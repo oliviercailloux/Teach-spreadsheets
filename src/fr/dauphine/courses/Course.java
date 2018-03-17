@@ -8,29 +8,29 @@ package fr.dauphine.courses;
  *
  */
 public class Course {
-	private String nom, codeApogee, anneeEt;
-	private double hCM, hTD, hCMTD, hTP;
-	private int nbGrCM, nbGrTD, nbGrCMTD, nbGrTP;
+	private String name, peakCode, yearOfStud;
+	private double cMH, tDH, cMTDH, tPH;
+	private int cMGrNB, tDGrNB, cMTDGrNB, tPGrNB;
 
-	public Course(String nom, String codeApogee, String anneeEt) {
-		this.nom = nom;
-		this.codeApogee = codeApogee;
-		this.anneeEt = anneeEt;
+	public Course(String name, String peakCode, String yearOfStud) {
+		this.name = name;
+		this.peakCode = peakCode;
+		this.yearOfStud = yearOfStud;
 	}
 
-	public Course(String nom, String codeApogee, String anneeEt, double hCM, double hTD, double hCMTD, double hTP,
-			int nbGrCM, int nbGrTD, int nbGrCMTD, int nbGrTP) {
-		this.nom = nom;
-		this.codeApogee = codeApogee;
-		this.anneeEt = anneeEt;
-		this.hCM = hCM;
-		this.hTD = hTD;
-		this.hCMTD = hCMTD;
-		this.hTP = hTP;
-		this.nbGrCM = nbGrCM;
-		this.nbGrTD = nbGrTD;
-		this.nbGrCMTD = nbGrCMTD;
-		this.nbGrTP = nbGrTP;
+	public Course(String name, String peakCode, String yearOfStud, double cMH, double tDH, double cMTDH, double tPH,
+			int cMGrNB, int tDGrNB, int cMTDGrNB, int tPGrNB) {
+		this.name = name;
+		this.peakCode = peakCode;
+		this.yearOfStud = yearOfStud;
+		this.cMH = cMH;
+		this.tDH = tDH;
+		this.cMTDH = cMTDH;
+		this.tPH = tPH;
+		this.cMGrNB = cMGrNB;
+		this.tDGrNB = tDGrNB;
+		this.cMTDGrNB = cMTDGrNB;
+		this.tPGrNB = tPGrNB;
 	}
 	
 	
@@ -38,97 +38,97 @@ public class Course {
 @Override
 public String toString() {
 	// TODO Auto-generated method stub
-	return "Nom : " + this.nom +"  code : "+ this.codeApogee+"  annee: " + this.anneeEt+ "\nnbHeuresCoursCommun: "+ this.hCM+ "  nbheuresTD: "+
-			this.hTD+ "  nbheuresCMTD: "+this.hCMTD+ "\nnbheuresTP: "+this.hTP+ "  nbheuresGroupeCommun: "+this.nbGrCM+ "  nbheuresGroupeTD: "+this.nbGrTD
-			+ "  nbheuresGroupeCMTD: "+this.nbGrCMTD+ "\nnbheuresGroupeTP: "+ this.nbGrTP;
+	return "name : " + this.name +"  code : "+ this.peakCode+"  year: " + this.yearOfStud+ "\nCM hours: "+ this.cMH+ "  TD hours: "+
+			this.tDH+ "  CMTD hour: "+this.cMTDH+ "\nTP hours: "+this.tPH+ "  CM groups number: "+this.cMGrNB+ "  TD groups number: "+this.tDGrNB
+			+ "  CMTD groups number: "+this.cMTDGrNB+ "\nTP groups number: "+ this.tPGrNB;
 }
 
-	public String getNom() {
-		return nom;
+	public String getname() {
+		return name;
 	}
 
-	public void setNom(String nom) {
-		this.nom = nom;
+	public void setname(String name) {
+		this.name = name;
 	}
 
-	public String getCodeApogee() {
-		return codeApogee;
+	public String getpeakCode() {
+		return peakCode;
 	}
 
-	public void setCodeApogee(String codeApogee) {
-		this.codeApogee = codeApogee;
+	public void setpeakCode(String peakCode) {
+		this.peakCode = peakCode;
 	}
 
-	public String getAnneeEt() {
-		return anneeEt;
+	public String getyearOfStud() {
+		return yearOfStud;
 	}
 
-	public void setAnneeEt(String anneeEt) {
-		this.anneeEt = anneeEt;
+	public void setyearOfStud(String yearOfStud) {
+		this.yearOfStud = yearOfStud;
 	}
 
 	public double gethCM() {
-		return hCM;
+		return cMH;
 	}
 
-	public void sethCM(double hCM) {
-		this.hCM = hCM;
+	public void sethCM(double cMH) {
+		this.cMH = cMH;
 	}
 
 	public double gethTD() {
-		return hTD;
+		return tDH;
 	}
 
-	public void sethTD(double hTD) {
-		this.hTD = hTD;
+	public void sethTD(double tDH) {
+		this.tDH = tDH;
 	}
 
 	public double gethCMTD() {
-		return hCMTD;
+		return cMTDH;
 	}
 
-	public void sethCMTD(double hCMTD) {
-		this.hCMTD = hCMTD;
+	public void sethCMTD(double cMTDH) {
+		this.cMTDH = cMTDH;
 	}
 
 	public double gethTP() {
-		return hTP;
+		return tPH;
 	}
 
-	public void sethTP(double hTP) {
-		this.hTP = hTP;
+	public void sethTP(double tPH) {
+		this.tPH = tPH;
 	}
 
 	public int getNbGrCM() {
-		return nbGrCM;
+		return cMGrNB;
 	}
 
-	public void setNbGrCM(int nbGrCM) {
-		this.nbGrCM = nbGrCM;
+	public void setNbGrCM(int cMGrNB) {
+		this.cMGrNB = cMGrNB;
 	}
 
 	public int getNbGrTD() {
-		return nbGrTD;
+		return tDGrNB;
 	}
 
-	public void setNbGrTD(int nbGrTD) {
-		this.nbGrTD = nbGrTD;
+	public void setNbGrTD(int tDGrNB) {
+		this.tDGrNB = tDGrNB;
 	}
 
 	public int getNbGrCMTD() {
-		return nbGrCMTD;
+		return cMTDGrNB;
 	}
 
-	public void setNbGrCMTD(int nbGrCMTD) {
-		this.nbGrCMTD = nbGrCMTD;
+	public void setNbGrCMTD(int cMTDGrNB) {
+		this.cMTDGrNB = cMTDGrNB;
 	}
 
 	public int getNbGrTP() {
-		return nbGrTP;
+		return tPGrNB;
 	}
 
-	public void setNbGrTP(int nbGrTP) {
-		this.nbGrTP = nbGrTP;
+	public void setNbGrTP(int tPGrNB) {
+		this.tPGrNB = tPGrNB;
 	}
 	
 	

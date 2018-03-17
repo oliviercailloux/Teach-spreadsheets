@@ -4,15 +4,15 @@ public class CoursePref {
 
 	private String course;
 	
-	private String enseignant;
+	private String teacher;
 	
-	private String choixCM;
+	private String cMChoice;
 	
-	private String choixTD;
+	private String tDChoice;
 	
-	private String choixCMTD;
+	private String cMTDChoice;
 	
-	private String choixTP;
+	private String tPChoice;
 	
 
 	public CoursePref() {
@@ -20,13 +20,13 @@ public class CoursePref {
 		// TODO Auto-generated constructor stub
 	}
 
-	public CoursePref(String course, String enseignant, String choixCM, String choixTD, String choixCMTD, String choixTP) {
+	public CoursePref(String course, String teacher, String cMChoice, String tDChoice, String cMTDChoice, String tPChoice) {
 		this.course = course;
-		this.enseignant = enseignant;
-		this.choixCM = choixCM;
-		this.choixTD = choixTD;
-		this.choixCMTD = choixCMTD;
-		this.choixTP = choixTP;
+		this.teacher = teacher;
+		this.cMChoice = cMChoice;
+		this.tDChoice = tDChoice;
+		this.cMTDChoice = cMTDChoice;
+		this.tPChoice = tPChoice;
 	}
 
 	public String getCourse() {
@@ -38,49 +38,49 @@ public class CoursePref {
 	}
 
 	public String getEnseignant() {
-		return enseignant;
+		return teacher;
 	}
 
-	public void setEnseignant(String enseignant) {
-		this.enseignant = enseignant;
+	public void setEnseignant(String teacher) {
+		this.teacher = teacher;
 	}
 
 	public String getchoixCM() {
-		return choixCM;
+		return cMChoice;
 	}
 
-	public void setchoixCM(String choixCM) {
-		this.choixCM = choixCM;
+	public void setchoixCM(String cMChoice) {
+		this.cMChoice = cMChoice;
 	}
 
 	public String getchoixTD() {
-		return choixTD;
+		return tDChoice;
 	}
 
-	public void setchoixTD(String choixTD) {
-		this.choixTD = choixTD;
+	public void setchoixTD(String tDChoice) {
+		this.tDChoice = tDChoice;
 	}
 
 	public String getchoixCMTD() {
-		return choixCMTD;
+		return cMTDChoice;
 	}
 
-	public void setchoixCMTD(String choixCMTD) {
-		this.choixCMTD = choixCMTD;
+	public void setchoixCMTD(String cMTDChoice) {
+		this.cMTDChoice = cMTDChoice;
 	}
 
 	public String getchoixTP() {
-		return choixTP;
+		return tPChoice;
 	}
 
-	public void setchoixTP(String choixTP) {
-		this.choixTP = choixTP;
+	public void setchoixTP(String tPChoice) {
+		this.tPChoice = tPChoice;
 	}
 
 	@Override
 	public String toString() {
-		return "Coursechoix [course=" + course + ", enseignant=" + enseignant + ", choixCM=" + choixCM + ", choixTD="
-				+ choixTD + ", choixCMTD=" + choixCMTD + ", choixTP=" + choixTP + "]";
+		return "Coursechoix [course=" + course + ", teacher=" + teacher + ", cMChoice=" + cMChoice + ", tDChoice="
+				+ tDChoice + ", cMTDChoice=" + cMTDChoice + ", tPChoice=" + tPChoice + "]";
 	}
 	
 	
