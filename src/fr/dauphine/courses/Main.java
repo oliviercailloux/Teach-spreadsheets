@@ -3,7 +3,16 @@ public class Main {
 
 	public static void main(String[] args) {
 		Course c=new Course("samuel","14","2008",14,15,16,17,10,11,12,13);
-		System.out.println(c);
+		CoursePref cp = new CoursePref(c, "Samuel", "A", "B", "C", "Absent");
+		CoursePref cp1 = new CoursePref(c, "Test", "A", "B", "C", "Absent");
+		System.out.println(c.getName() + " CM : " + cp.getCMChoice());
+		System.out.println(c.getName() + " TD : " + cp.getTDChoice());
+		System.out.println(c.getName() + " CMTD : " + cp.getCMTDChoice());
+		System.out.println(c.getName() + " TP : " + cp.getTPChoice());
+		System.out.println("\n" + cp.toString());
+		System.out.println("\n" + cp1.toString());
+		
+		System.out.println("\n" + c);
 		// TODO Auto-generated method stub
 
 	}
