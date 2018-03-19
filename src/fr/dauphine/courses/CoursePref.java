@@ -5,6 +5,7 @@ import java.util.ArrayList;
 /**
  * @author Victor CHEN (Kantoki), Louis Fontaine (fontlo15)
  * Contract 2
+ * This class stores a teacher's preferences for a course: it allows him to indicate a preference for CM, TD, CMTD, TP (A, B, C or Absent, for each).
  */
 
 public class CoursePref {
@@ -15,7 +16,7 @@ public class CoursePref {
 	private String tdChoice;
 	private String cmtdChoice;
 	private String tpChoice;
-	private ArrayList<String> choicesPossible = new ArrayList<String>();
+	private static ArrayList<String> choicesPossible = new ArrayList<String>();
 
 	/**
 	 * this method initializes the list of possible preferences choices for the courses
@@ -41,7 +42,7 @@ public class CoursePref {
 	
 	public CoursePref(Course course, String teacher, String cmChoice, String tdChoice, String cmtdChoice,
 			String tpChoice) {
-		initListChoicesPossible();
+		initListChoicesPossible(); // initializes the possible preferences choices for a type of course
 		this.course = course;
 		this.teacher = teacher;
 		this.cmChoice = cmChoice;
@@ -67,25 +68,62 @@ public class CoursePref {
 		return "Preferences for the course " + course.getName() + ", whose teacher is " + teacher + ", for CM : " + cmChoice + " ; TD : "
 				+ tdChoice + " ; CMTD : " + cmtdChoice + " ; TP : " + tpChoice + ".";
 	}
-	
+
+	public Course getCourse() {
+		return course;
+	}
+
+	public void setCourse(Course course) {
+		this.course = course;
+	}
+
 	public String getTeacher() {
 		return teacher;
 	}
 
-	public String getCMChoice() {
+	public void setTeacher(String teacher) {
+		this.teacher = teacher;
+	}
+
+	public String getCmChoice() {
 		return cmChoice;
 	}
-	
-	public String getTDChoice() {
+
+	public void setCmChoice(String cmChoice) {
+		this.cmChoice = cmChoice;
+	}
+
+	public String getTdChoice() {
 		return tdChoice;
 	}
 
-	public String getCMTDChoice() {
+	public void setTdChoice(String tdChoice) {
+		this.tdChoice = tdChoice;
+	}
+
+	public String getCmtdChoice() {
 		return cmtdChoice;
 	}
 
-	public String getTPChoice() {
+	public void setCmtdChoice(String cmtdChoice) {
+		this.cmtdChoice = cmtdChoice;
+	}
+
+	public String getTpChoice() {
 		return tpChoice;
 	}
+
+	public void setTpChoice(String tpChoice) {
+		this.tpChoice = tpChoice;
+	}
+
+	public ArrayList<String> getChoicesPossible() {
+		return choicesPossible;
+	}
+
+	public void setChoicesPossible(ArrayList<String> choicesPossible) {
+		this.choicesPossible = choicesPossible;
+	}
+	
 
 }
