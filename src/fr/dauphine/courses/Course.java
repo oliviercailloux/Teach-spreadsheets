@@ -1,16 +1,17 @@
 package fr.dauphine.courses;
-/**
- * 
- */
 
 /**
- * @author davau
- *
+ * @author Tuan Nuam DAVAUX (tuannamdavaux), Samuel COHEN (samuelcohen75)
+ * Contract 1 
+ * This class makes it possible to store a course : Name, Peak Code, CM hours, TD 
+ * hours, CMTD hours, TP hours, CM groups / TD hours / etc., and the
+ * year of studies in which the course is inserted (L3 Computing, M1
+ * Mathematics, L3 learning,...)
  */
 public class Course {
 	private String name, peakCode, yearOfStud;
-	private double cMH, tDH, cMTDH, tPH;
-	private int cMGrNB, tDGrNB, cMTDGrNB, tPGrNB;
+	private double cmH, tdH, cmtdH, tpH;
+	private int cmGrpNb, tdGrpNb, cmtdGrpNb, tpGrpNb;
 
 	public Course(String name, String peakCode, String yearOfStud) {
 		this.name = name;
@@ -18,119 +19,115 @@ public class Course {
 		this.yearOfStud = yearOfStud;
 	}
 
-	public Course(String name, String peakCode, String yearOfStud, double cMH, double tDH, double cMTDH, double tPH,
-			int cMGrNB, int tDGrNB, int cMTDGrNB, int tPGrNB) {
+	public Course(String name, String peakCode, String yearOfStud, double cmH, double tdH, double cmtdH, double tpH,
+			int cmGrpNb, int tdGrpNb, int cmtdGrpNb, int tpGrpNb) {
 		this.name = name;
 		this.peakCode = peakCode;
 		this.yearOfStud = yearOfStud;
-		this.cMH = cMH;
-		this.tDH = tDH;
-		this.cMTDH = cMTDH;
-		this.tPH = tPH;
-		this.cMGrNB = cMGrNB;
-		this.tDGrNB = tDGrNB;
-		this.cMTDGrNB = cMTDGrNB;
-		this.tPGrNB = tPGrNB;
+		this.cmH = cmH;
+		this.tdH = tdH;
+		this.cmtdH = cmtdH;
+		this.tpH = tpH;
+		this.cmGrpNb = cmGrpNb;
+		this.tdGrpNb = tdGrpNb;
+		this.cmtdGrpNb = cmtdGrpNb;
+		this.tpGrpNb = tpGrpNb;
 	}
-	
-	
 
-@Override
-public String toString() {
-	// TODO Auto-generated method stub
-	return "name : " + this.name +"  code : "+ this.peakCode+"  year: " + this.yearOfStud+ "\nCM hours: "+ this.cMH+ "  TD hours: "+
-			this.tDH+ "  CMTD hour: "+this.cMTDH+ "\nTP hours: "+this.tPH+ "  CM groups number: "+this.cMGrNB+ "  TD groups number: "+this.tDGrNB
-			+ "  CMTD groups number: "+this.cMTDGrNB+ "\nTP groups number: "+ this.tPGrNB;
-}
+	@Override
+	public String toString() {
+		return "name : " + this.name + "  code : " + this.peakCode + "  year: " + this.yearOfStud + "\nCM hours: "
+				+ this.cmH + "  TD hours: " + this.tdH + "  CMTD hour: " + this.cmtdH + "\nTP hours: " + this.tpH
+				+ "  CM groups number: " + this.cmGrpNb + "  TD groups number: " + this.tdGrpNb
+				+ "  CMTD groups number: " + this.cmtdGrpNb + "\nTP groups number: " + this.tpGrpNb;
+	}
 
-	public String getname() {
+	public String getName() {
 		return name;
 	}
 
-	public void setname(String name) {
+	public void setName(String name) {
 		this.name = name;
 	}
 
-	public String getpeakCode() {
+	public String getPeakCode() {
 		return peakCode;
 	}
 
-	public void setpeakCode(String peakCode) {
+	public void setPeakCode(String peakCode) {
 		this.peakCode = peakCode;
 	}
 
-	public String getyearOfStud() {
+	public String getYearOfStud() {
 		return yearOfStud;
 	}
 
-	public void setyearOfStud(String yearOfStud) {
+	public void setYearOfStud(String yearOfStud) {
 		this.yearOfStud = yearOfStud;
 	}
 
-	public double gethCM() {
-		return cMH;
+	public double getCM_Hour() {
+		return cmH;
 	}
 
-	public void sethCM(double cMH) {
-		this.cMH = cMH;
+	public void setCM_Hour(double cmH) {
+		this.cmH = cmH;
 	}
 
-	public double gethTD() {
-		return tDH;
+	public double getTD_Hour() {
+		return tdH;
 	}
 
-	public void sethTD(double tDH) {
-		this.tDH = tDH;
+	public void setTD_Hour(double tdH) {
+		this.tdH = tdH;
 	}
 
-	public double gethCMTD() {
-		return cMTDH;
+	public double getCMTD_Hour() {
+		return cmtdH;
 	}
 
-	public void sethCMTD(double cMTDH) {
-		this.cMTDH = cMTDH;
+	public void setCMTD_Hour(double cmtdH) {
+		this.cmtdH = cmtdH;
 	}
 
-	public double gethTP() {
-		return tPH;
+	public double getTP_Hour() {
+		return tpH;
 	}
 
-	public void sethTP(double tPH) {
-		this.tPH = tPH;
+	public void setTP_Hour(double tpH) {
+		this.tpH = tpH;
 	}
 
-	public int getNbGrCM() {
-		return cMGrNB;
+	public int getNbGrpCM() {
+		return cmGrpNb;
 	}
 
-	public void setNbGrCM(int cMGrNB) {
-		this.cMGrNB = cMGrNB;
+	public void setNbGrpCM(int cmGrpNb) {
+		this.cmGrpNb = cmGrpNb;
 	}
 
-	public int getNbGrTD() {
-		return tDGrNB;
+	public int getNbGrpTD() {
+		return tdGrpNb;
 	}
 
-	public void setNbGrTD(int tDGrNB) {
-		this.tDGrNB = tDGrNB;
+	public void setNbGrpTD(int tdGrpNb) {
+		this.tdGrpNb = tdGrpNb;
 	}
 
 	public int getNbGrCMTD() {
-		return cMTDGrNB;
+		return cmtdGrpNb;
 	}
 
-	public void setNbGrCMTD(int cMTDGrNB) {
-		this.cMTDGrNB = cMTDGrNB;
+	public void setNbGrpCMTD(int cmtdGrpNb) {
+		this.cmtdGrpNb = cmtdGrpNb;
 	}
 
-	public int getNbGrTP() {
-		return tPGrNB;
+	public int getNbGrpTP() {
+		return tpGrpNb;
 	}
 
-	public void setNbGrTP(int tPGrNB) {
-		this.tPGrNB = tPGrNB;
+	public void setNbGrpTP(int tpGrpNb) {
+		this.tpGrpNb = tpGrpNb;
 	}
-	
-	
 
 }
