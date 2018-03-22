@@ -13,6 +13,9 @@ public enum Choice {
 		this.fullChoiceName = fullChoiceName;
 	}
 	
+	/**
+	 * retrieves the full choice name
+	 **/
 	public String toString() {
 		return fullChoiceName;
 	}

@@ -20,7 +20,6 @@ public class CoursePref {
 
 	
 	public CoursePref(Course course, String teacher) {
-		
 		this.course = Objects.requireNonNull(course);
 		this.teacher = Objects.requireNonNull(teacher);
 	}

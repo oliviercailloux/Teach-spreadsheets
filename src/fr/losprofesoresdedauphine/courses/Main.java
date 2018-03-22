@@ -1,4 +1,5 @@
 package fr.losprofesoresdedauphine.courses;
+
 public class Main {
 
 	public static void main(String[] args) {
@@ -8,17 +9,14 @@ public class Main {
 		cp.setTdChoice(Choice.B);
 		cp.setCmtdChoice(Choice.C);
 		cp.setTpChoice(Choice.ABSENT);
-		//CoursePref cp1 = new CoursePref(c, "Samuel", Choice.A, Choice.B, Choice.C, Choice.ABSENT);
+		
 		System.out.println(c.getName() + " CM : " + cp.getCmChoice());
 		System.out.println(c.getName() + " TD : " + cp.getTdChoice());
 		System.out.println(c.getName() + " CMTD : " + cp.getCmtdChoice());
 		System.out.println(c.getName() + " TP : " + cp.getTpChoice());
 		System.out.println("\n" + cp.toString());
-		//System.out.println("\n" + cp1.toString());
 		
 		System.out.println("\n" + c);
-		// TODO Auto-generated method stub
-
 	}
 
 }
