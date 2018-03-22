@@ -1,12 +1,11 @@
 package fr.dauphine.courses;
 
 /**
- * @author Tuan Nuam DAVAUX (tuannamdavaux), Samuel COHEN (samuelcohen75)
- * Contract 1 
- * This class makes it possible to store a course : Name, Peak Code, CM hours, TD 
- * hours, CMTD hours, TP hours, CM groups / TD hours / etc., and the
- * year of studies in which the course is inserted (L3 Computing, M1
- * Mathematics, L3 learning,...)
+ * @author Tuan Nam DAVAUX (tuannamdavaux), Samuel COHEN (samuelcohen75)
+ *         Contract 1 This class makes it possible to store a course : Name,
+ *         Peak Code, CM hours, TD hours, CMTD hours, TP hours, CM groups / TD
+ *         hours / etc., and the year of studies in which the course is inserted
+ *         (L3 Computing, M1 Mathematics, L3 learning,...)
  */
 public class Course {
 	private String name, peakCode, yearOfStud;
@@ -17,21 +16,6 @@ public class Course {
 		this.name = name;
 		this.peakCode = peakCode;
 		this.yearOfStud = yearOfStud;
-	}
-
-	public Course(String name, String peakCode, String yearOfStud, double cmH, double tdH, double cmtdH, double tpH,
-			int cmGrpNb, int tdGrpNb, int cmtdGrpNb, int tpGrpNb) {
-		this.name = name;
-		this.peakCode = peakCode;
-		this.yearOfStud = yearOfStud;
-		this.cmH = cmH;
-		this.tdH = tdH;
-		this.cmtdH = cmtdH;
-		this.tpH = tpH;
-		this.cmGrpNb = cmGrpNb;
-		this.tdGrpNb = tdGrpNb;
-		this.cmtdGrpNb = cmtdGrpNb;
-		this.tpGrpNb = tpGrpNb;
 	}
 
 	@Override
@@ -71,7 +55,10 @@ public class Course {
 	}
 
 	public void setCM_Hour(double cmH) {
-		this.cmH = cmH;
+		if (cmH < 0)
+			throw new IllegalArgumentException("Negative number of hours !");
+		else
+			this.cmH = cmH;
 	}
 
 	public double getTD_Hour() {
@@ -79,7 +66,10 @@ public class Course {
 	}
 
 	public void setTD_Hour(double tdH) {
-		this.tdH = tdH;
+		if (tdH < 0)
+			throw new IllegalArgumentException("Negative number of hours !");
+		else
+			this.tdH = tdH;
 	}
 
 	public double getCMTD_Hour() {
@@ -87,7 +77,10 @@ public class Course {
 	}
 
 	public void setCMTD_Hour(double cmtdH) {
-		this.cmtdH = cmtdH;
+		if (cmtdH < 0)
+			throw new IllegalArgumentException("Negative number of hours !");
+		else
+			this.cmtdH = cmtdH;
 	}
 
 	public double getTP_Hour() {
@@ -95,7 +88,10 @@ public class Course {
 	}
 
 	public void setTP_Hour(double tpH) {
-		this.tpH = tpH;
+		if (tpH < 0)
+			throw new IllegalArgumentException("Negative number of hours !");
+		else
+			this.tpH = tpH;
 	}
 
 	public int getNbGrpCM() {
@@ -103,7 +99,10 @@ public class Course {
 	}
 
 	public void setNbGrpCM(int cmGrpNb) {
-		this.cmGrpNb = cmGrpNb;
+		if (cmGrpNb < 0)
+			throw new IllegalArgumentException("Negative number of groups !");
+		else
+			this.cmGrpNb = cmGrpNb;
 	}
 
 	public int getNbGrpTD() {
@@ -111,7 +110,10 @@ public class Course {
 	}
 
 	public void setNbGrpTD(int tdGrpNb) {
-		this.tdGrpNb = tdGrpNb;
+		if (tdGrpNb < 0)
+			throw new IllegalArgumentException("Negative number of groups !");
+		else
+			this.tdGrpNb = tdGrpNb;
 	}
 
 	public int getNbGrCMTD() {
@@ -119,7 +121,10 @@ public class Course {
 	}
 
 	public void setNbGrpCMTD(int cmtdGrpNb) {
-		this.cmtdGrpNb = cmtdGrpNb;
+		if (cmtdGrpNb < 0)
+			throw new IllegalArgumentException("Negative number of groups !");
+		else
+			this.cmtdGrpNb = cmtdGrpNb;
 	}
 
 	public int getNbGrpTP() {
@@ -127,7 +132,10 @@ public class Course {
 	}
 
 	public void setNbGrpTP(int tpGrpNb) {
-		this.tpGrpNb = tpGrpNb;
+		if (tpGrpNb < 0)
+			throw new IllegalArgumentException("Negative number of groups !");
+		else
+			this.tpGrpNb = tpGrpNb;
 	}
 
 }
