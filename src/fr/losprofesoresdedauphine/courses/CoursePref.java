@@ -3,7 +3,7 @@ package fr.losprofesoresdedauphine.courses;
 import java.util.Objects;
 
 /**
- * @author Victor CHEN (Kantoki), Louis Fontaine (fontlo15), Samuel COHEN
+ * @author Victor CHEN (Kantoki), Samuel COHEN
  * Contract 2 - Version 2.0
  * Last Update : 22/03/2018
  * This class stores a teacher's preferences for a course: it allows him to indicate a preference for CM, TD, CMTD, TP (A, B, C or Absent, for each).
@@ -18,7 +18,6 @@ public class CoursePref {
 	private Choice cmtdChoice;
 	private Choice tpChoice;
 
-	
 	public CoursePref(Course course, String teacher) {
 		this.course = Objects.requireNonNull(course);
 		this.teacher = Objects.requireNonNull(teacher);
