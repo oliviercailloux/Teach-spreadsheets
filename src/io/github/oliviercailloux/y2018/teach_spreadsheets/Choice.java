@@ -1,4 +1,4 @@
-package fr.losprofesoresdedauphine.courses;
+package io.github.oliviercailloux.y2018.teach_spreadsheets;
 
 public enum Choice {
 	
