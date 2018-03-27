@@ -3,13 +3,13 @@ package io.github.oliviercailloux.y2018.teach_spreadsheets;
 import java.util.Objects;
 
 /**
- * @author Tuan Nam DAVAUX (tuannamdavaux), Samuel COHEN (samuelcohen75)
+ * @author Tuan Nam Davaux (tuannamdavaux), Samuel COHEN (samuelcohen75)
  * 
  *         <p>
  *         <b> Contract 1 This class makes it possible to store a course : Name,
  *         Peak Code, CM hours, TD hours, CMTD hours, TP hours, CM groups / TD
  *         hours / etc., and the year of studies in which the course is inserted
- *         package fr.losprofesoresdedauphine.courses; (L3 Computing, M1
+ *         package io.github.oliviercailloux.y2018.teach_spreadsheets; (L3 Computing, M1
  *         Mathematics, L3 learning,...) </b>
  *         </p>
  */
