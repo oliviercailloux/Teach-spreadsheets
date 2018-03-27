@@ -16,6 +16,7 @@ public enum Choice {
 	/**
 	 * retrieves the full choice name
 	 **/
+	@Override
 	public String toString() {
 		return fullChoiceName;
 	}

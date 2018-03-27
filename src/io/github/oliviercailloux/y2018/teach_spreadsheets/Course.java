@@ -4,12 +4,14 @@ import java.util.Objects;
 
 /**
  * @author Tuan Nam DAVAUX (tuannamdavaux), Samuel COHEN (samuelcohen75)
- *         
- * <p> <b> Contract 1 This class makes it possible to store a course : Name,
+ * 
+ *         <p>
+ *         <b> Contract 1 This class makes it possible to store a course : Name,
  *         Peak Code, CM hours, TD hours, CMTD hours, TP hours, CM groups / TD
  *         hours / etc., and the year of studies in which the course is inserted
- *      package fr.losprofesoresdedauphine.courses;
-   (L3 Computing, M1 Mathematics, L3 learning,...) </b> </p>
+ *         package fr.losprofesoresdedauphine.courses; (L3 Computing, M1
+ *         Mathematics, L3 learning,...) </b>
+ *         </p>
  */
 public class Course {
 	private String name, peakCode, yearOfStud;
@@ -61,8 +63,7 @@ public class Course {
 	public void setCM_Hour(double cmH) {
 		if (cmH < 0)
 			throw new IllegalArgumentException("Negative number of hours !");
-		else
-			this.cmH = cmH;
+		this.cmH = cmH;
 	}
 
 	public double getTD_Hour() {
@@ -72,8 +73,7 @@ public class Course {
 	public void setTD_Hour(double tdH) {
 		if (tdH < 0)
 			throw new IllegalArgumentException("Negative number of hours !");
-		else
-			this.tdH = tdH;
+		this.tdH = tdH;
 	}
 
 	public double getCMTD_Hour() {
@@ -83,8 +83,7 @@ public class Course {
 	public void setCMTD_Hour(double cmtdH) {
 		if (cmtdH < 0)
 			throw new IllegalArgumentException("Negative number of hours !");
-		else
-			this.cmtdH = cmtdH;
+		this.cmtdH = cmtdH;
 	}
 
 	public double getTP_Hour() {
@@ -94,8 +93,7 @@ public class Course {
 	public void setTP_Hour(double tpH) {
 		if (tpH < 0)
 			throw new IllegalArgumentException("Negative number of hours !");
-		else
-			this.tpH = tpH;
+		this.tpH = tpH;
 	}
 
 	public int getNbGrpCM() {
@@ -105,8 +103,7 @@ public class Course {
 	public void setNbGrpCM(int cmGrpNb) {
 		if (cmGrpNb < 0)
 			throw new IllegalArgumentException("Negative number of groups !");
-		else
-			this.cmGrpNb = cmGrpNb;
+		this.cmGrpNb = cmGrpNb;
 	}
 
 	public int getNbGrpTD() {
@@ -116,8 +113,7 @@ public class Course {
 	public void setNbGrpTD(int tdGrpNb) {
 		if (tdGrpNb < 0)
 			throw new IllegalArgumentException("Negative number of groups !");
-		else
-			this.tdGrpNb = tdGrpNb;
+		this.tdGrpNb = tdGrpNb;
 	}
 
 	public int getNbGrCMTD() {
@@ -127,8 +123,7 @@ public class Course {
 	public void setNbGrpCMTD(int cmtdGrpNb) {
 		if (cmtdGrpNb < 0)
 			throw new IllegalArgumentException("Negative number of groups !");
-		else
-			this.cmtdGrpNb = cmtdGrpNb;
+		this.cmtdGrpNb = cmtdGrpNb;
 	}
 
 	public int getNbGrpTP() {
@@ -138,8 +133,7 @@ public class Course {
 	public void setNbGrpTP(int tpGrpNb) {
 		if (tpGrpNb < 0)
 			throw new IllegalArgumentException("Negative number of groups !");
-		else
-			this.tpGrpNb = tpGrpNb;
+		this.tpGrpNb = tpGrpNb;
 	}
 
 }
