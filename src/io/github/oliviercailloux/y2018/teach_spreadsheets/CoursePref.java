@@ -4,7 +4,7 @@ import java.util.Objects;
 
 /**
  * @author Victor CHEN (Kantoki), Samuel COHEN
- * Contract 2 - Version 2.0.1
+ * Contract 2 - Version 2.0.2
  * Last Update : 22/03/2018
  * This class stores a teacher's preferences for a course: it allows him to indicate a preference for CM, TD, CMTD, TP (A, B, C or Absent, for each).
  */
