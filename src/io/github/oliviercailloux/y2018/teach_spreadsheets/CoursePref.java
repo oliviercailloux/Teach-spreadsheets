@@ -11,7 +11,11 @@ import java.util.Objects;
 
 public class CoursePref {
 
+	/**
+	 * Course is never <code> null </code>
+	 */
 	private Course course;
+	
 	private String teacher;
 	private Choice cmChoice;
 	private Choice tdChoice;
@@ -27,6 +31,10 @@ public class CoursePref {
 	public CoursePref(Course course, String teacher) {
 		this.course = Objects.requireNonNull(course);
 		this.teacher = Objects.requireNonNull(teacher);
+		this.cmChoice = Choice.ABSENT;
+		this.tdChoice = Choice.ABSENT;
+		this.cmtdChoice = Choice.ABSENT;
+		this.tpChoice = Choice.ABSENT;
 	}
 	
 	@Override
