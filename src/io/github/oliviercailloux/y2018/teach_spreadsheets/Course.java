@@ -14,19 +14,19 @@ import java.util.Objects;
  *         </p>
  */
 public class Course {
-	private String name, peakCode, yearOfStud;
-	private double cmH, tdH, cmtdH, tpH;
-	private int cmGrpNb, tdGrpNb, cmtdGrpNb, tpGrpNb;
+	private String name = "", apogeeCode = "", yearOfStud = "";
+	private double cmH = 0.0, tdH = 0.0 , cmtdH = 0.0 , tpH = 0.0;
+	private int cmGrpNb = 0 , tdGrpNb = 0 , cmtdGrpNb = 0, tpGrpNb = 0;
 
-	public Course(String name, String peakCode, String yearOfStud) {
+	public Course(String name, String apogeeCode, String yearOfStud) {
 		this.name = Objects.requireNonNull(name);
-		this.peakCode = Objects.requireNonNull(peakCode);
+		this.apogeeCode = Objects.requireNonNull(apogeeCode);
 		this.yearOfStud = Objects.requireNonNull(yearOfStud);
 	}
 
 	@Override
 	public String toString() {
-		return "name : " + this.name + "  code : " + this.peakCode + "  year: " + this.yearOfStud + "\nCM hours: "
+		return "name : " + this.name + "  code : " + this.apogeeCode + "  year: " + this.yearOfStud + "\nCM hours: "
 				+ this.cmH + "  TD hours: " + this.tdH + "  CMTD hour: " + this.cmtdH + "\nTP hours: " + this.tpH
 				+ "  CM groups number: " + this.cmGrpNb + "  TD groups number: " + this.tdGrpNb
 				+ "  CMTD groups number: " + this.cmtdGrpNb + "\nTP groups number: " + this.tpGrpNb;
@@ -40,12 +40,12 @@ public class Course {
 		this.name = Objects.requireNonNull(name);
 	}
 
-	public String getPeakCode() {
-		return peakCode;
+	public String getapogeeCode() {
+		return apogeeCode;
 	}
 
-	public void setPeakCode(String peakCode) {
-		this.peakCode = Objects.requireNonNull(peakCode);
+	public void setapogeeCode(String apogeeCode) {
+		this.apogeeCode = Objects.requireNonNull(apogeeCode);
 	}
 
 	public String getYearOfStud() {
