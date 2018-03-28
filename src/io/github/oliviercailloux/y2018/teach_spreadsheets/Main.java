@@ -45,6 +45,9 @@ public class Main {
 		System.out.println("\n" + cp.toString());
 
 		CsvFileWriter.writeInCSV(courses, "TestCourses.csv");
+		
+		List<Course> courses2= new ArrayList<>();
+		CsvFileReader.readCourseCSVfile("TestCourses.csv", courses2);
 	}
 
 }
