@@ -46,18 +46,21 @@ public class Course {
 			setTD_Hour(Double.parseDouble(data));
 			break;
 		case 5:
-			setTP_Hour(Double.parseDouble(data));
+			setCMTD_Hour(Double.parseDouble(data));
 			break;
 		case 6:
-			setNbGrpCM(Integer.parseInt(data));
+			setTP_Hour(Double.parseDouble(data));
 			break;
 		case 7:
-			setNbGrpTD(Integer.parseInt(data));
+			setNbGrpCM(Integer.parseInt(data));
 			break;
 		case 8:
-			setNbGrpCMTD(Integer.parseInt(data));
+			setNbGrpTD(Integer.parseInt(data));
 			break;
 		case 9:
+			setNbGrpCMTD(Integer.parseInt(data));
+			break;
+		case 10:
 			setNbGrpTP(Integer.parseInt(data));
 			break;
 		default:
