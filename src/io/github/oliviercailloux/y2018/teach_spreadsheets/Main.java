@@ -1,8 +1,10 @@
 package io.github.oliviercailloux.y2018.teach_spreadsheets;
 
+import java.io.IOException;
+
 public class Main {
 
-	public static void main(String[] args) {
+	public static void main(String[] args) throws IOException {
 		Course c=new Course("samuel","14","2008");
 		CoursePref cp = new CoursePref(c, "Samuel");
 		cp.setCmChoice(Choice.A);
@@ -17,6 +19,9 @@ public class Main {
 		System.out.println("\n" + cp.toString());
 		
 		System.out.println("\n" + c);
+		
+		CsvFileWriter csv = new CsvFileWriter();
+		CsvFileWriter.writeCsvFile("Courses.csv");
 	}
 
 }
