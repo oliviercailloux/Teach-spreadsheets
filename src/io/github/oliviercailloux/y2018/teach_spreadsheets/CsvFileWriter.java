@@ -16,16 +16,10 @@ public class CsvFileWriter {
 	//CSV file header
 	private static final Object [] FILE_HEADER = {"name","apogeeCode","yearOfStud"};
 	
-	public static void writeCsvFile(String fileName) throws IOException {
-		//Create new students objects
-		Course c1 = new Course("Proba", "14", "2018");
-		Course c2 = new Course("Statistiques", "15", "2018");
-		
-		List<Course> courses = new ArrayList<Course>();
-		courses.add(c1);
-		courses.add(c2);
+	public static void writeCoursesCsvFile(String fileName, List<Course> courses) throws IOException {
 		
 		FileWriter fileWriter = new FileWriter(fileName);
+		String fileLocation = System.getProperty("user.dir");
 
 		CSVPrinter csvFilePrinter = null;
 
@@ -50,7 +44,8 @@ public class CsvFileWriter {
 				
 				csvFilePrinter.printRecord(coursesRecord);
 			}
-			System.out.println("CSV file was created successfully !!!");
+			System.out.println("\nYour courses have been successfully exported into a CSV File named " + fileName
+					+ " in " + fileLocation + " !");
 
 		} catch (Exception e) {
             System.out.println("Error in CsvFileWriter !!!");
