@@ -9,19 +9,60 @@ import java.util.Objects;
  *         <b> Contract 1 This class makes it possible to store a course : Name,
  *         Peak Code, CM hours, TD hours, CMTD hours, TP hours, CM groups / TD
  *         hours / etc., and the year of studies in which the course is inserted
- *         package io.github.oliviercailloux.y2018.teach_spreadsheets; (L3 Computing, M1
- *         Mathematics, L3 learning,...) </b>
+ *         package io.github.oliviercailloux.y2018.teach_spreadsheets; (L3
+ *         Computing, M1 Mathematics, L3 learning,...) </b>
  *         </p>
  */
 public class Course {
 	private String name = "", apogeeCode = "", yearOfStud = "";
-	private double cmH = 0.0, tdH = 0.0 , cmtdH = 0.0 , tpH = 0.0;
-	private int cmGrpNb = 0 , tdGrpNb = 0 , cmtdGrpNb = 0, tpGrpNb = 0;
+	private double cmH = 0.0, tdH = 0.0, cmtdH = 0.0, tpH = 0.0;
+	private int cmGrpNb = 0, tdGrpNb = 0, cmtdGrpNb = 0, tpGrpNb = 0;
 
 	public Course(String name, String apogeeCode, String yearOfStud) {
 		this.name = Objects.requireNonNull(name);
 		this.apogeeCode = Objects.requireNonNull(apogeeCode);
 		this.yearOfStud = Objects.requireNonNull(yearOfStud);
+	}
+
+	public Course() {
+
+	}
+
+	public void set(int index, String data) {
+		switch (index) {
+		case 0:
+			setName(data);
+			break;
+		case 1:
+			setapogeeCode(data);
+			break;
+		case 2:
+			setYearOfStud(data);
+			break;
+		case 3:
+			setCM_Hour(Double.parseDouble(data));
+			break;
+		case 4:
+			setTD_Hour(Double.parseDouble(data));
+			break;
+		case 5:
+			setTP_Hour(Double.parseDouble(data));
+			break;
+		case 6:
+			setNbGrpCM(Integer.parseInt(data));
+			break;
+		case 7:
+			setNbGrpTD(Integer.parseInt(data));
+			break;
+		case 8:
+			setNbGrpCMTD(Integer.parseInt(data));
+			break;
+		case 9:
+			setNbGrpTP(Integer.parseInt(data));
+			break;
+		default:
+			throw new IllegalArgumentException();
+		}
 	}
 
 	@Override
