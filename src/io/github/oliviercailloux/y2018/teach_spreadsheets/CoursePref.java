@@ -23,10 +23,8 @@ public class CoursePref {
 	private Choice tpChoice;
 
 	/**
-	 * @param course : the Course to insert the teacher's preferences
-	 * @param teacher : the teacher of the Course
-	 * course not <code> null </code>
-	 * teacher not <code> null </code>
+	 * @param course : the Course to insert the teacher's preferences. course not <code> null </code>
+	 * @param teacher : the teacher of the Course. teacher not <code> null </code>
 	 */
 	public CoursePref(Course course, String teacher) {
 		this.course = Objects.requireNonNull(course);
