@@ -1,4 +1,4 @@
-package io.github.oliviercailloux.y2018.teach_spreadsheets;
+package io.github.oliviercailloux.y2018.teach_spreadsheets.java;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -45,9 +45,12 @@ public class Main {
 		System.out.println("\n" + cp.toString());
 
 		CsvFileWriter.writeInCSV(courses, "TestCourses.csv");
-		
-		List<Course> courses2= new ArrayList<>();
-		CsvFileReader.readCourseCSVfile("TestCourses.csv", courses2);
+
+		List<Course> courses2 = new ArrayList<>();
+		CsvFileReader.readCourseCSVfile("C:\\Users\\lf947\\OneDrive\\L3_MIAGE\\JAVA\\L3_MIAGE\\JAVA\\Cours.odt",
+				courses2);
+		System.out.println(courses2);
+
 	}
 
 }

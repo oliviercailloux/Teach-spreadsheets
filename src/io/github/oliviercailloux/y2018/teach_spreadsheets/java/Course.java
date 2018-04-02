@@ -1,4 +1,4 @@
-package io.github.oliviercailloux.y2018.teach_spreadsheets;
+package io.github.oliviercailloux.y2018.teach_spreadsheets.java;
 
 import java.util.Objects;
 
@@ -9,7 +9,7 @@ import java.util.Objects;
  *         <b> Contract 1 This class makes it possible to store a course : Name,
  *         Peak Code, CM hours, TD hours, CMTD hours, TP hours, CM groups / TD
  *         hours / etc., and the year of studies in which the course is inserted
- *         package io.github.oliviercailloux.y2018.teach_spreadsheets; (L3
+ *         package io.github.oliviercailloux.y2018.teach_spreadsheets.java; (L3
  *         Computing, M1 Mathematics, L3 learning,...) </b>
  *         </p>
  */
@@ -29,6 +29,8 @@ public class Course {
 	}
 
 	public void set(int index, String data) {
+		assert data != null;
+
 		switch (index) {
 		case 0:
 			setName(data);
