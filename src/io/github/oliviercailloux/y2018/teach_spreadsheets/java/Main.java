@@ -44,10 +44,16 @@ public class Main {
 		System.out.println(c1.getName() + " TP : " + cp.getTpChoice());
 		System.out.println("\n" + cp.toString());
 
-		CsvFileWriter.writeInCSV(courses, "TestCourses.csv");
-
+		/*
+		 * CsvFileWriter.writeInCSV(courses,
+		 * "src\\io\\github\\oliviercailloux\\y2018\\teach_spreadsheets\\ressources\\start-courses.csv"
+		 * );
+		 */
 		List<Course> courses2 = new ArrayList<>();
-		CsvFileReader.readCourseCSVfile("TestCourses.csv", courses2);
+		System.out.println("\n");
+		CsvFileReader.readCourseCSVfile(
+				"src\\io\\github\\oliviercailloux\\y2018\\teach_spreadsheets\\ressources\\start-courses.csv",
+				courses2);
 		System.out.println(courses2);
 
 	}
