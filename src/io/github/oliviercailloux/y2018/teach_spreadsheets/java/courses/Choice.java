@@ -1,4 +1,4 @@
-package io.github.oliviercailloux.y2018.teach_spreadsheets.java;
+package io.github.oliviercailloux.y2018.teach_spreadsheets.java.courses;
 
 public enum Choice {
 	

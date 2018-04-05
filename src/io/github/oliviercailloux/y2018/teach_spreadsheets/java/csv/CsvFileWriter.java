@@ -1,4 +1,4 @@
-package io.github.oliviercailloux.y2018.teach_spreadsheets.java;
+package io.github.oliviercailloux.y2018.teach_spreadsheets.java.csv;
 
 import java.io.FileWriter;
 import java.io.IOException;
@@ -7,6 +7,8 @@ import java.util.List;
 
 import org.apache.commons.csv.CSVFormat;
 import org.apache.commons.csv.CSVPrinter;
+
+import io.github.oliviercailloux.y2018.teach_spreadsheets.java.courses.Course;
 
 /**
  * @author Victor CHEN (Kantoki), Davaux Tuan Nam (tuannamdavaux) File 1 -
