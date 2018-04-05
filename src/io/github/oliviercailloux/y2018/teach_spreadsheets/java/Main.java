@@ -47,8 +47,7 @@ public class Main {
 		CsvFileWriter.writeInCSV(courses, "TestCourses.csv");
 
 		List<Course> courses2 = new ArrayList<>();
-		CsvFileReader.readCourseCSVfile("C:\\Users\\lf947\\OneDrive\\L3_MIAGE\\JAVA\\L3_MIAGE\\JAVA\\Cours.odt",
-				courses2);
+		CsvFileReader.readCourseCSVfile("TestCourses.csv", courses2);
 		System.out.println(courses2);
 
 	}

@@ -8,6 +8,8 @@ import java.util.List;
 import org.apache.commons.csv.CSVFormat;
 import org.apache.commons.csv.CSVParser;
 import org.apache.commons.csv.CSVRecord;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * This class use an existing CsvReader (common-csv). It allows you to read a
@@ -18,6 +20,8 @@ import org.apache.commons.csv.CSVRecord;
  * @see Course
  */
 public class CsvFileReader {
+
+	private final static Logger LOGGER = LoggerFactory.getLogger(CsvFileReader.class);
 
 	/**
 	 * This method read a CSV file of {@link Course} and add them to the parameter
@@ -33,7 +37,11 @@ public class CsvFileReader {
 			throws FileNotFoundException, IOException, NumberFormatException, IllegalArgumentException {
 
 		try (FileReader filereader = new FileReader(filename)) {
+			LOGGER.info("File " + filename + " has been correctly read");
 			try (CSVParser parser = CSVParser.parse(filereader, CSVFormat.EXCEL)) {
+
+				LOGGER.info("File " + filename + " has been correctly parsed");
+
 				boolean line = true;
 				Course c = new Course();
 
@@ -51,6 +59,7 @@ public class CsvFileReader {
 
 					}
 				}
+				LOGGER.info("The Course list has been updated successfully with the CSV file : " + filename);
 			}
 		}
 	}
