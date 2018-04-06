@@ -1,24 +1,28 @@
-package io.github.oliviercailloux.y2018.teach_spreadsheets;
+package io.github.oliviercailloux.y2018.teach_spreadsheets.odf;
 
 import java.io.IOException;
 
-import io.github.oliviercailloux.y2018.teach_spreadsheets.odf.TeachSpreadsheetDocument;
+import org.junit.Assert;
+import org.junit.Test;
 
-public class MainResource2 {
+public class TeachSpreadsheetDocumentTest {
 
-	public static void main(String[] args) {
+	@SuppressWarnings("unused")
+	@Test
+	public void testOpenODS() {
 		String fileName = "Saisie_voeux_dauphine.ods";
 		String tableName = "L3_Informatique";
 		String cellPosition = "B4";
 
 		try {
 			TeachSpreadsheetDocument.openODS(fileName, tableName, cellPosition);
+			Assert.assertTrue(true);
 		} catch (NullPointerException e) {
-			throw new IllegalStateException(e);
+			Assert.assertTrue(false);
 		} catch (IOException e) {
-			throw new IllegalStateException(e);
+			Assert.assertTrue(false);
 		} catch (Exception e) {
-			throw new IllegalStateException(e);
+			Assert.assertTrue(false);
 		}
 
 	}
