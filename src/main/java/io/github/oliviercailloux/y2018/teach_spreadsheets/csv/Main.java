@@ -19,10 +19,11 @@ public class Main {
 			throws NumberFormatException, FileNotFoundException, IllegalArgumentException, IOException {
 		List<Course> courses2 = new ArrayList<>();
 		System.out.println("\n");
-		URL ressourceUrl = Main.class.getResource("start-courses.csv");
+		ClassLoader classLoader = Main.class.getClassLoader();
+		URL ressourceUrl = classLoader.getResource("start-courses.csv");
 		System.out.println(ressourceUrl.getPath());
-		CsvFileReader.readCourseCSVfile(ressourceUrl.getPath(), courses2);
-		System.out.println(courses2);
+		// CsvFileReader.readCourseCSVfile(ressourceUrl.getPath(), courses2);
+		// System.out.println(courses2);
 
 	}
 
