@@ -15,7 +15,7 @@ import io.github.oliviercailloux.y2018.teach_spreadsheets.courses.Course;
 
 /**
  * This class use an existing CsvReader (common-csv). It allows you to read a
- * CSV file of courses (see below) and set a list of courses
+ * CSV file of courses (see below) and set a list of courses.
  * 
  * @author Samuel COHEN (samuelcohen75) and Louis FONTAINE (fontlo15)
  * @see librarySource https://commons.apache.org/proper/commons-csv/
@@ -27,7 +27,7 @@ public class CsvFileReader {
 
 	/**
 	 * This method read a CSV file of {@link Course} and add them to the parameter
-	 * list.
+	 * {@link Course} list.
 	 * 
 	 * @param filename
 	 *            CSV file absolute or relative path
@@ -58,7 +58,6 @@ public class CsvFileReader {
 							c.set(i, csvRecord.get(i));
 						}
 						courses.add(c);
-
 					}
 				}
 				LOGGER.info("The Course list has been updated successfully with the CSV file : " + filename);

@@ -1,4 +1,4 @@
-package io.github.oliviercailloux.y2018.teach_spreadsheets.csv;
+package io.github.oliviercailloux.y2018.teach_spreadsheets;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -7,8 +7,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 import io.github.oliviercailloux.y2018.teach_spreadsheets.courses.Course;
+import io.github.oliviercailloux.y2018.teach_spreadsheets.csv.CsvFileReader;
 
-public class Main {
+public class MainResource1 {
 
 	/**
 	 * @author tuannamdavaux, kantoki <br>
@@ -19,11 +20,11 @@ public class Main {
 			throws NumberFormatException, FileNotFoundException, IllegalArgumentException, IOException {
 		List<Course> courses2 = new ArrayList<>();
 		System.out.println("\n");
-		ClassLoader classLoader = Main.class.getClassLoader();
+		ClassLoader classLoader = MainResource1.class.getClassLoader();
 		URL ressourceUrl = classLoader.getResource("start-courses.csv");
 		System.out.println(ressourceUrl.getPath());
-		// CsvFileReader.readCourseCSVfile(ressourceUrl.getPath(), courses2);
-		// System.out.println(courses2);
+		CsvFileReader.readCourseCSVfile(ressourceUrl.getPath(), courses2);
+		System.out.println(courses2);
 
 	}
 
