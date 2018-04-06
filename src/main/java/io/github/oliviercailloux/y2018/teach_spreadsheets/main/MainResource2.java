@@ -1,4 +1,4 @@
-package io.github.oliviercailloux.y2018.teach_spreadsheets;
+package io.github.oliviercailloux.y2018.teach_spreadsheets.main;
 
 import java.io.IOException;
 
