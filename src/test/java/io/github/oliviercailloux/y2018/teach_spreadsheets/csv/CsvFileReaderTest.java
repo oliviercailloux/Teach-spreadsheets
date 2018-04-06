@@ -1,7 +1,7 @@
 /**
  * 
  */
-package io.github.oliviercailloux.y2018.teach_spreadsheets.tests;
+package io.github.oliviercailloux.y2018.teach_spreadsheets.csv;
 
 import org.junit.Before;
 

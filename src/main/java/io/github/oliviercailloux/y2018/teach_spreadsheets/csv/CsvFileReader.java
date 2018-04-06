@@ -1,4 +1,4 @@
-package io.github.oliviercailloux.y2018.teach_spreadsheets.java.csv;
+package io.github.oliviercailloux.y2018.teach_spreadsheets.csv;
 
 import java.io.FileNotFoundException;
 import java.io.FileReader;
@@ -11,7 +11,7 @@ import org.apache.commons.csv.CSVRecord;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import io.github.oliviercailloux.y2018.teach_spreadsheets.java.courses.Course;
+import io.github.oliviercailloux.y2018.teach_spreadsheets.courses.Course;
 
 /**
  * This class use an existing CsvReader (common-csv). It allows you to read a

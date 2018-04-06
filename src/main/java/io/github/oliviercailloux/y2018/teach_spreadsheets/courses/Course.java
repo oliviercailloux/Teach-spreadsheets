@@ -1,4 +1,4 @@
-package io.github.oliviercailloux.y2018.teach_spreadsheets.java.courses;
+package io.github.oliviercailloux.y2018.teach_spreadsheets.courses;
 
 import java.util.Objects;
 

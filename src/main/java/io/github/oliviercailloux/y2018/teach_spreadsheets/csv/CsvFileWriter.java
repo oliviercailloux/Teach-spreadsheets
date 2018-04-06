@@ -1,4 +1,4 @@
-package io.github.oliviercailloux.y2018.teach_spreadsheets.java.csv;
+package io.github.oliviercailloux.y2018.teach_spreadsheets.csv;
 
 import java.io.FileWriter;
 import java.io.IOException;
@@ -8,7 +8,7 @@ import java.util.List;
 import org.apache.commons.csv.CSVFormat;
 import org.apache.commons.csv.CSVPrinter;
 
-import io.github.oliviercailloux.y2018.teach_spreadsheets.java.courses.Course;
+import io.github.oliviercailloux.y2018.teach_spreadsheets.courses.Course;
 
 /**
  * @author Victor CHEN (Kantoki), Davaux Tuan Nam (tuannamdavaux) File 1 -
@@ -22,24 +22,20 @@ public class CsvFileWriter {
 	private static final String NEW_LINE_SEPARATOR = "\n";
 
 	// CSV file header
-	private static final Object[] FILE_HEADER = {"Name", "Apogee Code",
-			"Year of Study", "CM hours", "TD hours", "CMTD hours", "TP hours",
-			"CM groups number", "TD groups number", "CMTD groups number",
-			"TP groups number"};
+	private static final Object[] FILE_HEADER = { "Name", "Apogee Code", "Year of Study", "CM hours", "TD hours",
+			"CMTD hours", "TP hours", "CM groups number", "TD groups number", "CMTD groups number",
+			"TP groups number" };
 
-	public static void writeInCSV(List<Course> courses, String fileName)
-			throws IOException {
+	public static void writeInCSV(List<Course> courses, String fileName) throws IOException {
 		String fileLocation = System.getProperty("user.dir");
 
 		// Create the CSVFormat object with "\n" as a record delimiter
-		CSVFormat csvFileFormat = CSVFormat.EXCEL
-				.withRecordSeparator(NEW_LINE_SEPARATOR);
+		CSVFormat csvFileFormat = CSVFormat.EXCEL.withRecordSeparator(NEW_LINE_SEPARATOR);
 		// initialize FileWriter object
 		try (FileWriter fileWriter = new FileWriter(fileName)) {
 
 			// initialize CSVPrinter object
-			try (CSVPrinter csvFilePrinter = new CSVPrinter(fileWriter,
-					csvFileFormat)) {
+			try (CSVPrinter csvFilePrinter = new CSVPrinter(fileWriter, csvFileFormat)) {
 
 				// Create CSV file header
 				csvFilePrinter.printRecord(FILE_HEADER);
@@ -61,9 +57,8 @@ public class CsvFileWriter {
 
 					csvFilePrinter.printRecord(coursesRecord);
 				}
-				System.out.println(
-						"\nYour courses have been successfully exported into a CSV File named "
-								+ fileName + " in " + fileLocation + " !");
+				System.out.println("\nYour courses have been successfully exported into a CSV File named " + fileName
+						+ " in " + fileLocation + " !");
 
 			}
 		}

@@ -1,12 +1,12 @@
-package io.github.oliviercailloux.y2018.teach_spreadsheets.java.courses;
+package io.github.oliviercailloux.y2018.teach_spreadsheets.courses;
 
 import java.util.Objects;
 
 /**
- * @author Victor CHEN (Kantoki), Samuel COHEN
- * Contract 2 - Version 2.0.2
- * Last Update : 22/03/2018
- * This class stores a teacher's preferences for a course: it allows him to indicate a preference for CM, TD, CMTD, TP (A, B, C or Absent, for each).
+ * @author Victor CHEN (Kantoki), Samuel COHEN Contract 2 - Version 2.0.2 Last
+ *         Update : 22/03/2018 This class stores a teacher's preferences for a
+ *         course: it allows him to indicate a preference for CM, TD, CMTD, TP
+ *         (A, B, C or Absent, for each).
  */
 
 public class CoursePref {
@@ -15,7 +15,7 @@ public class CoursePref {
 	 * Course is never <code> null </code>
 	 */
 	private Course course;
-	
+
 	private String teacher;
 	private Choice cmChoice;
 	private Choice tdChoice;
@@ -23,8 +23,11 @@ public class CoursePref {
 	private Choice tpChoice;
 
 	/**
-	 * @param course : the Course to insert the teacher's preferences. course not <code> null </code>
-	 * @param teacher : the teacher of the Course. teacher not <code> null </code>
+	 * @param course
+	 *            : the Course to insert the teacher's preferences. course not
+	 *            <code> null </code>
+	 * @param teacher
+	 *            : the teacher of the Course. teacher not <code> null </code>
 	 */
 	public CoursePref(Course course, String teacher) {
 		this.course = Objects.requireNonNull(course);
@@ -34,11 +37,12 @@ public class CoursePref {
 		this.cmtdChoice = Choice.ABSENT;
 		this.tpChoice = Choice.ABSENT;
 	}
-	
+
 	@Override
 	public String toString() {
-		return "Preferences for the course " + course.getName() + ", whose teacher is " + teacher + ", for CM : " + cmChoice.toString() + " ; TD : "
-				+ tdChoice.toString() + " ; CMTD : " + cmtdChoice.toString() + " ; TP : " + tpChoice.toString() + ".";
+		return "Preferences for the course " + course.getName() + ", whose teacher is " + teacher + ", for CM : "
+				+ cmChoice.toString() + " ; TD : " + tdChoice.toString() + " ; CMTD : " + cmtdChoice.toString()
+				+ " ; TP : " + tpChoice.toString() + ".";
 	}
 
 	public Course getCourse() {
@@ -46,7 +50,8 @@ public class CoursePref {
 	}
 
 	/**
-	 * @param course not <code> null </code>
+	 * @param course
+	 *            not <code> null </code>
 	 */
 	public void setCourse(Course course) {
 		this.course = Objects.requireNonNull(course);
@@ -57,7 +62,8 @@ public class CoursePref {
 	}
 
 	/**
-	 * @param teacher not <code> null </code>
+	 * @param teacher
+	 *            not <code> null </code>
 	 */
 	public void setTeacher(String teacher) {
 		this.teacher = Objects.requireNonNull(teacher);
@@ -68,7 +74,8 @@ public class CoursePref {
 	}
 
 	/**
-	 * @param cmChoice not <code> null </code>
+	 * @param cmChoice
+	 *            not <code> null </code>
 	 */
 	public void setCmChoice(Choice cmChoice) {
 		this.cmChoice = Objects.requireNonNull(cmChoice);
@@ -79,7 +86,8 @@ public class CoursePref {
 	}
 
 	/**
-	 * @param tdChoice not <code> null </code>
+	 * @param tdChoice
+	 *            not <code> null </code>
 	 */
 	public void setTdChoice(Choice tdChoice) {
 		this.tdChoice = Objects.requireNonNull(tdChoice);
@@ -90,7 +98,8 @@ public class CoursePref {
 	}
 
 	/**
-	 * @param cmtdChoice not <code> null </code>
+	 * @param cmtdChoice
+	 *            not <code> null </code>
 	 */
 	public void setCmtdChoice(Choice cmtdChoice) {
 		this.cmtdChoice = Objects.requireNonNull(cmtdChoice);
@@ -101,10 +110,11 @@ public class CoursePref {
 	}
 
 	/**
-	 * @param tpChoice not <code> null </code>
+	 * @param tpChoice
+	 *            not <code> null </code>
 	 */
 	public void setTpChoice(Choice tpChoice) {
 		this.tpChoice = Objects.requireNonNull(tpChoice);
 	}
-	
+
 }
