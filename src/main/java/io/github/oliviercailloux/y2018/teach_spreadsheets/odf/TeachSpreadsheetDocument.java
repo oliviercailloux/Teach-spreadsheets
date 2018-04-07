@@ -30,7 +30,7 @@ public class TeachSpreadsheetDocument {
 	 * @see librarySource https://incubator.apache.org/odftoolkit/
 	 */
 	public static void openODS(String fileName, String tableName, String cellPosition)
-			throws Exception, IOException, NullPointerException {
+			throws ClassCastException, NotFoundException, IOException, NullPointerException, Exception {
 		try (InputStream inputStream = TeachSpreadsheetDocument.class.getClassLoader().getResourceAsStream(fileName)) {
 			if (inputStream == null) {
 				LOGGER.info("File " + fileName + " not found.");
@@ -46,12 +46,15 @@ public class TeachSpreadsheetDocument {
 				try {
 					positionCell = spreadSheetDocument.getTableByName(tableName).getCellByPosition(cellPosition);
 				} catch (NullPointerException ex) {
-					LOGGER.info("Cellule " + cellPosition + " not found");
+					LOGGER.info("Table " + tableName + " not found");
 					throw ex;
 				}
 
-				LOGGER.info("Cellule found, text in it is : " + positionCell.getDisplayText());
-
+				if (positionCell == null) {
+					LOGGER.info("Cell " + cellPosition + " not found");
+				} else {
+					LOGGER.info("Cellule found, text in it is : " + positionCell.getDisplayText());
+				}
 			}
 		}
 		LOGGER.info("File " + fileName + " has been closed.");
