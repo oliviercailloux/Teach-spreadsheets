@@ -1,11 +1,13 @@
 package io.github.oliviercailloux.y2018.teach_spreadsheets.csv;
 
+import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
 import org.assertj.core.api.Assertions;
+import org.junit.After;
 import org.junit.Assert;
 import org.junit.Test;
 
@@ -61,7 +63,14 @@ public class CsvFileWriterTest {
 			Assert.assertTrue(false);
 		}
 
-		Assertions.assertThat(actual.get(0)).isEqualToComparingFieldByField(expected.get(0));
+		Assertions.assertThat(actual.get(0))
+				.isEqualToComparingFieldByField(expected.get(0));
 	}
-
+	@After
+	public void deleteTestFile() {
+		File f = new File("src/test/resources/oneCourseWritten.csv");
+		if(f.exists())
+			f.delete();
+	}
+	
 }
