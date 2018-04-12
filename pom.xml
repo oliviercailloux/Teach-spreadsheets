@@ -6,6 +6,13 @@
 	<version>0.0.1-SNAPSHOT</version>
 	<name> Maven Project Teach-Spreadsheets</name>
 	<description>	</description>
+	
+	<properties> 
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+		<maven.compiler.source>1.8</maven.compiler.source>
+		<maven.compiler.target>1.8</maven.compiler.target>
+	</properties>
+	
 	<build>
 		<resources>
 	        <resource>
@@ -15,7 +22,7 @@
 	            <directory>src/main/resources</directory>
 	        </resource>
 	        <resource>
-	            <directory>src/test/java</directory>
+	            <directory>	src/test/java</directory>
 	        </resource>
         	<resource>
 	            <directory>src/test/resources</directory>
