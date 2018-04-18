@@ -7,6 +7,8 @@ import java.util.List;
 
 import org.apache.commons.csv.CSVFormat;
 import org.apache.commons.csv.CSVPrinter;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import io.github.oliviercailloux.y2018.teach_spreadsheets.courses.Course;
 
@@ -17,6 +19,8 @@ import io.github.oliviercailloux.y2018.teach_spreadsheets.courses.Course;
  * @see librarySource https://commons.apache.org/proper/commons-csv/
  */
 public class CsvFileWriter {
+	
+	private final static Logger LOGGER = LoggerFactory.getLogger(CsvFileWriter.class);
 
 	// Delimiter used in CSV file
 	private static final String NEW_LINE_SEPARATOR = "\n";
@@ -33,10 +37,10 @@ public class CsvFileWriter {
 		CSVFormat csvFileFormat = CSVFormat.EXCEL.withRecordSeparator(NEW_LINE_SEPARATOR);
 		// initialize FileWriter object
 		try (FileWriter fileWriter = new FileWriter(fileName)) {
-
+			LOGGER.info("File " + fileName + " is ready to be writen");
 			// initialize CSVPrinter object
 			try (CSVPrinter csvFilePrinter = new CSVPrinter(fileWriter, csvFileFormat)) {
-
+				LOGGER.info("File " + fileName + " is ready to be writen with CSVPrinter");
 				// Create CSV file header
 				csvFilePrinter.printRecord(FILE_HEADER);
 
@@ -57,8 +61,8 @@ public class CsvFileWriter {
 
 					csvFilePrinter.printRecord(coursesRecord);
 				}
-				System.out.println("\nYour courses have been successfully exported into a CSV File named " + fileName
-						+ " in " + fileLocation + " !");
+				LOGGER.info("\nYour courses have been successfully exported into a CSV File named " + fileName + " in " + fileLocation + " !");
+				
 
 			}
 		}

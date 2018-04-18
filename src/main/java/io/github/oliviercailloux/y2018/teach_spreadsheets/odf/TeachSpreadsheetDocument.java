@@ -33,7 +33,7 @@ public class TeachSpreadsheetDocument {
 			throws ClassCastException, NotFoundException, IOException, NullPointerException, Exception {
 		try (InputStream inputStream = TeachSpreadsheetDocument.class.getClassLoader().getResourceAsStream(fileName)) {
 			if (inputStream == null) {
-				LOGGER.info("File " + fileName + " not found.");
+				LOGGER.error("File " + fileName + " not found.");
 				throw new NotFoundException("File is not in the resources folder");
 			}
 
@@ -46,12 +46,12 @@ public class TeachSpreadsheetDocument {
 				try {
 					positionCell = spreadSheetDocument.getTableByName(tableName).getCellByPosition(cellPosition);
 				} catch (NullPointerException ex) {
-					LOGGER.info("Table " + tableName + " not found");
+					LOGGER.error("Table " + tableName + " not found");
 					throw ex;
 				}
 
 				if (positionCell == null) {
-					LOGGER.info("Cell " + cellPosition + " not found");
+					LOGGER.warn("Cell " + cellPosition + " not found");
 				} else {
 					LOGGER.info("Cellule found, text in it is : " + positionCell.getDisplayText());
 				}

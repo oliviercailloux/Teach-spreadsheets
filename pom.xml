@@ -6,16 +6,29 @@
 	<version>0.0.1-SNAPSHOT</version>
 	<name> Maven Project Teach-Spreadsheets</name>
 	<description>	</description>
+	
+	<properties> 
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+		<maven.compiler.source>1.8</maven.compiler.source>
+		<maven.compiler.target>1.8</maven.compiler.target>
+	</properties>
+	
 	<build>
-		<sourceDirectory>src</sourceDirectory>
 		<resources>
-			<resource>
-				<directory>src</directory>
-				<excludes>
-					<exclude>**/*.java</exclude>
-				</excludes>
-			</resource>
-		</resources>
+	        <resource>
+	            <directory>src/main/java</directory>
+	        </resource>
+	        <resource>
+	            <directory>src/main/resources</directory>
+	        </resource>
+	        <resource>
+	            <directory>	src/test/java</directory>
+	        </resource>
+        	<resource>
+	            <directory>src/test/resources</directory>
+	        </resource>        
+    	</resources>
+    	
 		<plugins>
 			<plugin>
 				<artifactId>maven-compiler-plugin</artifactId>
