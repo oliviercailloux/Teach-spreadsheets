@@ -4,6 +4,7 @@ import java.io.IOException;
 
 import org.junit.Assert;
 import org.junit.Test;
+import org.odftoolkit.simple.SpreadsheetDocument;
 
 import com.hp.hpl.jena.shared.NotFoundException;
 
@@ -79,4 +80,6 @@ public class TeachSpreadsheetDocumentTest {
 
 	// TODO
 	// Test if the cell doesn't exist
+	
+	
 }

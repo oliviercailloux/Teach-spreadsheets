@@ -11,7 +11,11 @@ import org.odftoolkit.simple.table.Table;
  * @author Victor CHEN (Kantoki), Louis Fontaine This class implements
  *         SpreadsheetReader : it allows to read a Spreadsheet document, get the
  *         value of a cell, check if a cell is a diagonal border or not Version
+<<<<<<< HEAD
+ *         : 2.0 Last update : 07/05/2018
+=======
  *         : 1.0 Last update : 18/04/2018
+>>>>>>> branch 'master' of https://github.com/LosProfesoresDeDauphine/Teach-spreadsheets.git
  */
 public class ODSReader implements SpreadsheetReader {
 
@@ -36,6 +40,10 @@ public class ODSReader implements SpreadsheetReader {
 	public void setSheet(Table sheet) {
 		this.sheet = sheet;
 	}
+	
+	public SpreadsheetDocument getDocument() {
+		return document;
+	}
 
 	public void setDocument(SpreadsheetDocument document) {
 		this.document = Objects.requireNonNull(document);
@@ -44,8 +52,12 @@ public class ODSReader implements SpreadsheetReader {
 	@Override
 	public String getCellValue(String cellPosition) {
 		Cell cell = sheet.getCellByPosition(cellPosition);
+		boolean isDiagonalBorder = isDiagonalBorder(this.getDocument(), sheet.getTableName(), cellPosition);
 		if (cell == null) {
 			return "";
+		}
+		if (isDiagonalBorder) {
+			return null;
 		}
 		return cell.getDisplayText();
 	}
@@ -67,5 +79,4 @@ public class ODSReader implements SpreadsheetReader {
 		}
 		return false;
 	}
-
 }
