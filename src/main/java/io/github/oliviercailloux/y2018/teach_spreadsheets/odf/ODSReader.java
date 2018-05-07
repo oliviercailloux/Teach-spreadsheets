@@ -10,12 +10,8 @@ import org.odftoolkit.simple.table.Table;
 /**
  * @author Victor CHEN (Kantoki), Louis Fontaine This class implements
  *         SpreadsheetReader : it allows to read a Spreadsheet document, get the
- *         value of a cell, check if a cell is a diagonal border or not Version
-<<<<<<< HEAD
- *         : 2.0 Last update : 07/05/2018
-=======
- *         : 1.0 Last update : 18/04/2018
->>>>>>> branch 'master' of https://github.com/LosProfesoresDeDauphine/Teach-spreadsheets.git
+ *         value of a cell, check if a cell is a diagonal border or not 
+ *         Version : 2.0 Last update : 07/05/2018
  */
 public class ODSReader implements SpreadsheetReader {
 
