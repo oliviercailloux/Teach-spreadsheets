@@ -1,5 +1,6 @@
 package io.github.oliviercailloux.y2018.teach_spreadsheets.odf;
 
+import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
