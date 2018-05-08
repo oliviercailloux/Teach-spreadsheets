@@ -1,5 +1,6 @@
 package io.github.oliviercailloux.y2018.teach_spreadsheets.odf;
 
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 
@@ -7,8 +8,6 @@ import org.odftoolkit.simple.SpreadsheetDocument;
 import org.odftoolkit.simple.table.Cell;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
-import com.hp.hpl.jena.shared.NotFoundException;
 
 public class TeachSpreadsheetDocument {
 
@@ -30,11 +29,11 @@ public class TeachSpreadsheetDocument {
 	 * @see librarySource https://incubator.apache.org/odftoolkit/
 	 */
 	public static void openODS(String fileName, String tableName, String cellPosition)
-			throws ClassCastException, NotFoundException, IOException, NullPointerException, Exception {
+			throws ClassCastException, FileNotFoundException, IOException, NullPointerException, Exception {
 		try (InputStream inputStream = TeachSpreadsheetDocument.class.getClassLoader().getResourceAsStream(fileName)) {
 			if (inputStream == null) {
 				LOGGER.error("File " + fileName + " not found.");
-				throw new NotFoundException("File is not in the resources folder");
+				throw new FileNotFoundException("File not found");
 			}
 
 			LOGGER.info("File " + fileName + " has been loaded.");
