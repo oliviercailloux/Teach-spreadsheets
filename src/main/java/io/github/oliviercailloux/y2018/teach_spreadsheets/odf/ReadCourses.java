@@ -2,83 +2,119 @@ package io.github.oliviercailloux.y2018.teach_spreadsheets.odf;
 
 import java.io.InputStream;
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Scanner;
 
 import org.odftoolkit.simple.SpreadsheetDocument;
 import org.odftoolkit.simple.table.Cell;
-import org.odftoolkit.simple.table.Column;
-import org.odftoolkit.simple.table.Row;
 import org.odftoolkit.simple.table.Table;
 
 import io.github.oliviercailloux.y2018.teach_spreadsheets.courses.Course;
 
 public class ReadCourses {
 
-	private List<Course> courses;
+	private static String COURSTD = "CMTD";
+	private static String TD = "TD";
 
 	private ODSReader reader;
 
-	public ReadCourses(List<Course> courses, ODSReader reader) {
+	public ReadCourses(ODSReader reader) {
 		super();
-		this.courses = courses;
 		this.reader = reader;
 	}
 
 	public List<Course> readCourses(String cellPosition) {
-		SpreadsheetDocument document = reader.getDocument();
+		List<Course> courses = new ArrayList<>();
+		try (SpreadsheetDocument document = reader.getDocument()) {
 
-		Table tableCourante = reader.getSheet();
-		
-		String yearOfStudy = tableCourante.getTableName();
-		
-		Cell startCell = tableCourante.getCellByPosition(cellPosition);
+			Table tableCourante = reader.getSheet();
 
-		Row startRow = startCell.getTableRow();
+			String yearOfStudy = tableCourante.getTableName();
 
-		int startCellColumnIndex = startCell.getColumnIndex();
-		int startCellRowIndex = startCell.getRowIndex();
+			Cell startCell = tableCourante.getCellByPosition(cellPosition);
 
-		Cell actualCell = startCell;
-		Course course = new Course();
-		
-		for (int i = startCellRowIndex; i < tableCourante.getRowCount(); i++) {
-			for (int j = startCellColumnIndex; j < tableCourante.getColumnCount(); j++) {
-				actualCell = tableCourante.getCellByPosition(j, i);
+			int startCellColumnIndex = startCell.getColumnIndex();
+			int startCellRowIndex = startCell.getRowIndex();
 
-				if (actualCell.getDisplayText().equals("")) {
-					break;
+			Cell actualCell = startCell;
+
+			for (int i = startCellRowIndex; i < tableCourante.getRowCount(); i++) {
+				Course course = new Course();
+
+				for (int j = startCellColumnIndex; j < tableCourante.getColumnCount(); j++) {
+					actualCell = tableCourante.getCellByPosition(j, i);
+
+					if (actualCell.getDisplayText().equals("")) {
+						break;
+					}
+
+					int columnRelativeNumber = j - startCellColumnIndex;
+
+					switch (columnRelativeNumber) {
+					case 0:
+						course.setName(actualCell.getDisplayText());
+						break;
+					case 1:
+						course.setapogeeCode(actualCell.getDisplayText());
+						break;
+					case 2:
+						if (this.reader.isDiagonalBorder(yearOfStudy, cellPosition)) {
+							course.setCM_Hour(0);
+						} else {
+							String hourStr = actualCell.getDisplayText();
+							String[] hourTab = hourStr.split("h");
+							course.setCM_Hour(Double.parseDouble(hourTab[0]));
+						}
+						break;
+
+					case 3:
+						if (this.reader.isDiagonalBorder(yearOfStudy, cellPosition)) {
+							course.setTD_Hour(0);
+							course.setCMTD_Hour(0);
+						} else {
+							String hourStr = actualCell.getDisplayText();
+							String[] hourTab = hourStr.split("h");
+							if (hourStr.contains(COURSTD)) {
+								course.setCMTD_Hour(Double.parseDouble(hourTab[0]));
+							} else if (hourStr.contains(TD)) {
+								course.setTD_Hour(Double.parseDouble(hourTab[0]));
+							}
+						}
+						break;
+					case 4:
+						if (this.reader.isDiagonalBorder(yearOfStudy, cellPosition)) {
+							course.setTP_Hour(0);
+						} else {
+							String hourStr = actualCell.getDisplayText();
+							String[] hourTab = hourStr.split("h");
+							course.setTP_Hour(Double.parseDouble(hourTab[0]));
+						}
+						break;
+					case 5:
+						if (this.reader.isDiagonalBorder(yearOfStudy, cellPosition)) {
+							course.setNbGrpCM(0);
+							course.setNbGrpCMTD(0);
+							course.setNbGrpTD(0);
+							course.setNbGrpTP(0);
+						} else {
+							String hourStr = actualCell.getDisplayText();
+							int hour = Integer.parseInt(hourStr);
+							course.setNbGrpCM(hour);
+							course.setNbGrpCMTD(hour);
+							course.setNbGrpTD(hour);
+							course.setNbGrpTP(hour);
+						}
+					default:
+						break;
+					}
+					if (actualCell.getDisplayText().equals("")) {
+						break;
+					}
 				}
-				
-				int columnRelativeNumber = j-startCellColumnIndex;
-				
-				switch(columnRelativeNumber) {
-				case 0:
-					course.setName(actualCell.getDisplayText());
-					break;
-				case 1:
-					course.setapogeeCode(actualCell.getDisplayText());
-					break;
-				case 2:
-					if(this.reader.isDiagonalBorder(yearOfStudy, cellPosition))
-					break;
-					
-				case 3:
-					
-					break;
-				}
-				case 4:
-					
-					break;
-				default:
-					break;
+				courses.add(course);
 			}
-			if(actualCell.getDisplayText().equals("")) {
-				break;
-			}
+
 		}
-
 		return courses;
 	}
 
@@ -101,9 +137,10 @@ public class ReadCourses {
 
 		List<Course> courses = new ArrayList<>();
 
-		ReadCourses reader = new ReadCourses(courses, odsR);
+		ReadCourses reader = new ReadCourses(odsR);
 		String cellPosition = "B4";
-		reader.readCourses(cellPosition);
+		courses = reader.readCourses(cellPosition);
 
+		System.out.println(courses);
 	}
 }
