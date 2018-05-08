@@ -55,13 +55,6 @@ public class ReadCourses {
 
 		}
 	}
-	
-	public List<Course> readCourses(){
-		SpreadsheetDocument sd = reader.getDocument();
-		
-		
-		return courses;
-	}
 
 	public static void main(String[] args) throws Exception {
 		InputStream is = ReadCourses.class.getClassLoader().getResourceAsStream("Saisie_voeux_dauphine.ods");
