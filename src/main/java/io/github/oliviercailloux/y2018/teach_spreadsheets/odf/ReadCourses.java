@@ -24,6 +24,37 @@ public class ReadCourses {
 		this.courses = courses;
 		this.reader = reader;
 	}
+
+	public List<Course> readCourses(String cellPosition) {
+		Table tableCourante = reader.getSheet();
+		String yearOfStudy = tableCourante.getTableName();
+		Cell startCell = tableCourante.getCellByPosition(cellPosition);
+
+		int startCellColumnIndex = startCell.getColumnIndex();
+		int startCellRowIndex = startCell.getRowIndex();
+
+		SpreadsheetDocument document = reader.getDocument();
+		Iterator<Row> rowIterator = tableCourante.getRowIterator();
+
+		while (rowIterator.hasNext()) {
+			Row row = rowIterator.next();
+			while (!row.getCellByIndex(startCellColumnIndex).equals(startCell)) {
+				System.out.println(row.getCellByIndex(startCellColumnIndex).getDisplayText());
+			}
+		}
+		return courses;
+	}
+
+	public void iterateBeginCells() {
+		Scanner sc = new Scanner(System.in);
+
+		String[] beginCell;
+		String cell = sc.next();
+
+		while (cell != "STOP") {
+
+		}
+	}
 	
 	public List<Course> readCourses(){
 		SpreadsheetDocument sd = reader.getDocument();
