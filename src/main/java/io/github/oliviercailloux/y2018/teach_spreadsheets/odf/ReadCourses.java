@@ -127,17 +127,6 @@ public class ReadCourses {
 		return courses;
 	}
 
-	public void iterateBeginCells() {
-		Scanner sc = new Scanner(System.in);
-
-		String[] beginCell;
-		String cell = sc.next();
-
-		while (cell != "STOP") {
-
-		}
-	}
-
 	public static void main(String[] args) throws Exception {
 		try (InputStream is = ReadCourses.class.getClassLoader().getResourceAsStream("Saisie_voeux_dauphine.ods")) {
 			try (SpreadsheetDocument sd = SpreadsheetDocument.loadDocument(is)) {
