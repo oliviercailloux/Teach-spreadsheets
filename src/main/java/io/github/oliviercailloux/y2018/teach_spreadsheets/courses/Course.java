@@ -4,6 +4,7 @@ import java.util.Objects;
 
 /**
  * @author Tuan Nam Davaux (tuannamdavaux), Samuel COHEN (samuelcohen75)
+ * @contributors Louis Fontaine, Victor CHEN
  * 
  *         <p>
  *         <b> Contract 1 This class makes it possible to store a course : Name,
