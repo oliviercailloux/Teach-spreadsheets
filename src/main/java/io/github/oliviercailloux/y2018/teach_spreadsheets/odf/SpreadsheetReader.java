@@ -1,6 +1,7 @@
 package io.github.oliviercailloux.y2018.teach_spreadsheets.odf;
 
 import org.odftoolkit.simple.SpreadsheetDocument;
+import org.odftoolkit.simple.table.Cell;
 import org.odftoolkit.simple.table.Table;
 
 /**
@@ -18,8 +19,18 @@ public interface SpreadsheetReader {
 
 	/**
 	 * detect if there is a diagonal border in cell at cellPosition
+	 * 
+	 * @param cellPosition
+	 *            for instance : B14
 	 */
 	public boolean isDiagonalBorder(String yearOfStudy, String cellPosition);
+
+	/**
+	 * detect if there is a diagonal border in cell at cellPosition
+	 * 
+	 * @param cell
+	 */
+	public boolean isDiagonalBorder(Cell cell);
 
 	/**
 	 * specify a current sheet
