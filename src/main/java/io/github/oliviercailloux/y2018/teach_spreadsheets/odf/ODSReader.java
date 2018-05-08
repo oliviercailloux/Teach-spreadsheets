@@ -78,4 +78,21 @@ public class ODSReader implements SpreadsheetReader {
 		return false;
 	}
 
+	@Override
+	public boolean isDiagonalBorder(Cell cell) {
+		/*
+		 * There is a problem with ODFTookit, their function getBorder return NULL if
+		 * the border doesn't exists, but if there is a border, It doesn't return the
+		 * description but a NumberFormatException, so the catch fix it
+		 */
+		try {
+			cell.getBorder(CellBordersType.DIAGONALBLTR);
+		} catch (NullPointerException e) {
+			return false;
+		} catch (NumberFormatException z) {
+			return true;
+		}
+		return false;
+	}
+
 }

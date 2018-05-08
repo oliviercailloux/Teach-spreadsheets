@@ -18,6 +18,7 @@ public class Course {
 	private String name = "", apogeeCode = "", yearOfStud = "";
 	private double cmH = 0.0, tdH = 0.0, cmtdH = 0.0, tpH = 0.0;
 	private int cmGrpNb = 0, tdGrpNb = 0, cmtdGrpNb = 0, tpGrpNb = 0;
+	private String teachers = "", supervisor = "";
 
 	public Course(String name, String apogeeCode, String yearOfStud) {
 		this.name = Objects.requireNonNull(name);
@@ -76,7 +77,8 @@ public class Course {
 		return "name : " + this.name + "  code : " + this.apogeeCode + "  year: " + this.yearOfStud + "\nCM hours: "
 				+ this.cmH + "  TD hours: " + this.tdH + "  CMTD hour: " + this.cmtdH + "\nTP hours: " + this.tpH
 				+ "  CM groups number: " + this.cmGrpNb + "  TD groups number: " + this.tdGrpNb
-				+ "  CMTD groups number: " + this.cmtdGrpNb + "\nTP groups number: " + this.tpGrpNb;
+				+ "  CMTD groups number: " + this.cmtdGrpNb + "\nTP groups number: " + this.tpGrpNb + "\nResponsable: "
+				+ this.getSupervisor() + "\nIntervenants: " + this.getTeachers();
 	}
 
 	public String getName() {
@@ -181,6 +183,22 @@ public class Course {
 		if (tpGrpNb < 0)
 			throw new IllegalArgumentException("Negative number of groups !");
 		this.tpGrpNb = tpGrpNb;
+	}
+
+	public String getTeachers() {
+		return teachers;
+	}
+
+	public void setTeachers(String teachers) {
+		this.teachers = teachers;
+	}
+
+	public String getSupervisor() {
+		return supervisor;
+	}
+
+	public void setSupervisor(String supervisor) {
+		this.supervisor = supervisor;
 	}
 
 }
