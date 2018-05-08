@@ -19,17 +19,16 @@ public interface SpreadsheetReader {
 	/**
 	 * detect if there is a diagonal border in cell at cellPosition
 	 */
-	public boolean isDiagonalBorder(SpreadsheetDocument sd, String yearOfStudy, String cellPosition);
-	
+	public boolean isDiagonalBorder(String yearOfStudy, String cellPosition);
+
 	/**
 	 * specify a current sheet
 	 */
 	public void setSheet(Table sheet);
-	
+
 	/**
 	 * specify the input file
 	 */
-	public void setDocument(SpreadsheetDocument  document);
-	
+	public void setDocument(SpreadsheetDocument document);
 
 }

@@ -10,8 +10,8 @@ import org.odftoolkit.simple.table.Table;
 /**
  * @author Victor CHEN (Kantoki), Louis Fontaine This class implements
  *         SpreadsheetReader : it allows to read a Spreadsheet document, get the
- *         value of a cell, check if a cell is a diagonal border or not 
- *         Version : 2.0 Last update : 07/05/2018
+ *         value of a cell, check if a cell is a diagonal border or not Version
+ *         : 2.0 Last update : 07/05/2018
  */
 public class ODSReader implements SpreadsheetReader {
 
@@ -33,14 +33,16 @@ public class ODSReader implements SpreadsheetReader {
 		return sheet;
 	}
 
+	@Override
 	public void setSheet(Table sheet) {
 		this.sheet = sheet;
 	}
-	
+
 	public SpreadsheetDocument getDocument() {
 		return document;
 	}
 
+	@Override
 	public void setDocument(SpreadsheetDocument document) {
 		this.document = Objects.requireNonNull(document);
 	}
@@ -48,7 +50,7 @@ public class ODSReader implements SpreadsheetReader {
 	@Override
 	public String getCellValue(String cellPosition) {
 		Cell cell = sheet.getCellByPosition(cellPosition);
-		boolean isDiagonalBorder = isDiagonalBorder(this.getDocument(), sheet.getTableName(), cellPosition);
+		boolean isDiagonalBorder = isDiagonalBorder(sheet.getTableName(), cellPosition);
 		if (cell == null) {
 			return "";
 		}
@@ -59,8 +61,8 @@ public class ODSReader implements SpreadsheetReader {
 	}
 
 	@Override
-	public boolean isDiagonalBorder(SpreadsheetDocument sd, String yearOfStudy, String cellPosition) {
-		Table sheet = sd.getSheetByName(yearOfStudy);
+	public boolean isDiagonalBorder(String yearOfStudy, String cellPosition) {
+		Table sheet = this.getDocument().getSheetByName(yearOfStudy);
 		/*
 		 * There is a problem with ODFTookit, their function getBorder return NULL if
 		 * the border doesn't exists, but if there is a border, It doesn't return the

@@ -1,5 +1,6 @@
 package io.github.oliviercailloux.y2018.teach_spreadsheets.odf;
 
+import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
@@ -7,6 +8,7 @@ import java.util.Scanner;
 
 import org.odftoolkit.simple.SpreadsheetDocument;
 import org.odftoolkit.simple.table.Cell;
+import org.odftoolkit.simple.table.Column;
 import org.odftoolkit.simple.table.Row;
 import org.odftoolkit.simple.table.Table;
 
@@ -25,22 +27,58 @@ public class ReadCourses {
 	}
 
 	public List<Course> readCourses(String cellPosition) {
+		SpreadsheetDocument document = reader.getDocument();
+
 		Table tableCourante = reader.getSheet();
+		
 		String yearOfStudy = tableCourante.getTableName();
+		
 		Cell startCell = tableCourante.getCellByPosition(cellPosition);
+
+		Row startRow = startCell.getTableRow();
 
 		int startCellColumnIndex = startCell.getColumnIndex();
 		int startCellRowIndex = startCell.getRowIndex();
 
-		SpreadsheetDocument document = reader.getDocument();
-		Iterator<Row> rowIterator = tableCourante.getRowIterator();
+		Cell actualCell = startCell;
+		Course course = new Course();
+		
+		for (int i = startCellRowIndex; i < tableCourante.getRowCount(); i++) {
+			for (int j = startCellColumnIndex; j < tableCourante.getColumnCount(); j++) {
+				actualCell = tableCourante.getCellByPosition(j, i);
 
-		while (rowIterator.hasNext()) {
-			Row row = rowIterator.next();
-			while (!row.getCellByIndex(startCellColumnIndex).equals(startCell)) {
-				System.out.println(row.getCellByIndex(startCellColumnIndex).getDisplayText());
+				if (actualCell.getDisplayText().equals("")) {
+					break;
+				}
+				
+				int columnRelativeNumber = j-startCellColumnIndex;
+				
+				switch(columnRelativeNumber) {
+				case 0:
+					course.setName(actualCell.getDisplayText());
+					break;
+				case 1:
+					course.setapogeeCode(actualCell.getDisplayText());
+					break;
+				case 2:
+					if(this.reader.isDiagonalBorder(yearOfStudy, cellPosition))
+					break;
+					
+				case 3:
+					
+					break;
+				}
+				case 4:
+					
+					break;
+				default:
+					break;
+			}
+			if(actualCell.getDisplayText().equals("")) {
+				break;
 			}
 		}
+
 		return courses;
 	}
 
@@ -66,5 +104,6 @@ public class ReadCourses {
 		ReadCourses reader = new ReadCourses(courses, odsR);
 		String cellPosition = "B4";
 		reader.readCourses(cellPosition);
+
 	}
 }

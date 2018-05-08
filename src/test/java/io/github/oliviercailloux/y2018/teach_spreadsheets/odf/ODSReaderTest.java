@@ -1,7 +1,5 @@
 package io.github.oliviercailloux.y2018.teach_spreadsheets.odf;
 
-import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.InputStream;
 
 import org.junit.Assert;
@@ -22,7 +20,7 @@ public class ODSReaderTest {
 		String yearOfStudy = "L3_Informatique";
 		String cellPosition = "F4";
 
-		Assert.assertTrue(odsR.isDiagonalBorder(sd, yearOfStudy, cellPosition));
+		Assert.assertTrue(odsR.isDiagonalBorder(yearOfStudy, cellPosition));
 
 	}
 
@@ -38,7 +36,7 @@ public class ODSReaderTest {
 		String yearOfStudy = "L3_Informatique";
 		String cellPosition = "I4";
 
-		Assert.assertFalse(odsR.isDiagonalBorder(sd, yearOfStudy, cellPosition));
+		Assert.assertFalse(odsR.isDiagonalBorder(yearOfStudy, cellPosition));
 	}
 
 	/**
