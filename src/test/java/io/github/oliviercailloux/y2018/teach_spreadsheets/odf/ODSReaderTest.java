@@ -5,6 +5,7 @@ import java.io.InputStream;
 import org.junit.Assert;
 import org.junit.Test;
 import org.odftoolkit.simple.SpreadsheetDocument;
+import org.odftoolkit.simple.table.Cell;
 
 public class ODSReaderTest {
 
@@ -40,7 +41,7 @@ public class ODSReaderTest {
 	}
 
 	/**
-	 * Test to check we can retrieve a cell value
+	 * /** Test to check we can retrieve a cell value
 	 */
 	@Test
 	public void testCellValueOK() throws Exception {
