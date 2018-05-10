@@ -13,7 +13,9 @@ import io.github.oliviercailloux.y2018.teach_spreadsheets.courses.Course;
 public class ReadCourses {
 
 	private static String COURSTD = "CMTD";
+	private static String COURSTP = "CMTP";
 	private static String TD = "TD";
+	private static String TP = "TP";
 	private static int NBATTRIBUTE = 8;
 	private ODSReader reader;
 
@@ -90,10 +92,16 @@ public class ReadCourses {
 				case 6:
 					if (this.reader.isDiagonalBorder(actualCell)) {
 						course.setTP_Hour(0);
+						course.setCMTP_Hour(0);
 					} else {
 						String hourStr = cellText;
 						String[] hourTab = hourStr.split("h");
-						course.setTP_Hour(Double.parseDouble(hourTab[0]));
+						if (hourStr.contains(COURSTP)) {
+							course.setCMTP_Hour(Double.parseDouble(hourTab[0]));
+						} else if (hourStr.contains(TP)) {
+							course.setTP_Hour(Double.parseDouble(hourTab[0]));
+						}
+						
 					}
 					break;
 				case 7:

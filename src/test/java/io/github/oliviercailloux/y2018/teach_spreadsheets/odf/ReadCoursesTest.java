@@ -62,6 +62,7 @@ public class ReadCoursesTest {
 		c2.setTD_Hour(0);
 		c2.setCMTD_Hour(15);
 		c2.setTP_Hour(0);
+		c2.setCMTP_Hour(0);
 		c2.setNbGrpCM(0);
 		c2.setNbGrpCMTD(0);
 		c2.setNbGrpTD(0);
