@@ -1,5 +1,6 @@
 package io.github.oliviercailloux.y2018.teach_spreadsheets.courses;
 
+import java.util.ArrayList;
 import java.util.Objects;
 
 /**
@@ -19,7 +20,8 @@ public class Course {
 	private String name = "", apogeeCode = "", yearOfStud = "";
 	private double cmH = 0.0, tdH = 0.0, cmtdH = 0.0, tpH = 0.0, cmtpH = 0.0;
 	private int cmGrpNb = 0, tdGrpNb = 0, cmtdGrpNb = 0, tpGrpNb = 0;
-	private String teachers = "", supervisor = "";
+	private ArrayList<String> teachers = new ArrayList<>();
+	private String supervisor = "";
 
 	public Course(String name, String apogeeCode, String yearOfStud) {
 		this.name = Objects.requireNonNull(name);
@@ -35,51 +37,55 @@ public class Course {
 		assert data != null;
 
 		switch (index) {
-		case 0:
-			setName(data);
-			break;
-		case 1:
-			setapogeeCode(data);
-			break;
-		case 2:
-			setYearOfStud(data);
-			break;
-		case 3:
-			setCM_Hour(Double.parseDouble(data));
-			break;
-		case 4:
-			setTD_Hour(Double.parseDouble(data));
-			break;
-		case 5:
-			setCMTD_Hour(Double.parseDouble(data));
-			break;
-		case 6:
-			setTP_Hour(Double.parseDouble(data));
-			break;
-		case 7:
-			setNbGrpCM(Integer.parseInt(data));
-			break;
-		case 8:
-			setNbGrpTD(Integer.parseInt(data));
-			break;
-		case 9:
-			setNbGrpCMTD(Integer.parseInt(data));
-			break;
-		case 10:
-			setNbGrpTP(Integer.parseInt(data));
-			break;
-		default:
-			throw new IllegalArgumentException();
+			case 0 :
+				setName(data);
+				break;
+			case 1 :
+				setapogeeCode(data);
+				break;
+			case 2 :
+				setYearOfStud(data);
+				break;
+			case 3 :
+				setCM_Hour(Double.parseDouble(data));
+				break;
+			case 4 :
+				setTD_Hour(Double.parseDouble(data));
+				break;
+			case 5 :
+				setCMTD_Hour(Double.parseDouble(data));
+				break;
+			case 6 :
+				setTP_Hour(Double.parseDouble(data));
+				break;
+			case 7 :
+				setNbGrpCM(Integer.parseInt(data));
+				break;
+			case 8 :
+				setNbGrpTD(Integer.parseInt(data));
+				break;
+			case 9 :
+				setNbGrpCMTD(Integer.parseInt(data));
+				break;
+			case 10 :
+				setNbGrpTP(Integer.parseInt(data));
+				break;
+			default :
+				throw new IllegalArgumentException();
 		}
 	}
 
 	@Override
 	public String toString() {
-		return "name : " + this.name + "  code : " + this.apogeeCode + "  year: " + this.yearOfStud + "\nCM hours: "
-				+ this.cmH + "  TD hours: " + this.tdH + "  CMTD hour: " + this.cmtdH + "\nTP hours: " + this.tpH
-				+ "  CM groups number: " + this.cmGrpNb + "  TD groups number: " + this.tdGrpNb
-				+ "  CMTD groups number: " + this.cmtdGrpNb + "\nTP groups number: " + this.tpGrpNb + "\nResponsable: "
-				+ this.getSupervisor() + "\nIntervenants: " + this.getTeachers();
+		return "name : " + this.name + "  code : " + this.apogeeCode
+				+ "  year: " + this.yearOfStud + "\nCM hours: " + this.cmH
+				+ "  TD hours: " + this.tdH + "  CMTD hour: " + this.cmtdH
+				+ "\nTP hours: " + this.tpH + "  CM groups number: "
+				+ this.cmGrpNb + "  TD groups number: " + this.tdGrpNb
+				+ "  CMTD groups number: " + this.cmtdGrpNb
+				+ "\nTP groups number: " + this.tpGrpNb + "\nResponsable: "
+				+ this.getSupervisor() + "\nIntervenants: "
+				+ this.getTeachers();
 	}
 
 	public String getName() {
@@ -196,11 +202,11 @@ public class Course {
 		this.tpGrpNb = tpGrpNb;
 	}
 
-	public String getTeachers() {
+	public ArrayList<String> getTeachers() {
 		return teachers;
 	}
 
-	public void setTeachers(String teachers) {
+	public void setTeachers(ArrayList<String> teachers) {
 		this.teachers = teachers;
 	}
 
