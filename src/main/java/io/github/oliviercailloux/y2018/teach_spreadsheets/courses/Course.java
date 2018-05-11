@@ -1,6 +1,5 @@
 package io.github.oliviercailloux.y2018.teach_spreadsheets.courses;
 
-import java.util.ArrayList;
 import java.util.Objects;
 
 /**
@@ -20,8 +19,7 @@ public class Course {
 	private String name = "", apogeeCode = "", yearOfStud = "";
 	private double cmH = 0.0, tdH = 0.0, cmtdH = 0.0, tpH = 0.0, cmtpH = 0.0;
 	private int cmGrpNb = 0, tdGrpNb = 0, cmtdGrpNb = 0, tpGrpNb = 0;
-	private ArrayList<String> teachers = new ArrayList<>();
-	private String supervisor = "";
+	private String teachers = "", supervisor = "";
 
 	public Course(String name, String apogeeCode, String yearOfStud) {
 		this.name = Objects.requireNonNull(name);
@@ -202,11 +200,11 @@ public class Course {
 		this.tpGrpNb = tpGrpNb;
 	}
 
-	public ArrayList<String> getTeachers() {
+	public String getTeachers() {
 		return teachers;
 	}
 
-	public void setTeachers(ArrayList<String> teachers) {
+	public void setTeachers(String teachers) {
 		this.teachers = teachers;
 	}
 
