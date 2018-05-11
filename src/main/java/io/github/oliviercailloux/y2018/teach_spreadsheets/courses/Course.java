@@ -18,7 +18,7 @@ import java.util.Objects;
 public class Course {
 	private String name = "", apogeeCode = "", yearOfStud = "";
 	private double cmH = 0.0, tdH = 0.0, cmtdH = 0.0, tpH = 0.0, cmtpH = 0.0;
-	private int cmGrpNb = 0, tdGrpNb = 0, cmtdGrpNb = 0, tpGrpNb = 0;
+	private String grpsNumber = "";
 	private String teachers = "", supervisor = "";
 
 	public Course(String name, String apogeeCode, String yearOfStud) {
@@ -57,16 +57,7 @@ public class Course {
 				setTP_Hour(Double.parseDouble(data));
 				break;
 			case 7 :
-				setNbGrpCM(Integer.parseInt(data));
-				break;
-			case 8 :
-				setNbGrpTD(Integer.parseInt(data));
-				break;
-			case 9 :
-				setNbGrpCMTD(Integer.parseInt(data));
-				break;
-			case 10 :
-				setNbGrpTP(Integer.parseInt(data));
+				setgrpsNumber(data);
 				break;
 			default :
 				throw new IllegalArgumentException();
@@ -78,12 +69,9 @@ public class Course {
 		return "name : " + this.name + "  code : " + this.apogeeCode
 				+ "  year: " + this.yearOfStud + "\nCM hours: " + this.cmH
 				+ "  TD hours: " + this.tdH + "  CMTD hour: " + this.cmtdH
-				+ "\nTP hours: " + this.tpH + "  CM groups number: "
-				+ this.cmGrpNb + "  TD groups number: " + this.tdGrpNb
-				+ "  CMTD groups number: " + this.cmtdGrpNb
-				+ "\nTP groups number: " + this.tpGrpNb + "\nResponsable: "
-				+ this.getSupervisor() + "\nIntervenants: "
-				+ this.getTeachers();
+				+ "\nTP hours: " + this.tpH + "  Groups number: "
+				+ this.grpsNumber + "\nResponsable: " + this.getSupervisor()
+				+ "\nIntervenants: " + this.getTeachers();
 	}
 
 	public String getName() {
@@ -160,44 +148,12 @@ public class Course {
 		this.cmtpH = cmtpH;
 	}
 
-	public int getNbGrpCM() {
-		return cmGrpNb;
+	public String getgrpsNumber() {
+		return this.grpsNumber;
 	}
 
-	public void setNbGrpCM(int cmGrpNb) {
-		if (cmGrpNb < 0)
-			throw new IllegalArgumentException("Negative number of groups !");
-		this.cmGrpNb = cmGrpNb;
-	}
-
-	public int getNbGrpTD() {
-		return tdGrpNb;
-	}
-
-	public void setNbGrpTD(int tdGrpNb) {
-		if (tdGrpNb < 0)
-			throw new IllegalArgumentException("Negative number of groups !");
-		this.tdGrpNb = tdGrpNb;
-	}
-
-	public int getNbGrCMTD() {
-		return cmtdGrpNb;
-	}
-
-	public void setNbGrpCMTD(int cmtdGrpNb) {
-		if (cmtdGrpNb < 0)
-			throw new IllegalArgumentException("Negative number of groups !");
-		this.cmtdGrpNb = cmtdGrpNb;
-	}
-
-	public int getNbGrpTP() {
-		return tpGrpNb;
-	}
-
-	public void setNbGrpTP(int tpGrpNb) {
-		if (tpGrpNb < 0)
-			throw new IllegalArgumentException("Negative number of groups !");
-		this.tpGrpNb = tpGrpNb;
+	public void setgrpsNumber(String grpsNumber) {
+		this.grpsNumber = grpsNumber;
 	}
 
 	public String getTeachers() {
