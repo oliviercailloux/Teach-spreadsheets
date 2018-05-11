@@ -29,10 +29,7 @@ public class CsvFileWriterTest {
 		course.setTD_Hour(4);
 		course.setCMTD_Hour(8);
 		course.setTP_Hour(8);
-		course.setNbGrpCM(8);
-		course.setNbGrpTD(2);
-		course.setNbGrpCMTD(7);
-		course.setNbGrpTP(5);
+		course.setGrpsNumber("8 CM");
 
 		expected.add(course);
 
@@ -69,8 +66,8 @@ public class CsvFileWriterTest {
 	@After
 	public void deleteTestFile() {
 		File f = new File("src/test/resources/oneCourseWritten.csv");
-		if(f.exists())
+		if (f.exists())
 			f.delete();
 	}
-	
+
 }

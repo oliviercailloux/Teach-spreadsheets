@@ -19,28 +19,34 @@ import io.github.oliviercailloux.y2018.teach_spreadsheets.courses.Course;
  * @see librarySource https://commons.apache.org/proper/commons-csv/
  */
 public class CsvFileWriter {
-	
-	private final static Logger LOGGER = LoggerFactory.getLogger(CsvFileWriter.class);
+
+	private final static Logger LOGGER = LoggerFactory
+			.getLogger(CsvFileWriter.class);
 
 	// Delimiter used in CSV file
 	private static final String NEW_LINE_SEPARATOR = "\n";
 
 	// CSV file header
-	private static final Object[] FILE_HEADER = { "Name", "Apogee Code", "Year of Study", "CM hours", "TD hours",
-			"CMTD hours", "TP hours", "CM groups number", "TD groups number", "CMTD groups number",
-			"TP groups number" };
+	private static final Object[] FILE_HEADER = {"Name", "Apogee Code",
+			"Year of Study", "CM hours", "TD hours", "CMTD hours", "TP hours",
+			"CM groups number", "TD groups number", "CMTD groups number",
+			"TP groups number"};
 
-	public static void writeInCSV(List<Course> courses, String fileName) throws IOException {
+	public static void writeInCSV(List<Course> courses, String fileName)
+			throws IOException {
 		String fileLocation = System.getProperty("user.dir");
 
 		// Create the CSVFormat object with "\n" as a record delimiter
-		CSVFormat csvFileFormat = CSVFormat.EXCEL.withRecordSeparator(NEW_LINE_SEPARATOR);
+		CSVFormat csvFileFormat = CSVFormat.EXCEL
+				.withRecordSeparator(NEW_LINE_SEPARATOR);
 		// initialize FileWriter object
 		try (FileWriter fileWriter = new FileWriter(fileName)) {
 			LOGGER.info("File " + fileName + " is ready to be writen");
 			// initialize CSVPrinter object
-			try (CSVPrinter csvFilePrinter = new CSVPrinter(fileWriter, csvFileFormat)) {
-				LOGGER.info("File " + fileName + " is ready to be writen with CSVPrinter");
+			try (CSVPrinter csvFilePrinter = new CSVPrinter(fileWriter,
+					csvFileFormat)) {
+				LOGGER.info("File " + fileName
+						+ " is ready to be writen with CSVPrinter");
 				// Create CSV file header
 				csvFilePrinter.printRecord(FILE_HEADER);
 
@@ -54,15 +60,13 @@ public class CsvFileWriter {
 					coursesRecord.add(String.valueOf(c.getTD_Hour()));
 					coursesRecord.add(String.valueOf(c.getCMTD_Hour()));
 					coursesRecord.add(String.valueOf(c.getTP_Hour()));
-					coursesRecord.add(String.valueOf(c.getNbGrpCM()));
-					coursesRecord.add(String.valueOf(c.getNbGrpTD()));
-					coursesRecord.add(String.valueOf(c.getNbGrCMTD()));
-					coursesRecord.add(String.valueOf(c.getNbGrpTP()));
+					coursesRecord.add(c.getGrpsNumber());
 
 					csvFilePrinter.printRecord(coursesRecord);
 				}
-				LOGGER.info("\nYour courses have been successfully exported into a CSV File named " + fileName + " in " + fileLocation + " !");
-				
+				LOGGER.info(
+						"\nYour courses have been successfully exported into a CSV File named "
+								+ fileName + " in " + fileLocation + " !");
 
 			}
 		}

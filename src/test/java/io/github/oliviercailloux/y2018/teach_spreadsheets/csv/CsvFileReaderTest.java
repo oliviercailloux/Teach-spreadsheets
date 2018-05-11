@@ -28,10 +28,7 @@ public class CsvFileReaderTest {
 		course.setTD_Hour(4);
 		course.setCMTD_Hour(8);
 		course.setTP_Hour(8);
-		course.setNbGrpCM(8);
-		course.setNbGrpTD(2);
-		course.setNbGrpCMTD(7);
-		course.setNbGrpTP(5);
+		course.setGrpsNumber("8 CM");
 
 		expected.add(course);
 
@@ -50,7 +47,8 @@ public class CsvFileReaderTest {
 		} catch (IOException e) {
 			Assert.assertTrue(false);
 		}
-		Assertions.assertThat(actual.get(0)).isEqualToComparingFieldByField(expected.get(0));
+		Assertions.assertThat(actual.get(0))
+				.isEqualToComparingFieldByField(expected.get(0));
 	}
 
 }

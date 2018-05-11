@@ -57,7 +57,7 @@ public class Course {
 				setTP_Hour(Double.parseDouble(data));
 				break;
 			case 7 :
-				setgrpsNumber(data);
+				setGrpsNumber(data);
 				break;
 			default :
 				throw new IllegalArgumentException();
@@ -148,11 +148,11 @@ public class Course {
 		this.cmtpH = cmtpH;
 	}
 
-	public String getgrpsNumber() {
+	public String getGrpsNumber() {
 		return this.grpsNumber;
 	}
 
-	public void setgrpsNumber(String grpsNumber) {
+	public void setGrpsNumber(String grpsNumber) {
 		this.grpsNumber = grpsNumber;
 	}
 
