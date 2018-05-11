@@ -4,19 +4,22 @@ import java.util.Objects;
 
 /**
  * @author Tuan Nam Davaux (tuannamdavaux), Samuel COHEN (samuelcohen75)
+ * @contributors Louis Fontaine, Victor CHEN
  * 
- *         <p>
- *         <b> Contract 1 This class makes it possible to store a course : Name,
- *         Peak Code, CM hours, TD hours, CMTD hours, TP hours, CM groups / TD
- *         hours / etc., and the year of studies in which the course is inserted
- *         package io.github.oliviercailloux.y2018.teach_spreadsheets.java; (L3
- *         Computing, M1 Mathematics, L3 learning,...) </b>
- *         </p>
+ *               <p>
+ *               <b> Contract 1 This class makes it possible to store a course :
+ *               Name, Peak Code, CM hours, TD hours, CMTD hours, TP hours, CM
+ *               groups / TD hours / etc., and the year of studies in which the
+ *               course is inserted package
+ *               io.github.oliviercailloux.y2018.teach_spreadsheets.java; (L3
+ *               Computing, M1 Mathematics, L3 learning,...) </b>
+ *               </p>
  */
 public class Course {
 	private String name = "", apogeeCode = "", yearOfStud = "";
-	private double cmH = 0.0, tdH = 0.0, cmtdH = 0.0, tpH = 0.0;
+	private double cmH = 0.0, tdH = 0.0, cmtdH = 0.0, tpH = 0.0, cmtpH = 0.0;
 	private int cmGrpNb = 0, tdGrpNb = 0, cmtdGrpNb = 0, tpGrpNb = 0;
+	private String teachers = "", supervisor = "";
 
 	public Course(String name, String apogeeCode, String yearOfStud) {
 		this.name = Objects.requireNonNull(name);
@@ -75,7 +78,8 @@ public class Course {
 		return "name : " + this.name + "  code : " + this.apogeeCode + "  year: " + this.yearOfStud + "\nCM hours: "
 				+ this.cmH + "  TD hours: " + this.tdH + "  CMTD hour: " + this.cmtdH + "\nTP hours: " + this.tpH
 				+ "  CM groups number: " + this.cmGrpNb + "  TD groups number: " + this.tdGrpNb
-				+ "  CMTD groups number: " + this.cmtdGrpNb + "\nTP groups number: " + this.tpGrpNb;
+				+ "  CMTD groups number: " + this.cmtdGrpNb + "\nTP groups number: " + this.tpGrpNb + "\nResponsable: "
+				+ this.getSupervisor() + "\nIntervenants: " + this.getTeachers();
 	}
 
 	public String getName() {
@@ -142,6 +146,16 @@ public class Course {
 		this.tpH = tpH;
 	}
 
+	public double getCMTP_Hour() {
+		return cmtpH;
+	}
+
+	public void setCMTP_Hour(double cmtpH) {
+		if (cmtpH < 0)
+			throw new IllegalArgumentException("Negative number of hours !");
+		this.cmtpH = cmtpH;
+	}
+
 	public int getNbGrpCM() {
 		return cmGrpNb;
 	}
@@ -180,6 +194,22 @@ public class Course {
 		if (tpGrpNb < 0)
 			throw new IllegalArgumentException("Negative number of groups !");
 		this.tpGrpNb = tpGrpNb;
+	}
+
+	public String getTeachers() {
+		return teachers;
+	}
+
+	public void setTeachers(String teachers) {
+		this.teachers = teachers;
+	}
+
+	public String getSupervisor() {
+		return supervisor;
+	}
+
+	public void setSupervisor(String supervisor) {
+		this.supervisor = supervisor;
 	}
 
 }
