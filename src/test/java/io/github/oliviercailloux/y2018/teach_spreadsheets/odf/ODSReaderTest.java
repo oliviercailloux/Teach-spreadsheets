@@ -5,7 +5,6 @@ import java.io.InputStream;
 import org.junit.Assert;
 import org.junit.Test;
 import org.odftoolkit.simple.SpreadsheetDocument;
-import org.odftoolkit.simple.table.Cell;
 
 public class ODSReaderTest {
 
@@ -14,15 +13,17 @@ public class ODSReaderTest {
 	 */
 	@Test
 	public void testCellIsDiagonalBorder() throws Exception {
-		InputStream is = ODSReaderTest.class.getClassLoader().getResourceAsStream("Saisie_voeux_dauphine.ods");
-		SpreadsheetDocument sd = SpreadsheetDocument.loadDocument(is);
-		ODSReader odsR = new ODSReader(sd);
+		try (InputStream is = ODSReaderTest.class.getClassLoader().getResourceAsStream("Saisie_voeux_dauphine.ods")) {
+			try (SpreadsheetDocument sd = SpreadsheetDocument.loadDocument(is)) {
+				ODSReader odsR = new ODSReader(sd);
 
-		String yearOfStudy = "L3_Informatique";
-		String cellPosition = "F4";
+				String yearOfStudy = "L3_Informatique";
+				String cellPosition = "F4";
 
-		Assert.assertTrue(odsR.isDiagonalBorder(yearOfStudy, cellPosition));
+				Assert.assertTrue(odsR.isDiagonalBorder(yearOfStudy, cellPosition));
 
+			}
+		}
 	}
 
 	/**
@@ -30,14 +31,16 @@ public class ODSReaderTest {
 	 */
 	@Test
 	public void testCellIsNotDiagonalBorder() throws Exception {
-		InputStream is = ODSReaderTest.class.getClassLoader().getResourceAsStream("Saisie_voeux_dauphine.ods");
-		SpreadsheetDocument sd = SpreadsheetDocument.loadDocument(is);
-		ODSReader odsR = new ODSReader(sd);
+		try (InputStream is = ODSReaderTest.class.getClassLoader().getResourceAsStream("Saisie_voeux_dauphine.ods")) {
+			try (SpreadsheetDocument sd = SpreadsheetDocument.loadDocument(is)) {
+				ODSReader odsR = new ODSReader(sd);
 
-		String yearOfStudy = "L3_Informatique";
-		String cellPosition = "I4";
+				String yearOfStudy = "L3_Informatique";
+				String cellPosition = "I4";
 
-		Assert.assertFalse(odsR.isDiagonalBorder(yearOfStudy, cellPosition));
+				Assert.assertFalse(odsR.isDiagonalBorder(yearOfStudy, cellPosition));
+			}
+		}
 	}
 
 	/**
@@ -45,14 +48,16 @@ public class ODSReaderTest {
 	 */
 	@Test
 	public void testCellValueOK() throws Exception {
-		InputStream is = ODSReaderTest.class.getClassLoader().getResourceAsStream("Saisie_voeux_dauphine.ods");
-		SpreadsheetDocument sd = SpreadsheetDocument.loadDocument(is);
-		String yearOfStudy = "L3_Informatique";
-		ODSReader odsR = new ODSReader(sd, yearOfStudy);
+		try (InputStream is = ODSReaderTest.class.getClassLoader().getResourceAsStream("Saisie_voeux_dauphine.ods")) {
+			try (SpreadsheetDocument sd = SpreadsheetDocument.loadDocument(is)) {
+				String yearOfStudy = "L3_Informatique";
+				ODSReader odsR = new ODSReader(sd, yearOfStudy);
 
-		String cellPosition = "I5";
+				String cellPosition = "I5";
 
-		Assert.assertEquals("2", odsR.getCellValue(cellPosition));
+				Assert.assertEquals("2", odsR.getCellValue(cellPosition));
+			}
+		}
 	}
 
 	/**
@@ -60,14 +65,16 @@ public class ODSReaderTest {
 	 */
 	@Test
 	public void testCellValueNotOK() throws Exception {
-		InputStream is = ODSReaderTest.class.getClassLoader().getResourceAsStream("Saisie_voeux_dauphine.ods");
-		SpreadsheetDocument sd = SpreadsheetDocument.loadDocument(is);
-		String yearOfStudy = "L3_Informatique";
-		ODSReader odsR = new ODSReader(sd, yearOfStudy);
+		try (InputStream is = ODSReaderTest.class.getClassLoader().getResourceAsStream("Saisie_voeux_dauphine.ods")) {
+			try (SpreadsheetDocument sd = SpreadsheetDocument.loadDocument(is)) {
+				String yearOfStudy = "L3_Informatique";
+				ODSReader odsR = new ODSReader(sd, yearOfStudy);
 
-		String cellPosition = "I4";
+				String cellPosition = "I4";
 
-		Assert.assertEquals("", odsR.getCellValue(cellPosition));
+				Assert.assertEquals("", odsR.getCellValue(cellPosition));
+			}
+		}
 	}
 
 }

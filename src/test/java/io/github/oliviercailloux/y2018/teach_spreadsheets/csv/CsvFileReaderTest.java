@@ -28,10 +28,7 @@ public class CsvFileReaderTest {
 		course.setTD_Hour(4);
 		course.setCMTD_Hour(8);
 		course.setTP_Hour(8);
-		course.setNbGrpCM(8);
-		course.setNbGrpTD(2);
-		course.setNbGrpCMTD(7);
-		course.setNbGrpTP(5);
+		course.setGrpNbr("8");
 
 		expected.add(course);
 
