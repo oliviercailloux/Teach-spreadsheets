@@ -38,8 +38,8 @@ public class CsvFileWriterTest {
 
 		CsvFileReader.readCourseCSVfile(file, actual);
 
-		// assertThat().equals() ne fonctionne pas car ce ne sont pas les mêmes
-		// instances de classe
+		// assertThat().equals() doesn't work because they are not from the same
+		// instance of class
 		Assertions.assertThat(actual.get(0)).isEqualToComparingFieldByField(expected.get(0));
 	}
 
