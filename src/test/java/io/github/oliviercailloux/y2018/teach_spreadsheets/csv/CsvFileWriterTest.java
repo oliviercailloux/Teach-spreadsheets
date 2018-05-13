@@ -29,7 +29,7 @@ public class CsvFileWriterTest {
 		course.setGrpNbr("8");
 		expected.add(course);
 
-		String filename = "src/test/resources/oneCourseWritten.csv";
+		String filename = "src/test/resources/io/github/oliviercailloux/y2018/teach_spreadsheets/oneCourseWritten.csv";
 
 		File file = new File(filename);
 		List<Course> actual = new ArrayList<>();
@@ -45,7 +45,7 @@ public class CsvFileWriterTest {
 
 	@After
 	public void deleteTestFile() {
-		File f = new File("src/test/resources/oneCourseWritten.csv");
+		File f = new File("src/test/resources/io/github/oliviercailloux/y2018/teach_spreadsheets/oneCourseWritten.csv");
 		if (f.exists())
 			f.delete();
 	}

@@ -11,7 +11,7 @@ public class TeachSpreadsheetDocumentTest {
 	@SuppressWarnings("unused")
 	@Test
 	public void testOpenODSWhenAllExists() {
-		String fileName = "Saisie_voeux_dauphine.ods";
+		String fileName = "io/github/oliviercailloux/y2018/teach_spreadsheets/Saisie_voeux_dauphine.ods";
 		String tableName = "L3_Informatique";
 		String cellPosition = "B4";
 
@@ -55,7 +55,7 @@ public class TeachSpreadsheetDocumentTest {
 	@SuppressWarnings("unused")
 	@Test
 	public void testOpenODSWhenTableDoesNotExists() {
-		String fileName = "Saisie_voeux_dauphine.ods";
+		String fileName = "io/github/oliviercailloux/y2018/teach_spreadsheets/Saisie_voeux_dauphine.ods";
 		String tableName = "notExists";
 		String cellPosition = "B4";
 

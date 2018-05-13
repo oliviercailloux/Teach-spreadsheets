@@ -10,7 +10,7 @@ public class MainResource2 {
 	public static void main(String[] args)
 			throws FileNotFoundException, ClassCastException, NullPointerException, IOException, Exception {
 
-		String fileName = "Saisie_voeux_dauphine.ods";
+		String fileName = "io/github/oliviercailloux/y2018/teach_spreadsheets/Saisie_voeux_dauphine.ods";
 		String tableName = "L3_Informatique";
 		String cellPosition = "B4";
 

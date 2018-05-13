@@ -17,7 +17,8 @@ public class ReadCoursesTest {
 	 */
 	@Test
 	public void testReadCourses() throws Exception {
-		try (InputStream is = ODSReaderTest.class.getClassLoader().getResourceAsStream("Saisie_voeux_dauphine.ods")) {
+		try (InputStream is = ODSReaderTest.class.getClassLoader()
+				.getResourceAsStream("io/github/oliviercailloux/y2018/teach_spreadsheets/Saisie_voeux_dauphine.ods")) {
 			try (SpreadsheetDocument sd = SpreadsheetDocument.loadDocument(is)) {
 				String yearOfStudy = "L3_Informatique";
 				ODSReader odsR = new ODSReader(sd, yearOfStudy);
@@ -37,7 +38,8 @@ public class ReadCoursesTest {
 	 */
 	@Test
 	public void testSameCourseSheetAndReadCourses() throws Exception {
-		try (InputStream is = ODSReaderTest.class.getClassLoader().getResourceAsStream("Saisie_voeux_dauphine.ods")) {
+		try (InputStream is = ODSReaderTest.class.getClassLoader()
+				.getResourceAsStream("io/github/oliviercailloux/y2018/teach_spreadsheets/Saisie_voeux_dauphine.ods")) {
 			try (SpreadsheetDocument sd = SpreadsheetDocument.loadDocument(is)) {
 				String yearOfStudy = "L3_Informatique";
 				ODSReader odsR = new ODSReader(sd, yearOfStudy);
