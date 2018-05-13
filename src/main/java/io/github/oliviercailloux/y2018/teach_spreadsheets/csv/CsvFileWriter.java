@@ -19,7 +19,7 @@ import io.github.oliviercailloux.y2018.teach_spreadsheets.courses.Course;
  * @see librarySource https://commons.apache.org/proper/commons-csv/
  */
 public class CsvFileWriter {
-	
+
 	private final static Logger LOGGER = LoggerFactory.getLogger(CsvFileWriter.class);
 
 	// Delimiter used in CSV file
@@ -54,15 +54,12 @@ public class CsvFileWriter {
 					coursesRecord.add(String.valueOf(c.getTD_Hour()));
 					coursesRecord.add(String.valueOf(c.getCMTD_Hour()));
 					coursesRecord.add(String.valueOf(c.getTP_Hour()));
-					coursesRecord.add(String.valueOf(c.getNbGrpCM()));
-					coursesRecord.add(String.valueOf(c.getNbGrpTD()));
-					coursesRecord.add(String.valueOf(c.getNbGrCMTD()));
-					coursesRecord.add(String.valueOf(c.getNbGrpTP()));
+					coursesRecord.add(c.getGrpNbr());
 
 					csvFilePrinter.printRecord(coursesRecord);
 				}
-				LOGGER.info("\nYour courses have been successfully exported into a CSV File named " + fileName + " in " + fileLocation + " !");
-				
+				LOGGER.info("\nYour courses have been successfully exported into a CSV File named " + fileName + " in "
+						+ fileLocation + " !");
 
 			}
 		}
