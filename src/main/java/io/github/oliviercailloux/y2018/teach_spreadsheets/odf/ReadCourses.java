@@ -191,6 +191,13 @@ public class ReadCourses {
 		return courses;
 	}
 
+	/**
+	 * This method returns a List of {@link Course} from the ODS file read by the
+	 * {@link ODSReader} in the attribute.
+	 * 
+	 * This method reads all the Courses from all the sheets of the ODF document
+	 *
+	 */
 	@SuppressWarnings("resource")
 	public List<Course> readCourses() {
 		List<Course> courses = new ArrayList<>();
