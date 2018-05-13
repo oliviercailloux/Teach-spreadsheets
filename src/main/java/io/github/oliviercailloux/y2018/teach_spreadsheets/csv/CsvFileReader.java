@@ -1,5 +1,6 @@
 package io.github.oliviercailloux.y2018.teach_spreadsheets.csv;
 
+import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
@@ -35,14 +36,14 @@ public class CsvFileReader {
 	 *            a list of Course to set with the CSV file
 	 * 
 	 */
-	public static void readCourseCSVfile(String filename, List<Course> courses)
+	public static void readCourseCSVfile(File file, List<Course> courses)
 			throws FileNotFoundException, IOException, NumberFormatException, IllegalArgumentException {
 
-		try (FileReader filereader = new FileReader(filename)) {
-			LOGGER.info("File " + filename + " has been correctly read");
-			try (CSVParser parser = CSVParser.parse(filereader, CSVFormat.EXCEL)) {
-
-				LOGGER.info("File " + filename + " has been correctly parsed");
+		try (FileReader fileReader = new FileReader(file)) {
+			String fileName = file.getName();
+			LOGGER.info("File " + fileName + " has been correctly read");
+			try (CSVParser parser = CSVParser.parse(fileReader, CSVFormat.EXCEL)) {
+				LOGGER.info("File " + fileName + " has been correctly parsed");
 
 				boolean line = true;
 				Course c = new Course();
@@ -60,8 +61,9 @@ public class CsvFileReader {
 						courses.add(c);
 					}
 				}
-				LOGGER.info("The Course list has been updated successfully with the CSV file : " + filename);
+				LOGGER.info("The Course list has been updated successfully with the CSV file : " + fileName);
 			}
+
 		}
 	}
 

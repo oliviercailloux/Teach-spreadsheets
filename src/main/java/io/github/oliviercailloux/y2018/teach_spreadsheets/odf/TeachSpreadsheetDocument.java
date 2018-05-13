@@ -19,7 +19,7 @@ public class TeachSpreadsheetDocument {
 	 * ODFToolKit from Apache.
 	 * 
 	 * @param fileName
-	 *            file should be in the resources folder
+	 *            the name of the file
 	 * @param cellPosition
 	 *            the name of the cell that we want to display
 	 * @param tableName

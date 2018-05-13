@@ -1,5 +1,6 @@
 package io.github.oliviercailloux.y2018.teach_spreadsheets.csv;
 
+import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -27,16 +28,16 @@ public class CsvFileWriter {
 
 	// CSV file header
 	private static final Object[] FILE_HEADER = { "Name", "Apogee Code", "Year of Study", "CM hours", "TD hours",
-			"CMTD hours", "TP hours", "CM groups number", "TD groups number", "CMTD groups number",
-			"TP groups number" };
+			"CMTD hours", "TP hours", "Groups number" };
 
-	public static void writeInCSV(List<Course> courses, String fileName) throws IOException {
+	public static void writeInCSV(List<Course> courses, File file) throws IOException {
 		String fileLocation = System.getProperty("user.dir");
 
+		String fileName = file.getName();
 		// Create the CSVFormat object with "\n" as a record delimiter
 		CSVFormat csvFileFormat = CSVFormat.EXCEL.withRecordSeparator(NEW_LINE_SEPARATOR);
 		// initialize FileWriter object
-		try (FileWriter fileWriter = new FileWriter(fileName)) {
+		try (FileWriter fileWriter = new FileWriter(file)) {
 			LOGGER.info("File " + fileName + " is ready to be writen");
 			// initialize CSVPrinter object
 			try (CSVPrinter csvFilePrinter = new CSVPrinter(fileWriter, csvFileFormat)) {

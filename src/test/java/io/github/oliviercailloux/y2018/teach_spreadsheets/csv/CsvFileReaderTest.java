@@ -1,13 +1,11 @@
 
 package io.github.oliviercailloux.y2018.teach_spreadsheets.csv;
 
-import java.io.FileNotFoundException;
-import java.io.IOException;
+import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
 import org.assertj.core.api.Assertions;
-import org.junit.Assert;
 import org.junit.Test;
 
 import io.github.oliviercailloux.y2018.teach_spreadsheets.courses.Course;
@@ -16,7 +14,7 @@ public class CsvFileReaderTest {
 
 	@SuppressWarnings("unused")
 	@Test
-	public void testReadCourseCSVfile() {
+	public void testReadCourseCSVfile() throws Exception {
 
 		List<Course> expected = new ArrayList<>();
 
@@ -36,17 +34,9 @@ public class CsvFileReaderTest {
 
 		List<Course> actual = new ArrayList<>();
 
-		try {
-			CsvFileReader.readCourseCSVfile(filename, actual);
-		} catch (NumberFormatException e) {
-			Assert.assertTrue(false);
-		} catch (FileNotFoundException e) {
-			Assert.assertTrue(false);
-		} catch (IllegalArgumentException e) {
-			Assert.assertTrue(false);
-		} catch (IOException e) {
-			Assert.assertTrue(false);
-		}
+		File file = new File(filename);
+		CsvFileReader.readCourseCSVfile(file, actual);
+
 		Assertions.assertThat(actual.get(0)).isEqualToComparingFieldByField(expected.get(0));
 	}
 

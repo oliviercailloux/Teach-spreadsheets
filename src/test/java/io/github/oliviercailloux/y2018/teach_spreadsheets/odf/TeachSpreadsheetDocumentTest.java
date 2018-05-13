@@ -1,12 +1,10 @@
 package io.github.oliviercailloux.y2018.teach_spreadsheets.odf;
 
+import java.io.FileNotFoundException;
 import java.io.IOException;
 
 import org.junit.Assert;
 import org.junit.Test;
-import org.odftoolkit.simple.SpreadsheetDocument;
-
-import com.hp.hpl.jena.shared.NotFoundException;
 
 public class TeachSpreadsheetDocumentTest {
 
@@ -40,7 +38,7 @@ public class TeachSpreadsheetDocumentTest {
 		try {
 			TeachSpreadsheetDocument.openODS(fileName, tableName, cellPosition);
 			Assert.assertTrue(false);
-		} catch (NotFoundException e) {
+		} catch (FileNotFoundException e) {
 			Assert.assertTrue(true);
 		} catch (ClassCastException e) {
 			Assert.assertTrue(false);
@@ -64,7 +62,7 @@ public class TeachSpreadsheetDocumentTest {
 		try {
 			TeachSpreadsheetDocument.openODS(fileName, tableName, cellPosition);
 			Assert.assertTrue(false);
-		} catch (NotFoundException e) {
+		} catch (FileNotFoundException e) {
 			Assert.assertTrue(false);
 		} catch (ClassCastException e) {
 			Assert.assertTrue(false);
@@ -80,6 +78,5 @@ public class TeachSpreadsheetDocumentTest {
 
 	// TODO
 	// Test if the cell doesn't exist
-	
-	
+
 }

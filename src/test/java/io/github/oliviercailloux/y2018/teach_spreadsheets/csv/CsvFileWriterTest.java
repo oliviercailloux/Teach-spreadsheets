@@ -1,14 +1,11 @@
 package io.github.oliviercailloux.y2018.teach_spreadsheets.csv;
 
 import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
 import org.assertj.core.api.Assertions;
 import org.junit.After;
-import org.junit.Assert;
 import org.junit.Test;
 
 import io.github.oliviercailloux.y2018.teach_spreadsheets.courses.Course;
@@ -17,7 +14,7 @@ public class CsvFileWriterTest {
 
 	@SuppressWarnings("unused")
 	@Test
-	public void testWriteCourseCSVfile() {
+	public void testWriteCourseCSVfile() throws Exception {
 
 		List<Course> expected = new ArrayList<>();
 
@@ -34,31 +31,15 @@ public class CsvFileWriterTest {
 
 		String filename = "src/test/resources/oneCourseWritten.csv";
 
+		File file = new File(filename);
 		List<Course> actual = new ArrayList<>();
 
-		try {
-			CsvFileWriter.writeInCSV(expected, filename);
-		} catch (NumberFormatException e) {
-			Assert.assertTrue(false);
-		} catch (FileNotFoundException e) {
-			Assert.assertTrue(false);
-		} catch (IllegalArgumentException e) {
-			Assert.assertTrue(false);
-		} catch (IOException e) {
-			Assert.assertTrue(false);
-		}
-		try {
-			CsvFileReader.readCourseCSVfile(filename, actual);
-		} catch (NumberFormatException e) {
-			Assert.assertTrue(false);
-		} catch (FileNotFoundException e) {
-			Assert.assertTrue(false);
-		} catch (IllegalArgumentException e) {
-			Assert.assertTrue(false);
-		} catch (IOException e) {
-			Assert.assertTrue(false);
-		}
+		CsvFileWriter.writeInCSV(expected, file);
 
+		CsvFileReader.readCourseCSVfile(file, actual);
+
+		// assertThat().equals() ne fonctionne pas car ce ne sont pas les mêmes
+		// instances de classe
 		Assertions.assertThat(actual.get(0)).isEqualToComparingFieldByField(expected.get(0));
 	}
 
