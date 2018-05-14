@@ -20,8 +20,6 @@ import io.github.oliviercailloux.y2018.teach_spreadsheets.courses.Course;
  * @author Victor CHEN (Kantoki), Louis FONTAINE (fontlo15)
  * @version Version 1.0 Last Update : 13/05/2018.
  * 
- * 
- * 
  */
 public class ReadCourses {
 
@@ -213,7 +211,8 @@ public class ReadCourses {
 	}
 
 	public static void main(String[] args) throws Exception {
-		try (InputStream is = ReadCourses.class.getClassLoader().getResourceAsStream("Saisie_voeux_dauphine.ods")) {
+		try (InputStream is = ReadCourses.class.getClassLoader()
+				.getResourceAsStream("io/github/oliviercailloux/y2018/teach_spreadsheets/Saisie_voeux_dauphine.ods")) {
 			try (SpreadsheetDocument sd = SpreadsheetDocument.loadDocument(is)) {
 				String yearOfStudy = "L3_Informatique";
 				ODSReader odsR = new ODSReader(sd, yearOfStudy);
