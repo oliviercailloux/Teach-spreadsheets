@@ -64,7 +64,7 @@ public class ReadCoursesTest {
 				c2.setCMTD_Hour(15);
 				c2.setTP_Hour(0);
 				c2.setCMTP_Hour(0);
-				c2.setGrpNbr("");
+				c2.setGrpsNumber("");
 
 				Assertions.assertThat(c1).isEqualToComparingFieldByFieldRecursively(c2);
 			}

@@ -141,9 +141,9 @@ public class ReadCourses {
 					break;
 				case 7:
 					if (this.reader.isDiagonalBorder(actualCell) || "".equals(cellText)) {
-						course.setGrpNbr("");
+						course.setGrpsNumber("");
 					} else {
-						course.setGrpNbr(cellText);
+						course.setGrpsNumber(cellText);
 					}
 					break;
 				default:
