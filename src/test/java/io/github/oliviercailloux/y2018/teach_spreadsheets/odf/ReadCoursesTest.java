@@ -1,6 +1,5 @@
 package io.github.oliviercailloux.y2018.teach_spreadsheets.odf;
 
-import java.io.IOException;
 import java.io.InputStream;
 import java.util.List;
 
@@ -22,7 +21,8 @@ import io.github.oliviercailloux.y2018.teach_spreadsheets.courses.Course;
 public class ReadCoursesTest {
 
 	/**
-	 * Test to check that the method iterates on all courses of the sheet if we specify which sheet will be in the ODSReader
+	 * Test to check that the method iterates on all courses of the sheet if we
+	 * specify which sheet will be in the ODSReader
 	 */
 	@Test
 	public void testReadCourses() throws Exception {
@@ -112,7 +112,7 @@ public class ReadCoursesTest {
 				c2.setCMTD_Hour(15);
 				c2.setTP_Hour(0);
 				c2.setCMTP_Hour(0);
-				c2.setGrpNbr("");
+				c2.setGrpsNumber("");
 
 				Assertions.assertThat(c1).isEqualToComparingFieldByFieldRecursively(c2);
 			}
@@ -157,7 +157,7 @@ public class ReadCoursesTest {
 				c3.setCMTD_Hour(15);
 				c3.setTP_Hour(0);
 				c3.setCMTP_Hour(0);
-				c3.setGrpNbr("");
+				c3.setGrpsNumber("");
 
 				Course c4 = new Course();
 				c4.setName("Introduction à la microéconomie");
@@ -170,7 +170,7 @@ public class ReadCoursesTest {
 				c4.setCMTD_Hour(0);
 				c4.setTP_Hour(0);
 				c4.setCMTP_Hour(0);
-				c4.setGrpNbr("6 TD");
+				c4.setGrpsNumber("6 TD");
 
 				Assertions.assertThat(c1).isEqualToComparingFieldByFieldRecursively(c3);
 				Assertions.assertThat(c2).isEqualToComparingFieldByFieldRecursively(c4);
