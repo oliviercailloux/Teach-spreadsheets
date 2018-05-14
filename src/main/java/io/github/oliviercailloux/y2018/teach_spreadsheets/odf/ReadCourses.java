@@ -20,8 +20,6 @@ import io.github.oliviercailloux.y2018.teach_spreadsheets.courses.Course;
  * @author Victor CHEN (Kantoki), Louis FONTAINE (fontlo15)
  * @version Version 1.0 Last Update : 13/05/2018.
  * 
- * 
- * 
  */
 public class ReadCourses {
 

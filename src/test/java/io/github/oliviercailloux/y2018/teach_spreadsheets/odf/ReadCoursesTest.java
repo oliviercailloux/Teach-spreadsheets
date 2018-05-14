@@ -11,6 +11,14 @@ import org.odftoolkit.simple.SpreadsheetDocument;
 
 import io.github.oliviercailloux.y2018.teach_spreadsheets.courses.Course;
 
+/**
+ * Tests to check that the methods from ReadCourses class work
+ * 
+ * @author Victor CHEN (Kantoki), Louis FONTAINE (fontlo15)
+ * @version Version 2.0 Last Update : 14/05/2018.
+ * 
+ */
+
 public class ReadCoursesTest {
 
 	/**
