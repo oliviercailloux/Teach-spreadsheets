@@ -23,10 +23,13 @@ public class Course {
 
 	private String teachers = "", supervisor = "";
 
-	public Course(String name, String apogeeCode, String yearOfStud) {
+	public Course(String name, String apogeeCode, String yearOfStud,
+			String supervisor, String teachers) {
 		this.name = Objects.requireNonNull(name);
 		this.apogeeCode = Objects.requireNonNull(apogeeCode);
 		this.yearOfStud = Objects.requireNonNull(yearOfStud);
+		this.supervisor = Objects.requireNonNull(supervisor);
+		this.teachers = Objects.requireNonNull(teachers);
 	}
 
 	public Course() {
