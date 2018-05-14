@@ -26,7 +26,8 @@ public class CsvFileWriterTest {
 		course.setTD_Hour(4);
 		course.setCMTD_Hour(8);
 		course.setTP_Hour(8);
-		course.setGrpNbr("8");
+		course.setGrpsNumber("8");
+
 		expected.add(course);
 
 		String filename = "src/test/resources/io/github/oliviercailloux/y2018/teach_spreadsheets/oneCourseWritten.csv";

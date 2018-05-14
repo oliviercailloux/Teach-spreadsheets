@@ -31,6 +31,7 @@ public class CsvFileWriter {
 			"CMTD hours", "TP hours", "Groups number" };
 
 	public static void writeInCSV(List<Course> courses, File file) throws IOException {
+
 		String fileLocation = System.getProperty("user.dir");
 
 		String fileName = file.getName();
@@ -55,7 +56,7 @@ public class CsvFileWriter {
 					coursesRecord.add(String.valueOf(c.getTD_Hour()));
 					coursesRecord.add(String.valueOf(c.getCMTD_Hour()));
 					coursesRecord.add(String.valueOf(c.getTP_Hour()));
-					coursesRecord.add(c.getGrpNbr());
+					coursesRecord.add(c.getGrpsNumber());
 
 					csvFilePrinter.printRecord(coursesRecord);
 				}

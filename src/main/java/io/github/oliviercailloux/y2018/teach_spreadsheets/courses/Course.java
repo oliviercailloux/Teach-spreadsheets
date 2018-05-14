@@ -18,13 +18,18 @@ import java.util.Objects;
 public class Course {
 	private String name = "", apogeeCode = "", yearOfStud = "";
 	private double cmH = 0.0, tdH = 0.0, cmtdH = 0.0, tpH = 0.0, cmtpH = 0.0;
-	private String grpNbr = "";
+
+	private String grpsNumber = "";
+
 	private String teachers = "", supervisor = "";
 
-	public Course(String name, String apogeeCode, String yearOfStud) {
+	public Course(String name, String apogeeCode, String yearOfStud,
+			String supervisor, String teachers) {
 		this.name = Objects.requireNonNull(name);
 		this.apogeeCode = Objects.requireNonNull(apogeeCode);
 		this.yearOfStud = Objects.requireNonNull(yearOfStud);
+		this.supervisor = Objects.requireNonNull(supervisor);
+		this.teachers = Objects.requireNonNull(teachers);
 	}
 
 	public Course() {
@@ -57,9 +62,8 @@ public class Course {
 			setTP_Hour(Double.parseDouble(data));
 			break;
 		case 7:
-			setGrpNbr(data);
+			setGrpsNumber(data);
 			break;
-
 		default:
 			throw new IllegalArgumentException();
 		}
@@ -67,9 +71,10 @@ public class Course {
 
 	@Override
 	public String toString() {
-		return "Course [name=" + name + ", apogeeCode=" + apogeeCode + ", yearOfStud=" + yearOfStud + ", cmH=" + cmH
-				+ ", tdH=" + tdH + ", cmtdH=" + cmtdH + ", tpH=" + tpH + ", cmtpH=" + cmtpH + ", grpNbr=" + grpNbr
-				+ ", teachers=" + teachers + ", supervisor=" + supervisor + "]";
+		return "name : " + this.name + "  code : " + this.apogeeCode + "  year: " + this.yearOfStud + "\nCM hours: "
+				+ this.cmH + "  TD hours: " + this.tdH + "  CMTD hour: " + this.cmtdH + "\nTP hours: " + this.tpH
+				+ "  Groups number: " + this.grpsNumber + "\nResponsable: " + this.getSupervisor() + "\nIntervenants: "
+				+ this.getTeachers();
 	}
 
 	public String getName() {
@@ -146,12 +151,12 @@ public class Course {
 		this.cmtpH = cmtpH;
 	}
 
-	public String getGrpNbr() {
-		return grpNbr;
+	public String getGrpsNumber() {
+		return this.grpsNumber;
 	}
 
-	public void setGrpNbr(String grpNbr) {
-		this.grpNbr = Objects.requireNonNull(grpNbr);
+	public void setGrpsNumber(String grpsNumber) {
+		this.grpsNumber = grpsNumber;
 	}
 
 	public String getTeachers() {
