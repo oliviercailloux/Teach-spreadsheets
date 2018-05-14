@@ -14,7 +14,7 @@ import io.github.oliviercailloux.y2018.teach_spreadsheets.courses.Course;
 public class ReadCoursesTest {
 
 	/**
-	 * Test to check that the method iterates on all courses of the sheet
+	 * Test to check that the method iterates on all courses of the sheet if we specify which sheet will be in the ODSReader
 	 */
 	@Test
 	public void testReadCourses() throws Exception {
@@ -111,7 +111,7 @@ public class ReadCoursesTest {
 		}
 
 	}
-	
+
 	/**
 	 * Test to check that the method retrives the right courses from every sheet
 	 */
@@ -128,8 +128,9 @@ public class ReadCoursesTest {
 
 				Course c1 = new Course();
 				Course c2 = new Course();
-				for (Course c : courses){
-					if (c.getName().equals("Pré-rentrée : Mise à niveau Probabilités") && c.getYearOfStud().equals("L3_Informatique")) {
+				for (Course c : courses) {
+					if (c.getName().equals("Pré-rentrée : Mise à niveau Probabilités")
+							&& c.getYearOfStud().equals("L3_Informatique")) {
 						c1 = c;
 					}
 					if (c.getName().equals("Introduction à la microéconomie") && c.getYearOfStud().equals("DE1")) {
@@ -149,16 +150,13 @@ public class ReadCoursesTest {
 				c3.setTP_Hour(0);
 				c3.setCMTP_Hour(0);
 				c3.setGrpNbr("");
-				
+
 				Course c4 = new Course();
 				c4.setName("Introduction à la microéconomie");
 				c4.setYearOfStud("DE1");
 				c4.setapogeeCode("A1DEM04");
 				c4.setSupervisor("De Vreyer");
-				c4.setTeachers("De Vreyer CM\n" + 
-						"Brembilla\n" + 
-						"Laffineur\n" + 
-						"Morcillo");
+				c4.setTeachers("De Vreyer CM\n" + "Brembilla\n" + "Laffineur\n" + "Morcillo");
 				c4.setCM_Hour(19.5);
 				c4.setTD_Hour(19.5);
 				c4.setCMTD_Hour(0);
