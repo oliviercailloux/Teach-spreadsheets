@@ -4,13 +4,13 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.assertj.core.api.Assertions;
 import org.junit.Before;
 import org.junit.Test;
 import org.odftoolkit.simple.SpreadsheetDocument;
 import org.odftoolkit.simple.table.Table;
 
 import io.github.oliviercailloux.y2018.teach_spreadsheets.courses.Course;
-import junit.framework.Assert;
 
 public class WriteCoursesTest {
 
@@ -229,10 +229,17 @@ public class WriteCoursesTest {
 		actualSemester2 = reader.readCoursesFromCell(cellStartPosition2);
 
 		for (int i = 0; i < actualSemester1.size(); i++) {
-			Assert.assertTrue(actualSemester1.get(i)
-					.getCM_Hour() == (semestre1.get(i).getCM_Hour()));
+			Assertions.assertThat(actualSemester1.get(i).getCM_Hour())
+					.isEqualTo(semestre1.get(i).getCM_Hour());
 		}
-		Assert.assertTrue(semestre1.size() == actualSemester1.size());
-	}
+		Assertions.assertThat(semestre1.size())
+				.isEqualTo(actualSemester1.size());
 
+		for (int i = 0; i < actualSemester2.size(); i++) {
+			Assertions.assertThat(actualSemester2.get(i).getCM_Hour())
+					.isEqualTo(semestre2.get(i).getCM_Hour());
+		}
+		Assertions.assertThat(semestre2.size())
+				.isEqualTo(actualSemester2.size());
+	}
 }
