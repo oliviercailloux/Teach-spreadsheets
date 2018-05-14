@@ -213,7 +213,8 @@ public class ReadCourses {
 	}
 
 	public static void main(String[] args) throws Exception {
-		try (InputStream is = ReadCourses.class.getClassLoader().getResourceAsStream("Saisie_voeux_dauphine.ods")) {
+		try (InputStream is = ReadCourses.class.getClassLoader()
+				.getResourceAsStream("io/github/oliviercailloux/y2018/teach_spreadsheets/Saisie_voeux_dauphine.ods")) {
 			try (SpreadsheetDocument sd = SpreadsheetDocument.loadDocument(is)) {
 				String yearOfStudy = "L3_Informatique";
 				ODSReader odsR = new ODSReader(sd, yearOfStudy);
