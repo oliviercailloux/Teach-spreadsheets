@@ -15,14 +15,16 @@ import io.github.oliviercailloux.y2018.teach_spreadsheets.courses.Course;
 
 /**
  * This class allow you to read a file of courses for Dauphine University
- * teachers from an instance of {@link ODSReader}
+ * teachers from an instance of {@link ODSReader}.
+ * 
+ * WARNING ! This class only read sheets following the template of "DE1", where
+ * the tables of courses starts at cells "B4" and "P4".
  * 
  * @author Victor CHEN (Kantoki), Louis FONTAINE (fontlo15)
  * @version Version 1.0 Last Update : 13/05/2018.
  * 
  */
 public class ReadCourses {
-
 	private final static String COURSTD = "CMTD";
 	private final static String COURSTP = "CMTP";
 	private final static String TD = "TD";
