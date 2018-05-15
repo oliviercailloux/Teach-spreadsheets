@@ -23,8 +23,7 @@ public class Course {
 
 	private String teachers = "", supervisor = "";
 
-	public Course(String name, String apogeeCode, String yearOfStud,
-			String supervisor, String teachers) {
+	public Course(String name, String apogeeCode, String yearOfStud, String supervisor, String teachers) {
 		this.name = Objects.requireNonNull(name);
 		this.apogeeCode = Objects.requireNonNull(apogeeCode);
 		this.yearOfStud = Objects.requireNonNull(yearOfStud);
@@ -33,7 +32,64 @@ public class Course {
 	}
 
 	public Course() {
+	}
 
+	@Override
+	public int hashCode() {
+		return Objects.hash(name, apogeeCode, yearOfStud, supervisor, teachers, grpsNumber, cmH, tdH, cmtdH, tpH,
+				cmtpH);
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Course other = (Course) obj;
+		if (apogeeCode == null) {
+			if (other.apogeeCode != null)
+				return false;
+		} else if (!apogeeCode.equals(other.apogeeCode))
+			return false;
+		if (Double.doubleToLongBits(cmH) != Double.doubleToLongBits(other.cmH))
+			return false;
+		if (Double.doubleToLongBits(cmtdH) != Double.doubleToLongBits(other.cmtdH))
+			return false;
+		if (Double.doubleToLongBits(cmtpH) != Double.doubleToLongBits(other.cmtpH))
+			return false;
+		if (grpsNumber == null) {
+			if (other.grpsNumber != null)
+				return false;
+		} else if (!grpsNumber.equals(other.grpsNumber))
+			return false;
+		if (name == null) {
+			if (other.name != null)
+				return false;
+		} else if (!name.equals(other.name))
+			return false;
+		if (supervisor == null) {
+			if (other.supervisor != null)
+				return false;
+		} else if (!supervisor.equals(other.supervisor))
+			return false;
+		if (Double.doubleToLongBits(tdH) != Double.doubleToLongBits(other.tdH))
+			return false;
+		if (teachers == null) {
+			if (other.teachers != null)
+				return false;
+		} else if (!teachers.equals(other.teachers))
+			return false;
+		if (Double.doubleToLongBits(tpH) != Double.doubleToLongBits(other.tpH))
+			return false;
+		if (yearOfStud == null) {
+			if (other.yearOfStud != null)
+				return false;
+		} else if (!yearOfStud.equals(other.yearOfStud))
+			return false;
+		return true;
 	}
 
 	public void set(int index, String data) {

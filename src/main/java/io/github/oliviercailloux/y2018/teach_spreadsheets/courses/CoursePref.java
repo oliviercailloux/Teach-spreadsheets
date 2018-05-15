@@ -45,6 +45,41 @@ public class CoursePref {
 				+ " ; TP : " + tpChoice.toString() + ".";
 	}
 
+	@Override
+	public int hashCode() {
+		return Objects.hash(course, teacher, cmChoice, tdChoice, cmtdChoice, tpChoice);
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		CoursePref other = (CoursePref) obj;
+		if (cmChoice != other.cmChoice)
+			return false;
+		if (cmtdChoice != other.cmtdChoice)
+			return false;
+		if (course == null) {
+			if (other.course != null)
+				return false;
+		} else if (!course.equals(other.course))
+			return false;
+		if (tdChoice != other.tdChoice)
+			return false;
+		if (teacher == null) {
+			if (other.teacher != null)
+				return false;
+		} else if (!teacher.equals(other.teacher))
+			return false;
+		if (tpChoice != other.tpChoice)
+			return false;
+		return true;
+	}
+
 	public Course getCourse() {
 		return course;
 	}
