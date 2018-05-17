@@ -35,67 +35,53 @@ public class WriteCoursesTest {
 
 		String sheetName = "DE1";
 
-		Course course0 = new Course("PRE-RENTREE : \r\n" + "Mathématiques",
-				"A1PREMA", sheetName, "Pasquignon",
-				"Huveneers\r\n" + "Lamboley\r\n" + "Vialard\r\n" + "Legendre");
+		Course course0 = new Course("PRE-RENTREE : " + "Mathématiques", "A1PREMA", sheetName, "Pasquignon",
+				"Huveneers" + "Lamboley" + "Vialard" + "Legendre");
 		course0.setCMTD_Hour(15);
 		course0.setGrpsNumber("6 CMTD");
 
-		Course course1 = new Course("Analyse1", "A1DEM01", sheetName,
-				"Simenhaus", "Legendre\r\n" + "Lamboley\r\n" + "Attouchi\r\n"
-						+ "Simenhaus\r\n" + "Boussion\r\n" + "Truchot");
+		Course course1 = new Course("Analyse1", "A1DEM01", sheetName, "Simenhaus",
+				"Legendre" + "Lamboley" + "Attouchi" + "Simenhaus" + "Boussion" + "Truchot");
 		course1.setCMTD_Hour(72);
 		course1.setGrpsNumber("6 CMTD");
 
-		Course course2 = new Course("Algèbre linéaire 1", "A1DEM02", sheetName,
-				"Pasquignon",
-				"Tamzali-Lafond\r\n" + "Henon\r\n" + "Pasquignon\r\n"
-						+ "Taleng\r\n" + "Pasquignon\r\n" + "Vialard");
+		Course course2 = new Course("Algèbre linéaire 1", "A1DEM02", sheetName, "Pasquignon",
+				"Tamzali-Lafond" + "Henon" + "Pasquignon" + "Taleng" + "Pasquignon" + "Vialard");
 		course2.setCMTD_Hour(72);
 		course2.setGrpsNumber("6 CMTD");
 
-		Course course3 = new Course("Algorithmique et programmation 1",
-				"A1DEM03", sheetName, "Colazzo",
-				"Colazzo CM\r\n" + "Raksanyi\r\n" + "Gabrel-Willemin\r\n"
-						+ "Murat\r\n" + "Manouvrier\r\n" + "Arib");
+		Course course3 = new Course("Algorithmique et programmation 1", "A1DEM03", sheetName, "Colazzo",
+				"Colazzo CM" + "Raksanyi" + "Gabrel-Willemin" + "Murat" + "Manouvrier" + "Arib");
 		course3.setCMTD_Hour(30);
 		course3.setCMTP_Hour(30);
 		course3.setGrpsNumber("6 CMTD et 6 CMTP");
 
-		Course course4 = new Course("Introduction à la microéconomie",
-				"A1DEM04", sheetName, "De Vreyer", "De Vreyer CM\r\n"
-						+ "Brembilla\r\n" + "Laffineur\r\n" + "Morcillo");
+		Course course4 = new Course("Introduction à la microéconomie", "A1DEM04", sheetName, "De Vreyer",
+				"De Vreyer CM" + "Brembilla" + "Laffineur" + "Morcillo");
 		course4.setCM_Hour(19.5);
 		course4.setTD_Hour(19.5);
 		course4.setGrpsNumber("6 TD");
 
-		Course course6 = new Course("Problèmes économiques", "A1DEM06",
-				sheetName, "Dieudonne", "Dieudonne");
+		Course course6 = new Course("Problèmes économiques", "A1DEM06", sheetName, "Dieudonne", "Dieudonne");
 		course6.setCM_Hour(36);
 
-		Course course7 = new Course("Organisation des entreprisess", "A1DEM07",
-				sheetName, "Servel", "Carcassonne CM\r\n" + "Servel CM\r\n"
-						+ "Zouaneb\r\n" + "Diedhiou");
+		Course course7 = new Course("Organisation des entreprisess", "A1DEM07", sheetName, "Servel",
+				"Carcassonne CM" + "Servel CM" + "Zouaneb" + "Diedhiou");
 		course7.setCM_Hour(6);
 		course7.setTD_Hour(30);
 		course7.setGrpsNumber("2 TD");
 
-		Course course5 = new Course("Anglais 1", "A1DEM05", sheetName,
-				"Bourrel",
-				"Lytle-Hassan\r\n" + "Countcham\r\n" + "Joyce\r\n" + "Roque\r\n"
-						+ "Pattie\r\n" + "Whiteside\r\n" + "Levy-Alimi");
+		Course course5 = new Course("Anglais 1", "A1DEM05", sheetName, "Bourrel",
+				"Lytle-Hassan" + "Countcham" + "Joyce" + "Roque" + "Pattie" + "Whiteside" + "Levy-Alimi");
 		course5.setCMTD_Hour(18);
 		course5.setGrpsNumber("12");
 
-		Course courseL = new Course("LV2 (Allemand / Espagnol)",
-				"A1ALL01\r\n" + "A1ESP01", sheetName,
-				"Quinchon-Caudal\r\n" + "Amisse",
-				"Tudoran\r\n" + "Barrera Guarin\r\n" + "Jareno Gila");
+		Course courseL = new Course("LV2 (Allemand / Espagnol)", "A1ALL01" + "A1ESP01", sheetName,
+				"Quinchon-Caudal" + "Amisse", "Tudoran" + "Barrera Guarin" + "Jareno Gila");
 		courseL.setTD_Hour(18);
-		courseL.setGrpsNumber("2 all\r\n" + "3 esp");
+		courseL.setGrpsNumber("2 all" + "3 esp");
 
-		Course courseAS = new Course("Anglais soutien S1", "A1SOU01", sheetName,
-				"Bourrel", "Joyce");
+		Course courseAS = new Course("Anglais soutien S1", "A1SOU01", sheetName, "Bourrel", "Joyce");
 		courseAS.setTD_Hour(19.5);
 		courseAS.setGrpsNumber("1");
 
@@ -110,89 +96,69 @@ public class WriteCoursesTest {
 		semestre1.add(courseL);
 		semestre1.add(courseAS);
 
-		Course course8 = new Course("Analyse 2", "A1DEM08", sheetName,
-				"Lebourg", "Lebourg CM\r\n" + "Rammal\r\n" + "Schaison\r\n"
-						+ "Hadikhanloo\r\n" + "Massetti");
+		Course course8 = new Course("Analyse 2", "A1DEM08", sheetName, "Lebourg",
+				"Lebourg CM" + "Rammal" + "Schaison" + "Hadikhanloo" + "Massetti");
 		course8.setCM_Hour(19.5);
 		course8.setCMTD_Hour(39);
 		course8.setGrpsNumber("6");
 
-		Course course9 = new Course("Algèbre linéaire 2", "A1DEM09", sheetName,
-				"Vialard", "Vialard CM\r\n" + "Rammal\r\n" + "Fu Ying\r\n"
-						+ "Coron\r\n" + "Macasieb\r\n" + "Schaison\r\n" + "Fu");
+		Course course9 = new Course("Algèbre linéaire 2", "A1DEM09", sheetName, "Vialard",
+				"Vialard CM" + "Rammal" + "Fu Ying" + "Coron" + "Macasieb" + "Schaison" + "Fu");
 		course9.setCM_Hour(19.5);
 		course9.setCMTD_Hour(39);
 		course9.setGrpsNumber("6");
 
-		Course course11 = new Course("Algorithmique et programmation 2",
-				"A1DEM11", sheetName, "Cazenave",
-				"Cazenave CM\r\n" + "Jamain\r\n" + "Pontoizeau\r\n"
-						+ "Ternier\r\n" + "Labernia\r\n" + "Haddad\r\n"
-						+ "Tlilane");
+		Course course11 = new Course("Algorithmique et programmation 2", "A1DEM11", sheetName, "Cazenave",
+				"Cazenave CM" + "Jamain" + "Pontoizeau" + "Ternier" + "Labernia" + "Haddad" + "Tlilane");
 		course11.setCM_Hour(19.5);
 		course11.setTD_Hour(19.5);
 		course11.setGrpsNumber("6");
 
-		Course course10 = new Course(
-				"Modélisation et applications des mathématiques", "A1DEM10",
-				sheetName, "Boussion", "Boussion CM\r\n" + "Genadot\r\n"
-						+ "Leboucher\r\n" + "Le Cousin");
+		Course course10 = new Course("Modélisation et applications des mathématiques", "A1DEM10", sheetName, "Boussion",
+				"Boussion CM" + "Genadot" + "Leboucher" + "Le Cousin");
 		course10.setCM_Hour(19.5);
 		course10.setTD_Hour(19.5);
 		course10.setGrpsNumber("6");
 
-		Course course14 = new Course(
-				"Outils en informatique\r\n" + "- Outils de l'internet",
-				"A1DEM14", sheetName, "Mayag", "Mayag CM\r\n" + "Belhoul\r\n"
-						+ "Jamain\r\n" + "Magnouche\r\n" + "Arib");
+		Course course14 = new Course("Outils en informatique" + "- Outils de l'internet", "A1DEM14", sheetName, "Mayag",
+				"Mayag CM" + "Belhoul" + "Jamain" + "Magnouche" + "Arib");
 		course14.setCM_Hour(15);
 		course14.setTP_Hour(15);
 		course14.setGrpsNumber("6");
 
-		Course course141 = new Course("Outils en informatique\r\n"
-				+ "- Initiation à la recherche opérationnelle avec Excel",
-				"A1DEM14", sheetName, "Mayag",
-				"Mayag CM\r\n" + "Belhoul\r\n" + "Jamain\r\n" + "Magnouche\r\n"
-						+ "Mouhoub\r\n" + "Haddad");
+		Course course141 = new Course(
+				"Outils en informatique" + "- Initiation à la recherche opérationnelle avec Excel", "A1DEM14",
+				sheetName, "Mayag", "Mayag CM" + "Belhoul" + "Jamain" + "Magnouche" + "Mouhoub" + "Haddad");
 		course141.setCM_Hour(3);
 		course141.setTP_Hour(12);
 		course141.setGrpsNumber("6");
 
-		Course course142 = new Course(
-				"Outils en informatique\r\n"
-						+ "- Bases de données élémentaires",
-				"A1DEM14", sheetName, "Mayag", "Mayag CM\r\n" + "Belhoul\r\n"
-						+ "Fu Liangliang\r\n" + "Monnet\r\n" + "Arib");
+		Course course142 = new Course("Outils en informatique" + "- Bases de données élémentaires", "A1DEM14",
+				sheetName, "Mayag", "Mayag CM" + "Belhoul" + "Fu Liangliang" + "Monnet" + "Arib");
 		course142.setCM_Hour(3);
 		course142.setTP_Hour(12);
 		course142.setGrpsNumber("6");
 
-		Course course12 = new Course("Macroéconomie : analyse de long terme",
-				"A1DEM12", sheetName, "Chagny",
-				"Chagny CM\r\n" + "Lorre\r\n" + "Laffineur");
+		Course course12 = new Course("Macroéconomie : analyse de long terme", "A1DEM12", sheetName, "Chagny",
+				"Chagny CM" + "Lorre" + "Laffineur");
 		course12.setCM_Hour(19.5);
 		course12.setTD_Hour(19.5);
 		course12.setGrpsNumber("6");
 
-		Course course13 = new Course("Anglais 2", "A1DEM13", sheetName,
-				"Bourrel",
-				"Lytle-Hassan\r\n" + "Countcham\r\n" + "Joyce\r\n" + "Roque\r\n"
-						+ "Pattie\r\n" + "Whiteside\r\n" + "Orgeret");
+		Course course13 = new Course("Anglais 2", "A1DEM13", sheetName, "Bourrel",
+				"Lytle-Hassan" + "Countcham" + "Joyce" + "Roque" + "Pattie" + "Whiteside" + "Orgeret");
 		course13.setCMTD_Hour(19.5);
 		course13.setGrpsNumber("12");
 
-		Course courseL2 = new Course("LV2 (Allemand / Espagnol)", "", sheetName,
-				"", "");
+		Course courseL2 = new Course("LV2 (Allemand / Espagnol)", "", sheetName, "", "");
 		courseL2.setTD_Hour(19.5);
-		courseL2.setGrpsNumber("2 all\r\n" + "3 esp");
+		courseL2.setGrpsNumber("2 all" + "3 esp");
 
-		Course courseAS2 = new Course("Anglais soutien S2", "A1SOU02",
-				sheetName, "Bourrel", "Joyce");
+		Course courseAS2 = new Course("Anglais soutien S2", "A1SOU02", sheetName, "Bourrel", "Joyce");
 		courseAS2.setTD_Hour(19.5);
 		courseAS2.setGrpsNumber("1");
 
-		Course courseD = new Course("DROIT C2I", "A0MID21", sheetName, "",
-				"Batusanski");
+		Course courseD = new Course("DROIT C2I", "A0MID21", sheetName, "", "Batusanski");
 		courseD.setCM_Hour(18);
 		courseD.setGrpsNumber("1");
 
@@ -211,15 +177,13 @@ public class WriteCoursesTest {
 
 		WriteCourses yearOfStudyWriter = new WriteCourses(new File(
 				"src/test/resources/io/github/oliviercailloux/y2018/teach_spreadsheets/Saisie_voeux_dauphine_WriteCourses.ods"),
-				"1ère année de licence", 2016, 2017, 200, 1, semestre1,
-				semestre2);
+				"1ère année de licence", 2016, 2017, 200, 1, semestre1, semestre2);
 		yearOfStudyWriter.WriteCoursesOfYear();
 
 		List<Course> actualSemester1 = new ArrayList<>();
 		List<Course> actualSemester2 = new ArrayList<>();
 
-		ODSReader ods = new ODSReader(yearOfStudyWriter.getWorkbook(),
-				sheetName);
+		ODSReader ods = new ODSReader(yearOfStudyWriter.getWorkbook(), sheetName);
 		ReadCourses reader = new ReadCourses(ods);
 
 		String cellStartPosition1 = "B4";
@@ -228,18 +192,8 @@ public class WriteCoursesTest {
 		actualSemester1 = reader.readCoursesFromCell(cellStartPosition1);
 		actualSemester2 = reader.readCoursesFromCell(cellStartPosition2);
 
-		for (int i = 0; i < actualSemester1.size(); i++) {
-			Assertions.assertThat(actualSemester1.get(i).getCM_Hour())
-					.isEqualTo(semestre1.get(i).getCM_Hour());
-		}
-		Assertions.assertThat(semestre1.size())
-				.isEqualTo(actualSemester1.size());
+		Assertions.assertThat(actualSemester1).isEqualTo(semestre1);
+		Assertions.assertThat(actualSemester2).isEqualTo(semestre2);
 
-		for (int i = 0; i < actualSemester2.size(); i++) {
-			Assertions.assertThat(actualSemester2.get(i).getCM_Hour())
-					.isEqualTo(semestre2.get(i).getCM_Hour());
-		}
-		Assertions.assertThat(semestre2.size())
-				.isEqualTo(actualSemester2.size());
 	}
 }
