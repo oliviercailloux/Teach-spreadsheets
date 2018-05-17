@@ -62,23 +62,23 @@ public class ReadCourses {
 	public List<Course> readCoursesFromCell(String cellPosition) {
 		List<Course> courses = new ArrayList<>();
 
-		Table tableCourante = reader.getSheet();
+		Table currentSheet = reader.getSheet();
 
-		String yearOfStudy = tableCourante.getTableName();
+		String yearOfStudy = currentSheet.getTableName();
 
-		Cell startCell = tableCourante.getCellByPosition(cellPosition);
+		Cell startCell = currentSheet.getCellByPosition(cellPosition);
 
 		int startCellColumnIndex = startCell.getColumnIndex();
 		int startCellRowIndex = startCell.getRowIndex();
 
 		Cell actualCell = startCell;
 
-		for (int i = startCellRowIndex; i < tableCourante.getRowCount(); i++) {
+		for (int i = startCellRowIndex; i < currentSheet.getRowCount(); i++) {
 			Course course = new Course();
 			course.setYearOfStud(yearOfStudy);
 			int j = -1;
 			for (j = startCellColumnIndex; j < startCellColumnIndex + NBATTRIBUTE; j++) {
-				actualCell = tableCourante.getCellByPosition(j, i);
+				actualCell = currentSheet.getCellByPosition(j, i);
 
 				String cellText = actualCell.getDisplayText().replaceAll(",", ".");
 
