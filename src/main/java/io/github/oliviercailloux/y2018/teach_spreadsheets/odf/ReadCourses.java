@@ -30,17 +30,21 @@ public class ReadCourses {
 	private final static String TD = "TD";
 	private final static String TP = "TP";
 	private final static int NBATTRIBUTE = 8;
+	/**
+	 * Assuming that the Begin year and the end are at cells CELLYEAR.
+	 */
+	private final static String CELLYEAR = "G1";
 
 	private final static Logger LOGGER = LoggerFactory.getLogger(ReadCourses.class);
 
 	/**
-	 * Assuming that the tables of courses starts at cells startCell1 and startCell2
-	 * for each sheet
+	 * Assuming that the tables of courses starts at cells startCell1 and
+	 * startCell2 for each sheet
 	 */
 	private final static String startCell1 = "B4";
 	/**
-	 * Assuming that the tables of courses starts at cells startCell1 and startCell2
-	 * for each sheet
+	 * Assuming that the tables of courses starts at cells startCell1 and
+	 * startCell2 for each sheet
 	 */
 	private final static String startCell2 = "P4";
 
@@ -51,8 +55,8 @@ public class ReadCourses {
 	}
 
 	/**
-	 * This method returns a List of {@link Course} from the ODS file read by the
-	 * {@link ODSReader} in the attribute and the cell Position in argument.
+	 * This method returns a List of {@link Course} from the ODS file read by
+	 * the {@link ODSReader} in the attribute and the cell Position in argument.
 	 * 
 	 * @param cellPosition:
 	 *            the position of the first Cell of the Table where are the
@@ -72,7 +76,10 @@ public class ReadCourses {
 		int startCellRowIndex = startCell.getRowIndex();
 
 		Cell actualCell = startCell;
+		String cellContent = reader.getCellValue(CELLYEAR);
+		Integer yearBegin = Integer.parseInt(cellContent.split(" ")[1].split("/")[0]);
 
+		Course.setYearBegin(yearBegin);
 		for (int i = startCellRowIndex; i < currentSheet.getRowCount(); i++) {
 			Course course = new Course();
 			course.setYearOfStud(yearOfStudy);
@@ -85,7 +92,6 @@ public class ReadCourses {
 				if ("".equals(cellText) && j == startCellColumnIndex) {
 					break;
 				}
-
 				int columnRelativeNumber = j - startCellColumnIndex;
 				switch (columnRelativeNumber) {
 				case 0:
@@ -160,17 +166,17 @@ public class ReadCourses {
 	}
 
 	/**
-	 * This method returns a List of {@link Course} from the ODS file read by the
-	 * {@link ODSReader} in the attribute and a sheet of the file.
+	 * This method returns a List of {@link Course} from the ODS file read by
+	 * the {@link ODSReader} in the attribute and a sheet of the file.
 	 * 
-	 * This method only works with specific sheet of the spreadsheet document, with
-	 * a specific format.
+	 * This method only works with specific sheet of the spreadsheet document,
+	 * with a specific format.
 	 * 
 	 * @see the template in resources
 	 * 
 	 * @param sheet:
-	 *            the sheet of the spreadsheet document where you want to read the
-	 *            courses.
+	 *            the sheet of the spreadsheet document where you want to read
+	 *            the courses.
 	 * 
 	 */
 	public List<Course> readCoursesFromSheet(Table sheet) {
@@ -192,8 +198,8 @@ public class ReadCourses {
 	}
 
 	/**
-	 * This method returns a List of {@link Course} from the ODS file read by the
-	 * {@link ODSReader} in the attribute.
+	 * This method returns a List of {@link Course} from the ODS file read by
+	 * the {@link ODSReader} in the attribute.
 	 * 
 	 * This method reads all the Courses from all the sheets of the ODF document
 	 *
@@ -213,8 +219,7 @@ public class ReadCourses {
 	}
 
 	public static void main(String[] args) throws Exception {
-		try (InputStream is = ReadCourses.class
-				.getResourceAsStream("Saisie_voeux_dauphine.ods")) {
+		try (InputStream is = ReadCourses.class.getResourceAsStream("Saisie_voeux_dauphine.ods")) {
 			try (SpreadsheetDocument sd = SpreadsheetDocument.loadDocument(is)) {
 				String yearOfStudy = "L3_Informatique";
 				ODSReader odsR = new ODSReader(sd, yearOfStudy);
@@ -227,6 +232,7 @@ public class ReadCourses {
 				for (Course course : courses) {
 					System.out.println(course + "\n");
 				}
+				System.out.println(Course.getYearBegin());
 			}
 
 		}
