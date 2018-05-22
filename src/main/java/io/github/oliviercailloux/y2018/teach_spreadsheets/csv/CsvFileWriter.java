@@ -3,6 +3,7 @@ package io.github.oliviercailloux.y2018.teach_spreadsheets.csv;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.io.Writer;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -29,6 +30,43 @@ public class CsvFileWriter {
 	// CSV file header
 	private static final Object[] FILE_HEADER = { "Name", "Apogee Code", "Year of Study", "CM hours", "TD hours",
 			"CMTD hours", "TP hours", "Groups number" };
+
+	public static void writeInCSV(List<Course> courses, Writer writer) throws IOException {
+
+		String fileLocation = System.getProperty("user.dir");
+
+		// Create the CSVFormat object with "\n" as a record delimiter
+		CSVFormat csvFileFormat = CSVFormat.EXCEL.withRecordSeparator(NEW_LINE_SEPARATOR);
+		// initialize FileWriter object
+
+		LOGGER.info("File is ready to be writen");
+		// initialize CSVPrinter object
+		try (CSVPrinter csvFilePrinter = new CSVPrinter(writer, csvFileFormat)) {
+			LOGGER.info("File is ready to be writen with CSVPrinter");
+			// Create CSV file header
+			csvFilePrinter.printRecord(FILE_HEADER);
+
+			// Writing
+			for (Course c : courses) {
+				List<String> coursesRecord = new ArrayList<>();
+				coursesRecord.add(c.getName());
+				coursesRecord.add(c.getapogeeCode());
+				coursesRecord.add(c.getYearOfStud());
+				coursesRecord.add(String.valueOf(c.getCM_Hour()));
+				coursesRecord.add(String.valueOf(c.getTD_Hour()));
+				coursesRecord.add(String.valueOf(c.getCMTD_Hour()));
+				coursesRecord.add(String.valueOf(c.getTP_Hour()));
+				coursesRecord.add(c.getGrpsNumber());
+
+				csvFilePrinter.printRecord(coursesRecord);
+			}
+			LOGGER.info("\nYour courses have been successfully exported into a CSV File named in "
+					+ fileLocation + " !");
+
+		}
+	}
+
+	///
 
 	public static void writeInCSV(List<Course> courses, File file) throws IOException {
 

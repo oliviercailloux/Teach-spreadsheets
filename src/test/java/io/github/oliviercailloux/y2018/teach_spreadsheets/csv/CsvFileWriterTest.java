@@ -1,11 +1,15 @@
 package io.github.oliviercailloux.y2018.teach_spreadsheets.csv;
 
 import java.io.File;
+import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.Reader;
+import java.io.Writer;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.assertj.core.api.Assertions;
 import org.junit.After;
+import org.junit.Assert;
 import org.junit.Test;
 
 import io.github.oliviercailloux.y2018.teach_spreadsheets.courses.Course;
@@ -30,18 +34,19 @@ public class CsvFileWriterTest {
 
 		expected.add(course);
 
+		List<Course> actual = new ArrayList<>();
 		String filename = "src/test/resources/io/github/oliviercailloux/y2018/teach_spreadsheets/oneCourseWritten.csv";
 
-		File file = new File(filename);
-		List<Course> actual = new ArrayList<>();
+		try (Writer fileWriter = new FileWriter(new File(filename))) {
+			CsvFileWriter.writeInCSV(expected, fileWriter);
+		}
 
-		CsvFileWriter.writeInCSV(expected, file);
+		try (Reader fileReader = new FileReader(new File(filename))) {
+			CsvFileReader.readCourseCSVfile(fileReader, actual);
 
-		CsvFileReader.readCourseCSVfile(file, actual);
+		}
 
-		// assertThat().equals() doesn't work because they are not from the same
-		// instance of class
-		Assertions.assertThat(actual.get(0)).isEqualToComparingFieldByField(expected.get(0));
+		Assert.assertTrue(actual.get(0).equals((expected.get(0))));
 	}
 
 	@After
