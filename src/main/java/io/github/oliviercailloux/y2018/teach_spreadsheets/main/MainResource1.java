@@ -2,7 +2,9 @@ package io.github.oliviercailloux.y2018.teach_spreadsheets.main;
 
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.FileReader;
 import java.io.IOException;
+import java.io.Reader;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
@@ -26,7 +28,12 @@ public class MainResource1 {
 				.getResource("io/github/oliviercailloux/y2018/teach_spreadsheets/start-courses.csv");
 		System.out.println(ressourceUrl.getPath());
 		File file = new File(ressourceUrl.getPath());
-		CsvFileReader.readCourseCSVfile(file, courses2);
+		
+		try (Reader fileReader = new FileReader(file)) {
+			CsvFileReader.readCourseCSVfile(fileReader, courses2);
+
+		}
+		
 		System.out.println(courses2);
 
 	}
