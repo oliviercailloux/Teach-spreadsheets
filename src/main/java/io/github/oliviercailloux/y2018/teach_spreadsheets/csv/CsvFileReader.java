@@ -4,6 +4,8 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
+import java.io.Reader;
+import java.io.Writer;
 import java.util.List;
 
 import org.apache.commons.csv.CSVFormat;
@@ -36,35 +38,30 @@ public class CsvFileReader {
 	 *            a list of Course to set with the CSV file
 	 * 
 	 */
-	public static void readCourseCSVfile(File file, List<Course> courses)
+	public static void readCourseCSVfile(Reader fileReader, List<Course> courses)
 			throws FileNotFoundException, IOException, NumberFormatException, IllegalArgumentException {
 
-		try (FileReader fileReader = new FileReader(file)) {
-			String fileName = file.getName();
-			LOGGER.info("File " + fileName + " has been correctly read");
-			try (CSVParser parser = CSVParser.parse(fileReader, CSVFormat.EXCEL)) {
-				LOGGER.info("File " + fileName + " has been correctly parsed");
+		try (CSVParser parser = CSVParser.parse(fileReader, CSVFormat.EXCEL)) {
+			LOGGER.info("File has been correctly parsed");
 
-				boolean line = true;
-				Course c = new Course();
+			boolean line = true;
+			Course c = new Course();
 
-				// collect every line of the CSV file in a CSVRecord object - the first line is
-				// the header
-				for (CSVRecord csvRecord : parser) {
-					if (line) {
-						line = false;
-					} else {
-						c = new Course();
-						for (int i = 0; i < csvRecord.size(); i++) {
-							c.set(i, csvRecord.get(i));
-						}
-						courses.add(c);
+			// collect every line of the CSV file in a CSVRecord object - the first line is
+			// the header
+			for (CSVRecord csvRecord : parser) {
+				if (line) {
+					line = false;
+				} else {
+					c = new Course();
+					for (int i = 0; i < csvRecord.size(); i++) {
+						c.set(i, csvRecord.get(i));
 					}
+					courses.add(c);
 				}
-				LOGGER.info("The Course list has been updated successfully with the CSV file : " + fileName);
 			}
-
+			LOGGER.info("The Course list has been updated successfully with the CSV file. ");
 		}
-	}
 
+	}
 }
