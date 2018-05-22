@@ -4,7 +4,7 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.assertj.core.api.Assertions;
+import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 import org.odftoolkit.simple.SpreadsheetDocument;
@@ -17,12 +17,12 @@ public class WriteCoursesTest {
 	@Before
 	public void deleteYearOfStudySheet() throws Exception {
 		try (SpreadsheetDocument workbook = SpreadsheetDocument.loadDocument(
-				"src/test/resources/io/github/oliviercailloux/y2018/teach_spreadsheets/Saisie_voeux_dauphine_WriteCourses.ods")) {
+				"src/test/resources/io/github/oliviercailloux/y2018/teach_spreadsheets/odf/Saisie_voeux_dauphine_WriteCourses.ods")) {
 			Table sheet = workbook.getTableByName("DE1");
 			if (sheet != null) {
 				sheet.remove();
 				workbook.save(
-						"src/test/resources/io/github/oliviercailloux/y2018/teach_spreadsheets/Saisie_voeux_dauphine_WriteCourses.ods");
+						"src/test/resources/io/github/oliviercailloux/y2018/teach_spreadsheets/odf/Saisie_voeux_dauphine_WriteCourses.ods");
 			}
 		}
 
@@ -176,7 +176,7 @@ public class WriteCoursesTest {
 		semestre2.add(courseD);
 
 		WriteCourses yearOfStudyWriter = new WriteCourses(new File(
-				"src/test/resources/io/github/oliviercailloux/y2018/teach_spreadsheets/Saisie_voeux_dauphine_WriteCourses.ods"),
+				"src/test/resources/io/github/oliviercailloux/y2018/teach_spreadsheets/odf/Saisie_voeux_dauphine_WriteCourses.ods"),
 				"1ère année de licence", 2016, 2017, 200, 1, semestre1, semestre2);
 		yearOfStudyWriter.WriteCoursesOfYear();
 
@@ -192,8 +192,8 @@ public class WriteCoursesTest {
 		actualSemester1 = reader.readCoursesFromCell(cellStartPosition1);
 		actualSemester2 = reader.readCoursesFromCell(cellStartPosition2);
 
-		Assertions.assertThat(actualSemester1).isEqualTo(semestre1);
-		Assertions.assertThat(actualSemester2).isEqualTo(semestre2);
+		Assert.assertTrue((actualSemester1).equals(semestre1));
+		Assert.assertTrue((actualSemester2).equals(semestre2));
 
 	}
 }
