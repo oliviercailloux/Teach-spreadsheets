@@ -30,7 +30,7 @@ public class TeachSpreadsheetDocument {
 	 */
 	public static void openODS(String fileName, String tableName, String cellPosition)
 			throws ClassCastException, FileNotFoundException, IOException, NullPointerException, Exception {
-		try (InputStream inputStream = TeachSpreadsheetDocument.class.getClassLoader().getResourceAsStream(fileName)) {
+		try (InputStream inputStream = TeachSpreadsheetDocument.class.getResourceAsStream(fileName)) {
 			if (inputStream == null) {
 				LOGGER.error("File " + fileName + " not found.");
 				throw new FileNotFoundException("File not found");

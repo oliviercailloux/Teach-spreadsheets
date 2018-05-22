@@ -13,8 +13,8 @@ public class ODSReaderTest {
 	 */
 	@Test
 	public void testCellIsDiagonalBorder() throws Exception {
-		try (InputStream is = ODSReaderTest.class.getClassLoader()
-				.getResourceAsStream("io/github/oliviercailloux/y2018/teach_spreadsheets/Saisie_voeux_dauphine.ods")) {
+		try (InputStream is = ODSReaderTest.class
+				.getResourceAsStream("Saisie_voeux_dauphine.ods")) {
 			try (SpreadsheetDocument sd = SpreadsheetDocument.loadDocument(is)) {
 				ODSReader odsR = new ODSReader(sd);
 
@@ -32,8 +32,8 @@ public class ODSReaderTest {
 	 */
 	@Test
 	public void testCellIsNotDiagonalBorder() throws Exception {
-		try (InputStream is = ODSReaderTest.class.getClassLoader()
-				.getResourceAsStream("io/github/oliviercailloux/y2018/teach_spreadsheets/Saisie_voeux_dauphine.ods")) {
+		try (InputStream is = ODSReaderTest.class
+				.getResourceAsStream("Saisie_voeux_dauphine.ods")) {
 			try (SpreadsheetDocument sd = SpreadsheetDocument.loadDocument(is)) {
 				ODSReader odsR = new ODSReader(sd);
 
@@ -50,8 +50,8 @@ public class ODSReaderTest {
 	 */
 	@Test
 	public void testCellValueOK() throws Exception {
-		try (InputStream is = ODSReaderTest.class.getClassLoader()
-				.getResourceAsStream("io/github/oliviercailloux/y2018/teach_spreadsheets/Saisie_voeux_dauphine.ods")) {
+		try (InputStream is = ODSReaderTest.class
+				.getResourceAsStream("Saisie_voeux_dauphine.ods")) {
 			try (SpreadsheetDocument sd = SpreadsheetDocument.loadDocument(is)) {
 				String yearOfStudy = "L3_Informatique";
 				ODSReader odsR = new ODSReader(sd, yearOfStudy);
@@ -68,8 +68,8 @@ public class ODSReaderTest {
 	 */
 	@Test
 	public void testCellValueNotOK() throws Exception {
-		try (InputStream is = ODSReaderTest.class.getClassLoader()
-				.getResourceAsStream("io/github/oliviercailloux/y2018/teach_spreadsheets/Saisie_voeux_dauphine.ods")) {
+		try (InputStream is = ODSReaderTest.class
+				.getResourceAsStream("Saisie_voeux_dauphine.ods")) {
 			try (SpreadsheetDocument sd = SpreadsheetDocument.loadDocument(is)) {
 				String yearOfStudy = "L3_Informatique";
 				ODSReader odsR = new ODSReader(sd, yearOfStudy);

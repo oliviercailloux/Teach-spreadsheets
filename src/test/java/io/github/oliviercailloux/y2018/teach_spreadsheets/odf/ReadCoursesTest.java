@@ -3,7 +3,6 @@ package io.github.oliviercailloux.y2018.teach_spreadsheets.odf;
 import java.io.InputStream;
 import java.util.List;
 
-import org.assertj.core.api.Assertions;
 import org.junit.Assert;
 import org.junit.Test;
 import org.odftoolkit.simple.SpreadsheetDocument;
@@ -26,8 +25,8 @@ public class ReadCoursesTest {
 	 */
 	@Test
 	public void testReadCourses() throws Exception {
-		try (InputStream is = ODSReaderTest.class.getClassLoader()
-				.getResourceAsStream("io/github/oliviercailloux/y2018/teach_spreadsheets/Saisie_voeux_dauphine.ods")) {
+		try (InputStream is = ODSReaderTest.class
+				.getResourceAsStream("Saisie_voeux_dauphine.ods")) {
 			try (SpreadsheetDocument sd = SpreadsheetDocument.loadDocument(is)) {
 				String yearOfStudy = "L3_Informatique";
 				ODSReader odsR = new ODSReader(sd, yearOfStudy);
@@ -47,8 +46,8 @@ public class ReadCoursesTest {
 	 */
 	@Test
 	public void testSameCourseSheetAndReadCourses() throws Exception {
-		try (InputStream is = ODSReaderTest.class.getClassLoader()
-				.getResourceAsStream("io/github/oliviercailloux/y2018/teach_spreadsheets/Saisie_voeux_dauphine.ods")) {
+		try (InputStream is = ODSReaderTest.class
+				.getResourceAsStream("Saisie_voeux_dauphine.ods")) {
 			try (SpreadsheetDocument sd = SpreadsheetDocument.loadDocument(is)) {
 				String yearOfStudy = "L3_Informatique";
 				ODSReader odsR = new ODSReader(sd, yearOfStudy);
@@ -75,7 +74,7 @@ public class ReadCoursesTest {
 				c2.setCMTP_Hour(0);
 				c2.setGrpsNumber("");
 
-				Assertions.assertThat(c1).isEqualToComparingFieldByFieldRecursively(c2);
+				Assert.assertTrue((c1).equals(c2));
 			}
 		}
 	}
@@ -86,8 +85,8 @@ public class ReadCoursesTest {
 	 */
 	@Test
 	public void testReadCoursesFromSpecifiedSheet() throws Exception {
-		try (InputStream is = ODSReaderTest.class.getClassLoader().getResourceAsStream(
-				"io/github/oliviercailloux/y2018/teach_spreadsheets/Saisie_voeux_dauphine_TestForReadCourses_SingleSheet.ods")) {
+		try (InputStream is = ODSReaderTest.class.getResourceAsStream(
+				"Saisie_voeux_dauphine_TestForReadCourses_SingleSheet.ods")) {
 			try (SpreadsheetDocument sd = SpreadsheetDocument.loadDocument(is)) {
 				String yearOfStudy = "L3_Informatique";
 				ODSReader odsR = new ODSReader(sd, yearOfStudy);
@@ -114,7 +113,7 @@ public class ReadCoursesTest {
 				c2.setCMTP_Hour(0);
 				c2.setGrpsNumber("");
 
-				Assertions.assertThat(c1).isEqualToComparingFieldByFieldRecursively(c2);
+				Assert.assertTrue((c1).equals(c2));
 			}
 		}
 
@@ -125,8 +124,8 @@ public class ReadCoursesTest {
 	 */
 	@Test
 	public void testReadCoursesFromEverySheet() throws Exception {
-		try (InputStream is = ODSReaderTest.class.getClassLoader().getResourceAsStream(
-				"io/github/oliviercailloux/y2018/teach_spreadsheets/Saisie_voeux_dauphine_TestForReadCourses_TwoSheets.ods")) {
+		try (InputStream is = ODSReaderTest.class.getResourceAsStream(
+				"Saisie_voeux_dauphine_TestForReadCourses_TwoSheets.ods")) {
 			try (SpreadsheetDocument sd = SpreadsheetDocument.loadDocument(is)) {
 				ODSReader odsR = new ODSReader(sd);
 
@@ -172,8 +171,8 @@ public class ReadCoursesTest {
 				c4.setCMTP_Hour(0);
 				c4.setGrpsNumber("6 TD");
 
-				Assertions.assertThat(c1).isEqualToComparingFieldByFieldRecursively(c3);
-				Assertions.assertThat(c2).isEqualToComparingFieldByFieldRecursively(c4);
+				Assert.assertTrue((c1).equals(c3));
+				Assert.assertTrue((c2).equals(c4));
 			}
 		}
 

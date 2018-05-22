@@ -23,9 +23,9 @@ public class MainResource1 {
 			throws NumberFormatException, FileNotFoundException, IllegalArgumentException, IOException {
 		List<Course> courses2 = new ArrayList<>();
 		System.out.println("\n");
-		ClassLoader classLoader = MainResource1.class.getClassLoader();
-		URL ressourceUrl = classLoader
-				.getResource("io/github/oliviercailloux/y2018/teach_spreadsheets/start-courses.csv");
+		
+		URL ressourceUrl = MainResource1.class
+				.getResource("start-courses.csv");
 		System.out.println(ressourceUrl.getPath());
 		File file = new File(ressourceUrl.getPath());
 		
