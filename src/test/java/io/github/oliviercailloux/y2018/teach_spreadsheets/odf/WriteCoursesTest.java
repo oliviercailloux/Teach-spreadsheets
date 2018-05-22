@@ -177,7 +177,7 @@ public class WriteCoursesTest {
 
 		WriteCourses yearOfStudyWriter = new WriteCourses(
 				new File(
-						"src/test/resources/io/github/oliviercailloux/y2018/teach_spreadsheets/Saisie_voeux_dauphine_WriteCourses.ods"),
+						"src/test/resources/io/github/oliviercailloux/y2018/teach_spreadsheets/odf/Saisie_voeux_dauphine_WriteCourses.ods"),
 				"1ère année de licence", 200, 1, semestre1, semestre2);
 
 		yearOfStudyWriter.WriteCoursesOfYear();
