@@ -16,6 +16,7 @@ import java.util.Objects;
  *               </p>
  */
 public class Course {
+	private static int yearBegin = 2017;
 	private String name = "", apogeeCode = "", yearOfStud = "";
 	private double cmH = 0.0, tdH = 0.0, cmtdH = 0.0, tpH = 0.0, cmtpH = 0.0;
 
@@ -229,6 +230,14 @@ public class Course {
 
 	public void setSupervisor(String supervisor) {
 		this.supervisor = supervisor;
+	}
+
+	public static int getYearBegin() {
+		return yearBegin;
+	}
+
+	public static void setYearBegin(int yearBegin) {
+		Course.yearBegin = yearBegin;
 	}
 
 }

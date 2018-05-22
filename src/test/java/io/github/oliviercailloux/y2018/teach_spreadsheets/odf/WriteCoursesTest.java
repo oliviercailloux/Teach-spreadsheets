@@ -30,8 +30,8 @@ public class WriteCoursesTest {
 
 	@Test
 	public void testWriteCoursesOfYear() throws Exception {
-		ArrayList<Course> semestre1 = new ArrayList<>();
-		ArrayList<Course> semestre2 = new ArrayList<>();
+		List<Course> semestre1 = new ArrayList<>();
+		List<Course> semestre2 = new ArrayList<>();
 
 		String sheetName = "DE1";
 
@@ -175,9 +175,10 @@ public class WriteCoursesTest {
 		semestre2.add(courseAS2);
 		semestre2.add(courseD);
 
-		WriteCourses yearOfStudyWriter = new WriteCourses(new File(
-				"src/test/resources/io/github/oliviercailloux/y2018/teach_spreadsheets/Saisie_voeux_dauphine_WriteCourses.ods"),
-				"1ère année de licence", 2016, 2017, 200, 1, semestre1, semestre2);
+		WriteCourses yearOfStudyWriter = new WriteCourses(
+				new File(
+						"src/test/resources/io/github/oliviercailloux/y2018/teach_spreadsheets/Saisie_voeux_dauphine_WriteCourses.ods"),
+				"1ère année de licence", 200, 1, semestre1, semestre2);
 		yearOfStudyWriter.WriteCoursesOfYear();
 
 		List<Course> actualSemester1 = new ArrayList<>();
