@@ -1,5 +1,6 @@
 package io.github.oliviercailloux.y2018.teach_spreadsheets.odf;
 
+import java.util.List;
 import java.util.Objects;
 
 import org.odftoolkit.simple.SpreadsheetDocument;
@@ -22,14 +23,16 @@ public class ODSReader implements SpreadsheetReader {
 
 	private final static Logger LOGGER = LoggerFactory.getLogger(ODSReader.class);
 
-	private SpreadsheetDocument document;
+	private SpreadsheetDocument document = null;
 
-	private Table sheet;
+	private Table sheet = null;
+
+	private List<Table> sheetList = null;
 
 	public ODSReader(SpreadsheetDocument spreadsheetDocument) {
 		this.document = Objects.requireNonNull(spreadsheetDocument);
 		this.sheet = Objects.requireNonNull(spreadsheetDocument.getTableList().get(0));
-
+		this.sheetList = this.document.getTableList();
 		LOGGER.info("ODSReader initialized without actual sheet");
 	}
 
@@ -76,10 +79,18 @@ public class ODSReader implements SpreadsheetReader {
 		return cell.getDisplayText();
 	}
 
+	public List<Table> getSheetList() {
+		return sheetList;
+	}
+
+	public void setSheetList(List<Table> sheetList) {
+		this.sheetList = sheetList;
+	}
+
 	@SuppressWarnings("unused")
 	@Override
-	public boolean isDiagonalBorder(String yearOfStudy, String cellPosition) {
-		Table table = this.getDocument().getSheetByName(yearOfStudy);
+	public boolean isDiagonalBorder(String sheetName, String cellPosition) {
+		Table table = this.getDocument().getSheetByName(sheetName);
 		/*
 		 * There is a problem with ODFTookit, their function getBorder return NULL if
 		 * the border doesn't exists, but if there is a border, It doesn't return the
