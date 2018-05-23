@@ -1,6 +1,8 @@
 package io.github.oliviercailloux.y2018.teach_spreadsheets.odf;
 
 import java.io.File;
+import java.net.URI;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -11,13 +13,14 @@ import org.odftoolkit.simple.SpreadsheetDocument;
 import org.odftoolkit.simple.table.Table;
 
 import io.github.oliviercailloux.y2018.teach_spreadsheets.courses.Course;
+import io.github.oliviercailloux.y2018.teach_spreadsheets.courses.CourseSheet;
 
 public class WriteCoursesTest {
 
 	@Before
 	public void deleteYearOfStudySheet() throws Exception {
-		try (SpreadsheetDocument workbook = SpreadsheetDocument.loadDocument(
-				"src/test/resources/io/github/oliviercailloux/y2018/teach_spreadsheets/odf/Saisie_voeux_dauphine_WriteCourses.ods")) {
+		try (SpreadsheetDocument workbook = SpreadsheetDocument
+				.loadDocument(WriteCoursesTest.class.getResourceAsStream("Saisie_voeux_dauphine_WriteCourses.ods"))) {
 			Table sheet = workbook.getTableByName("DE1");
 			if (sheet != null) {
 				sheet.remove();
@@ -175,24 +178,29 @@ public class WriteCoursesTest {
 		semestre2.add(courseAS2);
 		semestre2.add(courseD);
 
-		WriteCourses yearOfStudyWriter = new WriteCourses(
-				new File(
-						"src/test/resources/io/github/oliviercailloux/y2018/teach_spreadsheets/odf/Saisie_voeux_dauphine_WriteCourses.ods"),
-				"1ère année de licence", 200, 1, semestre1, semestre2);
+		CourseSheet courseSheet = new CourseSheet(sheetName, "1ère année de licence", 200, 1, semestre1, semestre2);
+		WriteCourses yearOfStudyWriter = new WriteCourses(new File(
+				"src/test/resources/io/github/oliviercailloux/y2018/teach_spreadsheets/odf/Saisie_voeux_dauphine_WriteCourses.ods"),
+				courseSheet);
 
 		yearOfStudyWriter.WriteCoursesOfYear();
 
 		List<Course> actualSemester1 = new ArrayList<>();
 		List<Course> actualSemester2 = new ArrayList<>();
 
-		ODSReader ods = new ODSReader(yearOfStudyWriter.getWorkbook(), sheetName);
-		ReadCourses reader = new ReadCourses(ods);
+		URL is = ReadCoursesTest.class.getResource("Saisie_voeux_dauphine_WriteCourses.ods");
+		URI uri = is.toURI();
+		File file = new File(uri);
+		String yearOfStudy = "DE1";
+
+		ReadCourses reader = new ReadCourses(file);
+		Table currentTable = reader.getReader().getDocument().getTableByName(yearOfStudy);
 
 		String cellStartPosition1 = "B4";
 		String cellStartPosition2 = "P4";
 
-		actualSemester1 = reader.readCoursesFromCell(cellStartPosition1);
-		actualSemester2 = reader.readCoursesFromCell(cellStartPosition2);
+		actualSemester1 = reader.readCoursesFromCell(cellStartPosition1, currentTable);
+		actualSemester2 = reader.readCoursesFromCell(cellStartPosition2, currentTable);
 
 		Assert.assertTrue((actualSemester1).equals(semestre1));
 		Assert.assertTrue((actualSemester2).equals(semestre2));

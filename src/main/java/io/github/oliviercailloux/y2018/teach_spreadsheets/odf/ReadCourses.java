@@ -1,6 +1,6 @@
 package io.github.oliviercailloux.y2018.teach_spreadsheets.odf;
 
-import java.io.InputStream;
+import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -29,7 +29,6 @@ public class ReadCourses {
 	private final static String COURSTP = "CMTP";
 	private final static String TD = "TD";
 	private final static String TP = "TP";
-	private final static int NBATTRIBUTE = 8;
 	/**
 	 * Assuming that the Begin year and the end are at cells CELLYEAR.
 	 */
@@ -38,36 +37,34 @@ public class ReadCourses {
 	private final static Logger LOGGER = LoggerFactory.getLogger(ReadCourses.class);
 
 	/**
-	 * Assuming that the tables of courses starts at cells startCell1 and
-	 * startCell2 for each sheet
+	 * Assuming that the tables of courses starts at cells STARTCELL1 and STARTCELL2
+	 * for each sheet
 	 */
-	private final static String startCell1 = "B4";
+	private final static String STARTCELL1 = "B4";
 	/**
-	 * Assuming that the tables of courses starts at cells startCell1 and
-	 * startCell2 for each sheet
+	 * Assuming that the tables of courses starts at cells STARTCELL1 and STARTCELL2
+	 * for each sheet
 	 */
-	private final static String startCell2 = "P4";
+	private final static String STARTCELL2 = "P4";
 
 	private ODSReader reader;
 
-	public ReadCourses(ODSReader reader) {
-		this.reader = Objects.requireNonNull(reader);
+	public ReadCourses(File file) throws Exception {
+		this.reader = new ODSReader(SpreadsheetDocument.loadDocument(file));
 	}
 
 	/**
-	 * This method returns a List of {@link Course} from the ODS file read by
-	 * the {@link ODSReader} in the attribute and the cell Position in argument.
+	 * This method returns a List of {@link Course} from the ODS file read by the
+	 * {@link ODSReader} in the attribute and the cell Position in argument.
 	 * 
 	 * @param cellPosition:
 	 *            the position of the first Cell of the Table where are the
 	 *            courses(ex: B2)
 	 * 
 	 */
-	public List<Course> readCoursesFromCell(String cellPosition) {
+	public List<Course> readCoursesFromCell(String cellPosition, Table currentSheet) {
 		List<Course> courses = new ArrayList<>();
-
-		Table currentSheet = reader.getSheet();
-
+		reader.setSheet(currentSheet);
 		String yearOfStudy = currentSheet.getTableName();
 
 		Cell startCell = currentSheet.getCellByPosition(cellPosition);
@@ -77,106 +74,119 @@ public class ReadCourses {
 
 		Cell actualCell = startCell;
 		String cellContent = reader.getCellValue(CELLYEAR);
+
 		Integer yearBegin = Integer.parseInt(cellContent.split(" ")[1].split("/")[0]);
 
 		Course.setYearBegin(yearBegin);
 		for (int i = startCellRowIndex; i < currentSheet.getRowCount(); i++) {
 			Course course = new Course();
 			course.setYearOfStud(yearOfStudy);
-			int j = -1;
-			for (j = startCellColumnIndex; j < startCellColumnIndex + NBATTRIBUTE; j++) {
-				actualCell = currentSheet.getCellByPosition(j, i);
 
-				String cellText = actualCell.getDisplayText().replaceAll(",", ".");
+			int j = startCellColumnIndex;
+			actualCell = currentSheet.getCellByPosition(j, i);
+			String cellText = actualCell.getDisplayText();
 
-				if ("".equals(cellText) && j == startCellColumnIndex) {
-					break;
+			if ("".equals(cellText) && j == startCellColumnIndex) {
+				break;
+			}
+			course.setName(cellText);
+
+			j++;
+			actualCell = currentSheet.getCellByPosition(j, i);
+			cellText = actualCell.getDisplayText();
+
+			course.setapogeeCode(cellText);
+
+			j++;
+			actualCell = currentSheet.getCellByPosition(j, i);
+			cellText = actualCell.getDisplayText();
+
+			course.setSupervisor(cellText);
+
+			j++;
+			actualCell = currentSheet.getCellByPosition(j, i);
+			cellText = actualCell.getDisplayText();
+
+			course.setTeachers(cellText);
+
+			j++;
+			actualCell = currentSheet.getCellByPosition(j, i);
+			cellText = actualCell.getDisplayText();
+
+			if (this.reader.isDiagonalBorder(actualCell) || "".equals(cellText)) {
+				course.setCM_Hour(0);
+			} else {
+				String hourStr = cellText.replaceAll(",", ".");
+				String[] hourTab = hourStr.split("h");
+				course.setCM_Hour(Double.parseDouble(hourTab[0]));
+			}
+
+			j++;
+			actualCell = currentSheet.getCellByPosition(j, i);
+			cellText = actualCell.getDisplayText();
+
+			if (this.reader.isDiagonalBorder(actualCell) || "".equals(cellText)) {
+				course.setTD_Hour(0);
+				course.setCMTD_Hour(0);
+			} else {
+				String hourStr = cellText.replaceAll(",", ".");
+				String[] hourTab = hourStr.split("h");
+				if (hourStr.contains(COURSTD)) {
+					course.setCMTD_Hour(Double.parseDouble(hourTab[0]));
+				} else if (hourStr.contains(TD)) {
+					course.setTD_Hour(Double.parseDouble(hourTab[0]));
 				}
-				int columnRelativeNumber = j - startCellColumnIndex;
-				switch (columnRelativeNumber) {
-				case 0:
-					course.setName(cellText);
-					break;
-				case 1:
-					course.setapogeeCode(cellText);
-					break;
-				case 2:
-					course.setSupervisor(cellText);
-					break;
-				case 3:
-					course.setTeachers(cellText);
-					break;
-				case 4:
-					if (this.reader.isDiagonalBorder(actualCell) || "".equals(cellText)) {
-						course.setCM_Hour(0);
-					} else {
-						String hourStr = cellText;
-						String[] hourTab = hourStr.split("h");
-						course.setCM_Hour(Double.parseDouble(hourTab[0]));
-					}
-					break;
+			}
 
-				case 5:
-					if (this.reader.isDiagonalBorder(actualCell) || "".equals(cellText)) {
-						course.setTD_Hour(0);
-						course.setCMTD_Hour(0);
-					} else {
-						String hourStr = cellText;
-						String[] hourTab = hourStr.split("h");
-						if (hourStr.contains(COURSTD)) {
-							course.setCMTD_Hour(Double.parseDouble(hourTab[0]));
-						} else if (hourStr.contains(TD)) {
-							course.setTD_Hour(Double.parseDouble(hourTab[0]));
-						}
-					}
-					break;
-				case 6:
-					if (this.reader.isDiagonalBorder(actualCell) || "".equals(cellText)) {
-						course.setTP_Hour(0);
-						course.setCMTP_Hour(0);
-					} else {
-						String hourStr = cellText;
-						String[] hourTab = hourStr.split("h");
-						if (hourStr.contains(COURSTP)) {
-							course.setCMTP_Hour(Double.parseDouble(hourTab[0]));
-						} else if (hourStr.contains(TP)) {
-							course.setTP_Hour(Double.parseDouble(hourTab[0]));
-						}
+			j++;
+			actualCell = currentSheet.getCellByPosition(j, i);
+			cellText = actualCell.getDisplayText();
 
-					}
-					break;
-				case 7:
-					if (this.reader.isDiagonalBorder(actualCell) || "".equals(cellText)) {
-						course.setGrpsNumber("");
-					} else {
-						course.setGrpsNumber(cellText);
-					}
-					break;
-				default:
-					break;
+			if (this.reader.isDiagonalBorder(actualCell) || "".equals(cellText)) {
+				course.setTP_Hour(0);
+				course.setCMTP_Hour(0);
+			} else {
+				String hourStr = cellText.replaceAll(",", ".");
+				String[] hourTab = hourStr.split("h");
+				if (hourStr.contains(COURSTP)) {
+					course.setCMTP_Hour(Double.parseDouble(hourTab[0]));
+				} else if (hourStr.contains(TP)) {
+					course.setTP_Hour(Double.parseDouble(hourTab[0]));
 				}
+
+			}
+
+			j++;
+			actualCell = currentSheet.getCellByPosition(j, i);
+			cellText = actualCell.getDisplayText();
+
+			if (this.reader.isDiagonalBorder(actualCell) || "".equals(cellText)) {
+				course.setGrpsNumber("");
+			} else {
+				course.setGrpsNumber(cellText);
 			}
 			if (j == startCellColumnIndex) {
 				break;
 			}
 			courses.add(course);
+
 		}
 
 		return courses;
+
 	}
 
 	/**
-	 * This method returns a List of {@link Course} from the ODS file read by
-	 * the {@link ODSReader} in the attribute and a sheet of the file.
+	 * This method returns a List of {@link Course} from the ODS file read by the
+	 * {@link ODSReader} in the attribute and a sheet of the file.
 	 * 
-	 * This method only works with specific sheet of the spreadsheet document,
-	 * with a specific format.
+	 * This method returns a void list if the sheet has not the correct format
 	 * 
 	 * @see the template in resources
 	 * 
 	 * @param sheet:
-	 *            the sheet of the spreadsheet document where you want to read
-	 *            the courses.
+	 *            the sheet of the spreadsheet document where you want to read the
+	 *            courses.
 	 * 
 	 */
 	public List<Course> readCoursesFromSheet(Table sheet) {
@@ -187,8 +197,8 @@ public class ReadCourses {
 
 		// if the table format is correct
 		if (actualSheet.getCellByPosition("B3").getDisplayText().equals("Matière")) {
-			courses.addAll(this.readCoursesFromCell(startCell1));
-			courses.addAll(this.readCoursesFromCell(startCell2));
+			courses.addAll(this.readCoursesFromCell(STARTCELL1, sheet));
+			courses.addAll(this.readCoursesFromCell(STARTCELL2, sheet));
 			LOGGER.info("Table " + actualSheet.getTableName() + " courses have been added successfully\n");
 		} else {
 			LOGGER.info("Table " + actualSheet.getTableName() + " doesn't have courses or the table format is wrong\n");
@@ -198,8 +208,8 @@ public class ReadCourses {
 	}
 
 	/**
-	 * This method returns a List of {@link Course} from the ODS file read by
-	 * the {@link ODSReader} in the attribute.
+	 * This method returns a List of {@link Course} from the ODS file read by the
+	 * {@link ODSReader} in the attribute.
 	 * 
 	 * This method reads all the Courses from all the sheets of the ODF document
 	 *
@@ -207,9 +217,8 @@ public class ReadCourses {
 	@SuppressWarnings("resource")
 	public List<Course> readCourses() {
 		List<Course> courses = new ArrayList<>();
-		SpreadsheetDocument document = reader.getDocument();
 
-		List<Table> tables = document.getTableList();
+		List<Table> tables = reader.getSheetList();
 
 		for (Table table : tables) {
 			courses.addAll(this.readCoursesFromSheet(table));
@@ -218,23 +227,32 @@ public class ReadCourses {
 		return courses;
 	}
 
-	public static void main(String[] args) throws Exception {
-		try (InputStream is = ReadCourses.class.getResourceAsStream("Saisie_voeux_dauphine.ods")) {
-			try (SpreadsheetDocument sd = SpreadsheetDocument.loadDocument(is)) {
-				String yearOfStudy = "L3_Informatique";
-				ODSReader odsR = new ODSReader(sd, yearOfStudy);
-
-				List<Course> courses = new ArrayList<>();
-
-				ReadCourses reader = new ReadCourses(odsR);
-				courses = reader.readCourses();
-
-				for (Course course : courses) {
-					System.out.println(course + "\n");
-				}
-				System.out.println(Course.getYearBegin());
-			}
-
-		}
+	public ODSReader getReader() {
+		return reader;
 	}
+
+	public void setReader(ODSReader reader) {
+		this.reader = Objects.requireNonNull(reader);
+	}
+
+	// public static void main(String[] args) throws Exception {
+	// try (InputStream is =
+	// ReadCourses.class.getResourceAsStream("Saisie_voeux_dauphine.ods")) {
+	// try (SpreadsheetDocument sd = SpreadsheetDocument.loadDocument(is)) {
+	// String yearOfStudy = "L3_Informatique";
+	// ODSReader odsR = new ODSReader(sd, yearOfStudy);
+	//
+	// List<Course> courses = new ArrayList<>();
+	//
+	// ReadCourses reader = new ReadCourses(odsR);
+	// courses = reader.readCourses();
+	//
+	// for (Course course : courses) {
+	// System.out.println(course + "\n");
+	// }
+	// System.out.println(Course.getYearBegin());
+	// }
+	//
+	// }
+	// }
 }

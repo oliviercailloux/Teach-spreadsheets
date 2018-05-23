@@ -23,7 +23,7 @@ public interface SpreadsheetReader {
 	 * @param cellPosition
 	 *            for instance : B14
 	 */
-	public boolean isDiagonalBorder(String yearOfStudy, String cellPosition);
+	public boolean isDiagonalBorder(String sheetName, String cellPosition);
 
 	/**
 	 * detect if there is a diagonal border in cell at cellPosition
