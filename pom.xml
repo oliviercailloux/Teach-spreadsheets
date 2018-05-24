@@ -6,29 +6,29 @@
 	<version>0.0.1-SNAPSHOT</version>
 	<name> Maven Project Teach-Spreadsheets</name>
 	<description>	</description>
-	
-	<properties> 
+
+	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<maven.compiler.source>1.8</maven.compiler.source>
 		<maven.compiler.target>1.8</maven.compiler.target>
 	</properties>
-	
+
 	<build>
 		<resources>
-	        <resource>
-	            <directory>src/main/java</directory>
-	        </resource>
-	        <resource>
-	            <directory>src/main/resources</directory>
-	        </resource>
-	        <resource>
-	            <directory>	src/test/java</directory>
-	        </resource>
-        	<resource>
-	            <directory>src/test/resources</directory>
-	        </resource>        
-    	</resources>
-    	
+			<resource>
+				<directory>src/main/java</directory>
+			</resource>
+			<resource>
+				<directory>src/main/resources</directory>
+			</resource>
+			<resource>
+				<directory>	src/test/java</directory>
+			</resource>
+			<resource>
+				<directory>src/test/resources</directory>
+			</resource>
+		</resources>
+
 		<plugins>
 			<plugin>
 				<artifactId>maven-compiler-plugin</artifactId>
@@ -81,22 +81,63 @@
 		</dependency>
 
 		<dependency>
-		  <groupId>org.assertj</groupId>
-		  <artifactId>assertj-core</artifactId>
-		  <!-- use 2.9.0 for Java 7 projects -->
-		  <version>3.9.0</version>
-		  <scope>test</scope>
+			<groupId>org.assertj</groupId>
+			<artifactId>assertj-core</artifactId>
+			<!-- use 2.9.0 for Java 7 projects -->
+			<version>3.9.0</version>
+			<scope>test</scope>
 		</dependency>
-		
+
 		<dependency>
 			<groupId>org.apache.commons</groupId>
 			<artifactId>commons-csv</artifactId>
 			<version>1.5</version>
 		</dependency>
 		<dependency>
-		    <groupId>com.google.guava</groupId>
-		    <artifactId>guava</artifactId>
-		    <version>25.0-jre</version>
+			<groupId>com.google.guava</groupId>
+			<artifactId>guava</artifactId>
+			<version>25.0-jre</version>
+		</dependency>
+
+		<!-- https://mvnrepository.com/artifact/org.eclipse.swt/org.eclipse.swt.cocoa.macosx.x86_64 -->
+		<dependency>
+			<groupId>org.eclipse.swt</groupId>
+			<artifactId>org.eclipse.swt.cocoa.macosx.x86_64</artifactId>
+			<version>4.3</version>
+			<optional>true</optional>
+			<exclusions>
+				<exclusion>
+					<groupId>org.eclipse.platform</groupId>
+					<artifactId>org.eclipse.swt</artifactId>
+				</exclusion>
+			</exclusions>
+		</dependency>
+
+		<dependency>
+			<groupId>org.eclipse.platform</groupId>
+			<artifactId>org.eclipse.jface</artifactId>
+			<version>3.13.2</version>
+			<exclusions>
+				<exclusion>
+					<groupId>org.eclipse.platform</groupId>
+					<artifactId>org.eclipse.swt</artifactId>
+				</exclusion>
+			</exclusions>
 		</dependency>
 	</dependencies>
+
+	<dependencyManagement>
+		<dependencies>
+			<dependency>
+				<groupId>org.eclipse.platform</groupId>
+				<artifactId>org.eclipse.core.commands</artifactId>
+				<version>3.9.0</version>
+			</dependency>
+			<dependency>
+				<groupId>org.eclipse.platform</groupId>
+				<artifactId>org.eclipse.equinox.common</artifactId>
+				<version>3.9.0</version>
+			</dependency>
+		</dependencies>
+	</dependencyManagement>
 </project>
