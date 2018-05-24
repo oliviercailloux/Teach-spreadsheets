@@ -1,11 +1,12 @@
 package io.github.oliviercailloux.y2018.teach_spreadsheets.odf;
 
-import org.odftoolkit.simple.SpreadsheetDocument;
-import org.odftoolkit.simple.table.Cell;
-import org.odftoolkit.simple.table.Table;
+import java.io.InputStream;
 
 /**
  * <b>This interface allows to read data from a spreadsheet.</b>
+ * <p>
+ * All methods need the currentSheet name.
+ * </p>
  * 
  * @author tuannamdavaux, samuelcohen75
  * @see io.github.oliviercailloux.y2018.teach_spreadsheets.odf.SpreadsheetShower
@@ -13,33 +14,30 @@ import org.odftoolkit.simple.table.Table;
 public interface SpreadsheetReader {
 
 	/**
-	 * get cell value at cellPosition
+	 * get cell value at cellPosition at sheet
 	 */
-	public String getCellValue(String cellPosition);
+	public String getCellValue(String sheet, String cellPosition);
 
 	/**
-	 * detect if there is a diagonal border in cell at cellPosition
+	 * detect if there is a diagonal border in cell at cellPosition at sheet
 	 * 
 	 * @param cellPosition
-	 *            for instance : B14
 	 */
-	public boolean isDiagonalBorder(String sheetName, String cellPosition);
+	public boolean isDiagonalBorder(String sheet, String cellPosition);
 
 	/**
-	 * detect if there is a diagonal border in cell at cellPosition
+	 * detect if there is a diagonal border in cell at j i cellPosition at sheet
 	 * 
-	 * @param cell
+	 * @param cellPosition
 	 */
-	public boolean isDiagonalBorder(Cell cell);
-
-	/**
-	 * specify a current sheet
-	 */
-	public void setSheet(Table sheet);
+	public boolean isDiagonalBorder(String sheet, int columnIndex,
+			int rowIndex);
 
 	/**
 	 * specify the input file
+	 * 
+	 * @throws Exception
 	 */
-	public void setDocument(SpreadsheetDocument document);
+	public void setDocument(InputStream document) throws Exception;
 
 }

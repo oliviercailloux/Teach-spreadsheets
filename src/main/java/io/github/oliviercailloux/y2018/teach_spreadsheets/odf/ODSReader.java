@@ -1,5 +1,6 @@
 package io.github.oliviercailloux.y2018.teach_spreadsheets.odf;
 
+import java.io.InputStream;
 import java.util.List;
 import java.util.Objects;
 
@@ -13,48 +14,24 @@ import org.slf4j.LoggerFactory;
 /**
  * This class implements SpreadsheetReader : it allows to read a Spreadsheet
  * document, get the value of a cell, check if a cell is a diagonal border or
- * not. To use these methods, you'll need to precise a {@link Table}, the sheet
- * where the Reader will read.
+ * not.
  * 
- * @author Victor CHEN (Kantoki), Louis Fontaine
- * @version Version : 2.1 Last update : 08/05/2018
+ * @author Victor CHEN (Kantoki), Louis Fontaine (fontlo15)
+ * @version Version : 2.2 Last update : 24/05/2018
  */
 public class ODSReader implements SpreadsheetReader {
 
-	private final static Logger LOGGER = LoggerFactory.getLogger(ODSReader.class);
+	private final static Logger LOGGER = LoggerFactory
+			.getLogger(ODSReader.class);
 
 	private SpreadsheetDocument document = null;
-
-	private Table sheet = null;
 
 	private List<Table> sheetList = null;
 
 	public ODSReader(SpreadsheetDocument spreadsheetDocument) {
 		this.document = Objects.requireNonNull(spreadsheetDocument);
-		this.sheet = Objects.requireNonNull(spreadsheetDocument.getTableList().get(0));
 		this.sheetList = this.document.getTableList();
 		LOGGER.info("ODSReader initialized without actual sheet");
-	}
-
-	public ODSReader(SpreadsheetDocument spreadsheetDocument, String sheet) {
-		this.document = Objects.requireNonNull(spreadsheetDocument);
-		this.sheet = Objects.requireNonNull(spreadsheetDocument.getTableByName(sheet));
-
-		LOGGER.info("ODSReader initialized with actual sheet");
-
-	}
-
-	public Table getSheet() {
-		return sheet;
-	}
-
-	@Override
-	public void setSheet(Table sheet) {
-		this.sheet = sheet;
-	}
-
-	public void setSheet(String sheet) {
-		this.sheet = Objects.requireNonNull(document.getTableByName(sheet));
 	}
 
 	public SpreadsheetDocument getDocument() {
@@ -62,14 +39,21 @@ public class ODSReader implements SpreadsheetReader {
 	}
 
 	@Override
-	public void setDocument(SpreadsheetDocument document) {
-		this.document = Objects.requireNonNull(document);
+	public void setDocument(InputStream document) throws Exception {
+		this.document = Objects
+				.requireNonNull(SpreadsheetDocument.loadDocument(document));
+	}
+
+	public Table getTable(String sheet) {
+		return this.document.getSheetByName(sheet);
 	}
 
 	@Override
-	public String getCellValue(String cellPosition) {
-		Cell cell = sheet.getCellByPosition(cellPosition);
-		boolean isDiagonalBorder = isDiagonalBorder(sheet.getTableName(), cellPosition);
+	public String getCellValue(String sheet, String cellPosition) {
+		Table currentSheet = Objects
+				.requireNonNull(this.document.getSheetByName(sheet));
+		Cell cell = currentSheet.getCellByPosition(cellPosition);
+		boolean isDiagonalBorder = isDiagonalBorder(sheet, cellPosition);
 		if (cell == null) {
 			return "";
 		}
@@ -87,38 +71,42 @@ public class ODSReader implements SpreadsheetReader {
 		this.sheetList = sheetList;
 	}
 
-	@SuppressWarnings("unused")
 	@Override
-	public boolean isDiagonalBorder(String sheetName, String cellPosition) {
-		Table table = this.getDocument().getSheetByName(sheetName);
+	public boolean isDiagonalBorder(String sheet, String cellPosition) {
 		/*
-		 * There is a problem with ODFTookit, their function getBorder return NULL if
-		 * the border doesn't exists, but if there is a border, It doesn't return the
-		 * description but a NumberFormatException, so the catch fix it
+		 * There is a problem with ODFTookit, their function getBorder return
+		 * NULL if the border doesn't exists, but if there is a border, It
+		 * doesn't return the description but a NumberFormatException, so the
+		 * catch fix it
 		 */
-		try {
-			table.getCellByPosition(cellPosition).getBorder(CellBordersType.DIAGONALBLTR);
-		} catch (NullPointerException e) {
+		Table currentSheet = Objects
+				.requireNonNull(this.document.getSheetByName(sheet));
+		Cell cell = currentSheet.getCellByPosition(cellPosition);
+		if (cell == null)
 			return false;
-		} catch (NumberFormatException z) {
+		try {
+			cell.getBorder(CellBordersType.DIAGONALBLTR);
+		} catch (@SuppressWarnings("unused") NullPointerException e) {
+			return false;
+		} catch (@SuppressWarnings("unused") NumberFormatException z) {
 			return true;
 		}
 		return false;
 	}
 
-	@SuppressWarnings("unused")
 	@Override
-	public boolean isDiagonalBorder(Cell cell) {
-		/*
-		 * There is a problem with ODFTookit, their function getBorder return NULL if
-		 * the border doesn't exists, but if there is a border, It doesn't return the
-		 * description but a NumberFormatException, so the catch fix it
-		 */
+	public boolean isDiagonalBorder(String sheet, int columnIndex,
+			int rowIndex) {
+		Table currentSheet = Objects
+				.requireNonNull(this.document.getSheetByName(sheet));
+		Cell cell = currentSheet.getCellByPosition(columnIndex, rowIndex);
+		if (cell == null)
+			return false;
 		try {
 			cell.getBorder(CellBordersType.DIAGONALBLTR);
-		} catch (NullPointerException e) {
+		} catch (@SuppressWarnings("unused") NullPointerException e) {
 			return false;
-		} catch (NumberFormatException z) {
+		} catch (@SuppressWarnings("unused") NumberFormatException z) {
 			return true;
 		}
 		return false;

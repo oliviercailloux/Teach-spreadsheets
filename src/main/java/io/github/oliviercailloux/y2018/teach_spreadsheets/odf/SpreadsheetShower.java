@@ -3,68 +3,105 @@
  */
 package io.github.oliviercailloux.y2018.teach_spreadsheets.odf;
 
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.InputStream;
 import java.util.Objects;
 import java.util.Scanner;
 
-import org.odftoolkit.simple.SpreadsheetDocument;
+import org.odftoolkit.simple.table.Table;
 
 /**
  * <b>This class allows to print data by using a SpreadsheetShower object.</b>
+ * 
  * @author tuannamdavaux
- * @see io.github.oliviercailloux.y2018.teach_spreadsheets.odf.SpreadsheetReader
+ * @see io.github.oliviercailloux.y2018.teach_spreadsheets.odf.ODSReader
  */
 public class SpreadsheetShower {
 	/**
-	 * SpreadsheetReader object for showing cell values
+	 * ODSReader object for showing cell values
 	 */
-	private SpreadsheetReader spreadsheetReader = null;
+	private ODSReader reader = null;
 
-	public SpreadsheetShower(SpreadsheetReader spreadsheetReader) {
-		this.spreadsheetReader = Objects.requireNonNull(spreadsheetReader);
+	public SpreadsheetShower(ODSReader ODSReader) {
+		this.reader = Objects.requireNonNull(ODSReader);
 	}
-	
+
 	/**
-	 * This method asks the user to enter cell position in standard input then print its value.
-	 * And it will ask again until the user types End.
+	 * This method asks the user to enter cell position in standard input then
+	 * print its value. And it will ask again until the user types End.
 	 */
 	public void showCellsValue() {
-		try(Scanner sc = new Scanner(System.in)){
-		String position = "";
-		String cellValue = "";
-		boolean typeEnd = false;
-		System.out.println("Ce programme peut lire les cellules de la feuille :\nEntrez une position par exemple A1 / Tapez Fin pour terminer la saisie.");
-		do {
-			System.out.println(cellValue);
-			position = sc.nextLine();
-			if(position.equals("Fin")) {
-				System.out.println("End");
-				typeEnd = !typeEnd;
-			}else cellValue = spreadsheetReader.getCellValue(position);
-		} while (!typeEnd);
-		}
-	}
-	
-	/**
-	 * Same method plus : 
-	 * This method asks the user to specify a file.
-	 */
-	public void showCellsValueWithSpecifiedFile() throws Exception {
-		try(Scanner sc = new Scanner(System.in)){
+		try (Scanner sc = new Scanner(System.in)) {
+			Table currentSheet = null;
 			String position = "";
 			String cellValue = "";
 			boolean typeEnd = false;
-			System.out.println("Veuillez préciser le fichier d'entrée avec le chemin complet:");
-			spreadsheetReader.setDocument(SpreadsheetDocument.loadDocument(sc.nextLine()));
-			System.out.println("Ce programme peut lire les cellules de la feuille :\nEntrez une position par exemple A1 / Tapez Fin pour terminer la saisie.");
+			System.out.println(
+					"Ce programme peut lire les cellules de la feuille :\nEntrez une position par exemple A1 / Tapez Fin pour terminer la saisie.");
+			do {
+				System.out.println("Précisez la feuille.");
+				currentSheet = this.reader.getTable(sc.nextLine());
+			} while (currentSheet == null);
+			do {
+				System.out.println(cellValue);
+
+				position = sc.nextLine();
+				if (position.equals("Fin")) {
+					System.out.println("End");
+					typeEnd = !typeEnd;
+				} else
+					cellValue = reader.getCellValue(currentSheet.getTableName(),
+							position);
+			} while (!typeEnd);
+		}
+	}
+
+	/**
+	 * Same method plus : This method asks the user to specify a file.
+	 */
+
+	@SuppressWarnings("resource")
+	public void showCellsValueWithSpecifiedFile() {
+		try (Scanner sc = new Scanner(System.in)) {
+			Table currentSheet = null;
+			String position = "";
+			String cellValue = "";
+			boolean typeEnd = false;
+			InputStream file;
+
+			do {
+				try {
+					System.out.println(
+							"Veuillez préciser le fichier d'entrée avec le chemin complet:");
+					file = new FileInputStream(sc.nextLine());
+				} catch (@SuppressWarnings("unused") FileNotFoundException e) {
+					file = null;
+				}
+			} while (file == null);
+
+			try {
+				reader.setDocument(file);
+			} catch (Exception e) {
+				throw new IllegalStateException(e);
+			}
+			System.out.println(
+					"Ce programme peut lire les cellules de la feuille :\nEntrez une position par exemple A1 / Tapez Fin pour terminer la saisie.");
+			do {
+				System.out.println("Précisez la feuille.");
+				currentSheet = this.reader.getTable(sc.nextLine());
+			} while (currentSheet == null);
 			do {
 				System.out.println(cellValue);
 				position = sc.nextLine();
-				if(position.equals("Fin")) {
+				if (position.equals("Fin")) {
 					System.out.println("End");
 					typeEnd = !typeEnd;
-				}else cellValue = spreadsheetReader.getCellValue(position);
+				} else
+					cellValue = reader.getCellValue(currentSheet.getTableName(),
+							position);
 			} while (!typeEnd);
-			}
+		}
 	}
 
 }
