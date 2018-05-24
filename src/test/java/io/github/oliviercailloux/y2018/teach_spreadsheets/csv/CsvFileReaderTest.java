@@ -32,7 +32,7 @@ public class CsvFileReaderTest {
 
 		expected.add(course);
 
-		String filename = "src/test/resources/io/github/oliviercailloux/y2018/teach_spreadsheets/oneCourseTest.csv";
+		String filename = "src/test/resources/io/github/oliviercailloux/y2018/teach_spreadsheets/csv/oneCourseTest.csv";
 
 		List<Course> actual = new ArrayList<>();
 
