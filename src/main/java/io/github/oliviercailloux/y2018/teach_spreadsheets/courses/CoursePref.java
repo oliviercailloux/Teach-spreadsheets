@@ -16,38 +16,76 @@ public class CoursePref {
 	 */
 	private Course course;
 
-	private String teacher;
 	private Choice cmChoice;
 	private Choice tdChoice;
-	private Choice cmtdChoice;
 	private Choice tpChoice;
+
+	private int nbrGrpCm;
+	private int nbrGrpTd;
+	private int nbrGrpTp;
+	private int nbrExp;
 
 	/**
 	 * @param course
 	 *            : the Course to insert the teacher's preferences. course not
 	 *            <code> null </code>
-	 * @param teacher
-	 *            : the teacher of the Course. teacher not <code> null </code>
+	 * 
 	 */
-	public CoursePref(Course course, String teacher) {
+	public CoursePref(Course course) {
 		this.course = Objects.requireNonNull(course);
-		this.teacher = Objects.requireNonNull(teacher);
-		this.cmChoice = Choice.ABSENT;
-		this.tdChoice = Choice.ABSENT;
-		this.cmtdChoice = Choice.ABSENT;
-		this.tpChoice = Choice.ABSENT;
+		this.cmChoice = (course.getCM_Hour() == 0) ? Choice.NA : Choice.ABSENT;
+		this.tdChoice = (course.getTD_Hour() == 0 && course.getCMTD_Hour() == 0)
+				? Choice.NA
+				: Choice.ABSENT;
+		this.tpChoice = (course.getTP_Hour() == 0 && course.getCMTP_Hour() == 0)
+				? Choice.NA
+				: Choice.ABSENT;
 	}
 
 	@Override
 	public String toString() {
-		return "Preferences for the course " + course.getName() + ", whose teacher is " + teacher + ", for CM : "
-				+ cmChoice.toString() + " ; TD : " + tdChoice.toString() + " ; CMTD : " + cmtdChoice.toString()
-				+ " ; TP : " + tpChoice.toString() + ".";
+		return "Preferences for the course " + course.getName() + ", for CM : "
+				+ cmChoice.toString() + " ; TD : " + tdChoice.toString()
+				+ " ; TP : " + tpChoice.toString() + ", nbrGrpCM : " + nbrGrpCm
+				+ ", nbrGrpTd : " + nbrGrpTd + ", nbrGrpTp : " + nbrGrpTp
+				+ ", course experience : " + nbrExp + ".";
+	}
+
+	public int getNbrGrpCm() {
+		return nbrGrpCm;
+	}
+
+	public void setNbrGrpCm(int nbrGrpCm) {
+		this.nbrGrpCm = nbrGrpCm;
+	}
+
+	public int getNbrGrpTd() {
+		return nbrGrpTd;
+	}
+
+	public void setNbrGrpTd(int nbrGrpTd) {
+		this.nbrGrpTd = nbrGrpTd;
+	}
+
+	public int getNbrGrpTp() {
+		return nbrGrpTp;
+	}
+
+	public void setNbrGrpTp(int nbrGrpTp) {
+		this.nbrGrpTp = nbrGrpTp;
+	}
+
+	public int getNbrExp() {
+		return nbrExp;
+	}
+
+	public void setNbrExp(int nbrExp) {
+		this.nbrExp = nbrExp;
 	}
 
 	@Override
 	public int hashCode() {
-		return Objects.hash(course, teacher, cmChoice, tdChoice, cmtdChoice, tpChoice);
+		return Objects.hash(course);
 	}
 
 	@Override
@@ -59,23 +97,10 @@ public class CoursePref {
 		if (getClass() != obj.getClass())
 			return false;
 		CoursePref other = (CoursePref) obj;
-		if (cmChoice != other.cmChoice)
-			return false;
-		if (cmtdChoice != other.cmtdChoice)
-			return false;
 		if (course == null) {
 			if (other.course != null)
 				return false;
 		} else if (!course.equals(other.course))
-			return false;
-		if (tdChoice != other.tdChoice)
-			return false;
-		if (teacher == null) {
-			if (other.teacher != null)
-				return false;
-		} else if (!teacher.equals(other.teacher))
-			return false;
-		if (tpChoice != other.tpChoice)
 			return false;
 		return true;
 	}
@@ -90,18 +115,6 @@ public class CoursePref {
 	 */
 	public void setCourse(Course course) {
 		this.course = Objects.requireNonNull(course);
-	}
-
-	public String getTeacher() {
-		return teacher;
-	}
-
-	/**
-	 * @param teacher
-	 *            not <code> null </code>
-	 */
-	public void setTeacher(String teacher) {
-		this.teacher = Objects.requireNonNull(teacher);
 	}
 
 	public Choice getCmChoice() {
@@ -126,18 +139,6 @@ public class CoursePref {
 	 */
 	public void setTdChoice(Choice tdChoice) {
 		this.tdChoice = Objects.requireNonNull(tdChoice);
-	}
-
-	public Choice getCmtdChoice() {
-		return cmtdChoice;
-	}
-
-	/**
-	 * @param cmtdChoice
-	 *            not <code> null </code>
-	 */
-	public void setCmtdChoice(Choice cmtdChoice) {
-		this.cmtdChoice = Objects.requireNonNull(cmtdChoice);
 	}
 
 	public Choice getTpChoice() {
