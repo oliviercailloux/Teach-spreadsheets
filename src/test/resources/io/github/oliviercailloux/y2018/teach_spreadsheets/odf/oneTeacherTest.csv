@@ -1,0 +1,2 @@
+﻿id, name , firstName , adress , postCode , city , personalPhone , mobilePhone , personalMail , dauphineMail , status , dauphinePhone , desk
+1, dupont, toto, 52 rue des laurents, 75016, Paris, 0154669563, 0645895632, toto.dupont@gmail.com, toto.dupont@dauphine.eu, maitre de conférence, 0145895522, B14
