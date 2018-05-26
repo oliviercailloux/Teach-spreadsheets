@@ -2,6 +2,8 @@ package io.github.oliviercailloux.y2018.teach_spreadsheets.courses;
 
 import java.util.Objects;
 
+import com.google.common.base.Preconditions;
+
 /**
  * @author Tuan Nam Davaux (tuannamdavaux), Samuel COHEN (samuelcohen75)
  * @contributors Louis Fontaine, Victor CHEN
@@ -20,16 +22,21 @@ public class Course {
 	private String name = "", apogeeCode = "", yearOfStud = "";
 	private double cmH = 0.0, tdH = 0.0, cmtdH = 0.0, tpH = 0.0, cmtpH = 0.0;
 
+	private int semester = 0;
+
 	private String grpsNumber = "";
 
 	private String teachers = "", supervisor = "";
 
-	public Course(String name, String apogeeCode, String yearOfStud, String supervisor, String teachers) {
+	public Course(String name, String apogeeCode, String yearOfStud, String supervisor, String teachers, int semester) {
 		this.name = Objects.requireNonNull(name);
 		this.apogeeCode = Objects.requireNonNull(apogeeCode);
 		this.yearOfStud = Objects.requireNonNull(yearOfStud);
 		this.supervisor = Objects.requireNonNull(supervisor);
 		this.teachers = Objects.requireNonNull(teachers);
+		Preconditions.checkArgument(semester >= 1 && semester <= 6);
+		this.semester = semester;
+
 	}
 
 	public Course() {
@@ -238,6 +245,15 @@ public class Course {
 
 	public static void setYearBegin(int yearBegin) {
 		Course.yearBegin = yearBegin;
+	}
+
+	public int getSemester() {
+		return semester;
+	}
+
+	public void setSemester(int semester) {
+		Preconditions.checkArgument(semester >= 1 && semester <= 6);
+		this.semester = semester;
 	}
 
 }
