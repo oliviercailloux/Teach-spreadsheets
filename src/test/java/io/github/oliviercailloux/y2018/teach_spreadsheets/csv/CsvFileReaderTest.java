@@ -11,10 +11,10 @@ import org.junit.Assert;
 import org.junit.Test;
 
 import io.github.oliviercailloux.y2018.teach_spreadsheets.courses.Course;
+import io.github.oliviercailloux.y2018.teach_spreadsheets.courses.Teacher;
 
 public class CsvFileReaderTest {
 
-	@SuppressWarnings("unused")
 	@Test
 	public void testReadCourseCSVfile() throws Exception {
 
@@ -32,13 +32,10 @@ public class CsvFileReaderTest {
 
 		expected.add(course);
 
-		String filename = "src/test/resources/io/github/oliviercailloux/y2018/teach_spreadsheets/csv/oneCourseTest.csv";
-
+		String filename = "oneCourseTest.csv";
+		File file = new File(CsvFileReaderTest.class.getResource(filename).toURI());
 		List<Course> actual = new ArrayList<>();
-
-		File file = new File(filename);
-
-		try (Reader fileReader = new FileReader(new File(filename))) {
+		try (Reader fileReader = new FileReader(file)) {
 			CsvFileReader.readCourseCSVfile(fileReader, actual);
 
 		}
@@ -46,4 +43,26 @@ public class CsvFileReaderTest {
 		Assert.assertTrue(actual.get(0).equals((expected.get(0))));
 	}
 
+	@Test
+	public void testReadTeachersFromCSVfile() throws Exception {
+
+		List<Teacher> expected = new ArrayList<>();
+
+		Teacher teacher = new Teacher(1, "dupont", "toto", "52 rue des laurents", "75016", "Paris", "0154669563",
+				"0645895632", "toto.dupont@gmail.com", "toto.dupont@dauphine.eu", "maitre de conférence", "0145895522",
+				"B14");
+
+		expected.add(teacher);
+
+		String filename = "oneTeacherTest.csv";
+
+		List<Teacher> actual = new ArrayList<>();
+
+		File file = new File(CsvFileReaderTest.class.getResource(filename).toURI());
+		try (Reader fileReader = new FileReader(file)) {
+			CsvFileReader.readTeachersFromCSVfile(fileReader, actual);
+		}
+
+		Assert.assertTrue(actual.get(0).equals((expected.get(0))));
+	}
 }
