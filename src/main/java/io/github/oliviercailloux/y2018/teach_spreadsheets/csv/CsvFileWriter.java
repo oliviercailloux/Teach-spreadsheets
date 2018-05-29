@@ -1,7 +1,5 @@
 package io.github.oliviercailloux.y2018.teach_spreadsheets.csv;
 
-import java.io.File;
-import java.io.FileWriter;
 import java.io.IOException;
 import java.io.Writer;
 import java.util.ArrayList;
@@ -33,8 +31,6 @@ public class CsvFileWriter {
 
 	public static void writeInCSV(List<Course> courses, Writer writer) throws IOException {
 
-		String fileLocation = System.getProperty("user.dir");
-
 		// Create the CSVFormat object with "\n" as a record delimiter
 		CSVFormat csvFileFormat = CSVFormat.EXCEL.withRecordSeparator(NEW_LINE_SEPARATOR);
 		// initialize FileWriter object
@@ -60,50 +56,9 @@ public class CsvFileWriter {
 
 				csvFilePrinter.printRecord(coursesRecord);
 			}
-			LOGGER.info("\nYour courses have been successfully exported into a CSV File named in "
-					+ fileLocation + " !");
+			LOGGER.info("\nYour courses have been successfully exported into a CSV File");
 
 		}
-	}
-
-	///
-
-	public static void writeInCSV(List<Course> courses, File file) throws IOException {
-
-		String fileLocation = System.getProperty("user.dir");
-
-		String fileName = file.getName();
-		// Create the CSVFormat object with "\n" as a record delimiter
-		CSVFormat csvFileFormat = CSVFormat.EXCEL.withRecordSeparator(NEW_LINE_SEPARATOR);
-		// initialize FileWriter object
-		try (FileWriter fileWriter = new FileWriter(file)) {
-			LOGGER.info("File " + fileName + " is ready to be writen");
-			// initialize CSVPrinter object
-			try (CSVPrinter csvFilePrinter = new CSVPrinter(fileWriter, csvFileFormat)) {
-				LOGGER.info("File " + fileName + " is ready to be writen with CSVPrinter");
-				// Create CSV file header
-				csvFilePrinter.printRecord(FILE_HEADER);
-
-				// Writing
-				for (Course c : courses) {
-					List<String> coursesRecord = new ArrayList<>();
-					coursesRecord.add(c.getName());
-					coursesRecord.add(c.getapogeeCode());
-					coursesRecord.add(c.getYearOfStud());
-					coursesRecord.add(String.valueOf(c.getCM_Hour()));
-					coursesRecord.add(String.valueOf(c.getTD_Hour()));
-					coursesRecord.add(String.valueOf(c.getCMTD_Hour()));
-					coursesRecord.add(String.valueOf(c.getTP_Hour()));
-					coursesRecord.add(c.getGrpsNumber());
-
-					csvFilePrinter.printRecord(coursesRecord);
-				}
-				LOGGER.info("\nYour courses have been successfully exported into a CSV File named " + fileName + " in "
-						+ fileLocation + " !");
-
-			}
-		}
-
 	}
 
 }

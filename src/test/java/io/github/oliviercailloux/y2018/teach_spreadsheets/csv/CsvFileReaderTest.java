@@ -46,23 +46,19 @@ public class CsvFileReaderTest {
 	@Test
 	public void testReadTeachersFromCSVfile() throws Exception {
 
-		List<Teacher> expected = new ArrayList<>();
-
-		Teacher teacher = new Teacher(1, "dupont", "toto", "52 rue des laurents", "75016", "Paris", "0154669563",
+		Teacher expected = new Teacher(1, "dupont", "toto", "52 rue des laurents", "75016", "Paris", "0154669563",
 				"0645895632", "toto.dupont@gmail.com", "toto.dupont@dauphine.eu", "maitre de conférence", "0145895522",
 				"B14");
 
-		expected.add(teacher);
-
 		String filename = "oneTeacherTest.csv";
 
-		List<Teacher> actual = new ArrayList<>();
+		Teacher actual = null;
 
 		File file = new File(CsvFileReaderTest.class.getResource(filename).toURI());
 		try (Reader fileReader = new FileReader(file)) {
-			CsvFileReader.readTeachersFromCSVfile(fileReader, actual);
+			actual = CsvFileReader.readTeacherFromCSVfile(fileReader);
 		}
 
-		Assert.assertTrue(actual.get(0).equals((expected.get(0))));
+		Assert.assertTrue(actual.equals((expected)));
 	}
 }

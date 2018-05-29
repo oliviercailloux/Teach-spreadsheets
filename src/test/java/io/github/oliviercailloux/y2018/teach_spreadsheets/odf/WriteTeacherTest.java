@@ -6,8 +6,6 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.io.Reader;
 import java.net.URISyntaxException;
-import java.util.ArrayList;
-import java.util.List;
 
 import org.junit.Assert;
 import org.junit.Before;
@@ -25,15 +23,11 @@ public class WriteTeacherTest {
 
 		String filename = "oneTeacherTest.csv";
 
-		List<Teacher> teachers = new ArrayList<>();
-
 		File file = new File(WriteTeacherTest.class.getResource(filename).toURI());
 
 		try (Reader fileReader = new FileReader(file)) {
-			CsvFileReader.readTeachersFromCSVfile(fileReader, teachers);
+			teacher = CsvFileReader.readTeacherFromCSVfile(fileReader);
 		}
-
-		teacher = teachers.get(0);
 
 	}
 
