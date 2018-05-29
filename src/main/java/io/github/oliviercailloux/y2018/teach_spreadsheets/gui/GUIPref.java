@@ -36,13 +36,13 @@ public class GUIPref {
 			}
 
 			Display display = new Display();
-
-			Image image = new Image(display, inputStream);
-
 			Shell shell = new Shell(display);
 			shell.setText("Menu principal - Teach-spreadsheets");
 			shell.setLayout(new GridLayout(1, false));
-			shell.setSize(800, 800);
+			shell.setSize(500, 700);
+			
+			// Display an image
+			Image image = new Image(display, inputStream);
 			Label labelImg = new Label(shell, SWT.BORDER);
 			Rectangle clientArea = shell.getClientArea();
 			labelImg.setLocation(clientArea.x, clientArea.y);
@@ -53,9 +53,15 @@ public class GUIPref {
 			Label separator = new Label(shell, SWT.HORIZONTAL | SWT.SEPARATOR);
 			separator.setLayoutData(new GridData(GridData.FILL_HORIZONTAL));
 
-			// Create a label
-			new Label(shell, SWT.NONE).setText("This is a plain label.");
-
+			// Label with teacher name
+			Label lblCentered = new Label(shell, SWT.NONE);
+			lblCentered.setText("Bienvenue");
+			lblCentered.setLayoutData(new GridData(SWT.CENTER, SWT.FILL, false, false));
+			
+			// Create a horizontal separator
+			Label separator2 = new Label(shell, SWT.HORIZONTAL | SWT.SEPARATOR);
+			separator2.setLayoutData(new GridData(GridData.FILL_HORIZONTAL));
+			
 			Text text = new Text(shell, SWT.BORDER);
 			text.setText("aaaa");
 
