@@ -3,6 +3,8 @@ package io.github.oliviercailloux.y2018.teach_spreadsheets.gui;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.io.Reader;
 
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.graphics.Image;
@@ -14,6 +16,9 @@ import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.Text;
 import org.slf4j.LoggerFactory;
+
+import io.github.oliviercailloux.y2018.teach_spreadsheets.courses.Teacher;
+import io.github.oliviercailloux.y2018.teach_spreadsheets.csv.CsvFileReader;
 
 public class GUIPref {
 	private final static org.slf4j.Logger LOGGER = LoggerFactory.getLogger(GUIPref.class);
@@ -27,6 +32,8 @@ public class GUIPref {
 				LOGGER.error("File " + logoFileName + " not found.");
 				throw new FileNotFoundException("File not found");
 			}
+
+			LOGGER.info("Image bien récupérée");
 
 			Display display = new Display();
 			Shell shell = new Shell(display);
@@ -48,7 +55,7 @@ public class GUIPref {
 
 			// Label with teacher name
 			Label lblCentered = new Label(shell, SWT.NONE);
-			lblCentered.setText("Bienvenue");
+			lblCentered.setText("Bienvenue" + getTheTeacher());
 			lblCentered.setLayoutData(new GridData(SWT.CENTER, SWT.FILL, false, false));
 
 			// Create a horizontal separator
@@ -66,6 +73,27 @@ public class GUIPref {
 			}
 			image.dispose();
 			display.dispose();
+		}
+	}
+
+	private String getTheTeacher()
+			throws NumberFormatException, FileNotFoundException, IllegalArgumentException, IOException {
+
+		String teacherDetails = "teacher_info.csv";
+
+		try (InputStream inputStream = GUIPref.class.getResourceAsStream(teacherDetails)) {
+			if (inputStream == null) {
+				LOGGER.error("File " + teacherDetails + " not found.");
+				throw new FileNotFoundException("File not found");
+			}
+
+			Reader reader = new InputStreamReader(inputStream);
+			Teacher t = new Teacher();
+			t = CsvFileReader.readTeacherFromCSVfile(reader);
+
+			LOGGER.info("Les informations du Teacher ont bien été récupérées !");
+			String teacherName = t.getFirstName() + t.getName();
+			return teacherName;
 		}
 	}
 
