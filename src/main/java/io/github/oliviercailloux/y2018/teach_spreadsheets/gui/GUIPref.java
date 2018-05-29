@@ -11,8 +11,11 @@ import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.graphics.Rectangle;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
+import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Display;
+import org.eclipse.swt.widgets.Event;
 import org.eclipse.swt.widgets.Label;
+import org.eclipse.swt.widgets.Listener;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.Text;
 import org.slf4j.LoggerFactory;
@@ -100,6 +103,44 @@ public class GUIPref {
 	public static void main(String[] args) throws IOException {
 		GUIPref gui = new GUIPref();
 		gui.initializeMainMenu();
+		Display display = new Display();
+		Shell shell = new Shell(display, SWT.RESIZE | SWT.CLOSE | SWT.MIN);
+		shell.open();
+		shell.setText("File Choice");
+
+		// initialize a grid layout manager
+		GridLayout gridLayout = new GridLayout();
+		gridLayout.numColumns = 2;
+		shell.setLayout(gridLayout);
+
+		// create the label and the field text
+		Label labelTitle = new Label(shell, SWT.NONE);
+		labelTitle.setText("File to load : ");
+		labelTitle.setSize(100, 25);
+		Text textTitle = new Text(shell, SWT.BORDER);
+		textTitle.setText("Saisie_Voeux_Dauphine.ods");
+		Button buttonSubmit = new Button(shell, SWT.PUSH);
+		buttonSubmit.setText("Submit");
+		buttonSubmit.setSize(100, 25);
+		buttonSubmit.addListener(SWT.Selection, new Listener() {
+			@Override
+			public void handleEvent(Event e) {
+				switch (e.type) {
+				case SWT.Selection:
+					String selection = textTitle.getText();
+					Shell shell2 = new Shell(display, SWT.RESIZE | SWT.CLOSE | SWT.MIN);
+					shell2.open();
+
+					while (!shell2.isDisposed()) { //
+						if (!display.readAndDispatch())
+							display.sleep();
+					}
+					break;
+				default:
+					break;
+				}
+			}
+		});
 	}
 
 }
