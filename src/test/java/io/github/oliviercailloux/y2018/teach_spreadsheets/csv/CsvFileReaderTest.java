@@ -1,12 +1,13 @@
 
 package io.github.oliviercailloux.y2018.teach_spreadsheets.csv;
 
-import java.io.File;
-import java.io.FileReader;
 import java.io.Reader;
+import java.io.StringReader;
+import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.apache.commons.io.IOUtils;
 import org.junit.Assert;
 import org.junit.Test;
 
@@ -33,12 +34,13 @@ public class CsvFileReaderTest {
 		expected.add(course);
 
 		String filename = "oneCourseTest.csv";
-		File file = new File(CsvFileReaderTest.class.getResource(filename).toURI());
-		List<Course> actual = new ArrayList<>();
-		try (Reader fileReader = new FileReader(file)) {
-			CsvFileReader.readCourseCSVfile(fileReader, actual);
+		String inputStream = IOUtils.toString(CsvFileReaderTest.class.getResourceAsStream(filename),
+				StandardCharsets.UTF_8);
 
-		}
+		Reader stringReader = new StringReader(inputStream);
+
+		List<Course> actual = new ArrayList<>();
+		CsvFileReader.readCourseCSVfile(stringReader, actual);
 
 		Assert.assertTrue(actual.get(0).equals((expected.get(0))));
 	}
@@ -54,10 +56,11 @@ public class CsvFileReaderTest {
 
 		Teacher actual = null;
 
-		File file = new File(CsvFileReaderTest.class.getResource(filename).toURI());
-		try (Reader fileReader = new FileReader(file)) {
-			actual = CsvFileReader.readTeacherFromCSVfile(fileReader);
-		}
+		String inputStream = IOUtils.toString(CsvFileReaderTest.class.getResourceAsStream(filename),
+				StandardCharsets.UTF_8);
+
+		Reader stringReader = new StringReader(inputStream);
+		actual = CsvFileReader.readTeacherFromCSVfile(stringReader);
 
 		Assert.assertTrue(actual.equals((expected)));
 	}
