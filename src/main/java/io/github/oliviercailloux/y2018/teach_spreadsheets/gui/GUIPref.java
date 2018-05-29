@@ -1,38 +1,30 @@
 package io.github.oliviercailloux.y2018.teach_spreadsheets.gui;
 
-import java.io.File;
 import java.io.FileNotFoundException;
-import java.io.FileReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.Reader;
-import java.util.ArrayList;
-import java.util.List;
 
 import org.eclipse.swt.SWT;
-import org.eclipse.swt.events.SelectionAdapter;
-import org.eclipse.swt.graphics.Color;
 import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.graphics.Rectangle;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Button;
-import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Display;
+import org.eclipse.swt.widgets.Event;
 import org.eclipse.swt.widgets.Label;
+import org.eclipse.swt.widgets.Listener;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.Text;
-import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import io.github.oliviercailloux.y2018.teach_spreadsheets.courses.Course;
 import io.github.oliviercailloux.y2018.teach_spreadsheets.courses.Teacher;
 import io.github.oliviercailloux.y2018.teach_spreadsheets.csv.CsvFileReader;
-import io.github.oliviercailloux.y2018.teach_spreadsheets.csv.CsvFileReaderTest;
 
 public class GUIPref {
-	private final static Logger LOGGER = LoggerFactory.getLogger(GUIPref.class);
+	private final static org.slf4j.Logger LOGGER = LoggerFactory.getLogger(GUIPref.class);
 
 	private void initializeMainMenu() throws IOException {
 
@@ -111,6 +103,44 @@ public class GUIPref {
 	public static void main(String[] args) throws IOException {
 		GUIPref gui = new GUIPref();
 		gui.initializeMainMenu();
+		Display display = new Display();
+		Shell shell = new Shell(display, SWT.RESIZE | SWT.CLOSE | SWT.MIN);
+		shell.open();
+		shell.setText("File Choice");
+
+		// initialize a grid layout manager
+		GridLayout gridLayout = new GridLayout();
+		gridLayout.numColumns = 2;
+		shell.setLayout(gridLayout);
+
+		// create the label and the field text
+		Label labelTitle = new Label(shell, SWT.NONE);
+		labelTitle.setText("File to load : ");
+		labelTitle.setSize(100, 25);
+		Text textTitle = new Text(shell, SWT.BORDER);
+		textTitle.setText("Saisie_Voeux_Dauphine.ods");
+		Button buttonSubmit = new Button(shell, SWT.PUSH);
+		buttonSubmit.setText("Submit");
+		buttonSubmit.setSize(100, 25);
+		buttonSubmit.addListener(SWT.Selection, new Listener() {
+			@Override
+			public void handleEvent(Event e) {
+				switch (e.type) {
+				case SWT.Selection:
+					String selection = textTitle.getText();
+					Shell shell2 = new Shell(display, SWT.RESIZE | SWT.CLOSE | SWT.MIN);
+					shell2.open();
+
+					while (!shell2.isDisposed()) { //
+						if (!display.readAndDispatch())
+							display.sleep();
+					}
+					break;
+				default:
+					break;
+				}
+			}
+		});
 	}
 
 }
