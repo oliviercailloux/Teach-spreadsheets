@@ -1,14 +1,12 @@
 package io.github.oliviercailloux.y2018.teach_spreadsheets.csv;
 
-import java.io.File;
-import java.io.FileReader;
-import java.io.FileWriter;
 import java.io.Reader;
+import java.io.StringReader;
+import java.io.StringWriter;
 import java.io.Writer;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.junit.After;
 import org.junit.Assert;
 import org.junit.Test;
 
@@ -16,7 +14,6 @@ import io.github.oliviercailloux.y2018.teach_spreadsheets.courses.Course;
 
 public class CsvFileWriterTest {
 
-	@SuppressWarnings("unused")
 	@Test
 	public void testWriteCourseCSVfile() throws Exception {
 
@@ -35,25 +32,16 @@ public class CsvFileWriterTest {
 		expected.add(course);
 
 		List<Course> actual = new ArrayList<>();
-		String filename = "src/test/resources/io/github/oliviercailloux/y2018/teach_spreadsheets/oneCourseWritten.csv";
 
-		try (Writer fileWriter = new FileWriter(new File(filename))) {
-			CsvFileWriter.writeInCSV(expected, fileWriter);
-		}
+		Writer stringWriter = new StringWriter();
 
-		try (Reader fileReader = new FileReader(new File(filename))) {
-			CsvFileReader.readCourseCSVfile(fileReader, actual);
+		CsvFileWriter.writeInCSV(expected, stringWriter);
 
-		}
+		Reader stringReader = new StringReader(stringWriter.toString());
+
+		CsvFileReader.readCourseCSVfile(stringReader, actual);
 
 		Assert.assertTrue(actual.get(0).equals((expected.get(0))));
-	}
-
-	@After
-	public void deleteTestFile() {
-		File f = new File("src/test/resources/io/github/oliviercailloux/y2018/teach_spreadsheets/oneCourseWritten.csv");
-		if (f.exists())
-			f.delete();
 	}
 
 }

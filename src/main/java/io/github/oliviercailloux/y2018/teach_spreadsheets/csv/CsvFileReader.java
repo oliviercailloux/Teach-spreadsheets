@@ -66,16 +66,13 @@ public class CsvFileReader {
 	}
 
 	/**
-	 * This method read a CSV file of {@link Teacher} and add them to the parameter
-	 * {@link Teacher} list.
+	 * This method read a CSV file of a {@link Teacher} and return the teacher
 	 * 
 	 * @param fileReader
 	 *            a reader set to a CSV file
-	 * @param teachers
-	 *            a list of Teacher to set with the CSV file
 	 * 
 	 */
-	public static void readTeachersFromCSVfile(Reader fileReader, List<Teacher> teachers)
+	public static Teacher readTeacherFromCSVfile(Reader fileReader)
 			throws FileNotFoundException, IOException, NumberFormatException, IllegalArgumentException {
 
 		try (CSVParser parser = CSVParser.parse(fileReader, CSVFormat.EXCEL)) {
@@ -94,11 +91,12 @@ public class CsvFileReader {
 					for (int i = 0; i < csvRecord.size(); i++) {
 						c.set(i, csvRecord.get(i));
 					}
-					teachers.add(c);
+					return c;
 				}
 			}
 			LOGGER.info("The Teacher list has been updated successfully with the CSV file. ");
 		}
+		return null;
 
 	}
 }
