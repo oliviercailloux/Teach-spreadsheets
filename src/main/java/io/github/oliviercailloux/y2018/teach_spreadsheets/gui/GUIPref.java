@@ -66,7 +66,8 @@ public class GUIPref {
 			labelImg.pack();
 
 			// Create a horizontal separator
-			Label separator = new Label(shell, SWT.HORIZONTAL | SWT.SEPARATOR);
+			Label separator;
+			separator = new Label(shell, SWT.HORIZONTAL | SWT.SEPARATOR);
 			separator.setLayoutData(new GridData(GridData.FILL_HORIZONTAL));
 
 			// Label with teacher name
@@ -75,8 +76,8 @@ public class GUIPref {
 			lblCentered.setLayoutData(new GridData(SWT.CENTER, SWT.FILL, false, false));
 
 			// Create a horizontal separator
-			Label separator2 = new Label(shell, SWT.HORIZONTAL | SWT.SEPARATOR);
-			separator2.setLayoutData(new GridData(GridData.FILL_HORIZONTAL));
+			separator = new Label(shell, SWT.HORIZONTAL | SWT.SEPARATOR);
+			separator.setLayoutData(new GridData(GridData.FILL_HORIZONTAL));
 
 			Button button = new Button(shell, SWT.NONE);
 			button.setText("Créez mes préférences");
@@ -160,7 +161,11 @@ public class GUIPref {
 		Label separator = new Label(prefShell, SWT.HORIZONTAL | SWT.SEPARATOR);
 		separator.setLayoutData(new GridData(GridData.FILL_HORIZONTAL));
 		
-		
+		 Button buttonSemester;
+		 buttonSemester = new Button(prefShell, SWT.CHECK | SWT.WRAP);
+		 buttonSemester.setText("Semestre 1");
+		 buttonSemester = new Button(prefShell, SWT.CHECK | SWT.WRAP);
+		 buttonSemester.setText("Semestre 2");
 		
 		final List list = new List (prefShell, SWT.BORDER | SWT.MULTI | SWT.V_SCROLL);
 
