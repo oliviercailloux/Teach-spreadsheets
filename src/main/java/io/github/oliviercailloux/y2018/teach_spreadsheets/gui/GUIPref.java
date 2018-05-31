@@ -7,7 +7,6 @@ import java.io.InputStreamReader;
 import java.io.Reader;
 import java.util.ArrayList;
 
-
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.ControlAdapter;
 import org.eclipse.swt.events.ControlEvent;
@@ -38,7 +37,7 @@ import io.github.oliviercailloux.y2018.teach_spreadsheets.csv.CsvFileReader;
 
 public class GUIPref {
 	private final static org.slf4j.Logger LOGGER = LoggerFactory.getLogger(GUIPref.class);
-	
+
 	Display display;
 	Shell shell;
 
@@ -81,7 +80,7 @@ public class GUIPref {
 			// Create a horizontal separator
 			separator = new Label(shell, SWT.HORIZONTAL | SWT.SEPARATOR);
 			separator.setLayoutData(new GridData(GridData.FILL_HORIZONTAL));
-			
+
 			Button buttonFileExplorer = new Button(shell, SWT.NONE);
 			buttonFileExplorer.setText("Ouvrez votre fichier contenant tous les cours");
 			buttonFileExplorer.setLayoutData(new GridData(GridData.FILL_HORIZONTAL));
@@ -93,7 +92,7 @@ public class GUIPref {
 					// the main Display. The child could also access the
 					// display itself by calling Display.getDefault()
 					// =====================================================
-					LOGGER.info("Shell for the courses preferences well opened");
+					LOGGER.info("File Explorer well opened");
 					openFileExplorer();
 				}
 
@@ -168,7 +167,7 @@ public class GUIPref {
 	}
 
 	private void prefShell() {
-		
+
 		// Doesn't allow the user to close the main shell when the child shell is open
 		final Shell prefShell = new Shell(display, SWT.CLOSE | SWT.SYSTEM_MODAL);
 		prefShell.setLayout(new GridLayout(1, false));
@@ -184,14 +183,14 @@ public class GUIPref {
 		// Create a horizontal separator
 		Label separator = new Label(prefShell, SWT.HORIZONTAL | SWT.SEPARATOR);
 		separator.setLayoutData(new GridData(GridData.FILL_HORIZONTAL));
-		
-		 Button buttonSemester;
-		 buttonSemester = new Button(prefShell, SWT.CHECK | SWT.WRAP);
-		 buttonSemester.setText("Semestre 1");
-		 buttonSemester = new Button(prefShell, SWT.CHECK | SWT.WRAP);
-		 buttonSemester.setText("Semestre 2");
-		
-		final List list = new List (prefShell, SWT.BORDER | SWT.MULTI | SWT.V_SCROLL);
+
+		Button buttonSemester;
+		buttonSemester = new Button(prefShell, SWT.CHECK | SWT.WRAP);
+		buttonSemester.setText("Semestre 1");
+		buttonSemester = new Button(prefShell, SWT.CHECK | SWT.WRAP);
+		buttonSemester.setText("Semestre 2");
+
+		final List list = new List(prefShell, SWT.BORDER | SWT.MULTI | SWT.V_SCROLL);
 
 		// shell.pack();
 		prefShell.open();
@@ -208,66 +207,56 @@ public class GUIPref {
 			}
 		});
 	}
-	
+
 	private void openFileExplorer() {
-		shell = new Shell(display);
-		
-		FileDialog fd = new FileDialog(shell, SWT.OPEN);
-        fd.setText("Open");
-        fd.setFilterPath("C:/");
-        String[] filterExt = { "*.csv" };
-        fd.setFilterExtensions(filterExt);
-        String selected = fd.open();
-        System.out.println(selected);
+		Shell shellFE = new Shell(display);
+
+		FileDialog fd = new FileDialog(shellFE, SWT.OPEN);
+		fd.setText("Open");
+		fd.setFilterPath("C:/");
+		String[] filterExt = { "*.csv" };
+		fd.setFilterExtensions(filterExt);
+		String selected = fd.open();
+		if (selected == null) {
+			LOGGER.error("None file has been opened !");
+		}
+		else {
+		LOGGER.info("The file " + selected + " has been opened.");
+		}
+		shellFE.dispose();
 	}
-	
+
 	private ArrayList<Course> getCoursesFromSemester() {
 		ArrayList<Course> courses = new ArrayList();
-		
+
 		return courses;
 	}
 
 	public static void main(String[] args) throws IOException {
 		GUIPref gui = new GUIPref();
 		gui.initializeMainMenu();
-		/* Display display = new Display();
-		Shell shell = new Shell(display, SWT.RESIZE | SWT.CLOSE | SWT.MIN);
-		shell.open();
-		shell.setText("File Choice");
-
-		// initialize a grid layout manager
-		GridLayout gridLayout = new GridLayout();
-		gridLayout.numColumns = 2;
-		shell.setLayout(gridLayout);
-
-		// create the label and the field text
-		Label labelTitle = new Label(shell, SWT.NONE);
-		labelTitle.setText("File to load : ");
-		labelTitle.setSize(100, 25);
-		Text textTitle = new Text(shell, SWT.BORDER);
-		textTitle.setText("Saisie_Voeux_Dauphine.ods");
-		Button buttonSubmit = new Button(shell, SWT.PUSH);
-		buttonSubmit.setText("Submit");
-		buttonSubmit.setSize(100, 25);
-		buttonSubmit.addListener(SWT.Selection, new Listener() {
-			@Override
-			public void handleEvent(Event e) {
-				switch (e.type) {
-				case SWT.Selection:
-					String selection = textTitle.getText();
-					Shell shell2 = new Shell(display, SWT.RESIZE | SWT.CLOSE | SWT.MIN);
-					shell2.open();
-
-					while (!shell2.isDisposed()) { //
-						if (!display.readAndDispatch())
-							display.sleep();
-					}
-					break;
-				default:
-					break;
-				}
-			}
-		});*/
+		/*
+		 * Display display = new Display(); Shell shell = new Shell(display, SWT.RESIZE
+		 * | SWT.CLOSE | SWT.MIN); shell.open(); shell.setText("File Choice");
+		 * 
+		 * // initialize a grid layout manager GridLayout gridLayout = new GridLayout();
+		 * gridLayout.numColumns = 2; shell.setLayout(gridLayout);
+		 * 
+		 * // create the label and the field text Label labelTitle = new Label(shell,
+		 * SWT.NONE); labelTitle.setText("File to load : "); labelTitle.setSize(100,
+		 * 25); Text textTitle = new Text(shell, SWT.BORDER);
+		 * textTitle.setText("Saisie_Voeux_Dauphine.ods"); Button buttonSubmit = new
+		 * Button(shell, SWT.PUSH); buttonSubmit.setText("Submit");
+		 * buttonSubmit.setSize(100, 25); buttonSubmit.addListener(SWT.Selection, new
+		 * Listener() {
+		 * 
+		 * @Override public void handleEvent(Event e) { switch (e.type) { case
+		 * SWT.Selection: String selection = textTitle.getText(); Shell shell2 = new
+		 * Shell(display, SWT.RESIZE | SWT.CLOSE | SWT.MIN); shell2.open();
+		 * 
+		 * while (!shell2.isDisposed()) { // if (!display.readAndDispatch())
+		 * display.sleep(); } break; default: break; } } });
+		 */
 	}
 
 }
