@@ -23,6 +23,7 @@ import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Event;
+import org.eclipse.swt.widgets.FileDialog;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Listener;
 import org.eclipse.swt.widgets.Shell;
@@ -37,6 +38,9 @@ import io.github.oliviercailloux.y2018.teach_spreadsheets.csv.CsvFileReader;
 
 public class GUIPref {
 	private final static org.slf4j.Logger LOGGER = LoggerFactory.getLogger(GUIPref.class);
+	
+	Display display;
+	Shell shell;
 
 	private void initializeMainMenu() throws IOException {
 
@@ -50,8 +54,8 @@ public class GUIPref {
 
 			LOGGER.info("Image-Logo bien récupérée");
 
-			Display display = new Display();
-			Shell shell = new Shell(display, SWT.CLOSE);
+			display = new Display();
+			shell = new Shell(display, SWT.CLOSE);
 			shell.setText("Menu principal - Teach-spreadsheets");
 			shell.setLayout(new GridLayout(1, false));
 			shell.setSize(500, 700);
@@ -77,11 +81,11 @@ public class GUIPref {
 			// Create a horizontal separator
 			separator = new Label(shell, SWT.HORIZONTAL | SWT.SEPARATOR);
 			separator.setLayoutData(new GridData(GridData.FILL_HORIZONTAL));
-
-			Button button = new Button(shell, SWT.NONE);
-			button.setText("Créez mes préférences");
-			button.setLayoutData(new GridData(GridData.FILL_HORIZONTAL));
-			button.addSelectionListener(new SelectionListener() {
+			
+			Button buttonFileExplorer = new Button(shell, SWT.NONE);
+			buttonFileExplorer.setText("Ouvrez votre fichier contenant tous les cours");
+			buttonFileExplorer.setLayoutData(new GridData(GridData.FILL_HORIZONTAL));
+			buttonFileExplorer.addSelectionListener(new SelectionListener() {
 				@Override
 				public void widgetSelected(SelectionEvent e) {
 					// =====================================================
@@ -90,7 +94,28 @@ public class GUIPref {
 					// display itself by calling Display.getDefault()
 					// =====================================================
 					LOGGER.info("Shell for the courses preferences well opened");
-					prefShell(display);
+					openFileExplorer();
+				}
+
+				@Override
+				public void widgetDefaultSelected(SelectionEvent e) {
+					widgetSelected(e);
+				}
+			});
+
+			Button buttonPref = new Button(shell, SWT.NONE);
+			buttonPref.setText("Créez mes préférences");
+			buttonPref.setLayoutData(new GridData(GridData.FILL_HORIZONTAL));
+			buttonPref.addSelectionListener(new SelectionListener() {
+				@Override
+				public void widgetSelected(SelectionEvent e) {
+					// =====================================================
+					// on button press, create a child Shell object passing
+					// the main Display. The child could also access the
+					// display itself by calling Display.getDefault()
+					// =====================================================
+					LOGGER.info("Shell for the courses preferences well opened");
+					prefShell();
 				}
 
 				@Override
@@ -142,7 +167,7 @@ public class GUIPref {
 		}
 	}
 
-	private void prefShell(Display display) {
+	private void prefShell() {
 		
 		// Doesn't allow the user to close the main shell when the child shell is open
 		final Shell prefShell = new Shell(display, SWT.CLOSE | SWT.SYSTEM_MODAL);
@@ -182,6 +207,18 @@ public class GUIPref {
 				prefShell.dispose();
 			}
 		});
+	}
+	
+	private void openFileExplorer() {
+		shell = new Shell(display);
+		
+		FileDialog fd = new FileDialog(shell, SWT.OPEN);
+        fd.setText("Open");
+        fd.setFilterPath("C:/");
+        String[] filterExt = { "*.csv" };
+        fd.setFilterExtensions(filterExt);
+        String selected = fd.open();
+        System.out.println(selected);
 	}
 	
 	private ArrayList<Course> getCoursesFromSemester() {
