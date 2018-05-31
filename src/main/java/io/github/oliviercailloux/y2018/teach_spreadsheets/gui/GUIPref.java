@@ -1,11 +1,15 @@
 package io.github.oliviercailloux.y2018.teach_spreadsheets.gui;
 
+import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.Reader;
+import java.io.StringReader;
 import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.Set;
 
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.ControlAdapter;
@@ -25,6 +29,9 @@ import org.eclipse.swt.widgets.Event;
 import org.eclipse.swt.widgets.FileDialog;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Listener;
+import org.eclipse.swt.widgets.Menu;
+import org.eclipse.swt.widgets.MenuItem;
+import org.eclipse.swt.widgets.MessageBox;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.Text;
 import org.eclipse.swt.widgets.List;
@@ -34,6 +41,7 @@ import org.slf4j.LoggerFactory;
 import io.github.oliviercailloux.y2018.teach_spreadsheets.courses.Course;
 import io.github.oliviercailloux.y2018.teach_spreadsheets.courses.Teacher;
 import io.github.oliviercailloux.y2018.teach_spreadsheets.csv.CsvFileReader;
+import io.github.oliviercailloux.y2018.teach_spreadsheets.odf.ReadCourses;
 
 public class GUIPref {
 	private final static org.slf4j.Logger LOGGER = LoggerFactory.getLogger(GUIPref.class);
@@ -63,14 +71,13 @@ public class GUIPref {
 			Image image = new Image(display, inputStream);
 			Label labelImg = new Label(shell, SWT.CENTER);
 			Rectangle clientArea = shell.getClientArea();
-			// labelImg.setLocation(clientArea.x, clientArea.y);
+			labelImg.setLocation(clientArea.x, clientArea.y);
 			labelImg.setImage(image);
 			labelImg.pack();
 
 			// Create a horizontal separator
-			Label separator;
-			separator = new Label(shell, SWT.HORIZONTAL | SWT.SEPARATOR);
-			separator.setLayoutData(new GridData(GridData.FILL_HORIZONTAL));
+			Label lblSeparator= new Label(shell, SWT.HORIZONTAL | SWT.SEPARATOR);
+			lblSeparator.setLayoutData(new GridData(GridData.FILL_HORIZONTAL));
 
 			// Label with teacher name
 			Label lblCentered = new Label(shell, SWT.NONE);
@@ -78,8 +85,8 @@ public class GUIPref {
 			lblCentered.setLayoutData(new GridData(SWT.CENTER, SWT.FILL, false, false));
 
 			// Create a horizontal separator
-			separator = new Label(shell, SWT.HORIZONTAL | SWT.SEPARATOR);
-			separator.setLayoutData(new GridData(GridData.FILL_HORIZONTAL));
+			lblSeparator = new Label(shell, SWT.HORIZONTAL | SWT.SEPARATOR);
+			lblSeparator.setLayoutData(new GridData(GridData.FILL_HORIZONTAL));
 
 			Button buttonFileExplorer = new Button(shell, SWT.NONE);
 			buttonFileExplorer.setText("Ouvrez votre fichier contenant tous les cours");
@@ -93,7 +100,8 @@ public class GUIPref {
 					// display itself by calling Display.getDefault()
 					// =====================================================
 					LOGGER.info("File Explorer well opened");
-					openFileExplorer();
+					String chosenFile = openFileExplorer();
+					System.out.println(chosenFile);
 				}
 
 				@Override
@@ -102,10 +110,11 @@ public class GUIPref {
 				}
 			});
 
-			Button buttonPref = new Button(shell, SWT.NONE);
-			buttonPref.setText("Créez mes préférences");
-			buttonPref.setLayoutData(new GridData(GridData.FILL_HORIZONTAL));
-			buttonPref.addSelectionListener(new SelectionListener() {
+			Button buttonExit;
+			buttonExit = new Button(shell, SWT.NONE);
+			buttonExit.setText("Quitter l'application");
+			buttonExit.setLayoutData(new GridData(GridData.FILL_HORIZONTAL));
+			buttonExit.addSelectionListener(new SelectionListener() {
 				@Override
 				public void widgetSelected(SelectionEvent e) {
 					// =====================================================
@@ -113,8 +122,9 @@ public class GUIPref {
 					// the main Display. The child could also access the
 					// display itself by calling Display.getDefault()
 					// =====================================================
-					LOGGER.info("Shell for the courses preferences well opened");
-					prefShell();
+
+					exitApplication();
+
 				}
 
 				@Override
@@ -172,6 +182,30 @@ public class GUIPref {
 		final Shell prefShell = new Shell(display, SWT.CLOSE | SWT.SYSTEM_MODAL);
 		prefShell.setLayout(new GridLayout(1, false));
 		prefShell.setText("Mes préférences - Teach-spreadsheets");
+		
+		// Create a menu
+		Menu menu = new Menu(prefShell, SWT.BAR);
+	    // create a file menu and add an exit item
+	    final MenuItem file = new MenuItem(menu, SWT.CASCADE);
+	    file.setText("&Menu");
+	    final Menu filemenu = new Menu(prefShell, SWT.DROP_DOWN);
+	    file.setMenu(filemenu);
+	    final MenuItem exportItem = new MenuItem(filemenu, SWT.PUSH);
+	    exportItem.setText("&Export your prefs");
+	    // method
+	    final MenuItem openNewFileItem = new MenuItem(filemenu, SWT.PUSH);
+	    openNewFileItem.setText("&Open new file courses");
+	    
+	    openNewFileItem.addListener(SWT.Activate, new Listener() {
+			@Override
+			public void handleEvent(Event event) {
+				openFileExplorer();
+			}
+		});
+	    final MenuItem menuSeparator = new MenuItem(filemenu, SWT.SEPARATOR);
+	    final MenuItem exitItem = new MenuItem(filemenu, SWT.PUSH);
+	    exitItem.setText("E&xit");
+	    prefShell.setMenuBar(menu);
 
 		// ============================
 		// Create a Label in the Shell
@@ -181,8 +215,8 @@ public class GUIPref {
 		topLabel.setLayoutData(new GridData(SWT.CENTER, SWT.FILL, false, false));
 
 		// Create a horizontal separator
-		Label separator = new Label(prefShell, SWT.HORIZONTAL | SWT.SEPARATOR);
-		separator.setLayoutData(new GridData(GridData.FILL_HORIZONTAL));
+		Label lblSeparator = new Label(prefShell, SWT.HORIZONTAL | SWT.SEPARATOR);
+		lblSeparator.setLayoutData(new GridData(GridData.FILL_HORIZONTAL));
 
 		Button buttonSemester;
 		buttonSemester = new Button(prefShell, SWT.CHECK | SWT.WRAP);
@@ -190,7 +224,8 @@ public class GUIPref {
 		buttonSemester = new Button(prefShell, SWT.CHECK | SWT.WRAP);
 		buttonSemester.setText("Semestre 2");
 
-		final List list = new List(prefShell, SWT.BORDER | SWT.MULTI | SWT.V_SCROLL);
+		final List listSheetName = new List(prefShell, SWT.BORDER | SWT.MULTI | SWT.V_SCROLL);
+		
 
 		// shell.pack();
 		prefShell.open();
@@ -208,9 +243,9 @@ public class GUIPref {
 		});
 	}
 
-	private void openFileExplorer() {
+	private String openFileExplorer() {
 		Shell shellFE = new Shell(display);
-
+		
 		FileDialog fd = new FileDialog(shellFE, SWT.OPEN);
 		fd.setText("Open");
 		fd.setFilterPath("C:/");
@@ -219,17 +254,58 @@ public class GUIPref {
 		String selected = fd.open();
 		if (selected == null) {
 			LOGGER.error("None file has been opened !");
+			return null;
 		}
-		else {
 		LOGGER.info("The file " + selected + " has been opened.");
-		}
+		// if a file has been opened then we open the preferences shell
+		prefShell();
+		LOGGER.info("Shell for the courses preferences well opened");
 		shellFE.dispose();
+		return selected;
+	}
+	
+	private File getTheChosenFile() {
+		File file;
+		String fileName = openFileExplorer();
+		file = new File(fileName);
+		return file;
 	}
 
-	private ArrayList<Course> getCoursesFromSemester() {
-		ArrayList<Course> courses = new ArrayList();
+	private void exitApplication() {
+		MessageBox messageBox = new MessageBox(shell, SWT.ICON_QUESTION | SWT.YES | SWT.NO);
+		messageBox.setMessage("Voulez-vous vraiment quitter l'application ?");
+		messageBox.setText("Fermeture de l'application");
+		int response = messageBox.open();
+		if (response == SWT.YES) {
+			LOGGER.info("L'application a bien été fermée.");
+			System.exit(0);
+		}
+	}
+
+	private java.util.List<Course> getCoursesFromSemester(String s) {
+		java.util.List<Course> courses = new ArrayList();
 
 		return courses;
+	}
+	
+	private java.util.List<Course> getCourses() throws Exception {
+		java.util.List<Course> courses = new ArrayList();
+		File file = getTheChosenFile();
+		ReadCourses rc = new ReadCourses(file);
+		return courses = rc.readCourses();
+	}
+	
+	private java.util.List<String> getEverySheetName() throws Exception {
+		java.util.List<Course> courses = getCourses();
+		java.util.List<String> allSheetName = new ArrayList<>();
+		for (Course course : courses) {
+			allSheetName.add(course.getYearOfStud());
+		}
+	    Set set = new HashSet() ;
+        set.addAll(allSheetName);
+        java.util.List allSheetNameNoDoublon = new ArrayList(set) ;
+        return allSheetNameNoDoublon;
+   
 	}
 
 	public static void main(String[] args) throws IOException {
