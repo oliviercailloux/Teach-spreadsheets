@@ -188,23 +188,50 @@ public class GUIPref {
 	    // create a file menu and add an exit item
 	    final MenuItem file = new MenuItem(menu, SWT.CASCADE);
 	    file.setText("&Menu");
-	    final Menu filemenu = new Menu(prefShell, SWT.DROP_DOWN);
-	    file.setMenu(filemenu);
-	    final MenuItem exportItem = new MenuItem(filemenu, SWT.PUSH);
+	    final Menu fileMenu = new Menu(prefShell, SWT.DROP_DOWN);
+	    // final Menu fileMenu = new Menu(file);
+	    file.setMenu(fileMenu);
+	    final MenuItem exportItem = new MenuItem(fileMenu, SWT.PUSH);
 	    exportItem.setText("&Export your prefs");
 	    // method
-	    final MenuItem openNewFileItem = new MenuItem(filemenu, SWT.PUSH);
+	    final MenuItem openNewFileItem = new MenuItem(fileMenu, SWT.PUSH);
 	    openNewFileItem.setText("&Open new file courses");
 	    
-	    openNewFileItem.addListener(SWT.Activate, new Listener() {
+	    openNewFileItem.addSelectionListener(new SelectionListener() {
 			@Override
-			public void handleEvent(Event event) {
+			public void widgetSelected(SelectionEvent e) {
+				// =====================================================
+				// on button press, create a child Shell object passing
+				// the main Display. The child could also access the
+				// display itself by calling Display.getDefault()
+				// =====================================================
 				openFileExplorer();
 			}
+
+			@Override
+			public void widgetDefaultSelected(SelectionEvent e) {
+				widgetSelected(e);
+			}
 		});
-	    final MenuItem menuSeparator = new MenuItem(filemenu, SWT.SEPARATOR);
-	    final MenuItem exitItem = new MenuItem(filemenu, SWT.PUSH);
+	    final MenuItem menuSeparator = new MenuItem(fileMenu, SWT.SEPARATOR);
+	    final MenuItem exitItem = new MenuItem(fileMenu, SWT.NONE);
 	    exitItem.setText("E&xit");
+	    openNewFileItem.addSelectionListener(new SelectionListener() {
+			@Override
+			public void widgetSelected(SelectionEvent e) {
+				// =====================================================
+				// on button press, create a child Shell object passing
+				// the main Display. The child could also access the
+				// display itself by calling Display.getDefault()
+				// =====================================================
+				exitApplication();
+			}
+
+			@Override
+			public void widgetDefaultSelected(SelectionEvent e) {
+				widgetSelected(e);
+			}
+		});
 	    prefShell.setMenuBar(menu);
 
 		// ============================
