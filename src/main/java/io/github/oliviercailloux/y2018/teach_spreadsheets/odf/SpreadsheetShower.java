@@ -28,62 +28,33 @@ public class SpreadsheetShower {
 	}
 
 	/**
-	 * This method asks the user to enter cell position in standard input then
-	 * print its value. And it will ask again until the user types End.
+	 * This method asks the user to enter cell position in standard input then print
+	 * its value. And it will ask again until the user types End.
 	 */
-	public void showCellsValue() {
-		try (Scanner sc = new Scanner(System.in)) {
-			Table currentSheet = null;
-			String position = "";
-			String cellValue = "";
-			boolean typeEnd = false;
-			System.out.println(
-					"Ce programme peut lire les cellules de la feuille :\nEntrez une position par exemple A1 / Tapez Fin pour terminer la saisie.");
-			do {
-				System.out.println("Précisez la feuille.");
-				currentSheet = this.reader.getTable(sc.nextLine());
-			} while (currentSheet == null);
-			do {
-				System.out.println(cellValue);
-
-				position = sc.nextLine();
-				if (position.equals("Fin")) {
-					System.out.println("End");
-					typeEnd = !typeEnd;
-				} else
-					cellValue = reader.getCellValue(currentSheet.getTableName(),
-							position);
-			} while (!typeEnd);
-		}
-	}
-
-	/**
-	 * Same method plus : This method asks the user to specify a file.
-	 */
-
 	@SuppressWarnings("resource")
-	public void showCellsValueWithSpecifiedFile() {
+	public void showCellsValue(boolean fileNeeded) {
+
 		try (Scanner sc = new Scanner(System.in)) {
 			Table currentSheet = null;
 			String position = "";
 			String cellValue = "";
 			boolean typeEnd = false;
 			InputStream file;
+			if (fileNeeded) {
+				do {
+					try {
+						System.out.println("Veuillez préciser le fichier d'entrée avec le chemin complet:");
+						file = new FileInputStream(sc.nextLine());
+					} catch (@SuppressWarnings("unused") FileNotFoundException e) {
+						file = null;
+					}
+				} while (file == null);
 
-			do {
 				try {
-					System.out.println(
-							"Veuillez préciser le fichier d'entrée avec le chemin complet:");
-					file = new FileInputStream(sc.nextLine());
-				} catch (@SuppressWarnings("unused") FileNotFoundException e) {
-					file = null;
+					reader.setDocument(file);
+				} catch (Exception e) {
+					throw new IllegalStateException(e);
 				}
-			} while (file == null);
-
-			try {
-				reader.setDocument(file);
-			} catch (Exception e) {
-				throw new IllegalStateException(e);
 			}
 			System.out.println(
 					"Ce programme peut lire les cellules de la feuille :\nEntrez une position par exemple A1 / Tapez Fin pour terminer la saisie.");
@@ -93,13 +64,13 @@ public class SpreadsheetShower {
 			} while (currentSheet == null);
 			do {
 				System.out.println(cellValue);
+
 				position = sc.nextLine();
 				if (position.equals("Fin")) {
 					System.out.println("End");
 					typeEnd = !typeEnd;
 				} else
-					cellValue = reader.getCellValue(currentSheet.getTableName(),
-							position);
+					cellValue = reader.getCellValue(currentSheet.getTableName(), position);
 			} while (!typeEnd);
 		}
 	}
