@@ -54,9 +54,15 @@ public class CsvFileReader {
 					line = false;
 				} else {
 					c = new Course();
-					for (int i = 0; i < csvRecord.size(); i++) {
-						c.set(i, csvRecord.get(i));
-					}
+					c.setName(csvRecord.get(0));
+					c.setapogeeCode(csvRecord.get(1));
+					c.setYearOfStud(csvRecord.get(2));
+					c.setCM_Hour(Double.parseDouble(csvRecord.get(3)));
+					c.setTD_Hour(Double.parseDouble(csvRecord.get(4)));
+					c.setCMTD_Hour(Double.parseDouble(csvRecord.get(5)));
+					c.setTP_Hour(Double.parseDouble(csvRecord.get(6)));
+					c.setGrpsNumber(csvRecord.get(7));
+
 					courses.add(c);
 				}
 			}
@@ -88,9 +94,21 @@ public class CsvFileReader {
 					line = false;
 				} else {
 					c = new Teacher();
-					for (int i = 0; i < csvRecord.size(); i++) {
-						c.set(i, csvRecord.get(i));
-					}
+
+					c.setId(Integer.parseInt(csvRecord.get(0)));
+					c.setName(csvRecord.get(1));
+					c.setFirstName(csvRecord.get(2));
+					c.setAdress(csvRecord.get(3));
+					c.setPostCode(csvRecord.get(4));
+					c.setCity(csvRecord.get(5));
+					c.setPersonalPhone(csvRecord.get(6));
+					c.setMobilePhone(csvRecord.get(7));
+					c.setPersonalMail(csvRecord.get(8));
+					c.setDauphineMail(csvRecord.get(9));
+					c.setStatus(csvRecord.get(10));
+					c.setDauphinePhone(csvRecord.get(11));
+					c.setDesk(csvRecord.get(12));
+
 					return c;
 				}
 			}
