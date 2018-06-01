@@ -196,7 +196,6 @@ public class GUIPref {
 	    // method
 	    final MenuItem openNewFileItem = new MenuItem(fileMenu, SWT.PUSH);
 	    openNewFileItem.setText("&Open new file courses");
-	    
 	    openNewFileItem.addSelectionListener(new SelectionListener() {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
@@ -205,7 +204,10 @@ public class GUIPref {
 				// the main Display. The child could also access the
 				// display itself by calling Display.getDefault()
 				// =====================================================
-				openFileExplorer();
+				String pathFile = openFileExplorer();
+				if (pathFile != null) {
+					prefShell.dispose();
+				}
 			}
 
 			@Override
@@ -213,10 +215,33 @@ public class GUIPref {
 				widgetSelected(e);
 			}
 		});
+	    
+	    final MenuItem closeShellItem = new MenuItem(fileMenu, SWT.PUSH);
+	    closeShellItem.setText("Close this display");
+	    closeShellItem.addSelectionListener(new SelectionListener() {
+			@Override
+			public void widgetSelected(SelectionEvent e) {
+				// =====================================================
+				// on button press, create a child Shell object passing
+				// the main Display. The child could also access the
+				// display itself by calling Display.getDefault()
+				// =====================================================
+				boolean closing = exitShell();
+				if (closing) {
+					prefShell.dispose();
+				}
+			}
+
+			@Override
+			public void widgetDefaultSelected(SelectionEvent e) {
+				widgetSelected(e);
+			}
+		});
+	    
 	    final MenuItem menuSeparator = new MenuItem(fileMenu, SWT.SEPARATOR);
 	    final MenuItem exitItem = new MenuItem(fileMenu, SWT.NONE);
-	    exitItem.setText("E&xit");
-	    openNewFileItem.addSelectionListener(new SelectionListener() {
+	    exitItem.setText("E&xit the application");
+	    exitItem.addSelectionListener(new SelectionListener() {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
 				// =====================================================
@@ -253,7 +278,6 @@ public class GUIPref {
 
 		final List listSheetName = new List(prefShell, SWT.BORDER | SWT.MULTI | SWT.V_SCROLL);
 		
-
 		// shell.pack();
 		prefShell.open();
 
@@ -296,6 +320,18 @@ public class GUIPref {
 		String fileName = openFileExplorer();
 		file = new File(fileName);
 		return file;
+	}
+	
+	private boolean exitShell() {
+		MessageBox messageBox = new MessageBox(shell, SWT.ICON_QUESTION | SWT.YES | SWT.NO);
+		messageBox.setMessage("Voulez-vous vraiment quitter cette fenêtre ? Toutes les données non sauvegardées seront perdues !");
+		messageBox.setText("Fermeture de la fenêtre");
+		int response = messageBox.open();
+		if (response == SWT.YES) {
+			LOGGER.info("La fenêtre a bien été fermée.");
+			return true;
+		}
+		return false;
 	}
 
 	private void exitApplication() {
