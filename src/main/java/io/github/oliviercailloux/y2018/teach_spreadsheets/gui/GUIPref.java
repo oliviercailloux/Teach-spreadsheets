@@ -300,7 +300,7 @@ public class GUIPref {
 		FileDialog fd = new FileDialog(shellFE, SWT.OPEN);
 		fd.setText("Open");
 		fd.setFilterPath("C:/");
-		String[] filterExt = { "*.csv" };
+		String[] filterExt = { "*.ods" };
 		fd.setFilterExtensions(filterExt);
 		String selected = fd.open();
 		if (selected == null) {
