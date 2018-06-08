@@ -1,6 +1,7 @@
 package io.github.oliviercailloux.y2018.teach_spreadsheets.gui;
 
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
@@ -24,9 +25,11 @@ import org.eclipse.swt.graphics.Rectangle;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Button;
+import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Event;
 import org.eclipse.swt.widgets.FileDialog;
+import org.eclipse.swt.widgets.Group;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Listener;
 import org.eclipse.swt.widgets.Menu;
@@ -48,6 +51,7 @@ public class GUIPref {
 
 	Display display;
 	Shell shell;
+	Shell prefShell;
 
 	private void initializeMainMenu() throws IOException {
 
@@ -76,7 +80,7 @@ public class GUIPref {
 			labelImg.pack();
 
 			// Create a horizontal separator
-			Label lblSeparator= new Label(shell, SWT.HORIZONTAL | SWT.SEPARATOR);
+			Label lblSeparator = new Label(shell, SWT.HORIZONTAL | SWT.SEPARATOR);
 			lblSeparator.setLayoutData(new GridData(GridData.FILL_HORIZONTAL));
 
 			// Label with teacher name
@@ -179,24 +183,29 @@ public class GUIPref {
 	private void prefShell() {
 
 		// Doesn't allow the user to close the main shell when the child shell is open
-		final Shell prefShell = new Shell(display, SWT.CLOSE | SWT.SYSTEM_MODAL);
-		prefShell.setLayout(new GridLayout(1, false));
-		prefShell.setText("Mes préférences - Teach-spreadsheets");
+		prefShell = new Shell(display, SWT.CLOSE | SWT.SYSTEM_MODAL);
 		
+		GridLayout gl = new GridLayout();
+	    gl.numColumns = 1;
+	    prefShell.setLayout(gl);
+	    
+		// prefShell.setLayout(new GridLayout(2, false));
+		prefShell.setText("Mes préférences - Teach-spreadsheets");
+
 		// Create a menu
 		Menu menu = new Menu(prefShell, SWT.BAR);
-	    // create a file menu and add an exit item
-	    final MenuItem file = new MenuItem(menu, SWT.CASCADE);
-	    file.setText("&Menu");
-	    final Menu fileMenu = new Menu(prefShell, SWT.DROP_DOWN);
-	    // final Menu fileMenu = new Menu(file);
-	    file.setMenu(fileMenu);
-	    final MenuItem exportItem = new MenuItem(fileMenu, SWT.PUSH);
-	    exportItem.setText("&Export your prefs");
-	    // method
-	    final MenuItem openNewFileItem = new MenuItem(fileMenu, SWT.PUSH);
-	    openNewFileItem.setText("&Open new file courses");
-	    openNewFileItem.addSelectionListener(new SelectionListener() {
+		// create a file menu and add an exit item
+		final MenuItem file = new MenuItem(menu, SWT.CASCADE);
+		file.setText("&Menu");
+		final Menu fileMenu = new Menu(prefShell, SWT.DROP_DOWN);
+		// final Menu fileMenu = new Menu(file);
+		file.setMenu(fileMenu);
+		final MenuItem exportItem = new MenuItem(fileMenu, SWT.PUSH);
+		exportItem.setText("&Export your prefs");
+		// method
+		final MenuItem openNewFileItem = new MenuItem(fileMenu, SWT.PUSH);
+		openNewFileItem.setText("&Open new file courses");
+		openNewFileItem.addSelectionListener(new SelectionListener() {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
 				// =====================================================
@@ -215,10 +224,10 @@ public class GUIPref {
 				widgetSelected(e);
 			}
 		});
-	    
-	    final MenuItem closeShellItem = new MenuItem(fileMenu, SWT.PUSH);
-	    closeShellItem.setText("Close this display");
-	    closeShellItem.addSelectionListener(new SelectionListener() {
+
+		final MenuItem closeShellItem = new MenuItem(fileMenu, SWT.PUSH);
+		closeShellItem.setText("Close this display");
+		closeShellItem.addSelectionListener(new SelectionListener() {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
 				// =====================================================
@@ -237,11 +246,11 @@ public class GUIPref {
 				widgetSelected(e);
 			}
 		});
-	    
-	    final MenuItem menuSeparator = new MenuItem(fileMenu, SWT.SEPARATOR);
-	    final MenuItem exitItem = new MenuItem(fileMenu, SWT.NONE);
-	    exitItem.setText("E&xit the application");
-	    exitItem.addSelectionListener(new SelectionListener() {
+
+		final MenuItem menuSeparator = new MenuItem(fileMenu, SWT.SEPARATOR);
+		final MenuItem exitItem = new MenuItem(fileMenu, SWT.NONE);
+		exitItem.setText("E&xit the application");
+		exitItem.addSelectionListener(new SelectionListener() {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
 				// =====================================================
@@ -257,7 +266,7 @@ public class GUIPref {
 				widgetSelected(e);
 			}
 		});
-	    prefShell.setMenuBar(menu);
+		prefShell.setMenuBar(menu);
 
 		// ============================
 		// Create a Label in the Shell
@@ -269,7 +278,10 @@ public class GUIPref {
 		// Create a horizontal separator
 		Label lblSeparator = new Label(prefShell, SWT.HORIZONTAL | SWT.SEPARATOR);
 		lblSeparator.setLayoutData(new GridData(GridData.FILL_HORIZONTAL));
-
+		//lblSeparator.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false));
+		
+		Composite c = createComposite();
+		
 		Button buttonSemester;
 		buttonSemester = new Button(prefShell, SWT.CHECK | SWT.WRAP);
 		buttonSemester.setText("Semestre 1");
@@ -278,7 +290,8 @@ public class GUIPref {
 
 		final List listSheetName = new List(prefShell, SWT.BORDER | SWT.MULTI | SWT.V_SCROLL);
 		
-		// shell.pack();
+		// prefShell.pack();
+		
 		prefShell.open();
 
 		// =============================================================
@@ -296,7 +309,7 @@ public class GUIPref {
 
 	private String openFileExplorer() {
 		Shell shellFE = new Shell(display);
-		
+
 		FileDialog fd = new FileDialog(shellFE, SWT.OPEN);
 		fd.setText("Open");
 		fd.setFilterPath("C:/");
@@ -314,17 +327,16 @@ public class GUIPref {
 		shellFE.dispose();
 		return selected;
 	}
-	
-	private File getTheChosenFile() {
-		File file;
+
+	private String getTheChosenFile() {
 		String fileName = openFileExplorer();
-		file = new File(fileName);
-		return file;
+		return fileName;
 	}
-	
+
 	private boolean exitShell() {
 		MessageBox messageBox = new MessageBox(shell, SWT.ICON_QUESTION | SWT.YES | SWT.NO);
-		messageBox.setMessage("Voulez-vous vraiment quitter cette fenêtre ? Toutes les données non sauvegardées seront perdues !");
+		messageBox.setMessage(
+				"Voulez-vous vraiment quitter cette fenêtre ? Toutes les données non sauvegardées seront perdues !");
 		messageBox.setText("Fermeture de la fenêtre");
 		int response = messageBox.open();
 		if (response == SWT.YES) {
@@ -350,25 +362,93 @@ public class GUIPref {
 
 		return courses;
 	}
-	
+
+	@SuppressWarnings("resource")
 	private java.util.List<Course> getCourses() throws Exception {
 		java.util.List<Course> courses = new ArrayList();
-		File file = getTheChosenFile();
-		ReadCourses rc = new ReadCourses(file);
+		String fileName = getTheChosenFile();
+		FileInputStream fis = new FileInputStream(fileName);
+		ReadCourses rc = new ReadCourses(fis);
 		return courses = rc.readCourses();
 	}
-	
+
 	private java.util.List<String> getEverySheetName() throws Exception {
 		java.util.List<Course> courses = getCourses();
 		java.util.List<String> allSheetName = new ArrayList<>();
 		for (Course course : courses) {
 			allSheetName.add(course.getYearOfStud());
 		}
-	    Set set = new HashSet() ;
-        set.addAll(allSheetName);
-        java.util.List allSheetNameNoDoublon = new ArrayList(set) ;
-        return allSheetNameNoDoublon;
-   
+		Set set = new HashSet();
+		set.addAll(allSheetName);
+		java.util.List allSheetNameNoDoublon = new ArrayList(set);
+		return allSheetNameNoDoublon;
+
+	}
+
+	private Composite createComposite() {
+		Composite c = new Composite(prefShell, SWT.CENTER);
+		c.setLayout(new GridLayout(3, true));
+		c.setSize(prefShell.getSize().x, prefShell.getSize().y);
+		
+		Group group1 = new Group(c, SWT.NONE);
+		group1.setSize(c.getSize().x / 3, c.getSize().y / 3);
+		
+		group1.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
+		group1.setText("Step 1: Choose the year of study");
+		group1.setLayout(new GridLayout(1, false));
+		
+		/** Label nameLabel = new Label(group1, SWT.NONE);
+	    nameLabel.setText("Choose"); **/
+	    
+	    List list = new List( group1, SWT.BORDER | SWT.MULTI | SWT.V_SCROLL );
+	    list.setLayoutData( new GridData( SWT.FILL, SWT.FILL, true, true ) );
+	    for( int i = 0; i < 10; i++ ) {
+	      list.add( "Item " + i );
+	    }
+		// List listSheetName = new List(group1, SWT.BORDER | SWT.MULTI | SWT.V_SCROLL);
+		
+		
+		// Group group1 = new Group(prefShell, SWT.SHADOW_OUT);
+		Group group2 = new Group(c, SWT.SHADOW_OUT);
+		group2.setText("Step 1: Choose:");
+		group2.setSize(c.getSize().x / 3, c.getSize().y / 3);
+		group2.setLayout(new GridLayout(1, true));
+
+		// buttonCsv
+		final Button button1 = new Button(group2, SWT.RADIO);
+		button1.setText("choice 1 ");
+		// buttonTxt
+		final Button button2 = new Button(group2, SWT.RADIO);
+		button2.setText("choice 2 ");
+
+		Listener listener1 = new Listener() {
+			public void handleEvent(Event event) {
+				int user_choice;
+
+				if (event.widget == button1) {
+					user_choice = 1;
+					System.out.println(user_choice);
+				} else if (event.widget == button2) {
+					user_choice = 2;
+					System.out.println(user_choice);
+				}
+
+			}
+		};
+		button1.addListener(SWT.Selection, listener1);
+		button2.addListener(SWT.Selection, listener1);
+		
+		// Group group2 = new Group(prefShell, SWT.SHADOW_OUT);	
+		Group group3 = new Group(c, SWT.SHADOW_OUT);
+		group3.setSize(c.getSize().x / 3, c.getSize().y / 3);
+		group3.setText("Step 2: Insert your age ");
+		group3.setLayout(new GridLayout(1, true));
+		Text textRow=new Text(group3, SWT.BORDER);
+		textRow.setText(" ");
+
+		
+		return c;
+
 	}
 
 	public static void main(String[] args) throws IOException {
