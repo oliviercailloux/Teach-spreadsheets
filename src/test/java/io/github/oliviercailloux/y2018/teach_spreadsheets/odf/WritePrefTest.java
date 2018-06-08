@@ -1,6 +1,7 @@
 package io.github.oliviercailloux.y2018.teach_spreadsheets.odf;
 
-import java.io.File;
+import java.io.ByteArrayOutputStream;
+import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -54,15 +55,17 @@ public class WritePrefTest {
 		CourseSheet courseSheet = new CourseSheet(sheetName,
 				"1ère année de licence", 200, 1, semestre1, semestre2);
 
-		File file = new File(WritePrefTest.class
-				.getResource("Saisie_voeux_dauphine_WritePref.ods").toURI());
+		try (InputStream is = WritePrefTest.class
+				.getResourceAsStream("Saisie_voeux_dauphine_WritePref.ods")) {
+			ByteArrayOutputStream tmpWriter = new ByteArrayOutputStream();
 
-		WritePref writer = new WritePref(file, courseSheet);
+			WritePref writer = new WritePref(is, tmpWriter, courseSheet);
 
-		writer.writeSheetCoursesPref();
+			writer.writeSheetCoursesPref();
 
-		// If no exceptions are thrown, then the writing works.
+			// If no exceptions are thrown, then the writing works.
 
-		Assert.assertTrue(true);
+			Assert.assertTrue(true);
+		}
 	}
 }

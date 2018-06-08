@@ -1,6 +1,7 @@
 package io.github.oliviercailloux.y2018.teach_spreadsheets.gui;
 
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileReader;
 import java.util.List;
 
@@ -17,7 +18,8 @@ public class TeachSpreadSheetController {
 
 	private List<CourseSheet> courseSheetList;
 
-	public TeachSpreadSheetController(File destination, List<CourseSheet> courseSheetList) {
+	public TeachSpreadSheetController(File destination,
+			List<CourseSheet> courseSheetList) {
 		super();
 		this.destination = destination;
 		this.courseSheetList = courseSheetList;
@@ -35,9 +37,13 @@ public class TeachSpreadSheetController {
 
 		// Read courses from spreadsheet
 
-		ReadCourses courseReader = new ReadCourses(new File(spreadSheetInitialPath));
+		ReadCourses courseReader = new ReadCourses(
+				new FileInputStream(spreadSheetInitialPath));
 
 		List<CourseSheet> currentCourseSheet = courseReader.readCourseSheets();
+
+		//
+
 	}
 
 }

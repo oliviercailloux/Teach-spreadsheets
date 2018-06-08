@@ -1,9 +1,11 @@
 package io.github.oliviercailloux.y2018.teach_spreadsheets.odf;
 
+import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.Reader;
 import java.net.URISyntaxException;
 
@@ -19,11 +21,13 @@ public class WriteTeacherTest {
 	private static Teacher teacher;
 
 	@Before
-	public void setUp() throws URISyntaxException, FileNotFoundException, IOException {
+	public void setUp()
+			throws URISyntaxException, FileNotFoundException, IOException {
 
 		String filename = "oneTeacherTest.csv";
 
-		File file = new File(WriteTeacherTest.class.getResource(filename).toURI());
+		File file = new File(
+				WriteTeacherTest.class.getResource(filename).toURI());
 
 		try (Reader fileReader = new FileReader(file)) {
 			teacher = CsvFileReader.readTeacherFromCSVfile(fileReader);
@@ -34,13 +38,17 @@ public class WriteTeacherTest {
 	@Test
 	public void writeTest() throws Exception {
 
-		File file = new File(WriteTeacherTest.class.getResource("Saisie_voeux_dauphine_WriteTeacher.ods").toURI());
+		try (InputStream is = WriteTeacherTest.class.getResourceAsStream(
+				"Saisie_voeux_dauphine_WriteTeacher.ods")) {
 
-		WriteTeacher writeTeacher = new WriteTeacher(file);
+			ByteArrayOutputStream tmpWriter = new ByteArrayOutputStream();
 
-		writeTeacher.write(teacher);
+			WriteTeacher writeTeacher = new WriteTeacher(is, tmpWriter);
 
-		Assert.assertTrue(true);
+			writeTeacher.write(teacher);
 
+			Assert.assertTrue(true);
+
+		}
 	}
 }

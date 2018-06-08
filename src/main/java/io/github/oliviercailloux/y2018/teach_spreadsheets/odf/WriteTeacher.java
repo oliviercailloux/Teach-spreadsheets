@@ -1,6 +1,7 @@
 package io.github.oliviercailloux.y2018.teach_spreadsheets.odf;
 
-import java.io.File;
+import java.io.InputStream;
+import java.io.OutputStream;
 import java.util.Objects;
 
 import org.odftoolkit.simple.SpreadsheetDocument;
@@ -35,21 +36,23 @@ public class WriteTeacher {
 	private final static String DESKPOSITION = "H11";
 	private final static String SHEETNAME = "Emplois_du_temps";
 
-	private File odfFile = null;
+	private OutputStream destination = null;
 	private SpreadsheetDocument workbook = null;
-	private final static Logger LOGGER = LoggerFactory.getLogger(WriteCourses.class);
+	private final static Logger LOGGER = LoggerFactory
+			.getLogger(WriteCourses.class);
 
-	public WriteTeacher(File odfFile) throws Exception {
-		this.odfFile = Objects.requireNonNull(odfFile);
-		this.workbook = SpreadsheetDocument.loadDocument(this.odfFile);
-		LOGGER.info("File" + odfFile + "has been correctly loaded");
+	public WriteTeacher(InputStream source, OutputStream destination)
+			throws Exception {
+		this.destination = Objects.requireNonNull(destination);
+		this.workbook = SpreadsheetDocument.loadDocument(source);
+		LOGGER.info("File" + source + "has been correctly loaded");
 	}
 
 	/**
 	 * Write all informations of teacher in corresponding fields.
 	 */
 	public void write(Teacher teacher) throws Exception {
-		LOGGER.info("Start writing teacher in file : " + odfFile.getName());
+		LOGGER.info("Start writing teacher...");
 		Table sheet = this.workbook.getSheetByName(SHEETNAME);
 
 		System.out.println(sheet.getCellByPosition("A2").getDisplayText());
@@ -58,20 +61,29 @@ public class WriteTeacher {
 		// Fill fields
 
 		sheet.getCellByPosition(NAMEPOSITION).setStringValue(teacher.getName());
-		sheet.getCellByPosition(FIRSTNAMEPOSITION).setStringValue(teacher.getFirstName());
-		sheet.getCellByPosition(ADRESSPOSITION).setStringValue(teacher.getAdress());
-		sheet.getCellByPosition(POSTCODEPOSITION).setStringValue(teacher.getPostCode());
+		sheet.getCellByPosition(FIRSTNAMEPOSITION)
+				.setStringValue(teacher.getFirstName());
+		sheet.getCellByPosition(ADRESSPOSITION)
+				.setStringValue(teacher.getAdress());
+		sheet.getCellByPosition(POSTCODEPOSITION)
+				.setStringValue(teacher.getPostCode());
 		sheet.getCellByPosition(CITYPOSITION).setStringValue(teacher.getCity());
-		sheet.getCellByPosition(PERSONALPHONEPOSITION).setStringValue(teacher.getPersonalPhone());
-		sheet.getCellByPosition(MOBILEPHONEPOSITION).setStringValue(teacher.getMobilePhone());
-		sheet.getCellByPosition(PERSONALMAILPOSITION).setStringValue(teacher.getPersonalMail());
-		sheet.getCellByPosition(DAUPHINEMAILPOSITION).setStringValue(teacher.getDauphineMail());
-		sheet.getCellByPosition(STATUSPOSITION).setStringValue(teacher.getStatus());
-		sheet.getCellByPosition(DAUPHINEPHONEPOSITION).setStringValue(teacher.getDauphinePhone());
+		sheet.getCellByPosition(PERSONALPHONEPOSITION)
+				.setStringValue(teacher.getPersonalPhone());
+		sheet.getCellByPosition(MOBILEPHONEPOSITION)
+				.setStringValue(teacher.getMobilePhone());
+		sheet.getCellByPosition(PERSONALMAILPOSITION)
+				.setStringValue(teacher.getPersonalMail());
+		sheet.getCellByPosition(DAUPHINEMAILPOSITION)
+				.setStringValue(teacher.getDauphineMail());
+		sheet.getCellByPosition(STATUSPOSITION)
+				.setStringValue(teacher.getStatus());
+		sheet.getCellByPosition(DAUPHINEPHONEPOSITION)
+				.setStringValue(teacher.getDauphinePhone());
 		sheet.getCellByPosition(DESKPOSITION).setStringValue(teacher.getDesk());
 
-		workbook.save(odfFile);
-		LOGGER.info("Teacher has been written successfully in file : " + odfFile.getName());
+		workbook.save(destination);
+		LOGGER.info("Teacher has been written successfully !");
 
 	}
 

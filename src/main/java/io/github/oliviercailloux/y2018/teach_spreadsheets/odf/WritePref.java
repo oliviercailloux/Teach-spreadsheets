@@ -1,6 +1,7 @@
 package io.github.oliviercailloux.y2018.teach_spreadsheets.odf;
 
-import java.io.File;
+import java.io.InputStream;
+import java.io.OutputStream;
 import java.util.List;
 import java.util.Objects;
 
@@ -31,18 +32,18 @@ public class WritePref {
 	 */
 	private final static String STARTCELL2 = "X4";
 
-	private File odfFile = null;
+	private OutputStream destination = null;
 	private SpreadsheetDocument workbook = null;
 	private CourseSheet courseSheet = null;
 
 	private final static Logger LOGGER = LoggerFactory
 			.getLogger(WriteCourses.class);
 
-	public WritePref(File odfFile, CourseSheet courseSheet) throws Exception {
-		this.odfFile = Objects.requireNonNull(odfFile);
-		this.workbook = SpreadsheetDocument.loadDocument(this.odfFile);
+	public WritePref(InputStream source, OutputStream destination,
+			CourseSheet courseSheet) throws Exception {
+		this.destination = Objects.requireNonNull(destination);
+		this.workbook = SpreadsheetDocument.loadDocument(source);
 		this.courseSheet = Objects.requireNonNull(courseSheet);
-		LOGGER.info("File" + odfFile + "has been correctly loaded");
 	}
 
 	/**
@@ -113,9 +114,9 @@ public class WritePref {
 
 		}
 
-		this.workbook.save(this.odfFile);
+		this.workbook.save(this.destination);
 
-		LOGGER.info("File" + odfFile + "has been correctly saved");
+		LOGGER.info("File" + destination + "has been correctly saved");
 
 	}
 
