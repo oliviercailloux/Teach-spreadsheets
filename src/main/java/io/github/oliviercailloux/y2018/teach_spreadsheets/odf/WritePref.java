@@ -1,5 +1,6 @@
 package io.github.oliviercailloux.y2018.teach_spreadsheets.odf;
 
+import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.util.List;
@@ -36,11 +37,9 @@ public class WritePref {
 	private SpreadsheetDocument workbook = null;
 	private CourseSheet courseSheet = null;
 
-	private final static Logger LOGGER = LoggerFactory
-			.getLogger(WriteCourses.class);
+	private final static Logger LOGGER = LoggerFactory.getLogger(WriteCourses.class);
 
-	public WritePref(InputStream source, OutputStream destination,
-			CourseSheet courseSheet) throws Exception {
+	public WritePref(InputStream source, OutputStream destination, CourseSheet courseSheet) throws Exception {
 		this.destination = Objects.requireNonNull(destination);
 		this.workbook = SpreadsheetDocument.loadDocument(source);
 		this.courseSheet = Objects.requireNonNull(courseSheet);
@@ -53,16 +52,14 @@ public class WritePref {
 	 *            is a list of {@link CoursePref} that will be fill in the
 	 *            spreadsheet
 	 * @param startCellPosition
-	 *            the starting position of the array of {@link CoursePref}, of
-	 *            one semester
+	 *            the starting position of the array of {@link CoursePref}, of one
+	 *            semester
 	 */
-	private void writeSemesterCoursesPref(List<CoursePref> coursesPref,
-			String startCellPosition) throws Exception {
+	private void writeSemesterCoursesPref(List<CoursePref> coursesPref, String startCellPosition) throws Exception {
 
 		// Design handling
-		Border border = new Border(Color.BLACK, 1,
-				StyleTypeDefinitions.SupportedLinearMeasure.PT);
-		Table sheet = this.workbook.getSheetByName(courseSheet.getYearOfStud());
+		Border border = new Border(Color.BLACK, 1, StyleTypeDefinitions.SupportedLinearMeasure.PT);
+		Table sheet = this.workbook.getSheetByName(courseSheet.getSheetMetadata().getYearOfStud());
 
 		Cell currentCell = sheet.getCellByPosition(startCellPosition);
 
@@ -72,8 +69,7 @@ public class WritePref {
 		// Writing coursePref by row
 		for (CoursePref coursePref : coursesPref) {
 			// CM Choice
-			currentCell = sheet.getCellByPosition(startCellColumnIndex,
-					currentRow);
+			currentCell = sheet.getCellByPosition(startCellColumnIndex, currentRow);
 			if (coursePref.getCmChoice() == Choice.NA) {
 				currentCell.setBorders(CellBordersType.DIAGONALBLTR, border);
 			} else {
@@ -81,8 +77,7 @@ public class WritePref {
 			}
 
 			// TD Choice
-			currentCell = sheet.getCellByPosition(startCellColumnIndex + 1,
-					currentRow);
+			currentCell = sheet.getCellByPosition(startCellColumnIndex + 1, currentRow);
 			if (coursePref.getTdChoice() == Choice.NA) {
 				currentCell.setBorders(CellBordersType.DIAGONALBLTR, border);
 			} else {
@@ -90,8 +85,7 @@ public class WritePref {
 			}
 
 			// TP Choice
-			currentCell = sheet.getCellByPosition(startCellColumnIndex + 2,
-					currentRow);
+			currentCell = sheet.getCellByPosition(startCellColumnIndex + 2, currentRow);
 			if (coursePref.getTpChoice() == Choice.NA) {
 				currentCell.setBorders(CellBordersType.DIAGONALBLTR, border);
 			} else {
@@ -99,15 +93,12 @@ public class WritePref {
 			}
 
 			// Groups number
-			currentCell = sheet.getCellByPosition(startCellColumnIndex + 3,
-					currentRow);
-			currentCell.setStringValue("CM : " + coursePref.getNbrGrpCm()
-					+ ", TD : " + coursePref.getNbrGrpTd() + ", TP : "
-					+ coursePref.getNbrGrpTp());
+			currentCell = sheet.getCellByPosition(startCellColumnIndex + 3, currentRow);
+			currentCell.setStringValue("CM : " + coursePref.getNbrGrpCm() + ", TD : " + coursePref.getNbrGrpTd()
+					+ ", TP : " + coursePref.getNbrGrpTp());
 
 			// Experience
-			currentCell = sheet.getCellByPosition(startCellColumnIndex + 4,
-					currentRow);
+			currentCell = sheet.getCellByPosition(startCellColumnIndex + 4, currentRow);
 			currentCell.setStringValue(String.valueOf(coursePref.getNbrExp()));
 
 			currentRow++;
@@ -121,13 +112,17 @@ public class WritePref {
 	}
 
 	/**
-	 * This method writes all the course preferences of a sheet for both
-	 * semester.
+	 * This method writes all the course preferences of a sheet for both semester.
 	 */
 	public void writeSheetCoursesPref() throws Exception {
 
 		writeSemesterCoursesPref(courseSheet.getCoursePrefS1(), STARTCELL1);
 		writeSemesterCoursesPref(courseSheet.getCoursePrefS2(), STARTCELL2);
 
+	}
+
+	public void close() throws IOException {
+		this.workbook.close();
+		this.destination.close();
 	}
 }

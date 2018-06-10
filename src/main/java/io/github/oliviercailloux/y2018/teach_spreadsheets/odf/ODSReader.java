@@ -19,10 +19,9 @@ import org.slf4j.LoggerFactory;
  * @author Victor CHEN (Kantoki), Louis Fontaine (fontlo15)
  * @version Version : 2.2 Last update : 24/05/2018
  */
-public class ODSReader implements SpreadsheetReader {
+public class ODSReader implements SpreadsheetReader, AutoCloseable {
 
-	private final static Logger LOGGER = LoggerFactory
-			.getLogger(ODSReader.class);
+	private final static Logger LOGGER = LoggerFactory.getLogger(ODSReader.class);
 
 	private SpreadsheetDocument document = null;
 
@@ -34,14 +33,18 @@ public class ODSReader implements SpreadsheetReader {
 		LOGGER.info("ODSReader initialized without actual sheet");
 	}
 
+	@Override
+	public void close() {
+		this.document.close();
+	}
+
 	public SpreadsheetDocument getDocument() {
 		return document;
 	}
 
 	@Override
 	public void setDocument(InputStream document) throws Exception {
-		this.document = Objects
-				.requireNonNull(SpreadsheetDocument.loadDocument(document));
+		this.document = Objects.requireNonNull(SpreadsheetDocument.loadDocument(document));
 	}
 
 	public Table getTable(String sheet) {
@@ -50,8 +53,7 @@ public class ODSReader implements SpreadsheetReader {
 
 	@Override
 	public String getCellValue(String sheet, String cellPosition) {
-		Table currentSheet = Objects
-				.requireNonNull(this.document.getSheetByName(sheet));
+		Table currentSheet = Objects.requireNonNull(this.document.getSheetByName(sheet));
 		Cell cell = currentSheet.getCellByPosition(cellPosition);
 		boolean isDiagonalBorder = isDiagonalBorder(sheet, cellPosition);
 		if (cell == null) {
@@ -74,13 +76,11 @@ public class ODSReader implements SpreadsheetReader {
 	@Override
 	public boolean isDiagonalBorder(String sheet, String cellPosition) {
 		/*
-		 * There is a problem with ODFTookit, their function getBorder return
-		 * NULL if the border doesn't exists, but if there is a border, It
-		 * doesn't return the description but a NumberFormatException, so the
-		 * catch fix it
+		 * There is a problem with ODFTookit, their function getBorder return NULL if
+		 * the border doesn't exists, but if there is a border, It doesn't return the
+		 * description but a NumberFormatException, so the catch fix it
 		 */
-		Table currentSheet = Objects
-				.requireNonNull(this.document.getSheetByName(sheet));
+		Table currentSheet = Objects.requireNonNull(this.document.getSheetByName(sheet));
 		Cell cell = currentSheet.getCellByPosition(cellPosition);
 		if (cell == null)
 			return false;
@@ -95,10 +95,8 @@ public class ODSReader implements SpreadsheetReader {
 	}
 
 	@Override
-	public boolean isDiagonalBorder(String sheet, int columnIndex,
-			int rowIndex) {
-		Table currentSheet = Objects
-				.requireNonNull(this.document.getSheetByName(sheet));
+	public boolean isDiagonalBorder(String sheet, int columnIndex, int rowIndex) {
+		Table currentSheet = Objects.requireNonNull(this.document.getSheetByName(sheet));
 		Cell cell = currentSheet.getCellByPosition(columnIndex, rowIndex);
 		if (cell == null)
 			return false;

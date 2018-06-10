@@ -1,14 +1,14 @@
 package io.github.oliviercailloux.y2018.teach_spreadsheets.odf;
 
 import java.io.ByteArrayOutputStream;
-import java.io.File;
 import java.io.FileNotFoundException;
-import java.io.FileReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.Reader;
-import java.net.URISyntaxException;
+import java.io.StringReader;
+import java.nio.charset.StandardCharsets;
 
+import org.apache.commons.io.IOUtils;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
@@ -21,25 +21,23 @@ public class WriteTeacherTest {
 	private static Teacher teacher;
 
 	@Before
-	public void setUp()
-			throws URISyntaxException, FileNotFoundException, IOException {
+	public void setUp() throws FileNotFoundException, IOException {
 
 		String filename = "oneTeacherTest.csv";
 
-		File file = new File(
-				WriteTeacherTest.class.getResource(filename).toURI());
+		String inputStream = IOUtils.toString(WriteTeacherTest.class.getResourceAsStream(filename),
+				StandardCharsets.UTF_8);
 
-		try (Reader fileReader = new FileReader(file)) {
-			teacher = CsvFileReader.readTeacherFromCSVfile(fileReader);
-		}
+		Reader stringReader = new StringReader(inputStream);
+
+		teacher = CsvFileReader.readTeacherFromCSVfile(stringReader);
 
 	}
 
 	@Test
 	public void writeTest() throws Exception {
 
-		try (InputStream is = WriteTeacherTest.class.getResourceAsStream(
-				"Saisie_voeux_dauphine_WriteTeacher.ods")) {
+		try (InputStream is = WriteTeacherTest.class.getResourceAsStream("Saisie_voeux_dauphine_WriteTeacher.ods")) {
 
 			ByteArrayOutputStream tmpWriter = new ByteArrayOutputStream();
 

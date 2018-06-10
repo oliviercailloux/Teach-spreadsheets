@@ -12,25 +12,18 @@ import io.github.oliviercailloux.y2018.teach_spreadsheets.courses.Teacher;
 
 public class WriteSpreadSheet {
 
-	private final static Logger LOGGER = LoggerFactory
-			.getLogger(WriteSpreadSheet.class);
+	private final static Logger LOGGER = LoggerFactory.getLogger(WriteSpreadSheet.class);
 
-	public static void writeSpreadSheet(InputStream source,
-			OutputStream destination, List<CourseSheet> courseSheetList,
+	public static void writeSpreadSheet(InputStream source, OutputStream destination, List<CourseSheet> courseSheetList,
 			Teacher teacher) throws Exception {
 
 		WriteTeacher writeTeacher = new WriteTeacher(source, destination);
 		writeTeacher.write(teacher);
+		writeTeacher.close();
 
-		for (CourseSheet courseSheet : courseSheetList) {
-			WriteCourseSheet.writeCourseSheet(source, destination, courseSheet);
-		}
+		WriteCourseSheet.writeCourseSheets(source, destination, courseSheetList);
 
 		LOGGER.info("The spreadsheet has been written successfully");
-	}
-
-	public static void main(String[] args) {
-
 	}
 
 }

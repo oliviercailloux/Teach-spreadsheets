@@ -30,8 +30,7 @@ public interface SpreadsheetReader {
 	 * 
 	 * @param cellPosition
 	 */
-	public boolean isDiagonalBorder(String sheet, int columnIndex,
-			int rowIndex);
+	public boolean isDiagonalBorder(String sheet, int columnIndex, int rowIndex);
 
 	/**
 	 * specify the input file
@@ -40,4 +39,8 @@ public interface SpreadsheetReader {
 	 */
 	public void setDocument(InputStream document) throws Exception;
 
+	/**
+	 * Close the document
+	 */
+	public void close();
 }

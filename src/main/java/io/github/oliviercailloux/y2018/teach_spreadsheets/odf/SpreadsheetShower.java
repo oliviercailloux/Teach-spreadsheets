@@ -76,6 +76,7 @@ public class SpreadsheetShower {
 						cellValue = odsReader.getCellValue(currentSheet.getTableName(), position);
 				} while (!typeEnd);
 			}
+			reader.close();
 		}
 	}
 
