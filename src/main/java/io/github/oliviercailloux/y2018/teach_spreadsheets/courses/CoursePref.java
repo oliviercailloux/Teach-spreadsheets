@@ -1,5 +1,7 @@
 package io.github.oliviercailloux.y2018.teach_spreadsheets.courses;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
 /**
@@ -34,21 +36,25 @@ public class CoursePref {
 	public CoursePref(Course course) {
 		this.course = Objects.requireNonNull(course);
 		this.cmChoice = (course.getCM_Hour() == 0) ? Choice.NA : Choice.ABSENT;
-		this.tdChoice = (course.getTD_Hour() == 0 && course.getCMTD_Hour() == 0)
-				? Choice.NA
-				: Choice.ABSENT;
-		this.tpChoice = (course.getTP_Hour() == 0 && course.getCMTP_Hour() == 0)
-				? Choice.NA
-				: Choice.ABSENT;
+		this.tdChoice = (course.getTD_Hour() == 0 && course.getCMTD_Hour() == 0) ? Choice.NA : Choice.ABSENT;
+		this.tpChoice = (course.getTP_Hour() == 0 && course.getCMTP_Hour() == 0) ? Choice.NA : Choice.ABSENT;
+	}
+
+	public static List<CoursePref> toCoursePref(List<Course> courses) {
+		List<CoursePref> coursePrefs = new ArrayList<>();
+
+		for (Course course : courses) {
+			coursePrefs.add(new CoursePref(course));
+		}
+
+		return coursePrefs;
 	}
 
 	@Override
 	public String toString() {
-		return "Preferences for the course " + course.getName() + ", for CM : "
-				+ cmChoice.toString() + " ; TD : " + tdChoice.toString()
-				+ " ; TP : " + tpChoice.toString() + ", nbrGrpCM : " + nbrGrpCm
-				+ ", nbrGrpTd : " + nbrGrpTd + ", nbrGrpTp : " + nbrGrpTp
-				+ ", course experience : " + nbrExp + ".";
+		return "Preferences for the course " + course.getName() + ", for CM : " + cmChoice.toString() + " ; TD : "
+				+ tdChoice.toString() + " ; TP : " + tpChoice.toString() + ", nbrGrpCM : " + nbrGrpCm + ", nbrGrpTd : "
+				+ nbrGrpTd + ", nbrGrpTp : " + nbrGrpTp + ", course experience : " + nbrExp + ".";
 	}
 
 	public int getNbrGrpCm() {

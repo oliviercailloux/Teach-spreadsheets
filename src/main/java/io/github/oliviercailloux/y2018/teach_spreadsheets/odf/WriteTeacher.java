@@ -38,11 +38,9 @@ public class WriteTeacher {
 
 	private OutputStream destination = null;
 	private SpreadsheetDocument workbook = null;
-	private final static Logger LOGGER = LoggerFactory
-			.getLogger(WriteCourses.class);
+	private final static Logger LOGGER = LoggerFactory.getLogger(WriteCourses.class);
 
-	public WriteTeacher(InputStream source, OutputStream destination)
-			throws Exception {
+	public WriteTeacher(InputStream source, OutputStream destination) throws Exception {
 		this.destination = Objects.requireNonNull(destination);
 		this.workbook = SpreadsheetDocument.loadDocument(source);
 		LOGGER.info("File" + source + "has been correctly loaded");
@@ -55,31 +53,19 @@ public class WriteTeacher {
 		LOGGER.info("Start writing teacher...");
 		Table sheet = this.workbook.getSheetByName(SHEETNAME);
 
-		System.out.println(sheet.getCellByPosition("A2").getDisplayText());
-		System.out.println(sheet.getTableName());
-
 		// Fill fields
 
 		sheet.getCellByPosition(NAMEPOSITION).setStringValue(teacher.getName());
-		sheet.getCellByPosition(FIRSTNAMEPOSITION)
-				.setStringValue(teacher.getFirstName());
-		sheet.getCellByPosition(ADRESSPOSITION)
-				.setStringValue(teacher.getAdress());
-		sheet.getCellByPosition(POSTCODEPOSITION)
-				.setStringValue(teacher.getPostCode());
+		sheet.getCellByPosition(FIRSTNAMEPOSITION).setStringValue(teacher.getFirstName());
+		sheet.getCellByPosition(ADRESSPOSITION).setStringValue(teacher.getAdress());
+		sheet.getCellByPosition(POSTCODEPOSITION).setStringValue(teacher.getPostCode());
 		sheet.getCellByPosition(CITYPOSITION).setStringValue(teacher.getCity());
-		sheet.getCellByPosition(PERSONALPHONEPOSITION)
-				.setStringValue(teacher.getPersonalPhone());
-		sheet.getCellByPosition(MOBILEPHONEPOSITION)
-				.setStringValue(teacher.getMobilePhone());
-		sheet.getCellByPosition(PERSONALMAILPOSITION)
-				.setStringValue(teacher.getPersonalMail());
-		sheet.getCellByPosition(DAUPHINEMAILPOSITION)
-				.setStringValue(teacher.getDauphineMail());
-		sheet.getCellByPosition(STATUSPOSITION)
-				.setStringValue(teacher.getStatus());
-		sheet.getCellByPosition(DAUPHINEPHONEPOSITION)
-				.setStringValue(teacher.getDauphinePhone());
+		sheet.getCellByPosition(PERSONALPHONEPOSITION).setStringValue(teacher.getPersonalPhone());
+		sheet.getCellByPosition(MOBILEPHONEPOSITION).setStringValue(teacher.getMobilePhone());
+		sheet.getCellByPosition(PERSONALMAILPOSITION).setStringValue(teacher.getPersonalMail());
+		sheet.getCellByPosition(DAUPHINEMAILPOSITION).setStringValue(teacher.getDauphineMail());
+		sheet.getCellByPosition(STATUSPOSITION).setStringValue(teacher.getStatus());
+		sheet.getCellByPosition(DAUPHINEPHONEPOSITION).setStringValue(teacher.getDauphinePhone());
 		sheet.getCellByPosition(DESKPOSITION).setStringValue(teacher.getDesk());
 
 		workbook.save(destination);
@@ -87,4 +73,7 @@ public class WriteTeacher {
 
 	}
 
+	public void close() {
+		this.workbook.close();
+	}
 }

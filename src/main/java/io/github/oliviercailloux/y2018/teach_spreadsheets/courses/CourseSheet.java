@@ -4,19 +4,13 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-import com.google.common.base.Preconditions;
-
 /**
  * This class represents a sheet of courses, with all the metadata
  *
  */
 public class CourseSheet {
 
-	private static int yearBegin = 2017;
-	private String yearOfStud = "";
-	private String completeYearOfStudyName = "";
-	private int studentNumber = 0;
-	private int firstSemesterNumber = 0;
+	private CourseSheetMetadata sheetMetadata;
 
 	private List<CoursePref> coursePrefS1;
 	private List<CoursePref> coursePrefS2;
@@ -24,18 +18,9 @@ public class CourseSheet {
 	/**
 	 * All parameters are supposed not null
 	 */
-	public CourseSheet(String yearOfStud, String completeYearOfStudyName,
-			int studentNumber, int firstSemesterNumber,
-			List<CoursePref> coursePrefS1, List<CoursePref> coursePrefS2) {
-		this.yearOfStud = Objects.requireNonNull(yearOfStud);
-		this.completeYearOfStudyName = Objects
-				.requireNonNull(completeYearOfStudyName);
-		Preconditions.checkArgument(studentNumber >= 0,
-				"The number of student can't be negative");
-		this.studentNumber = studentNumber;
-		Preconditions.checkArgument(studentNumber >= 0,
-				"The number of the first semester is incorrect");
-		this.firstSemesterNumber = firstSemesterNumber;
+	public CourseSheet(CourseSheetMetadata sheetMetadata, List<CoursePref> coursePrefS1,
+			List<CoursePref> coursePrefS2) {
+		this.sheetMetadata = Objects.requireNonNull(sheetMetadata);
 
 		this.coursePrefS1 = Objects.requireNonNull(coursePrefS1);
 		this.coursePrefS2 = Objects.requireNonNull(coursePrefS2);
@@ -55,46 +40,6 @@ public class CourseSheet {
 		return courses;
 	}
 
-	public static int getYearBegin() {
-		return yearBegin;
-	}
-
-	public static void setYearBegin(int yearBegin) {
-		CourseSheet.yearBegin = yearBegin;
-	}
-
-	public String getYearOfStud() {
-		return yearOfStud;
-	}
-
-	public void setYearOfStud(String yearOfStud) {
-		this.yearOfStud = yearOfStud;
-	}
-
-	public String getCompleteYearOfStudyName() {
-		return completeYearOfStudyName;
-	}
-
-	public void setCompleteYearOfStudyName(String completeYearOfStudyName) {
-		this.completeYearOfStudyName = completeYearOfStudyName;
-	}
-
-	public int getStudentNumber() {
-		return studentNumber;
-	}
-
-	public void setStudentNumber(int studentNumber) {
-		this.studentNumber = studentNumber;
-	}
-
-	public int getFirstSemesterNumber() {
-		return firstSemesterNumber;
-	}
-
-	public void setFirstSemesterNumber(int firstSemesterNumber) {
-		this.firstSemesterNumber = firstSemesterNumber;
-	}
-
 	public List<CoursePref> getCoursePrefS1() {
 		return coursePrefS1;
 	}
@@ -111,13 +56,18 @@ public class CourseSheet {
 		this.coursePrefS2 = courseS2;
 	}
 
+	public CourseSheetMetadata getSheetMetadata() {
+		return sheetMetadata;
+	}
+
+	public void setSheetMetadata(CourseSheetMetadata sheetMetadata) {
+		this.sheetMetadata = Objects.requireNonNull(sheetMetadata);
+	}
+
 	@Override
 	public String toString() {
-		return "CourseSheet [yearOfStud=" + yearOfStud
-				+ ", completeYearOfStudyName=" + completeYearOfStudyName
-				+ ", studentNumber=" + studentNumber + ", firstSemesterNumber="
-				+ firstSemesterNumber + ", coursePrefS1=" + coursePrefS1
-				+ ", coursePrefS2=" + coursePrefS2 + "]";
+		return "CourseSheet [sheetMetadata=" + sheetMetadata + ", coursePrefS1=" + coursePrefS1 + ", coursePrefS2="
+				+ coursePrefS2 + "]";
 	}
 
 }
