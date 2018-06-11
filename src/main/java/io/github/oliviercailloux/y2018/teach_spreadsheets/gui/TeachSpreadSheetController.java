@@ -41,7 +41,7 @@ public class TeachSpreadSheetController {
 		return yearNames;
 	}
 
-	public CourseSheet getCourseSheetByYear(String yearName) {
+	private CourseSheet getCourseSheetByYear(String yearName) {
 		for (CourseSheet courseSheet : courseSheetList) {
 			if (courseSheet.getYearOfStud().equals(yearName)) {
 				return courseSheet;
