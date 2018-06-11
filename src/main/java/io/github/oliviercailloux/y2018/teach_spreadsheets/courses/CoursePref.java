@@ -40,6 +40,19 @@ public class CoursePref {
 		this.tpChoice = (course.getTP_Hour() == 0 && course.getCMTP_Hour() == 0) ? Choice.NA : Choice.ABSENT;
 	}
 
+	public List<String> getPossibleChoice() {
+		List<String> choices = new ArrayList<>();
+
+		if (cmChoice == Choice.ABSENT) {
+			choices.add("CM");
+		} else if (tdChoice == Choice.ABSENT) {
+			choices.add("TD");
+		} else if (tpChoice == Choice.ABSENT) {
+			choices.add("TP");
+		}
+		return choices;
+	}
+
 	public static List<CoursePref> toCoursePref(List<Course> courses) {
 		List<CoursePref> coursePrefs = new ArrayList<>();
 

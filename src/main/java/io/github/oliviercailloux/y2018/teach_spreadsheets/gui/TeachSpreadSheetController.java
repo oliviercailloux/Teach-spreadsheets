@@ -32,6 +32,10 @@ public class TeachSpreadSheetController {
 		this.courseSheetList = courseSheetList;
 	}
 
+	public TeachSpreadSheetController() {
+
+	}
+
 	public List<String> getYearNames() {
 		List<String> yearNames = new ArrayList<>();
 
@@ -51,18 +55,40 @@ public class TeachSpreadSheetController {
 	}
 
 	public List<String> getCoursesName(String yearName, int semester) {
-		List<String> coursesName = new ArrayList<>();
 		CourseSheet courseSheet = getCourseSheetByYear(yearName);
-		if (semester % 2 == 0) {
+		return courseSheet.getCoursesName(semester);
+	}
+
+	public List<String> getPossibleChoice(String yearName, int semester, String courseName) {
+		CourseSheet courseSheet = getCourseSheetByYear(yearName);
+		return courseSheet.getPossibleChoice(semester, courseName);
+	}
+
+	public void updatePref(CoursePref coursePref, String yearName, int semester, String courseName) {
+		CoursePref updatedCoursePref = this.getCoursePref(yearName, semester, courseName);
+
+		updatedCoursePref.setCmChoice(coursePref.getCmChoice());
+		updatedCoursePref.setTdChoice(coursePref.getTdChoice());
+		updatedCoursePref.setTpChoice(coursePref.getTpChoice());
+	}
+
+	private CoursePref getCoursePref(String yearName, int semester, String courseName) {
+		CourseSheet courseSheet = getCourseSheetByYear(yearName);
+
+		if (semester % 2 == 1) {
 			for (CoursePref coursePref : courseSheet.getCoursePrefS1()) {
-				coursesName.add(coursePref.getCourse().getName());
+				if (coursePref.getCourse().getName().equals(courseName)) {
+					return coursePref;
+				}
 			}
-		} else {
+		} else if (semester % 2 == 2) {
 			for (CoursePref coursePref : courseSheet.getCoursePrefS2()) {
-				coursesName.add(coursePref.getCourse().getName());
+				if (coursePref.getCourse().getName().equals(courseName)) {
+					return coursePref;
+				}
 			}
 		}
-		return coursesName;
+		return null;
 	}
 
 	public InputStream getSource() {

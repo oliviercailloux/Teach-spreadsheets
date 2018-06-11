@@ -59,6 +59,27 @@ public class CourseSheet {
 		return coursesName;
 	}
 
+	private CoursePref getCoursePref(int semester, String courseName) {
+		if (semester % 2 == 0) {
+			for (CoursePref coursePref : coursePrefS1) {
+				if (coursePref.getCourse().getName().equals(courseName)) {
+					return coursePref;
+				}
+			}
+		} else {
+			for (CoursePref coursePref : coursePrefS2) {
+				if (coursePref.getCourse().getName().equals(courseName)) {
+					return coursePref;
+				}
+			}
+		}
+		return null;
+	}
+
+	public List<String> getPossibleChoice(int semester, String courseName) {
+		return this.getCoursePref(semester, courseName).getPossibleChoice();
+	}
+
 	public int getFirstSemesterNumber() {
 		return this.sheetMetadata.getFirstSemesterNumber();
 	}
