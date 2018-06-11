@@ -9,8 +9,6 @@ import java.io.InputStreamReader;
 import java.io.Reader;
 import java.io.StringReader;
 import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.Set;
 
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.ControlAdapter;
@@ -41,17 +39,32 @@ import org.eclipse.swt.widgets.List;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import io.github.oliviercailloux.y2018.teach_spreadsheets.courses.Choice;
 import io.github.oliviercailloux.y2018.teach_spreadsheets.courses.Course;
+import io.github.oliviercailloux.y2018.teach_spreadsheets.courses.CoursePref;
+import io.github.oliviercailloux.y2018.teach_spreadsheets.courses.CourseSheet;
+import io.github.oliviercailloux.y2018.teach_spreadsheets.courses.CourseSheetMetadata;
 import io.github.oliviercailloux.y2018.teach_spreadsheets.courses.Teacher;
 import io.github.oliviercailloux.y2018.teach_spreadsheets.csv.CsvFileReader;
 import io.github.oliviercailloux.y2018.teach_spreadsheets.odf.ReadCourses;
 
 public class GUIPref {
-	private final static org.slf4j.Logger LOGGER = LoggerFactory.getLogger(GUIPref.class);
+	private final static Logger LOGGER = LoggerFactory.getLogger(GUIPref.class);
 
 	Display display;
 	Shell shell;
 	Shell prefShell;
+	
+	String fileName;
+	
+	TeachSpreadSheetController teach;
+	
+	java.util.List<String> yearStudy = new ArrayList();
+	
+	public GUIPref(TeachSpreadSheetController teach, java.util.List<String> yearStudy) {
+		this.teach = teach;
+		this.yearStudy = yearStudy;
+	}
 
 	private void initializeMainMenu() throws IOException {
 
@@ -96,6 +109,7 @@ public class GUIPref {
 			buttonFileExplorer.setText("Ouvrez votre fichier contenant tous les cours");
 			buttonFileExplorer.setLayoutData(new GridData(GridData.FILL_HORIZONTAL));
 			buttonFileExplorer.addSelectionListener(new SelectionListener() {
+				@SuppressWarnings("resource")
 				@Override
 				public void widgetSelected(SelectionEvent e) {
 					// =====================================================
@@ -104,8 +118,18 @@ public class GUIPref {
 					// display itself by calling Display.getDefault()
 					// =====================================================
 					LOGGER.info("File Explorer well opened");
-					String chosenFile = openFileExplorer();
-					System.out.println(chosenFile);
+					// String chosenFile = openFileExplorer();
+					// getCoursesFromFileExplorer();
+					String fileName = openFileExplorerTwo();
+					FileInputStream fis;
+					try {
+						fis = new FileInputStream(fileName);
+					} catch (FileNotFoundException e1) {
+						throw new IllegalStateException();
+					}
+					teach.setSource(fis);
+					prefShell();
+					// System.out.println(chosenFile);
 				}
 
 				@Override
@@ -327,6 +351,62 @@ public class GUIPref {
 		shellFE.dispose();
 		return selected;
 	}
+	
+	private String openFileExplorerTwo(){
+		Shell shellFE = new Shell(display);
+
+		FileDialog fd = new FileDialog(shellFE, SWT.OPEN);
+		fd.setText("Open");
+		fd.setFilterPath("C:/");
+		String[] filterExt = { "*.ods" };
+		fd.setFilterExtensions(filterExt);
+		String selected = fd.open();
+		if (selected == null) {
+			LOGGER.error("None file has been opened !");
+			return null;
+
+		}
+		LOGGER.info("The file " + selected + " has been opened.");
+		// if a file has been opened then we open the preferences shell
+		// prefShell();
+		// this.fileName = selected;
+		
+		
+		LOGGER.info("Shell for the courses preferences well opened");
+		shellFE.dispose();
+		return selected;
+	}
+	
+	private java.util.List<String> getYearNamesFromFile(String fileName) {
+		java.util.List<String> yearNames = teach.getYearNames();
+		return yearNames;
+	}
+	
+	@SuppressWarnings("resource")
+	private java.util.List<Course> getCoursesFromFileExplorer() throws Exception {
+		java.util.List<Course> courses = new ArrayList();
+		Shell shellFE = new Shell(display);
+
+		FileDialog fd = new FileDialog(shellFE, SWT.OPEN);
+		fd.setText("Open");
+		fd.setFilterPath("C:/");
+		String[] filterExt = { "*.ods" };
+		fd.setFilterExtensions(filterExt);
+		String selected = fd.open();
+		if (selected == null) {
+			LOGGER.error("None file has been opened !");
+			return null;
+		}
+		LOGGER.info("The file " + selected + " has been opened.");
+		// if a file has been opened then we open the preferences shell
+		prefShell();
+		LOGGER.info("Shell for the courses preferences well opened");
+		shellFE.dispose();
+		
+		FileInputStream fis = new FileInputStream(selected);
+		ReadCourses rc = new ReadCourses(fis);
+		return courses = rc.readCourses();
+	}
 
 	private String getTheChosenFile() {
 		String fileName = openFileExplorer();
@@ -363,29 +443,12 @@ public class GUIPref {
 		return courses;
 	}
 
-	@SuppressWarnings("resource")
-	private java.util.List<Course> getCourses() throws Exception {
-		java.util.List<Course> courses = new ArrayList();
-		String fileName = getTheChosenFile();
-		FileInputStream fis = new FileInputStream(fileName);
-		ReadCourses rc = new ReadCourses(fis);
-		return courses = rc.readCourses();
-	}
 
-	private java.util.List<String> getEverySheetName() throws Exception {
-		java.util.List<Course> courses = getCourses();
-		java.util.List<String> allSheetName = new ArrayList<>();
-		for (Course course : courses) {
-			allSheetName.add(course.getYearOfStud());
-		}
-		Set set = new HashSet();
-		set.addAll(allSheetName);
-		java.util.List allSheetNameNoDoublon = new ArrayList(set);
-		return allSheetNameNoDoublon;
-
-	}
 
 	private Composite createComposite() {
+		java.util.List<String> yearNames = getYearNamesFromFile(fileName);
+		
+		
 		Composite c = new Composite(prefShell, SWT.CENTER);
 		c.setLayout(new GridLayout(3, true));
 		c.setSize(prefShell.getSize().x, prefShell.getSize().y);
@@ -402,9 +465,14 @@ public class GUIPref {
 	    
 	    List list = new List( group1, SWT.BORDER | SWT.MULTI | SWT.V_SCROLL );
 	    list.setLayoutData( new GridData( SWT.FILL, SWT.FILL, true, true ) );
-	    for( int i = 0; i < 10; i++ ) {
+	    /** for( int i = 0; i < 10; i++ ) {
+	    	  
 	      list.add( "Item " + i );
-	    }
+	    } **/
+	    
+	    for (String string : yearStudy) {
+			list.add(string);
+		}
 		// List listSheetName = new List(group1, SWT.BORDER | SWT.MULTI | SWT.V_SCROLL);
 		
 		
@@ -452,7 +520,22 @@ public class GUIPref {
 	}
 
 	public static void main(String[] args) throws IOException {
-		GUIPref gui = new GUIPref();
+		CourseSheetMetadata csm = new CourseSheetMetadata();
+		java.util.List<CourseSheet> courses = new ArrayList();
+		
+		Course c = new Course("Test", "Test", "L3", "Ok", "Ok", 1);
+		CoursePref cp = new CoursePref(c);
+		java.util.List<CoursePref> coursePrefS1 = new ArrayList();
+		java.util.List<CoursePref> coursePrefS2 = new ArrayList();
+		coursePrefS1.add(cp);
+		
+		java.util.List<String> yearStudy = new ArrayList();
+		yearStudy.add(c.getYearOfStud());
+		
+		CourseSheet cs = new CourseSheet(csm, coursePrefS1, coursePrefS2);
+		courses.add(cs);
+		TeachSpreadSheetController teach = new TeachSpreadSheetController(null, null, courses);
+		GUIPref gui = new GUIPref(teach, yearStudy);
 		gui.initializeMainMenu();
 		/*
 		 * Display display = new Display(); Shell shell = new Shell(display, SWT.RESIZE
