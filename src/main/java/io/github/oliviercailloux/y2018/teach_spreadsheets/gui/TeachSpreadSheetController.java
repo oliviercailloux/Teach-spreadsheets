@@ -65,6 +65,30 @@ public class TeachSpreadSheetController {
 		return coursesName;
 	}
 
+	public InputStream getSource() {
+		return source;
+	}
+
+	public void setSource(InputStream source) {
+		this.source = source;
+	}
+
+	public OutputStream getDestination() {
+		return destination;
+	}
+
+	public void setDestination(OutputStream destination) {
+		this.destination = destination;
+	}
+
+	public List<CourseSheet> getCourseSheetList() {
+		return courseSheetList;
+	}
+
+	public void setCourseSheetList(List<CourseSheet> courseSheetList) {
+		this.courseSheetList = courseSheetList;
+	}
+
 	public static void main(String[] args) throws Exception {
 		// csv file of a teacher info
 		String teacherPath = "C:\\Users\\lf947\\Documents\\JAVA\\L3_MIAGE\\JAVA\\WORKSPACE_1\\Projets\\Teach-spreadsheets\\src\\test\\resources\\io\\github\\oliviercailloux\\y2018\\teach_spreadsheets\\odf\\oneTeacherTest.csv";
