@@ -40,6 +40,38 @@ public class CourseSheet {
 		return courses;
 	}
 
+	public String getYearOfStud() {
+		return sheetMetadata.getYearOfStud();
+
+	}
+
+	public static List<String> getYearNames(List<CourseSheet> courseSheets) {
+		List<String> yearNames = new ArrayList<>();
+
+		for (CourseSheet courseSheet : courseSheets) {
+			yearNames.add(courseSheet.getYearOfStud());
+		}
+		return yearNames;
+	}
+
+	public List<String> getCoursesName(int semester) {
+		List<String> coursesName = new ArrayList<>();
+		if (semester % 2 == 0) {
+			for (CoursePref coursePref : coursePrefS1) {
+				coursesName.add(coursePref.getCourse().getName());
+			}
+		} else {
+			for (CoursePref coursePref : coursePrefS2) {
+				coursesName.add(coursePref.getCourse().getName());
+			}
+		}
+		return coursesName;
+	}
+
+	public int getFirstSemesterNumber() {
+		return this.sheetMetadata.getFirstSemesterNumber();
+	}
+
 	public List<CoursePref> getCoursePrefS1() {
 		return coursePrefS1;
 	}
