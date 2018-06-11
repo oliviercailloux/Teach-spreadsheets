@@ -1,13 +1,15 @@
 package io.github.oliviercailloux.y2018.teach_spreadsheets.gui;
 
-import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.FileReader;
+import java.io.InputStream;
+import java.io.OutputStream;
 import java.util.ArrayList;
 import java.util.List;
 
 import io.github.oliviercailloux.y2018.teach_spreadsheets.courses.Choice;
+import io.github.oliviercailloux.y2018.teach_spreadsheets.courses.CoursePref;
 import io.github.oliviercailloux.y2018.teach_spreadsheets.courses.CourseSheet;
 import io.github.oliviercailloux.y2018.teach_spreadsheets.courses.Teacher;
 import io.github.oliviercailloux.y2018.teach_spreadsheets.csv.CsvFileReader;
@@ -18,14 +20,49 @@ public class TeachSpreadSheetController {
 
 	private final static String template = "Saisie_voeux_dauphine_Template.ods";
 
-	private File destination;
+	private InputStream source;
+
+	private OutputStream destination;
 
 	private List<CourseSheet> courseSheetList;
 
-	public TeachSpreadSheetController(File destination, List<CourseSheet> courseSheetList) {
-		super();
+	public TeachSpreadSheetController(InputStream source, OutputStream destination, List<CourseSheet> courseSheetList) {
+		this.source = source;
 		this.destination = destination;
 		this.courseSheetList = courseSheetList;
+	}
+
+	public List<String> getYearNames() {
+		List<String> yearNames = new ArrayList<>();
+
+		for (CourseSheet courseSheet : courseSheetList) {
+			yearNames.add(courseSheet.getYearOfStud());
+		}
+		return yearNames;
+	}
+
+	public CourseSheet getCourseSheetByYear(String yearName) {
+		for (CourseSheet courseSheet : courseSheetList) {
+			if (courseSheet.getYearOfStud().equals(yearName)) {
+				return courseSheet;
+			}
+		}
+		return null;
+	}
+
+	public List<String> getCoursesName(String yearName, int semester) {
+		List<String> coursesName = new ArrayList<>();
+		CourseSheet courseSheet = getCourseSheetByYear(yearName);
+		if (semester % 2 == 0) {
+			for (CoursePref coursePref : courseSheet.getCoursePrefS1()) {
+				coursesName.add(coursePref.getCourse().getName());
+			}
+		} else {
+			for (CoursePref coursePref : courseSheet.getCoursePrefS2()) {
+				coursesName.add(coursePref.getCourse().getName());
+			}
+		}
+		return coursesName;
 	}
 
 	public static void main(String[] args) throws Exception {

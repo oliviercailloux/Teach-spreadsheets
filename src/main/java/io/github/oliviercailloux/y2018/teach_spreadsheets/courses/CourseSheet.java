@@ -45,15 +45,6 @@ public class CourseSheet {
 
 	}
 
-	public static List<String> getYearNames(List<CourseSheet> courseSheets) {
-		List<String> yearNames = new ArrayList<>();
-
-		for (CourseSheet courseSheet : courseSheets) {
-			yearNames.add(courseSheet.getYearOfStud());
-		}
-		return yearNames;
-	}
-
 	public List<String> getCoursesName(int semester) {
 		List<String> coursesName = new ArrayList<>();
 		if (semester % 2 == 0) {
