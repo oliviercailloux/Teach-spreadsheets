@@ -45,6 +45,14 @@ public class CourseSheet {
 
 	}
 
+	public List<Integer> getSemesters() {
+		List<Integer> semesters = new ArrayList<>();
+		semesters.add(this.sheetMetadata.getFirstSemesterNumber());
+		semesters.add(this.sheetMetadata.getFirstSemesterNumber() + 1);
+
+		return semesters;
+	}
+
 	public List<String> getCoursesName(int semester) {
 		List<String> coursesName = new ArrayList<>();
 		if (semester % 2 == 0) {
