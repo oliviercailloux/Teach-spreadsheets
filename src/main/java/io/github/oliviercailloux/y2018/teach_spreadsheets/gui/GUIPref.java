@@ -133,7 +133,11 @@ public class GUIPref {
 					} catch (FileNotFoundException e1) {
 						throw new IllegalStateException(e1);
 					}
-					teach.setSource(fis);
+					try {
+						teach.setSource(fis);
+					} catch (Exception e1) {
+						throw new IllegalStateException(e1);
+					}
 					// java.util.List<String> yearNames = teach.getYearNames();
 
 					prefShell();
@@ -631,7 +635,7 @@ public class GUIPref {
 	}
 
 	public static void main(String[] args) throws IOException {
-		CourseSheetMetadata csm1 = new CourseSheetMetadata();
+		/** CourseSheetMetadata csm1 = new CourseSheetMetadata();
 		csm1.setYearOfStud("L3 MIAGE");
 		csm1.setFirstSemesterNumber(1);
 
@@ -657,9 +661,9 @@ public class GUIPref {
 		CourseSheet cs1 = new CourseSheet(csm1, coursePrefS1, coursePrefS2);
 		CourseSheet cs2 = new CourseSheet(csm2, coursePrefS1, coursePrefS2);
 		courses.add(cs1);
-		courses.add(cs2);
+		courses.add(cs2); **/
 
-		TeachSpreadSheetController teach = new TeachSpreadSheetController(null, null, courses);
+		TeachSpreadSheetController teach = new TeachSpreadSheetController();
 		GUIPref gui = new GUIPref(teach);
 		gui.initializeMainMenu();
 		/*
