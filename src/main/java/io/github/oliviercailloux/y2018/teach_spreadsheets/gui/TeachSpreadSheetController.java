@@ -40,11 +40,6 @@ public class TeachSpreadSheetController {
 		List<CourseSheet> courseSheets = new ArrayList<>();
 		try (ReadCourses courseReader = new ReadCourses(this.source)) {
 			courseSheets = courseReader.readCourseSheets();
-
-			// Set course preferences
-
-			courseSheets.get(3).getCoursePrefS1().get(0).setCmChoice(Choice.A);
-			// Write spreadsheet
 		}
 
 		return courseSheets;
@@ -113,8 +108,9 @@ public class TeachSpreadSheetController {
 		return source;
 	}
 
-	public void setSource(InputStream source) {
+	public void setSource(InputStream source) throws Exception {
 		this.source = source;
+		this.courseSheetList = this.getCourseSheets();
 	}
 
 	public OutputStream getDestination() {
