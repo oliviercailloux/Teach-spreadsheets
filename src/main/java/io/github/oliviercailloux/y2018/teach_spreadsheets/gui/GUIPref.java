@@ -1,23 +1,16 @@
 package io.github.oliviercailloux.y2018.teach_spreadsheets.gui;
 
-import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.Reader;
-import java.io.StringReader;
 import java.util.ArrayList;
 
 import org.eclipse.swt.SWT;
-import org.eclipse.swt.events.ControlAdapter;
-import org.eclipse.swt.events.ControlEvent;
-import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.events.SelectionListener;
-import org.eclipse.swt.graphics.Color;
-
 import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.graphics.Rectangle;
 import org.eclipse.swt.layout.GridData;
@@ -29,17 +22,16 @@ import org.eclipse.swt.widgets.Event;
 import org.eclipse.swt.widgets.FileDialog;
 import org.eclipse.swt.widgets.Group;
 import org.eclipse.swt.widgets.Label;
+import org.eclipse.swt.widgets.List;
 import org.eclipse.swt.widgets.Listener;
 import org.eclipse.swt.widgets.Menu;
 import org.eclipse.swt.widgets.MenuItem;
 import org.eclipse.swt.widgets.MessageBox;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.Text;
-import org.eclipse.swt.widgets.List;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import io.github.oliviercailloux.y2018.teach_spreadsheets.courses.Choice;
 import io.github.oliviercailloux.y2018.teach_spreadsheets.courses.Course;
 import io.github.oliviercailloux.y2018.teach_spreadsheets.courses.CoursePref;
 import io.github.oliviercailloux.y2018.teach_spreadsheets.courses.CourseSheet;
@@ -54,13 +46,13 @@ public class GUIPref {
 	Display display;
 	Shell shell;
 	Shell prefShell;
-	
+
 	String fileName;
-	
+
 	TeachSpreadSheetController teach;
-	
+
 	java.util.List<String> yearStudy = new ArrayList();
-	
+
 	public GUIPref(TeachSpreadSheetController teach, java.util.List<String> yearStudy) {
 		this.teach = teach;
 		this.yearStudy = yearStudy;
@@ -125,9 +117,13 @@ public class GUIPref {
 					try {
 						fis = new FileInputStream(fileName);
 					} catch (FileNotFoundException e1) {
-						throw new IllegalStateException();
+						throw new IllegalStateException(e1);
 					}
-					teach.setSource(fis);
+					try {
+						teach.setSource(fis);
+					} catch (Exception e2) {
+						throw new IllegalStateException(e2);
+					}
 					prefShell();
 					// System.out.println(chosenFile);
 				}
@@ -206,13 +202,14 @@ public class GUIPref {
 
 	private void prefShell() {
 
-		// Doesn't allow the user to close the main shell when the child shell is open
+		// Doesn't allow the user to close the main shell when the child shell
+		// is open
 		prefShell = new Shell(display, SWT.CLOSE | SWT.SYSTEM_MODAL);
-		
+
 		GridLayout gl = new GridLayout();
-	    gl.numColumns = 1;
-	    prefShell.setLayout(gl);
-	    
+		gl.numColumns = 1;
+		prefShell.setLayout(gl);
+
 		// prefShell.setLayout(new GridLayout(2, false));
 		prefShell.setText("Mes préférences - Teach-spreadsheets");
 
@@ -302,10 +299,11 @@ public class GUIPref {
 		// Create a horizontal separator
 		Label lblSeparator = new Label(prefShell, SWT.HORIZONTAL | SWT.SEPARATOR);
 		lblSeparator.setLayoutData(new GridData(GridData.FILL_HORIZONTAL));
-		//lblSeparator.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false));
-		
+		// lblSeparator.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true,
+		// false));
+
 		Composite c = createComposite();
-		
+
 		Button buttonSemester;
 		buttonSemester = new Button(prefShell, SWT.CHECK | SWT.WRAP);
 		buttonSemester.setText("Semestre 1");
@@ -313,9 +311,9 @@ public class GUIPref {
 		buttonSemester.setText("Semestre 2");
 
 		final List listSheetName = new List(prefShell, SWT.BORDER | SWT.MULTI | SWT.V_SCROLL);
-		
+
 		// prefShell.pack();
-		
+
 		prefShell.open();
 
 		// =============================================================
@@ -351,8 +349,8 @@ public class GUIPref {
 		shellFE.dispose();
 		return selected;
 	}
-	
-	private String openFileExplorerTwo(){
+
+	private String openFileExplorerTwo() {
 		Shell shellFE = new Shell(display);
 
 		FileDialog fd = new FileDialog(shellFE, SWT.OPEN);
@@ -370,18 +368,17 @@ public class GUIPref {
 		// if a file has been opened then we open the preferences shell
 		// prefShell();
 		// this.fileName = selected;
-		
-		
+
 		LOGGER.info("Shell for the courses preferences well opened");
 		shellFE.dispose();
 		return selected;
 	}
-	
+
 	private java.util.List<String> getYearNamesFromFile(String fileName) {
 		java.util.List<String> yearNames = teach.getYearNames();
 		return yearNames;
 	}
-	
+
 	@SuppressWarnings("resource")
 	private java.util.List<Course> getCoursesFromFileExplorer() throws Exception {
 		java.util.List<Course> courses = new ArrayList();
@@ -402,7 +399,7 @@ public class GUIPref {
 		prefShell();
 		LOGGER.info("Shell for the courses preferences well opened");
 		shellFE.dispose();
-		
+
 		FileInputStream fis = new FileInputStream(selected);
 		ReadCourses rc = new ReadCourses(fis);
 		return courses = rc.readCourses();
@@ -443,39 +440,39 @@ public class GUIPref {
 		return courses;
 	}
 
-
-
 	private Composite createComposite() {
 		java.util.List<String> yearNames = getYearNamesFromFile(fileName);
-		
-		
+
 		Composite c = new Composite(prefShell, SWT.CENTER);
 		c.setLayout(new GridLayout(3, true));
 		c.setSize(prefShell.getSize().x, prefShell.getSize().y);
-		
+
 		Group group1 = new Group(c, SWT.NONE);
 		group1.setSize(c.getSize().x / 3, c.getSize().y / 3);
-		
+
 		group1.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
 		group1.setText("Step 1: Choose the year of study");
 		group1.setLayout(new GridLayout(1, false));
-		
-		/** Label nameLabel = new Label(group1, SWT.NONE);
-	    nameLabel.setText("Choose"); **/
-	    
-	    List list = new List( group1, SWT.BORDER | SWT.MULTI | SWT.V_SCROLL );
-	    list.setLayoutData( new GridData( SWT.FILL, SWT.FILL, true, true ) );
-	    /** for( int i = 0; i < 10; i++ ) {
-	    	  
-	      list.add( "Item " + i );
-	    } **/
-	    
-	    for (String string : yearStudy) {
+
+		/**
+		 * Label nameLabel = new Label(group1, SWT.NONE);
+		 * nameLabel.setText("Choose");
+		 **/
+
+		List list = new List(group1, SWT.BORDER | SWT.MULTI | SWT.V_SCROLL);
+		list.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
+		/**
+		 * for( int i = 0; i < 10; i++ ) {
+		 * 
+		 * list.add( "Item " + i ); }
+		 **/
+
+		for (String string : yearStudy) {
 			list.add(string);
 		}
-		// List listSheetName = new List(group1, SWT.BORDER | SWT.MULTI | SWT.V_SCROLL);
-		
-		
+		// List listSheetName = new List(group1, SWT.BORDER | SWT.MULTI |
+		// SWT.V_SCROLL);
+
 		// Group group1 = new Group(prefShell, SWT.SHADOW_OUT);
 		Group group2 = new Group(c, SWT.SHADOW_OUT);
 		group2.setText("Step 1: Choose:");
@@ -490,6 +487,7 @@ public class GUIPref {
 		button2.setText("choice 2 ");
 
 		Listener listener1 = new Listener() {
+			@Override
 			public void handleEvent(Event event) {
 				int user_choice;
 
@@ -505,16 +503,15 @@ public class GUIPref {
 		};
 		button1.addListener(SWT.Selection, listener1);
 		button2.addListener(SWT.Selection, listener1);
-		
-		// Group group2 = new Group(prefShell, SWT.SHADOW_OUT);	
+
+		// Group group2 = new Group(prefShell, SWT.SHADOW_OUT);
 		Group group3 = new Group(c, SWT.SHADOW_OUT);
 		group3.setSize(c.getSize().x / 3, c.getSize().y / 3);
 		group3.setText("Step 2: Insert your age ");
 		group3.setLayout(new GridLayout(1, true));
-		Text textRow=new Text(group3, SWT.BORDER);
+		Text textRow = new Text(group3, SWT.BORDER);
 		textRow.setText(" ");
 
-		
 		return c;
 
 	}
@@ -522,39 +519,40 @@ public class GUIPref {
 	public static void main(String[] args) throws IOException {
 		CourseSheetMetadata csm = new CourseSheetMetadata();
 		java.util.List<CourseSheet> courses = new ArrayList();
-		
+
 		Course c = new Course("Test", "Test", "L3", "Ok", "Ok", 1);
 		CoursePref cp = new CoursePref(c);
 		java.util.List<CoursePref> coursePrefS1 = new ArrayList();
 		java.util.List<CoursePref> coursePrefS2 = new ArrayList();
 		coursePrefS1.add(cp);
-		
+
 		java.util.List<String> yearStudy = new ArrayList();
 		yearStudy.add(c.getYearOfStud());
-		
+
 		CourseSheet cs = new CourseSheet(csm, coursePrefS1, coursePrefS2);
 		courses.add(cs);
 		TeachSpreadSheetController teach = new TeachSpreadSheetController(null, null, courses);
 		GUIPref gui = new GUIPref(teach, yearStudy);
 		gui.initializeMainMenu();
 		/*
-		 * Display display = new Display(); Shell shell = new Shell(display, SWT.RESIZE
-		 * | SWT.CLOSE | SWT.MIN); shell.open(); shell.setText("File Choice");
+		 * Display display = new Display(); Shell shell = new Shell(display,
+		 * SWT.RESIZE | SWT.CLOSE | SWT.MIN); shell.open();
+		 * shell.setText("File Choice");
 		 * 
-		 * // initialize a grid layout manager GridLayout gridLayout = new GridLayout();
-		 * gridLayout.numColumns = 2; shell.setLayout(gridLayout);
+		 * // initialize a grid layout manager GridLayout gridLayout = new
+		 * GridLayout(); gridLayout.numColumns = 2; shell.setLayout(gridLayout);
 		 * 
-		 * // create the label and the field text Label labelTitle = new Label(shell,
-		 * SWT.NONE); labelTitle.setText("File to load : "); labelTitle.setSize(100,
-		 * 25); Text textTitle = new Text(shell, SWT.BORDER);
-		 * textTitle.setText("Saisie_Voeux_Dauphine.ods"); Button buttonSubmit = new
-		 * Button(shell, SWT.PUSH); buttonSubmit.setText("Submit");
-		 * buttonSubmit.setSize(100, 25); buttonSubmit.addListener(SWT.Selection, new
-		 * Listener() {
+		 * // create the label and the field text Label labelTitle = new
+		 * Label(shell, SWT.NONE); labelTitle.setText("File to load : ");
+		 * labelTitle.setSize(100, 25); Text textTitle = new Text(shell,
+		 * SWT.BORDER); textTitle.setText("Saisie_Voeux_Dauphine.ods"); Button
+		 * buttonSubmit = new Button(shell, SWT.PUSH);
+		 * buttonSubmit.setText("Submit"); buttonSubmit.setSize(100, 25);
+		 * buttonSubmit.addListener(SWT.Selection, new Listener() {
 		 * 
 		 * @Override public void handleEvent(Event e) { switch (e.type) { case
-		 * SWT.Selection: String selection = textTitle.getText(); Shell shell2 = new
-		 * Shell(display, SWT.RESIZE | SWT.CLOSE | SWT.MIN); shell2.open();
+		 * SWT.Selection: String selection = textTitle.getText(); Shell shell2 =
+		 * new Shell(display, SWT.RESIZE | SWT.CLOSE | SWT.MIN); shell2.open();
 		 * 
 		 * while (!shell2.isDisposed()) { // if (!display.readAndDispatch())
 		 * display.sleep(); } break; default: break; } } });
