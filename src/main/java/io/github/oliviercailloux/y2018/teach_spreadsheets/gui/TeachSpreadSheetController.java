@@ -26,14 +26,31 @@ public class TeachSpreadSheetController {
 
 	private List<CourseSheet> courseSheetList;
 
-	public TeachSpreadSheetController(InputStream source, OutputStream destination, List<CourseSheet> courseSheetList) {
+	public TeachSpreadSheetController(InputStream source, OutputStream destination) {
 		this.source = source;
 		this.destination = destination;
-		this.courseSheetList = courseSheetList;
 	}
 
 	public TeachSpreadSheetController() {
 
+	}
+
+	private List<CourseSheet> getCourseSheets() throws Exception {
+		List<CourseSheet> courseSheets = new ArrayList<>();
+		try (ReadCourses courseReader = new ReadCourses(this.source)) {
+			courseSheets = courseReader.readCourseSheets();
+
+			// Set course preferences
+
+			courseSheets.get(3).getCoursePrefS1().get(0).setCmChoice(Choice.A);
+			// Write spreadsheet
+		}
+
+		return courseSheets;
+	}
+
+	public List<Integer> getSemesters(String yearName) {
+		return this.getCourseSheetByYear(yearName).getSemesters();
 	}
 
 	public List<String> getYearNames() {
