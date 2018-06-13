@@ -26,9 +26,10 @@ public class TeachSpreadSheetController {
 
 	private List<CourseSheet> courseSheetList;
 
-	public TeachSpreadSheetController(InputStream source, OutputStream destination) {
+	public TeachSpreadSheetController(InputStream source, OutputStream destination, List<CourseSheet> courseSheetList) {
 		this.source = source;
 		this.destination = destination;
+		this.courseSheetList = courseSheetList;
 	}
 
 	public TeachSpreadSheetController() {
