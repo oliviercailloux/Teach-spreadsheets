@@ -9,6 +9,7 @@ import java.io.InputStreamReader;
 import java.io.Reader;
 import java.io.StringReader;
 import java.util.ArrayList;
+import java.util.Arrays;
 
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.ControlAdapter;
@@ -28,6 +29,7 @@ import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Event;
 import org.eclipse.swt.widgets.FileDialog;
 import org.eclipse.swt.widgets.Group;
+import org.eclipse.swt.widgets.Item;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Listener;
 import org.eclipse.swt.widgets.Menu;
@@ -35,6 +37,7 @@ import org.eclipse.swt.widgets.MenuItem;
 import org.eclipse.swt.widgets.MessageBox;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.Text;
+import org.eclipse.swt.widgets.Widget;
 import org.eclipse.swt.widgets.List;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -51,19 +54,21 @@ import io.github.oliviercailloux.y2018.teach_spreadsheets.odf.ReadCourses;
 public class GUIPref {
 	private final static Logger LOGGER = LoggerFactory.getLogger(GUIPref.class);
 
-	Display display;
-	Shell shell;
-	Shell prefShell;
-	
-	String fileName;
-	
-	TeachSpreadSheetController teach;
-	
-	java.util.List<String> yearStudy = new ArrayList();
-	
-	public GUIPref(TeachSpreadSheetController teach, java.util.List<String> yearStudy) {
+	private Display display;
+	private Shell shell;
+	private Shell prefShell;
+
+	private String fileName;
+
+	private TeachSpreadSheetController teach;
+
+	private Composite groupButtons;
+	private Group groupYearsStudy;
+
+	private String selectedYearStudy = "";
+
+	public GUIPref(TeachSpreadSheetController teach) {
 		this.teach = teach;
-		this.yearStudy = yearStudy;
 	}
 
 	private void initializeMainMenu() throws IOException {
@@ -121,13 +126,16 @@ public class GUIPref {
 					// String chosenFile = openFileExplorer();
 					// getCoursesFromFileExplorer();
 					String fileName = openFileExplorerTwo();
+
 					FileInputStream fis;
 					try {
 						fis = new FileInputStream(fileName);
 					} catch (FileNotFoundException e1) {
-						throw new IllegalStateException();
+						throw new IllegalStateException(e1);
 					}
 					teach.setSource(fis);
+					// java.util.List<String> yearNames = teach.getYearNames();
+
 					prefShell();
 					// System.out.println(chosenFile);
 				}
@@ -208,11 +216,11 @@ public class GUIPref {
 
 		// Doesn't allow the user to close the main shell when the child shell is open
 		prefShell = new Shell(display, SWT.CLOSE | SWT.SYSTEM_MODAL);
-		
+
 		GridLayout gl = new GridLayout();
-	    gl.numColumns = 1;
-	    prefShell.setLayout(gl);
-	    
+		gl.numColumns = 1;
+		prefShell.setLayout(gl);
+
 		// prefShell.setLayout(new GridLayout(2, false));
 		prefShell.setText("Mes préférences - Teach-spreadsheets");
 
@@ -302,20 +310,11 @@ public class GUIPref {
 		// Create a horizontal separator
 		Label lblSeparator = new Label(prefShell, SWT.HORIZONTAL | SWT.SEPARATOR);
 		lblSeparator.setLayoutData(new GridData(GridData.FILL_HORIZONTAL));
-		//lblSeparator.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false));
-		
-		Composite c = createComposite();
-		
-		Button buttonSemester;
-		buttonSemester = new Button(prefShell, SWT.CHECK | SWT.WRAP);
-		buttonSemester.setText("Semestre 1");
-		buttonSemester = new Button(prefShell, SWT.CHECK | SWT.WRAP);
-		buttonSemester.setText("Semestre 2");
+		// lblSeparator.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false));
 
-		final List listSheetName = new List(prefShell, SWT.BORDER | SWT.MULTI | SWT.V_SCROLL);
-		
-		// prefShell.pack();
-		
+		// c = createComposite();
+		groupYearsStudy = createGroupYearsStudy();
+
 		prefShell.open();
 
 		// =============================================================
@@ -329,6 +328,207 @@ public class GUIPref {
 				prefShell.dispose();
 			}
 		});
+
+	}
+
+	private Group createGroupYearsStudy() {
+		java.util.List<String> yearNames = teach.getYearNames();
+
+		Composite c = new Composite(prefShell, SWT.CENTER);
+		c.setLayout(new GridLayout(2, false));
+		c.setSize(prefShell.getSize().x, prefShell.getSize().y);
+
+		Group group1 = new Group(c, SWT.NONE);
+		group1.setSize(c.getSize().x / 3, c.getSize().y / 3);
+
+		group1.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
+		group1.setText("Step 1: Choose the year of study");
+		group1.setLayout(new GridLayout(1, false));
+
+		List listYearStudy = new List(group1, SWT.BORDER | SWT.MULTI | SWT.V_SCROLL);
+		listYearStudy.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
+
+		for (String string : yearNames) {
+			listYearStudy.add(string);
+		}
+
+		/**
+		 * listYearStudy.addListener(SWT.Selection, new Listener() {
+		 * 
+		 * @Override public void handleEvent(Event e) { int[] selection =
+		 *           listYearStudy.getSelectionIndices(); java.util.List<String>
+		 *           selectedYears = new ArrayList(); for (int i = 0; i <
+		 *           selection.length; i++) {
+		 *           selectedYears.add(listYearStudy.getItem(i)); } selectedYearStudy =
+		 *           selectedYears.get(selectedYears.size() - 1); } });
+		 **/
+
+		final Text text = new Text(prefShell, SWT.BORDER);
+		text.setBounds(60, 130, 160, 25);
+
+		listYearStudy.addSelectionListener(new SelectionListener() {
+			@Override
+			public void widgetSelected(SelectionEvent event) {
+				int[] selectedItems = listYearStudy.getSelectionIndices();
+
+				String s[] = listYearStudy.getSelection();
+
+				String outString = s[0];
+				text.setText("Selected Items: " + outString);
+				selectedYearStudy = outString;
+
+				System.out.println(selectedYearStudy);
+				if (groupButtons != null)
+					groupButtons.dispose();
+				groupButtons = createGroupOfButtons();
+			}
+
+			public void widgetDefaultSelected(SelectionEvent event) {
+				int[] selectedItems = listYearStudy.getSelectionIndices();
+				String outString = "";
+				for (int loopIndex = 0; loopIndex < selectedItems.length; loopIndex++)
+					outString += selectedItems[loopIndex] + " ";
+				System.out.println("Test Selected Items: " + outString);
+			}
+		});
+
+		prefShell.pack();
+		return group1;
+	}
+
+	private Composite createGroupOfButtons() {
+		Composite c = new Composite(prefShell, SWT.CENTER);
+		GridLayout f = new GridLayout(2, false);
+		c.setLayout(f);
+		GridData a = new GridData(SWT.FILL, SWT.CENTER, true, false);
+		a.minimumWidth = SWT.FILL;
+		a.horizontalAlignment = SWT.CENTER;
+		a.widthHint = 200;
+
+		Group group2 = new Group(c, SWT.SHADOW_OUT);
+		group2.setText("Step 1: Choose:");
+		group2.setSize(c.getSize().x / 3, c.getSize().y / 3);
+		group2.setLayout(new GridLayout(1, true));
+
+		java.util.List<Integer> listSemester = teach.getSemesters(selectedYearStudy);
+		int firstSemester = 0;
+		int secondSemester = 0;
+
+		firstSemester = listSemester.get(0);
+		secondSemester = listSemester.get(1);
+		// buttonCsv
+		final Button button1 = new Button(group2, SWT.RADIO);
+		button1.setText(String.valueOf(firstSemester));
+		// buttonTxt
+		final Button button2 = new Button(group2, SWT.RADIO);
+		button2.setText(String.valueOf(secondSemester));
+
+		Listener listener1 = new Listener() {
+			public void handleEvent(Event event) {
+				int user_choice;
+
+				if (event.widget == button1) {
+					user_choice = 1;
+					System.out.println(user_choice);
+				} else if (event.widget == button2) {
+					user_choice = 2;
+					System.out.println(user_choice);
+				}
+
+			}
+		};
+		button1.addListener(SWT.Selection, listener1);
+		button2.addListener(SWT.Selection, listener1);
+
+		prefShell.pack();
+		// return group2;
+		return c;
+	}
+
+	private Composite createComposite() {
+		java.util.List<String> yearNames = teach.getYearNames();
+
+		Composite c = new Composite(prefShell, SWT.CENTER);
+		c.setLayout(new GridLayout(3, true));
+		c.setSize(prefShell.getSize().x, prefShell.getSize().y);
+
+		Group group1 = new Group(c, SWT.NONE);
+		group1.setSize(c.getSize().x / 3, c.getSize().y / 3);
+
+		group1.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
+		group1.setText("Step 1: Choose the year of study");
+		group1.setLayout(new GridLayout(1, false));
+
+		/**
+		 * Label nameLabel = new Label(group1, SWT.NONE); nameLabel.setText("Choose");
+		 **/
+
+		List listYearStudy = new List(group1, SWT.BORDER | SWT.MULTI | SWT.V_SCROLL);
+		listYearStudy.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
+		/**
+		 * for( int i = 0; i < 10; i++ ) {
+		 * 
+		 * list.add( "Item " + i ); }
+		 **/
+
+		for (String string : yearNames) {
+			listYearStudy.add(string);
+		}
+
+		listYearStudy.addListener(SWT.Selection, new Listener() {
+
+			@Override
+			public void handleEvent(Event e) {
+
+				int[] selection = listYearStudy.getSelectionIndices();
+				for (int i = 0; i < selection.length; i++) {
+					selectedYearStudy = listYearStudy.getItem(i);
+
+					// selectedYearStudy = listYearStudy.getItem(i);
+					// System.out.println(listYearStudy.getItem(i));
+					// string += selection[i] + " ";
+				}
+				// System.out.println(selectedYearStudy);
+				// System.out.println("Selection={" + string + "}");
+			}
+
+			// selectedYearStudy = selectedYearStudyListener;
+		});
+		// List listSheetName = new List(group1, SWT.BORDER | SWT.MULTI | SWT.V_SCROLL);
+		/**
+		 * // Group group1 = new Group(prefShell, SWT.SHADOW_OUT); Group group2 = new
+		 * Group(c, SWT.SHADOW_OUT); group2.setText("Step 1: Choose:");
+		 * group2.setSize(c.getSize().x / 3, c.getSize().y / 3); group2.setLayout(new
+		 * GridLayout(1, true));
+		 * 
+		 * 
+		 * // buttonCsv final Button button1 = new Button(group2, SWT.RADIO);
+		 * button1.setText("choice 1 "); // buttonTxt final Button button2 = new
+		 * Button(group2, SWT.RADIO); button2.setText("choice 2 ");
+		 * 
+		 * Listener listener1 = new Listener() { public void handleEvent(Event event) {
+		 * int user_choice;
+		 * 
+		 * if (event.widget == button1) { user_choice = 1;
+		 * System.out.println(user_choice); } else if (event.widget == button2) {
+		 * user_choice = 2; System.out.println(user_choice); }
+		 * 
+		 * } }; button1.addListener(SWT.Selection, listener1);
+		 * button2.addListener(SWT.Selection, listener1);
+		 **/
+
+		// createButtons();
+
+		// Group group2 = new Group(prefShell, SWT.SHADOW_OUT);
+		/**
+		 * Group group3 = new Group(c, SWT.SHADOW_OUT); group3.setSize(c.getSize().x /
+		 * 3, c.getSize().y / 3); group3.setText("Step 2: Insert your age ");
+		 * group3.setLayout(new GridLayout(1, true)); Text textRow=new Text(group3,
+		 * SWT.BORDER); textRow.setText(" ");
+		 **/
+
+		return c;
+
 	}
 
 	private String openFileExplorer() {
@@ -351,8 +551,8 @@ public class GUIPref {
 		shellFE.dispose();
 		return selected;
 	}
-	
-	private String openFileExplorerTwo(){
+
+	private String openFileExplorerTwo() {
 		Shell shellFE = new Shell(display);
 
 		FileDialog fd = new FileDialog(shellFE, SWT.OPEN);
@@ -364,24 +564,17 @@ public class GUIPref {
 		if (selected == null) {
 			LOGGER.error("None file has been opened !");
 			return null;
-
 		}
 		LOGGER.info("The file " + selected + " has been opened.");
 		// if a file has been opened then we open the preferences shell
 		// prefShell();
 		// this.fileName = selected;
-		
-		
-		LOGGER.info("Shell for the courses preferences well opened");
+
+		// LOGGER.info("Shell for the courses preferences well opened");
 		shellFE.dispose();
 		return selected;
 	}
-	
-	private java.util.List<String> getYearNamesFromFile(String fileName) {
-		java.util.List<String> yearNames = teach.getYearNames();
-		return yearNames;
-	}
-	
+
 	@SuppressWarnings("resource")
 	private java.util.List<Course> getCoursesFromFileExplorer() throws Exception {
 		java.util.List<Course> courses = new ArrayList();
@@ -402,7 +595,7 @@ public class GUIPref {
 		prefShell();
 		LOGGER.info("Shell for the courses preferences well opened");
 		shellFE.dispose();
-		
+
 		FileInputStream fis = new FileInputStream(selected);
 		ReadCourses rc = new ReadCourses(fis);
 		return courses = rc.readCourses();
@@ -437,105 +630,37 @@ public class GUIPref {
 		}
 	}
 
-	private java.util.List<Course> getCoursesFromSemester(String s) {
-		java.util.List<Course> courses = new ArrayList();
-
-		return courses;
-	}
-
-
-
-	private Composite createComposite() {
-		java.util.List<String> yearNames = getYearNamesFromFile(fileName);
-		
-		
-		Composite c = new Composite(prefShell, SWT.CENTER);
-		c.setLayout(new GridLayout(3, true));
-		c.setSize(prefShell.getSize().x, prefShell.getSize().y);
-		
-		Group group1 = new Group(c, SWT.NONE);
-		group1.setSize(c.getSize().x / 3, c.getSize().y / 3);
-		
-		group1.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
-		group1.setText("Step 1: Choose the year of study");
-		group1.setLayout(new GridLayout(1, false));
-		
-		/** Label nameLabel = new Label(group1, SWT.NONE);
-	    nameLabel.setText("Choose"); **/
-	    
-	    List list = new List( group1, SWT.BORDER | SWT.MULTI | SWT.V_SCROLL );
-	    list.setLayoutData( new GridData( SWT.FILL, SWT.FILL, true, true ) );
-	    /** for( int i = 0; i < 10; i++ ) {
-	    	  
-	      list.add( "Item " + i );
-	    } **/
-	    
-	    for (String string : yearStudy) {
-			list.add(string);
-		}
-		// List listSheetName = new List(group1, SWT.BORDER | SWT.MULTI | SWT.V_SCROLL);
-		
-		
-		// Group group1 = new Group(prefShell, SWT.SHADOW_OUT);
-		Group group2 = new Group(c, SWT.SHADOW_OUT);
-		group2.setText("Step 1: Choose:");
-		group2.setSize(c.getSize().x / 3, c.getSize().y / 3);
-		group2.setLayout(new GridLayout(1, true));
-
-		// buttonCsv
-		final Button button1 = new Button(group2, SWT.RADIO);
-		button1.setText("choice 1 ");
-		// buttonTxt
-		final Button button2 = new Button(group2, SWT.RADIO);
-		button2.setText("choice 2 ");
-
-		Listener listener1 = new Listener() {
-			public void handleEvent(Event event) {
-				int user_choice;
-
-				if (event.widget == button1) {
-					user_choice = 1;
-					System.out.println(user_choice);
-				} else if (event.widget == button2) {
-					user_choice = 2;
-					System.out.println(user_choice);
-				}
-
-			}
-		};
-		button1.addListener(SWT.Selection, listener1);
-		button2.addListener(SWT.Selection, listener1);
-		
-		// Group group2 = new Group(prefShell, SWT.SHADOW_OUT);	
-		Group group3 = new Group(c, SWT.SHADOW_OUT);
-		group3.setSize(c.getSize().x / 3, c.getSize().y / 3);
-		group3.setText("Step 2: Insert your age ");
-		group3.setLayout(new GridLayout(1, true));
-		Text textRow=new Text(group3, SWT.BORDER);
-		textRow.setText(" ");
-
-		
-		return c;
-
-	}
-
 	public static void main(String[] args) throws IOException {
-		CourseSheetMetadata csm = new CourseSheetMetadata();
+		CourseSheetMetadata csm1 = new CourseSheetMetadata();
+		csm1.setYearOfStud("L3 MIAGE");
+		csm1.setFirstSemesterNumber(1);
+
+		CourseSheetMetadata csm2 = new CourseSheetMetadata();
+		csm2.setYearOfStud("L1");
+		csm2.setFirstSemesterNumber(3);
+
 		java.util.List<CourseSheet> courses = new ArrayList();
-		
-		Course c = new Course("Test", "Test", "L3", "Ok", "Ok", 1);
-		CoursePref cp = new CoursePref(c);
+
+		Course c1 = new Course("Test", "Test", "L3", "Ok", "Ok", 1);
+		CoursePref cp1 = new CoursePref(c1);
+
+		Course c2 = new Course("Test", "Test", "L3", "Ok", "Ok", 3);
+		CoursePref cp = new CoursePref(c2);
 		java.util.List<CoursePref> coursePrefS1 = new ArrayList();
 		java.util.List<CoursePref> coursePrefS2 = new ArrayList();
 		coursePrefS1.add(cp);
-		
+
 		java.util.List<String> yearStudy = new ArrayList();
-		yearStudy.add(c.getYearOfStud());
-		
-		CourseSheet cs = new CourseSheet(csm, coursePrefS1, coursePrefS2);
-		courses.add(cs);
+		yearStudy.add(c1.getYearOfStud());
+		yearStudy.add(c2.getYearOfStud());
+
+		CourseSheet cs1 = new CourseSheet(csm1, coursePrefS1, coursePrefS2);
+		CourseSheet cs2 = new CourseSheet(csm2, coursePrefS1, coursePrefS2);
+		courses.add(cs1);
+		courses.add(cs2);
+
 		TeachSpreadSheetController teach = new TeachSpreadSheetController(null, null, courses);
-		GUIPref gui = new GUIPref(teach, yearStudy);
+		GUIPref gui = new GUIPref(teach);
 		gui.initializeMainMenu();
 		/*
 		 * Display display = new Display(); Shell shell = new Shell(display, SWT.RESIZE
