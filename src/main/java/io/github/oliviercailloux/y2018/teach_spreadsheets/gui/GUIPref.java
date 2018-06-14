@@ -354,8 +354,8 @@ public class GUIPref {
 			listYearStudy.add(string);
 		}
 		
-		final Text text = new Text(prefShell, SWT.BORDER);
-		text.setBounds(60, 130, 160, 25);
+		final Text text = new Text(c, SWT.BORDER);
+		text.setBounds(60, 130, 160, 25); 
 
 		listYearStudy.addSelectionListener(new SelectionListener() {
 			@Override
@@ -376,9 +376,14 @@ public class GUIPref {
 				
 				LOGGER.info("Year of study " + selectedYearStudy + " well chosen.");
 
-				if (compositeButtons != null)
+				if (compositeButtons != null) {
 					compositeButtons.dispose();
+					if ( compositeCourses != null) {
+						compositeCourses.dispose();
+					}
+				}
 				compositeButtons = createGroupSemesters();
+				// compositeCourses = createGroupCourses();
 			}
 
 			public void widgetDefaultSelected(SelectionEvent event) {
@@ -409,7 +414,6 @@ public class GUIPref {
 
 		Group group2 = new Group(c, SWT.SHADOW_OUT);
 		group2.setText("Step 2: Choose the semester");
-
 		group2.setLayout(new GridLayout(1, true));
 
 		java.util.List<Integer> listSemester = teach.getSemesters(selectedYearStudy);
@@ -476,7 +480,7 @@ public class GUIPref {
 			listCourses.add(string);
 		}
 		
-		final Text text = new Text(prefShell, SWT.BORDER);
+		final Text text = new Text(c, SWT.BORDER);
 		text.setBounds(60, 130, 160, 25);
 
 		listCourses.addSelectionListener(new SelectionListener() {
@@ -589,11 +593,6 @@ public class GUIPref {
 		FileInputStream fis = new FileInputStream(selected);
 		ReadCourses rc = new ReadCourses(fis);
 		return courses = rc.readCourses();
-	}
-
-	private String getTheChosenFile() {
-		String fileName = openFileExplorer();
-		return fileName;
 	}
 
 	private boolean exitShell() {
