@@ -52,10 +52,15 @@ public class GUIPref {
 	private Group groupYearsStudy;
 	private Composite compositeButtons;
 	private Composite compositeCourses;
+	private Composite compositeChoices;
+
+	private Group compositeCMButtons;
+	private Group compositeTDButtons;
 
 	private String selectedYearStudy = "";
 	private Integer selectedSemester;
 	private String selectedCourse = "";
+	private String selectedCMCHoice = "";
 
 	public GUIPref(TeachSpreadSheetController teach) {
 		this.teach = teach;
@@ -357,17 +362,12 @@ public class GUIPref {
 					compositeButtons.dispose();
 					if (compositeCourses != null) {
 						compositeCourses.dispose();
+						if (compositeChoices != null) {
+							compositeChoices.dispose();
+						}
 					}
 				}
 				compositeButtons = createGroupSemesters();
-
-				java.util.List<String> listCMCHoices = teach.getPossibleChoice(selectedYearStudy, selectedSemester,
-						selectedCourse);
-				for (String choice : listCMCHoices) {
-					if (choice.equals("CM")) {
-
-					}
-				}
 
 				// compositeCourses = createGroupCourses();
 			}
@@ -463,13 +463,14 @@ public class GUIPref {
 			listCourses.add(string.replaceAll("\n", ""));
 		}
 
-		final Text text = new Text(c, SWT.BORDER);
+		final Text text = new Text(c, SWT.BORDER | SWT.H_SCROLL);
 		text.setBounds(60, 130, 160, 25);
-		GridData gridDataList = new GridData(SWT.FILL, SWT.FILL, true, true);
-		gridDataList = new GridData();
-		gridDataList.widthHint = 400;
-		gridDataList.heightHint = 35;
-		text.setLayoutData(gridDataList);
+
+		GridData gridDataText = new GridData(SWT.FILL, SWT.FILL, true, true);
+		gridDataText = new GridData();
+		gridDataText.widthHint = 400;
+		gridDataText.heightHint = 35;
+		text.setLayoutData(gridDataText);
 
 		listCourses.addSelectionListener(new SelectionListener() {
 			@Override
@@ -481,6 +482,28 @@ public class GUIPref {
 				selectedCourse = outString;
 
 				LOGGER.info("Course " + selectedCourse + " well chosen.");
+
+				java.util.List<String> listPossibleChoice = teach.getPossibleChoice(selectedYearStudy, selectedSemester,
+						selectedCourse);
+
+				if (compositeChoices != null) {
+					compositeChoices.dispose();
+
+					if (compositeCMButtons != null) {
+						compositeCMButtons.dispose();
+					}
+				}
+
+				for (String possibleChoice : listPossibleChoice) {
+					compositeChoices = createCompositeForChoices();
+					if (possibleChoice.equals("CM")) {
+						compositeCMButtons = createGroupButtonsCM(compositeChoices);
+						// compositeCMButtons = createGroupButtonsCM(compositeButtons);
+					}
+					if (possibleChoice.equals("TD")) {
+						compositeTDButtons = createGroupButtonsTD(compositeChoices);
+					}
+				}
 
 			}
 
@@ -498,17 +521,18 @@ public class GUIPref {
 
 	}
 
-	private Composite createGroupButtonsCM() {
-		Composite c = new Composite(prefShell, SWT.CENTER);
-		GridLayout f = new GridLayout(2, false);
-		c.setLayout(f);
+	private Composite createCompositeForChoices() {
+		compositeChoices = new Composite(prefShell, SWT.CENTER);
+		GridLayout f = new GridLayout(3, false);
+		compositeChoices.setLayout(f);
+		return compositeChoices;
+	}
 
-		Group group2 = new Group(c, SWT.SHADOW_OUT);
-		group2.setText("Step 4 : Choose your preferences");
+	private Group createGroupButtonsCM(Composite compositeChoices) {
+		// Composite c = new Composite(compositeChoices, SWT.SHADOW_OUT);
+		Group group2 = new Group(compositeChoices, SWT.SHADOW_OUT);
+		group2.setText("Step 4 : Choose your preferences for CM");
 		group2.setLayout(new GridLayout(1, true));
-
-		java.util.List<String> listCMCHoices = teach.getPossibleChoice(selectedYearStudy, selectedSemester,
-				selectedCourse);
 
 		String choiceA = "A";
 		String choiceB = "B";
@@ -527,38 +551,91 @@ public class GUIPref {
 		Listener listener = new Listener() {
 			@Override
 			public void handleEvent(Event event) {
-				int user_choice = 0;
+				String CMChoice = "";
 
 				if (event.widget == buttonA) {
-					user_choice = Integer.valueOf(buttonA.getText());
-					selectedSemester = user_choice;
+					CMChoice = choiceA;
+					selectedCMCHoice = CMChoice;
 				} else if (event.widget == buttonB) {
-					user_choice = Integer.valueOf(buttonB.getText());
-					selectedSemester = user_choice;
+					CMChoice = choiceB;
+					selectedCMCHoice = CMChoice;
 				}
 				if (event.widget == buttonC) {
-					user_choice = Integer.valueOf(buttonC.getText());
-					selectedSemester = user_choice;
+					CMChoice = choiceC;
+					selectedCMCHoice = CMChoice;
 				} else if (event.widget == buttonAbs) {
-					user_choice = Integer.valueOf(buttonAbs.getText());
-					selectedSemester = user_choice;
+					CMChoice = choiceAbs;
+					selectedCMCHoice = CMChoice;
 				}
 
-				selectedSemester = user_choice;
-				System.out.println(selectedSemester);
-
-				if (compositeCourses != null)
-					compositeCourses.dispose();
-				compositeCourses = createGroupCourses();
+				selectedCMCHoice = CMChoice;
+				System.out.println(selectedCMCHoice);
 
 			}
 		};
 		buttonA.addListener(SWT.Selection, listener);
 		buttonB.addListener(SWT.Selection, listener);
+		buttonC.addListener(SWT.Selection, listener);
+		buttonAbs.addListener(SWT.Selection, listener);
 
 		prefShell.pack();
-		// return group2;
-		return c;
+		return group2;
+		// return c;
+	}
+
+	private Group createGroupButtonsTD(Composite compositeChoices) {
+		// Composite c = new Composite(compositeChoices, SWT.SHADOW_OUT);
+		Group group2 = new Group(compositeChoices, SWT.SHADOW_OUT);
+		group2.setText("Step 5 : Choose your preferences for TD");
+		group2.setLayout(new GridLayout(1, true));
+
+		String choiceA = "A";
+		String choiceB = "B";
+		String choiceC = "C";
+		String choiceAbs = "Absent";
+
+		final Button buttonA = new Button(group2, SWT.RADIO);
+		buttonA.setText(choiceA);
+		final Button buttonB = new Button(group2, SWT.RADIO);
+		buttonB.setText(choiceB);
+		final Button buttonC = new Button(group2, SWT.RADIO);
+		buttonC.setText(choiceC);
+		final Button buttonAbs = new Button(group2, SWT.RADIO);
+		buttonAbs.setText(choiceAbs);
+
+		Listener listener = new Listener() {
+			@Override
+			public void handleEvent(Event event) {
+				String CMChoice = "";
+
+				if (event.widget == buttonA) {
+					CMChoice = choiceA;
+					selectedCMCHoice = CMChoice;
+				} else if (event.widget == buttonB) {
+					CMChoice = choiceB;
+					selectedCMCHoice = CMChoice;
+				}
+				if (event.widget == buttonC) {
+					CMChoice = choiceC;
+					selectedCMCHoice = CMChoice;
+				} else if (event.widget == buttonAbs) {
+					CMChoice = choiceAbs;
+					selectedCMCHoice = CMChoice;
+				}
+
+				selectedCMCHoice = CMChoice;
+				System.out.println(selectedCMCHoice);
+
+			}
+		};
+		buttonA.addListener(SWT.Selection, listener);
+		buttonB.addListener(SWT.Selection, listener);
+		buttonC.addListener(SWT.Selection, listener);
+		buttonAbs.addListener(SWT.Selection, listener);
+
+		prefShell.pack();
+		return group2;
+		// return c;
 	}
 
 	private String openFileExplorer() {
