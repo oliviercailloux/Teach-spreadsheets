@@ -4,8 +4,6 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.io.Reader;
 import java.util.ArrayList;
 
 import org.eclipse.swt.SWT;
@@ -33,19 +31,25 @@ import org.eclipse.swt.widgets.Text;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import io.github.oliviercailloux.y2018.teach_spreadsheets.courses.Choice;
 import io.github.oliviercailloux.y2018.teach_spreadsheets.courses.Course;
-import io.github.oliviercailloux.y2018.teach_spreadsheets.courses.Teacher;
-import io.github.oliviercailloux.y2018.teach_spreadsheets.csv.CsvFileReader;
-import io.github.oliviercailloux.y2018.teach_spreadsheets.odf.ReadCourses;
+import io.github.oliviercailloux.y2018.teach_spreadsheets.courses.CoursePref;
 
+/**
+ * This class is a Graphic User Interface allowing the user to import a file (in
+ * which there are courses) and to set preferences on these courses. He can
+ * choose a specified year of study, then a semester, then a specified course.
+ * 
+ * @author Victor CHEN
+ * @version 1.0
+ * 
+ */
 public class GUIPref {
 	private final static Logger LOGGER = LoggerFactory.getLogger(GUIPref.class);
 
 	private Display display;
 	private Shell shell;
 	private Shell prefShell;
-
-	private String fileName;
 
 	private TeachSpreadSheetController teach;
 
@@ -54,18 +58,27 @@ public class GUIPref {
 	private Composite compositeCourses;
 	private Composite compositeChoices;
 
-	private Group compositeCMButtons;
-	private Group compositeTDButtons;
+	private Group groupCMButtons;
+	private Group groupTDButtons;
+	private Group groupTPButtons;
 
 	private String selectedYearStudy = "";
 	private Integer selectedSemester;
 	private String selectedCourse = "";
-	private String selectedCMCHoice = "";
+	private Choice selectedCMCHoice = Choice.NA;
+	private Choice selectedTDCHoice = Choice.NA;
+	private Choice selectedTPCHoice = Choice.NA;
+
+	private java.util.List<CoursePref> listCoursePref = new ArrayList<>();
 
 	public GUIPref(TeachSpreadSheetController teach) {
 		this.teach = teach;
 	}
 
+	/**
+	 * This methods is the main interface (display). This is the first shell where
+	 * the user starts
+	 */
 	public void initializeMainMenu() throws IOException {
 
 		String logoFileName = "logoGUI.png";
@@ -105,6 +118,8 @@ public class GUIPref {
 			lblSeparator = new Label(shell, SWT.HORIZONTAL | SWT.SEPARATOR);
 			lblSeparator.setLayoutData(new GridData(GridData.FILL_HORIZONTAL));
 
+			// Button to open the file explorer so that the user chooses the file in which
+			// there are courses
 			Button buttonFileExplorer = new Button(shell, SWT.NONE);
 			buttonFileExplorer.setText("Ouvrez votre fichier contenant tous les cours");
 			buttonFileExplorer.setLayoutData(new GridData(GridData.FILL_HORIZONTAL));
@@ -112,31 +127,22 @@ public class GUIPref {
 				@SuppressWarnings("resource")
 				@Override
 				public void widgetSelected(SelectionEvent e) {
-					// =====================================================
-					// on button press, create a child Shell object passing
-					// the main Display. The child could also access the
-					// display itself by calling Display.getDefault()
-					// =====================================================
-					LOGGER.info("File Explorer well opened");
-					// String chosenFile = openFileExplorer();
-					// getCoursesFromFileExplorer();
-					String fileName = openFileExplorerTwo();
+
+					String fileName = openFileExplorer();
 
 					FileInputStream fis;
-					try {
-						fis = new FileInputStream(fileName);
-					} catch (FileNotFoundException e1) {
-						throw new IllegalStateException(e1);
+					if (!(fileName == null)) {
+						// we must use a Try/Catch because we can't throw on the method
+						// widgetSelected(SelectionEvent e)
+						try {
+							fis = new FileInputStream(fileName);
+							teach.setSource(fis);
+							prefShell();
+						} catch (Exception e1) {
+							LOGGER.error("File not opened");
+							throw new IllegalStateException(e1);
+						}
 					}
-					try {
-						teach.setSource(fis);
-					} catch (Exception e1) {
-						throw new IllegalStateException(e1);
-					}
-					// java.util.List<String> yearNames = teach.getYearNames();
-
-					prefShell();
-					// System.out.println(chosenFile);
 				}
 
 				@Override
@@ -145,6 +151,7 @@ public class GUIPref {
 				}
 			});
 
+			// Button allowing the user to quit the application (it closes the display)
 			Button buttonExit;
 			buttonExit = new Button(shell, SWT.NONE);
 			buttonExit.setText("Quitter l'application");
@@ -152,12 +159,6 @@ public class GUIPref {
 			buttonExit.addSelectionListener(new SelectionListener() {
 				@Override
 				public void widgetSelected(SelectionEvent e) {
-					// =====================================================
-					// on button press, create a child Shell object passing
-					// the main Display. The child could also access the
-					// display itself by calling Display.getDefault()
-					// =====================================================
-
 					exitApplication();
 
 				}
@@ -182,35 +183,13 @@ public class GUIPref {
 	}
 
 	/**
-	 * This method allows to get the teacher's name from reading a CSV file
-	 * containing all his infos like address, phone number...
-	 * 
-	 * @return the teacher's names
+	 * This methods opens a new shell in order to let the user sets his preferences
+	 * for a specified course
 	 */
-	private String getTheTeacher()
-			throws NumberFormatException, FileNotFoundException, IllegalArgumentException, IOException {
-
-		String teacherDetails = "teacher_info.csv";
-
-		try (InputStream inputStream = GUIPref.class.getResourceAsStream(teacherDetails)) {
-			if (inputStream == null) {
-				LOGGER.error("File " + teacherDetails + " not found.");
-				throw new FileNotFoundException("File not found");
-			}
-
-			Reader reader = new InputStreamReader(inputStream);
-			Teacher t = new Teacher();
-			t = CsvFileReader.readTeacherFromCSVfile(reader);
-
-			LOGGER.info("Les informations du Teacher ont bien été récupérées !");
-			String teacherName = t.getFirstName() + t.getName();
-			return teacherName;
-		}
-	}
-
 	private void prefShell() {
 
-		// Doesn't allow the user to close the main shell when the child shell is open
+		// Doesn't allow the user to close the main shell when the preferences shell is
+		// open
 		prefShell = new Shell(display, SWT.CLOSE | SWT.SYSTEM_MODAL);
 
 		GridLayout gl = new GridLayout();
@@ -281,11 +260,6 @@ public class GUIPref {
 		exitItem.addSelectionListener(new SelectionListener() {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
-				// =====================================================
-				// on button press, create a child Shell object passing
-				// the main Display. The child could also access the
-				// display itself by calling Display.getDefault()
-				// =====================================================
 				exitApplication();
 			}
 
@@ -304,12 +278,45 @@ public class GUIPref {
 		topLabel.setLayoutData(new GridData(SWT.CENTER, SWT.FILL, false, false));
 
 		// Create a horizontal separator
-		Label lblSeparator = new Label(prefShell, SWT.HORIZONTAL | SWT.SEPARATOR);
+		Label lblSeparator;
+
+		lblSeparator = new Label(prefShell, SWT.HORIZONTAL | SWT.SEPARATOR);
+		lblSeparator.setLayoutData(new GridData(GridData.FILL_HORIZONTAL));
+
+		// Button to submit the preferences for a specified course
+		Button buttonSubmit;
+		buttonSubmit = new Button(prefShell, SWT.NONE);
+		buttonSubmit.setText("Submit your preferences for the course" + selectedCourse);
+		buttonSubmit.setLayoutData(new GridData(GridData.FILL_HORIZONTAL));
+		buttonSubmit.addSelectionListener(new SelectionListener() {
+			@Override
+			public void widgetSelected(SelectionEvent e) {
+				// =====================================================
+				// on button press, create a child Shell object passing
+				// the main Display. The child could also access the
+				// display itself by calling Display.getDefault()
+				// =====================================================
+				CoursePref cp = submitPreference(selectedCourse, selectedSemester, selectedCourse, selectedCMCHoice,
+						selectedCMCHoice, selectedCMCHoice);
+				listCoursePref.add(cp);
+				LOGGER.info("Your preferences have been saved");
+
+			}
+
+			@Override
+			public void widgetDefaultSelected(SelectionEvent e) {
+				widgetSelected(e);
+			}
+		});
+
+		// Create a horizontal separator
+		lblSeparator = new Label(prefShell, SWT.HORIZONTAL | SWT.SEPARATOR);
 		lblSeparator.setLayoutData(new GridData(GridData.FILL_HORIZONTAL));
 
 		groupYearsStudy = createGroupYearsOfStudy();
 
 		prefShell.open();
+		LOGGER.info("Shell for the preferences well opened");
 
 		// =============================================================
 		// Register a listener for the Close event on the child Shell.
@@ -325,6 +332,10 @@ public class GUIPref {
 
 	}
 
+	/**
+	 * This methods creates a Group in which there is a list of Years of Study from
+	 * the file opened
+	 */
 	private Group createGroupYearsOfStudy() {
 		Composite c = new Composite(prefShell, SWT.CENTER);
 		c.setLayout(new GridLayout(2, false));
@@ -367,7 +378,7 @@ public class GUIPref {
 						}
 					}
 				}
-				compositeButtons = createGroupSemesters();
+				compositeButtons = createCompositeSemesters();
 
 				// compositeCourses = createGroupCourses();
 			}
@@ -385,7 +396,11 @@ public class GUIPref {
 		return groupYearOfStudy;
 	}
 
-	private Composite createGroupSemesters() {
+	/**
+	 * This methods creates a Composite in which there are 2 buttons for each
+	 * semester available
+	 */
+	private Composite createCompositeSemesters() {
 		Composite c = new Composite(prefShell, SWT.CENTER);
 		GridLayout f = new GridLayout(2, false);
 		c.setLayout(f);
@@ -425,7 +440,7 @@ public class GUIPref {
 
 				if (compositeCourses != null)
 					compositeCourses.dispose();
-				compositeCourses = createGroupCourses();
+				compositeCourses = createCompositeCourses();
 			}
 		};
 
@@ -437,7 +452,10 @@ public class GUIPref {
 		return c;
 	}
 
-	private Composite createGroupCourses() {
+	/**
+	 * This methods creates a Composite in which there is a list of Courses
+	 */
+	private Composite createCompositeCourses() {
 		Composite c = new Composite(prefShell, SWT.CENTER);
 		GridLayout f = new GridLayout(2, false);
 		c.setLayout(f);
@@ -488,20 +506,19 @@ public class GUIPref {
 
 				if (compositeChoices != null) {
 					compositeChoices.dispose();
-
-					if (compositeCMButtons != null) {
-						compositeCMButtons.dispose();
-					}
 				}
 
 				for (String possibleChoice : listPossibleChoice) {
 					compositeChoices = createCompositeForChoices();
 					if (possibleChoice.equals("CM")) {
-						compositeCMButtons = createGroupButtonsCM(compositeChoices);
+						groupCMButtons = createGroupButtonsCM(compositeChoices);
 						// compositeCMButtons = createGroupButtonsCM(compositeButtons);
 					}
 					if (possibleChoice.equals("TD")) {
-						compositeTDButtons = createGroupButtonsTD(compositeChoices);
+						groupTDButtons = createGroupButtonsTD(compositeChoices);
+					}
+					if (possibleChoice.equals("TP")) {
+						groupTPButtons = createGroupButtonsTD(compositeChoices);
 					}
 				}
 
@@ -521,6 +538,10 @@ public class GUIPref {
 
 	}
 
+	/**
+	 * This method creates a Composite in which we store the 3 groups for the
+	 * Choices (CM, TD, TP)
+	 */
 	private Composite createCompositeForChoices() {
 		compositeChoices = new Composite(prefShell, SWT.CENTER);
 		GridLayout f = new GridLayout(3, false);
@@ -528,30 +549,33 @@ public class GUIPref {
 		return compositeChoices;
 	}
 
+	/**
+	 * This method creates a group of buttons for the CM choices
+	 */
 	private Group createGroupButtonsCM(Composite compositeChoices) {
 		// Composite c = new Composite(compositeChoices, SWT.SHADOW_OUT);
 		Group group2 = new Group(compositeChoices, SWT.SHADOW_OUT);
 		group2.setText("Step 4 : Choose your preferences for CM");
 		group2.setLayout(new GridLayout(1, true));
 
-		String choiceA = "A";
-		String choiceB = "B";
-		String choiceC = "C";
-		String choiceAbs = "Absent";
+		Choice choiceA = Choice.A;
+		Choice choiceB = Choice.B;
+		Choice choiceC = Choice.C;
+		Choice choiceAbs = Choice.ABSENT;
 
 		final Button buttonA = new Button(group2, SWT.RADIO);
-		buttonA.setText(choiceA);
+		buttonA.setText(choiceA.toString());
 		final Button buttonB = new Button(group2, SWT.RADIO);
-		buttonB.setText(choiceB);
+		buttonB.setText(choiceB.toString());
 		final Button buttonC = new Button(group2, SWT.RADIO);
-		buttonC.setText(choiceC);
+		buttonC.setText(choiceC.toString());
 		final Button buttonAbs = new Button(group2, SWT.RADIO);
-		buttonAbs.setText(choiceAbs);
+		buttonAbs.setText(choiceAbs.toString());
 
 		Listener listener = new Listener() {
 			@Override
 			public void handleEvent(Event event) {
-				String CMChoice = "";
+				Choice CMChoice = Choice.NA;
 
 				if (event.widget == buttonA) {
 					CMChoice = choiceA;
@@ -578,53 +602,118 @@ public class GUIPref {
 		buttonC.addListener(SWT.Selection, listener);
 		buttonAbs.addListener(SWT.Selection, listener);
 
+		group2.pack();
+		compositeChoices.pack();
 		prefShell.pack();
 		return group2;
 		// return c;
 	}
 
+	/**
+	 * This method creates a group of buttons for the TD choices
+	 */
 	private Group createGroupButtonsTD(Composite compositeChoices) {
 		// Composite c = new Composite(compositeChoices, SWT.SHADOW_OUT);
 		Group group2 = new Group(compositeChoices, SWT.SHADOW_OUT);
 		group2.setText("Step 5 : Choose your preferences for TD");
 		group2.setLayout(new GridLayout(1, true));
 
-		String choiceA = "A";
-		String choiceB = "B";
-		String choiceC = "C";
-		String choiceAbs = "Absent";
+		Choice choiceA = Choice.A;
+		Choice choiceB = Choice.B;
+		Choice choiceC = Choice.C;
+		Choice choiceAbs = Choice.ABSENT;
 
 		final Button buttonA = new Button(group2, SWT.RADIO);
-		buttonA.setText(choiceA);
+		buttonA.setText(choiceA.toString());
 		final Button buttonB = new Button(group2, SWT.RADIO);
-		buttonB.setText(choiceB);
+		buttonB.setText(choiceB.toString());
 		final Button buttonC = new Button(group2, SWT.RADIO);
-		buttonC.setText(choiceC);
+		buttonC.setText(choiceC.toString());
 		final Button buttonAbs = new Button(group2, SWT.RADIO);
-		buttonAbs.setText(choiceAbs);
+		buttonAbs.setText(choiceAbs.toString());
 
 		Listener listener = new Listener() {
 			@Override
 			public void handleEvent(Event event) {
-				String CMChoice = "";
+				Choice TDChoice = Choice.NA;
 
 				if (event.widget == buttonA) {
-					CMChoice = choiceA;
-					selectedCMCHoice = CMChoice;
+					TDChoice = choiceA;
+					selectedTDCHoice = TDChoice;
 				} else if (event.widget == buttonB) {
-					CMChoice = choiceB;
-					selectedCMCHoice = CMChoice;
+					TDChoice = choiceB;
+					selectedTDCHoice = TDChoice;
 				}
 				if (event.widget == buttonC) {
-					CMChoice = choiceC;
-					selectedCMCHoice = CMChoice;
+					TDChoice = choiceC;
+					selectedTDCHoice = TDChoice;
 				} else if (event.widget == buttonAbs) {
-					CMChoice = choiceAbs;
-					selectedCMCHoice = CMChoice;
+					TDChoice = choiceAbs;
+					selectedTDCHoice = TDChoice;
 				}
 
-				selectedCMCHoice = CMChoice;
-				System.out.println(selectedCMCHoice);
+				selectedTDCHoice = TDChoice;
+				System.out.println(selectedTDCHoice);
+
+			}
+		};
+		buttonA.addListener(SWT.Selection, listener);
+		buttonB.addListener(SWT.Selection, listener);
+		buttonC.addListener(SWT.Selection, listener);
+		buttonAbs.addListener(SWT.Selection, listener);
+
+		group2.pack();
+		compositeChoices.pack();
+		prefShell.pack();
+		return group2;
+		// return c;
+	}
+
+	/**
+	 * This method creates a group of buttons for the TP choices
+	 */
+	private Group createGroupButtonsTP(Composite compositeChoices) {
+		// Composite c = new Composite(compositeChoices, SWT.SHADOW_OUT);
+		Group group2 = new Group(compositeChoices, SWT.SHADOW_OUT);
+		group2.setText("Step 5 : Choose your preferences for TD");
+		group2.setLayout(new GridLayout(1, true));
+
+		Choice choiceA = Choice.A;
+		Choice choiceB = Choice.B;
+		Choice choiceC = Choice.C;
+		Choice choiceAbs = Choice.ABSENT;
+
+		final Button buttonA = new Button(group2, SWT.RADIO);
+		buttonA.setText(choiceA.toString());
+		final Button buttonB = new Button(group2, SWT.RADIO);
+		buttonB.setText(choiceB.toString());
+		final Button buttonC = new Button(group2, SWT.RADIO);
+		buttonC.setText(choiceC.toString());
+		final Button buttonAbs = new Button(group2, SWT.RADIO);
+		buttonAbs.setText(choiceAbs.toString());
+
+		Listener listener = new Listener() {
+			@Override
+			public void handleEvent(Event event) {
+				Choice TPChoice = Choice.NA;
+
+				if (event.widget == buttonA) {
+					TPChoice = choiceA;
+					selectedTPCHoice = TPChoice;
+				} else if (event.widget == buttonB) {
+					TPChoice = choiceB;
+					selectedTPCHoice = TPChoice;
+				}
+				if (event.widget == buttonC) {
+					TPChoice = choiceC;
+					selectedTPCHoice = TPChoice;
+				} else if (event.widget == buttonAbs) {
+					TPChoice = choiceAbs;
+					selectedTPCHoice = TPChoice;
+				}
+
+				selectedTPCHoice = TPChoice;
+				System.out.println(selectedTPCHoice);
 
 			}
 		};
@@ -638,28 +727,10 @@ public class GUIPref {
 		// return c;
 	}
 
+	/**
+	 * This methods open the file explorer
+	 */
 	private String openFileExplorer() {
-		Shell shellFE = new Shell(display);
-
-		FileDialog fd = new FileDialog(shellFE, SWT.OPEN);
-		fd.setText("Open");
-		fd.setFilterPath("C:/");
-		String[] filterExt = { "*.ods" };
-		fd.setFilterExtensions(filterExt);
-		String selected = fd.open();
-		if (selected == null) {
-			LOGGER.error("None file has been opened !");
-			return null;
-		}
-		LOGGER.info("The file " + selected + " has been opened.");
-		// if a file has been opened then we open the preferences shell
-		prefShell();
-		LOGGER.info("Shell for the courses preferences well opened");
-		shellFE.dispose();
-		return selected;
-	}
-
-	private String openFileExplorerTwo() {
 		Shell shellFE = new Shell(display);
 
 		FileDialog fd = new FileDialog(shellFE, SWT.OPEN);
@@ -680,6 +751,9 @@ public class GUIPref {
 		return selectedFile;
 	}
 
+	/**
+	 * This method opens the directory explorer
+	 */
 	private String openDirectoryExplorer() {
 		DirectoryDialog dlg = new DirectoryDialog(prefShell);
 		dlg.setText("Open");
@@ -693,111 +767,49 @@ public class GUIPref {
 		return selectedDir;
 	}
 
-	@SuppressWarnings("resource")
-	private java.util.List<Course> getCoursesFromFileExplorer() throws Exception {
-		java.util.List<Course> courses = new ArrayList();
-		Shell shellFE = new Shell(display);
-
-		FileDialog fd = new FileDialog(shellFE, SWT.OPEN);
-		fd.setText("Open");
-		fd.setFilterPath("C:/");
-		String[] filterExt = { "*.ods" };
-		fd.setFilterExtensions(filterExt);
-		String selected = fd.open();
-		if (selected == null) {
-			LOGGER.error("None file has been opened !");
-			return null;
-		}
-		LOGGER.info("The file " + selected + " has been opened.");
-		// if a file has been opened then we open the preferences shell
-		prefShell();
-		LOGGER.info("Shell for the courses preferences well opened");
-		shellFE.dispose();
-
-		FileInputStream fis = new FileInputStream(selected);
-		ReadCourses rc = new ReadCourses(fis);
-		return courses = rc.readCourses();
-	}
-
+	/**
+	 * This method closes a Shell if the user confirms it (by pressing YES button)
+	 */
 	private boolean exitShell() {
 		MessageBox messageBox = new MessageBox(shell, SWT.ICON_QUESTION | SWT.YES | SWT.NO);
-		messageBox.setMessage(
-				"Voulez-vous vraiment quitter cette fenêtre ? Toutes les données non sauvegardées seront perdues !");
-		messageBox.setText("Fermeture de la fenêtre");
+		messageBox.setMessage("Do you really want to leave this window? All unsaved data will be lost!");
+		messageBox.setText("Closing the window");
 		int response = messageBox.open();
 		if (response == SWT.YES) {
-			LOGGER.info("La fenêtre a bien été fermée.");
+			LOGGER.info("The window has been closed.");
 			return true;
 		}
 		return false;
 	}
 
+	/**
+	 * This methods closes the display.
+	 */
 	private void exitApplication() {
 		MessageBox messageBox = new MessageBox(shell, SWT.ICON_QUESTION | SWT.YES | SWT.NO);
-		messageBox.setMessage("Voulez-vous vraiment quitter l'application ?");
-		messageBox.setText("Fermeture de l'application");
+		messageBox.setMessage("Do you really want to quit the application?");
+		messageBox.setText("Closing the application");
 		int response = messageBox.open();
 		if (response == SWT.YES) {
-			LOGGER.info("L'application a bien été fermée.");
+			LOGGER.info("The application has been closed.");
 			System.exit(0);
 		}
 	}
 
-	// public static void main(String[] args) throws IOException {
-	// /** CourseSheetMetadata csm1 = new CourseSheetMetadata();
-	// csm1.setYearOfStud("L3 MIAGE");
-	// csm1.setFirstSemesterNumber(1);
-	//
-	// CourseSheetMetadata csm2 = new CourseSheetMetadata();
-	// csm2.setYearOfStud("L1");
-	// csm2.setFirstSemesterNumber(3);
-	//
-	// java.util.List<CourseSheet> courses = new ArrayList();
-	//
-	// Course c1 = new Course("Test", "Test", "L3", "Ok", "Ok", 1);
-	// CoursePref cp1 = new CoursePref(c1);
-	//
-	// Course c2 = new Course("Test", "Test", "L3", "Ok", "Ok", 3);
-	// CoursePref cp = new CoursePref(c2);
-	// java.util.List<CoursePref> coursePrefS1 = new ArrayList();
-	// java.util.List<CoursePref> coursePrefS2 = new ArrayList();
-	// coursePrefS1.add(cp);
-	//
-	// java.util.List<String> yearStudy = new ArrayList();
-	// yearStudy.add(c1.getYearOfStud());
-	// yearStudy.add(c2.getYearOfStud());
-	//
-	// CourseSheet cs1 = new CourseSheet(csm1, coursePrefS1, coursePrefS2);
-	// CourseSheet cs2 = new CourseSheet(csm2, coursePrefS1, coursePrefS2);
-	// courses.add(cs1);
-	// courses.add(cs2); **/
-	//
-	// TeachSpreadSheetController teach = new TeachSpreadSheetController();
-	// GUIPref gui = new GUIPref(teach);
-	// gui.initializeMainMenu();
-	// /*
-	// * Display display = new Display(); Shell shell = new Shell(display,
-	// SWT.RESIZE
-	// * | SWT.CLOSE | SWT.MIN); shell.open(); shell.setText("File Choice");
-	// *
-	// * // initialize a grid layout manager GridLayout gridLayout = new
-	// GridLayout();
-	// * gridLayout.numColumns = 2; shell.setLayout(gridLayout);
-	// *
-	// * // create the label and the field text Label labelTitle = new Label(shell,
-	// * SWT.NONE); labelTitle.setText("File to load : "); labelTitle.setSize(100,
-	// * 25); Text textTitle = new Text(shell, SWT.BORDER);
-	// * textTitle.setText("Saisie_Voeux_Dauphine.ods"); Button buttonSubmit = new
-	// * Button(shell, SWT.PUSH); buttonSubmit.setText("Submit");
-	// * buttonSubmit.setSize(100, 25); buttonSubmit.addListener(SWT.Selection, new
-	// * Listener() {
-	// *
-	// * @Override public void handleEvent(Event e) { switch (e.type) { case
-	// * SWT.Selection: String selection = textTitle.getText(); Shell shell2 = new
-	// * Shell(display, SWT.RESIZE | SWT.CLOSE | SWT.MIN); shell2.open();
-	// *
-	// * while (!shell2.isDisposed()) { // if (!display.readAndDispatch())
-	// * display.sleep(); } break; default: break; } } });
-	// */
-	// }
+	/**
+	 * This methods creates a new Course Preference object using all the selected
+	 * elements from the user
+	 */
+	@SuppressWarnings("hiding")
+	private CoursePref submitPreference(String selectedYearOfStudy, Integer selectedSemester, String selectedCourse,
+			Choice selectedCMChoice, Choice selectedTDChoice, Choice selectedTPChoice) {
+		Course c = new Course(selectedCourse, "", selectedYearOfStudy, "", "", selectedSemester);
+		CoursePref cp = new CoursePref(c);
+		cp.setCmChoice(selectedCMChoice);
+		cp.setTdChoice(selectedTDChoice);
+		cp.setTpChoice(selectedTPChoice);
+
+		return cp;
+
+	}
 }
