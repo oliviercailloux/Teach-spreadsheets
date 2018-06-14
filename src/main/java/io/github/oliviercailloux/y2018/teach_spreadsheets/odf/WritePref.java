@@ -1,7 +1,6 @@
 package io.github.oliviercailloux.y2018.teach_spreadsheets.odf;
 
 import java.io.IOException;
-import java.io.InputStream;
 import java.io.OutputStream;
 import java.util.List;
 import java.util.Objects;
@@ -39,9 +38,10 @@ public class WritePref {
 
 	private final static Logger LOGGER = LoggerFactory.getLogger(WriteCourses.class);
 
-	public WritePref(InputStream source, OutputStream destination, CourseSheet courseSheet) throws Exception {
+	public WritePref(SpreadsheetDocument spreadsheetDocument, OutputStream destination, CourseSheet courseSheet)
+			throws Exception {
 		this.destination = Objects.requireNonNull(destination);
-		this.workbook = SpreadsheetDocument.loadDocument(source);
+		this.workbook = spreadsheetDocument;
 		this.courseSheet = Objects.requireNonNull(courseSheet);
 	}
 
@@ -54,8 +54,10 @@ public class WritePref {
 	 * @param startCellPosition
 	 *            the starting position of the array of {@link CoursePref}, of one
 	 *            semester
+	 * @param save
 	 */
-	private void writeSemesterCoursesPref(List<CoursePref> coursesPref, String startCellPosition) throws Exception {
+	private void writeSemesterCoursesPref(List<CoursePref> coursesPref, String startCellPosition, boolean save)
+			throws Exception {
 
 		// Design handling
 		Border border = new Border(Color.BLACK, 1, StyleTypeDefinitions.SupportedLinearMeasure.PT);
@@ -105,8 +107,9 @@ public class WritePref {
 
 		}
 
-		this.workbook.save(this.destination);
-
+		if (save) {
+			this.workbook.save(this.destination);
+		}
 		LOGGER.info("File" + destination + "has been correctly saved");
 
 	}
@@ -114,10 +117,10 @@ public class WritePref {
 	/**
 	 * This method writes all the course preferences of a sheet for both semester.
 	 */
-	public void writeSheetCoursesPref() throws Exception {
+	public void writeSheetCoursesPref(boolean save) throws Exception {
 
-		writeSemesterCoursesPref(courseSheet.getCoursePrefS1(), STARTCELL1);
-		writeSemesterCoursesPref(courseSheet.getCoursePrefS2(), STARTCELL2);
+		writeSemesterCoursesPref(courseSheet.getCoursePrefS1(), STARTCELL1, save);
+		writeSemesterCoursesPref(courseSheet.getCoursePrefS2(), STARTCELL2, save);
 
 	}
 

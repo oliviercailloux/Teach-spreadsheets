@@ -7,6 +7,7 @@ import java.util.List;
 import org.apache.commons.io.output.ByteArrayOutputStream;
 import org.junit.Assert;
 import org.junit.Test;
+import org.odftoolkit.simple.SpreadsheetDocument;
 
 import io.github.oliviercailloux.y2018.teach_spreadsheets.courses.Course;
 import io.github.oliviercailloux.y2018.teach_spreadsheets.courses.CoursePref;
@@ -174,10 +175,11 @@ public class WriteCoursesTest {
 		CourseSheet courseSheet = new CourseSheet(courseSheetMetadata, semestre1, semestre2);
 		try (OutputStream tmpWriter = new ByteArrayOutputStream()) {
 			WriteCourses yearOfStudyWriter = new WriteCourses(
-					WriteCoursesTest.class.getResourceAsStream("Saisie_voeux_dauphine_WriteCourses.ods"), tmpWriter,
-					courseSheet);
+					SpreadsheetDocument.loadDocument(
+							WriteCoursesTest.class.getResourceAsStream("Saisie_voeux_dauphine_WriteCourses.ods")),
+					tmpWriter, courseSheet);
 
-			yearOfStudyWriter.writeCoursesOfYear();
+			yearOfStudyWriter.writeCoursesOfYear(true);
 		}
 		Assert.assertTrue(true);
 	}

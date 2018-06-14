@@ -12,6 +12,7 @@ import org.apache.commons.io.IOUtils;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
+import org.odftoolkit.simple.SpreadsheetDocument;
 
 import io.github.oliviercailloux.y2018.teach_spreadsheets.courses.Teacher;
 import io.github.oliviercailloux.y2018.teach_spreadsheets.csv.CsvFileReader;
@@ -41,9 +42,9 @@ public class WriteTeacherTest {
 
 			ByteArrayOutputStream tmpWriter = new ByteArrayOutputStream();
 
-			WriteTeacher writeTeacher = new WriteTeacher(is, tmpWriter);
+			WriteTeacher writeTeacher = new WriteTeacher(SpreadsheetDocument.loadDocument(is), tmpWriter);
 
-			writeTeacher.write(teacher);
+			writeTeacher.write(teacher, true);
 
 			Assert.assertTrue(true);
 

@@ -1,6 +1,5 @@
 package io.github.oliviercailloux.y2018.teach_spreadsheets.odf;
 
-import java.io.InputStream;
 import java.io.OutputStream;
 import java.util.Objects;
 
@@ -40,16 +39,16 @@ public class WriteTeacher {
 	private SpreadsheetDocument workbook = null;
 	private final static Logger LOGGER = LoggerFactory.getLogger(WriteCourses.class);
 
-	public WriteTeacher(InputStream source, OutputStream destination) throws Exception {
+	public WriteTeacher(SpreadsheetDocument spreadsheetDocument, OutputStream destination) throws Exception {
 		this.destination = Objects.requireNonNull(destination);
-		this.workbook = SpreadsheetDocument.loadDocument(source);
-		LOGGER.info("File" + source + "has been correctly loaded");
+		this.workbook = spreadsheetDocument;
+		LOGGER.info("File" + spreadsheetDocument + "has been correctly loaded");
 	}
 
 	/**
 	 * Write all informations of teacher in corresponding fields.
 	 */
-	public void write(Teacher teacher) throws Exception {
+	public void write(Teacher teacher, boolean save) throws Exception {
 		LOGGER.info("Start writing teacher...");
 		Table sheet = this.workbook.getSheetByName(SHEETNAME);
 
@@ -68,7 +67,9 @@ public class WriteTeacher {
 		sheet.getCellByPosition(DAUPHINEPHONEPOSITION).setStringValue(teacher.getDauphinePhone());
 		sheet.getCellByPosition(DESKPOSITION).setStringValue(teacher.getDesk());
 
-		workbook.save(destination);
+		if (save) {
+			workbook.save(destination);
+		}
 		LOGGER.info("Teacher has been written successfully !");
 
 	}

@@ -7,6 +7,7 @@ import java.util.List;
 
 import org.junit.Assert;
 import org.junit.Test;
+import org.odftoolkit.simple.SpreadsheetDocument;
 
 import io.github.oliviercailloux.y2018.teach_spreadsheets.courses.Choice;
 import io.github.oliviercailloux.y2018.teach_spreadsheets.courses.Course;
@@ -62,9 +63,9 @@ public class WritePrefTest {
 		try (InputStream is = WritePrefTest.class.getResourceAsStream("Saisie_voeux_dauphine_WritePref.ods")) {
 			ByteArrayOutputStream tmpWriter = new ByteArrayOutputStream();
 
-			WritePref writer = new WritePref(is, tmpWriter, courseSheet);
+			WritePref writer = new WritePref(SpreadsheetDocument.loadDocument(is), tmpWriter, courseSheet);
 
-			writer.writeSheetCoursesPref();
+			writer.writeSheetCoursesPref(true);
 
 			// If no exceptions are thrown, then the writing works.
 

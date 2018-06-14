@@ -4,6 +4,7 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.util.List;
 
+import org.odftoolkit.simple.SpreadsheetDocument;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -17,13 +18,18 @@ public class WriteSpreadSheet {
 	public static void writeSpreadSheet(InputStream source, OutputStream destination, List<CourseSheet> courseSheetList,
 			Teacher teacher) throws Exception {
 
-		WriteTeacher writeTeacher = new WriteTeacher(source, destination);
-		writeTeacher.write(teacher);
-		writeTeacher.close();
+		try (SpreadsheetDocument spreadsheetDocument = SpreadsheetDocument.loadDocument(source)) {
 
-		WriteCourseSheet.writeCourseSheets(source, destination, courseSheetList);
+			WriteTeacher writeTeacher = new WriteTeacher(spreadsheetDocument, destination);
+			boolean save = false;
+			writeTeacher.write(teacher, save);
 
-		LOGGER.info("The spreadsheet has been written successfully");
+			save = true;
+
+			WriteCourseSheet.writeCourseSheets(spreadsheetDocument, destination, courseSheetList, save);
+
+			LOGGER.info("The spreadsheet has been written successfully");
+		}
 	}
 
 }

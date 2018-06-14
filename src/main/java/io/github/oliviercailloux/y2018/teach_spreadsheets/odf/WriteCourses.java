@@ -4,7 +4,6 @@
 package io.github.oliviercailloux.y2018.teach_spreadsheets.odf;
 
 import java.io.IOException;
-import java.io.InputStream;
 import java.io.OutputStream;
 import java.util.List;
 import java.util.Objects;
@@ -51,11 +50,11 @@ public class WriteCourses {
 	/**
 	 * We supposed that source is different from destination.
 	 */
-	public WriteCourses(InputStream source, OutputStream destination, CourseSheet courseSheet) throws Exception {
+	public WriteCourses(SpreadsheetDocument spreadsheetDocument, OutputStream destination, CourseSheet courseSheet)
+			throws Exception {
 		this.destination = Objects.requireNonNull(destination);
-		this.workbook = SpreadsheetDocument.loadDocument(source);
+		this.workbook = spreadsheetDocument;
 		this.courseSheet = Objects.requireNonNull(courseSheet);
-		LOGGER.info("File" + source + "has been correctly loaded");
 	}
 
 	/**
@@ -66,8 +65,10 @@ public class WriteCourses {
 	 * all the courses of firstSemesterCourses and secondSemesterCourses correspond
 	 * to the courses of the same year of study. We assume that the corresponding
 	 * sheet doesn't exist yet.
+	 * 
+	 * @param save
 	 */
-	public void writeCoursesOfYear() throws Exception {
+	public void writeCoursesOfYear(boolean save) throws Exception {
 
 		// Design handling
 		Font headerBoldFont = new Font("Calibri", StyleTypeDefinitions.FontStyle.BOLD, 12, Color.BLACK);
@@ -115,13 +116,12 @@ public class WriteCourses {
 		sheet.getCellByPosition("P" + (secondArraySize + 5)).setFont(cellContentFont);
 		sheet.getCellByPosition("P" + (secondArraySize + 5)).setStringValue("COMMENTAIRES");
 		sheet.getCellRangeByPosition("Q" + (secondArraySize + 5), "AB" + (secondArraySize + 9)).merge();
-		this.workbook.save(this.destination);
 
 		LOGGER.info("File has been correctly saved");
 
 		// To fill the Arrays with courses informations
-		writeSemesterCourses(courseSheet.getCourses(1), STARTCOLUMN1, STARTROW1);
-		writeSemesterCourses(courseSheet.getCourses(2), STARTCOLUMN2, STARTROW2);
+		writeSemesterCourses(courseSheet.getCourses(1), STARTCOLUMN1, STARTROW1, save);
+		writeSemesterCourses(courseSheet.getCourses(2), STARTCOLUMN2, STARTROW2, save);
 	}
 
 	/**
@@ -135,7 +135,7 @@ public class WriteCourses {
 	 *            is the number of the line where we begin the filling
 	 * @throws Exception
 	 */
-	private void writeSemesterCourses(List<Course> coursesList, int col, int line) throws Exception {
+	private void writeSemesterCourses(List<Course> coursesList, int col, int line, boolean save) throws Exception {
 
 		// Design handling
 		Border border = new Border(Color.BLACK, 1, StyleTypeDefinitions.SupportedLinearMeasure.PT);
@@ -201,8 +201,9 @@ public class WriteCourses {
 			lineCursor++;
 		}
 
-		this.workbook.save(this.destination);
-
+		if (save) {
+			this.workbook.save(this.destination);
+		}
 		LOGGER.info("File has been correctly saved");
 
 	}
