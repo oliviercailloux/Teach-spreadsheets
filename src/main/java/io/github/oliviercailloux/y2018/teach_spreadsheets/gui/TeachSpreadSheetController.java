@@ -1,14 +1,15 @@
 package io.github.oliviercailloux.y2018.teach_spreadsheets.gui;
 
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
-import java.io.FileReader;
+import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.io.OutputStream;
+import java.io.Reader;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
-import io.github.oliviercailloux.y2018.teach_spreadsheets.courses.Choice;
 import io.github.oliviercailloux.y2018.teach_spreadsheets.courses.CoursePref;
 import io.github.oliviercailloux.y2018.teach_spreadsheets.courses.CourseSheet;
 import io.github.oliviercailloux.y2018.teach_spreadsheets.courses.Teacher;
@@ -23,7 +24,10 @@ import io.github.oliviercailloux.y2018.teach_spreadsheets.odf.WriteSpreadSheet;
  */
 public class TeachSpreadSheetController {
 
-	// private final static String template = "Saisie_voeux_dauphine_Template.ods";
+	// private final static String template =
+	// "Saisie_voeux_dauphine_Template.ods";
+
+	private Teacher teacher = null;
 
 	private InputStream source;
 
@@ -36,8 +40,21 @@ public class TeachSpreadSheetController {
 		this.destination = destination;
 	}
 
-	public TeachSpreadSheetController() {
+	public TeachSpreadSheetController(InputStream teacherPath) throws FileNotFoundException, IOException {
+		// Get teacher
+		try (Reader fileReader = new InputStreamReader(teacherPath)) {
+			this.teacher = CsvFileReader.readTeacherFromCSVfile(fileReader);
+		}
 
+	}
+
+	// Main functions
+
+	private void writeSpreadsheet() throws Exception {
+		try (InputStream template = TeachSpreadSheetController.class
+				.getResourceAsStream("Template_Saisie_voeux_dauphine.ods")) {
+			WriteSpreadSheet.writeSpreadSheet(template, destination, courseSheetList, this.teacher);
+		}
 	}
 
 	/**
@@ -50,6 +67,10 @@ public class TeachSpreadSheetController {
 		}
 
 		return courseSheets;
+	}
+
+	public String getTeacherName() {
+		return teacher.getName();
 	}
 
 	/**
@@ -101,6 +122,7 @@ public class TeachSpreadSheetController {
 	 * list of course preferences.
 	 */
 	public void updatePref(CoursePref coursePref, String yearName, int semester, String courseName) {
+
 		CoursePref updatedCoursePref = this.getCoursePref(yearName, semester, courseName);
 
 		updatedCoursePref.setCmChoice(coursePref.getCmChoice());
@@ -132,7 +154,7 @@ public class TeachSpreadSheetController {
 	}
 
 	public void setSource(InputStream source) throws Exception {
-		this.source = source;
+		this.source = Objects.requireNonNull(source);
 		this.courseSheetList = this.getCourseSheets();
 	}
 
@@ -140,46 +162,42 @@ public class TeachSpreadSheetController {
 		return destination;
 	}
 
-	public void setDestination(OutputStream destination) {
-		this.destination = destination;
+	public void setDestination(OutputStream destination) throws Exception {
+		this.destination = Objects.requireNonNull(destination);
+		this.writeSpreadsheet();
 	}
 
 	public List<CourseSheet> getCourseSheetList() {
 		return courseSheetList;
 	}
 
-	public static void main(String[] args) throws Exception {
-		// csv file of a teacher info
-		String teacherPath = "C:\\Users\\lf947\\Documents\\JAVA\\L3_MIAGE\\JAVA\\WORKSPACE_1\\Projets\\Teach-spreadsheets\\src\\test\\resources\\io\\github\\oliviercailloux\\y2018\\teach_spreadsheets\\odf\\oneTeacherTest.csv";
-		// file with all the courses
-		String spreadSheetInitialPath = "C:\\Users\\lf947\\Documents\\JAVA\\L3_MIAGE\\JAVA\\WORKSPACE_1\\Projets\\Teach-spreadsheets\\src\\main\\resources\\io\\github\\oliviercailloux\\y2018\\teach_spreadsheets\\odf\\Saisie_voeux_dauphine.ods";
-		// file with the template
-		String spreadSheetInputPath = "C:\\Users\\lf947\\Documents\\JAVA\\L3_MIAGE\\JAVA\\WORKSPACE_1\\Projets\\Teach-spreadsheets\\src\\test\\resources\\io\\github\\oliviercailloux\\y2018\\teach_spreadsheets\\odf\\Saisie_voeux_dauphine_WriteTeacher.ods";
-		// copie from the template
-		String spreadSheetOutputPath = "C:\\Users\\lf947\\Documents\\JAVA\\L3_MIAGE\\JAVA\\WORKSPACE_1\\Projets\\Saisie_voeux_dauphine.ods";
-
-		Teacher teacher = null;
-		// Get teacher
-		try (FileReader fileReader = new FileReader(teacherPath)) {
-			teacher = CsvFileReader.readTeacherFromCSVfile(fileReader);
-		}
-		// Read courses from spreadsheet
-		List<CourseSheet> courseSheets = new ArrayList<>();
-		try (FileInputStream coursesInputStream = new FileInputStream(spreadSheetInitialPath)) {
-			try (ReadCourses courseReader = new ReadCourses(coursesInputStream)) {
-				courseSheets = courseReader.readCourseSheets();
-
-				// Set course preferences
-
-				courseSheets.get(3).getCoursePrefS1().get(0).setCmChoice(Choice.A);
-				// Write spreadsheet
-			}
-		}
-		try (FileInputStream templateInputStream = new FileInputStream(spreadSheetInputPath)) {
-			try (FileOutputStream outputStream = new FileOutputStream(spreadSheetOutputPath)) {
-				WriteSpreadSheet.writeSpreadSheet(templateInputStream, outputStream, courseSheets, teacher);
-			}
-		}
-	}
-
+	/*
+	 * public static void main(String[] args) throws Exception { // csv file of a
+	 * teacher info String teacherPath =
+	 * "C:\\Users\\lf947\\Documents\\JAVA\\L3_MIAGE\\JAVA\\WORKSPACE_1\\Projets\\Teach-spreadsheets\\src\\test\\resources\\io\\github\\oliviercailloux\\y2018\\teach_spreadsheets\\odf\\oneTeacherTest.csv";
+	 * // file with all the courses String spreadSheetInitialPath =
+	 * "C:\\Users\\lf947\\Documents\\JAVA\\L3_MIAGE\\JAVA\\WORKSPACE_1\\Projets\\Teach-spreadsheets\\src\\main\\resources\\io\\github\\oliviercailloux\\y2018\\teach_spreadsheets\\odf\\Saisie_voeux_dauphine.ods";
+	 * // file with the template String spreadSheetInputPath =
+	 * "C:\\Users\\lf947\\Documents\\JAVA\\L3_MIAGE\\JAVA\\WORKSPACE_1\\Projets\\Teach-spreadsheets\\src\\test\\resources\\io\\github\\oliviercailloux\\y2018\\teach_spreadsheets\\odf\\Saisie_voeux_dauphine_WriteTeacher.ods";
+	 * // copie from the template String spreadSheetOutputPath =
+	 * "C:\\Users\\lf947\\Documents\\JAVA\\L3_MIAGE\\JAVA\\WORKSPACE_1\\Projets\\Saisie_voeux_dauphine.ods";
+	 * 
+	 * Teacher teacher = null; // Get teacher try (FileReader fileReader = new
+	 * FileReader(teacherPath)) { teacher =
+	 * CsvFileReader.readTeacherFromCSVfile(fileReader); } // Read courses from
+	 * spreadsheet List<CourseSheet> courseSheets = new ArrayList<>(); try
+	 * (FileInputStream coursesInputStream = new
+	 * FileInputStream(spreadSheetInitialPath)) { try (ReadCourses courseReader =
+	 * new ReadCourses(coursesInputStream)) { courseSheets =
+	 * courseReader.readCourseSheets();
+	 * 
+	 * // Set course preferences
+	 * 
+	 * courseSheets.get(3).getCoursePrefS1().get(0).setCmChoice(Choice.A); // Write
+	 * spreadsheet } } try (FileInputStream templateInputStream = new
+	 * FileInputStream(spreadSheetInputPath)) { try (FileOutputStream outputStream =
+	 * new FileOutputStream(spreadSheetOutputPath)) {
+	 * WriteSpreadSheet.writeSpreadSheet(templateInputStream, outputStream,
+	 * courseSheets, teacher); } } }
+	 */
 }
