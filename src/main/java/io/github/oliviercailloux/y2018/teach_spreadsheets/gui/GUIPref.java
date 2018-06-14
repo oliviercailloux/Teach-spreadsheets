@@ -62,10 +62,13 @@ public class GUIPref {
 
 	private TeachSpreadSheetController teach;
 
-	private Composite groupButtons;
 	private Group groupYearsStudy;
+	private Composite compositeButtons;
+	private Composite compositeCourses;
 
 	private String selectedYearStudy = "";
+	private Integer selectedSemester;
+	private String selectedCourse = "";
 
 	public GUIPref(TeachSpreadSheetController teach) {
 		this.teach = teach;
@@ -172,9 +175,6 @@ public class GUIPref {
 					widgetSelected(e);
 				}
 			});
-
-			Text text = new Text(shell, SWT.BORDER);
-			text.setText("aaaa");
 
 			shell.pack();
 			shell.open();
@@ -317,7 +317,7 @@ public class GUIPref {
 		// lblSeparator.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false));
 
 		// c = createComposite();
-		groupYearsStudy = createGroupYearsStudy();
+		groupYearsStudy = createGroupYearsOfStudy();
 
 		prefShell.open();
 
@@ -335,83 +335,81 @@ public class GUIPref {
 
 	}
 
-	private Group createGroupYearsStudy() {
-		java.util.List<String> yearNames = teach.getYearNames();
-
+	private Group createGroupYearsOfStudy() {
 		Composite c = new Composite(prefShell, SWT.CENTER);
 		c.setLayout(new GridLayout(2, false));
-		c.setSize(prefShell.getSize().x, prefShell.getSize().y);
 
-		Group group1 = new Group(c, SWT.NONE);
-		group1.setSize(c.getSize().x / 3, c.getSize().y / 3);
+		Group groupYearOfStudy = new Group(c, SWT.CENTER);
+		
+		java.util.List<String> yearNames = teach.getYearNames();
 
-		group1.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
-		group1.setText("Step 1: Choose the year of study");
-		group1.setLayout(new GridLayout(1, false));
+		groupYearOfStudy.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
+		groupYearOfStudy.setText("Step 1: Choose the year of study");
+		groupYearOfStudy.setLayout(new GridLayout(1, true));
 
-		List listYearStudy = new List(group1, SWT.BORDER | SWT.MULTI | SWT.V_SCROLL);
+		List listYearStudy = new List(groupYearOfStudy, SWT.BORDER | SWT.MULTI | SWT.V_SCROLL);
 		listYearStudy.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
 
 		for (String string : yearNames) {
 			listYearStudy.add(string);
 		}
-
-		/**
-		 * listYearStudy.addListener(SWT.Selection, new Listener() {
-		 * 
-		 * @Override public void handleEvent(Event e) { int[] selection =
-		 *           listYearStudy.getSelectionIndices(); java.util.List<String>
-		 *           selectedYears = new ArrayList(); for (int i = 0; i <
-		 *           selection.length; i++) {
-		 *           selectedYears.add(listYearStudy.getItem(i)); } selectedYearStudy =
-		 *           selectedYears.get(selectedYears.size() - 1); } });
-		 **/
-
+		
 		final Text text = new Text(prefShell, SWT.BORDER);
 		text.setBounds(60, 130, 160, 25);
 
 		listYearStudy.addSelectionListener(new SelectionListener() {
 			@Override
 			public void widgetSelected(SelectionEvent event) {
-				int[] selectedItems = listYearStudy.getSelectionIndices();
-
 				String s[] = listYearStudy.getSelection();
-
 				String outString = s[0];
-				text.setText("Selected Items: " + outString);
+				int length = s.length;
+				if (length != 1){
+					MessageBox messageBox = new MessageBox(prefShell, SWT.ICON_WARNING | SWT.OK);
+					messageBox.setMessage(
+							"It's forbidden to make a multiple selection");
+					messageBox.setText("Warning");
+					messageBox.open();
+				}
+				
+				text.setText("Selected year of study : " + outString);
 				selectedYearStudy = outString;
+				
+				LOGGER.info("Year of study " + selectedYearStudy + " well chosen.");
 
-				System.out.println(selectedYearStudy);
-				if (groupButtons != null)
-					groupButtons.dispose();
-				groupButtons = createGroupOfButtons();
+				if (compositeButtons != null)
+					compositeButtons.dispose();
+				compositeButtons = createGroupSemesters();
 			}
 
 			public void widgetDefaultSelected(SelectionEvent event) {
-				int[] selectedItems = listYearStudy.getSelectionIndices();
-				String outString = "";
-				for (int loopIndex = 0; loopIndex < selectedItems.length; loopIndex++)
-					outString += selectedItems[loopIndex] + " ";
-				System.out.println("Test Selected Items: " + outString);
+				String s[] = listYearStudy.getSelection();
+				String outString = s[0];
+				int length = s.length;
+				if (length != 1){
+					MessageBox messageBox = new MessageBox(prefShell, SWT.ICON_WARNING | SWT.OK);
+					messageBox.setMessage(
+							"It's forbidden to make a multiple selection");
+					messageBox.setText("Warning");
+					messageBox.open();
+				}
+				
+				text.setText("Selected year of study : " + outString);
+				selectedYearStudy = outString;
 			}
 		});
 
 		prefShell.pack();
-		return group1;
+		return groupYearOfStudy;
 	}
 
-	private Composite createGroupOfButtons() {
+	private Composite createGroupSemesters() {
 		Composite c = new Composite(prefShell, SWT.CENTER);
 		GridLayout f = new GridLayout(2, false);
 		c.setLayout(f);
-		GridData a = new GridData(SWT.FILL, SWT.CENTER, true, false);
-		a.minimumWidth = SWT.FILL;
-		a.horizontalAlignment = SWT.CENTER;
-		a.widthHint = 200;
 
 		Group group2 = new Group(c, SWT.SHADOW_OUT);
-		group2.setText("Step 1: Choose:");
-		group2.setSize(c.getSize().x / 3, c.getSize().y / 3);
+		group2.setText("Step 2: Choose the semester");
+
 		group2.setLayout(new GridLayout(1, true));
 
 		java.util.List<Integer> listSemester = teach.getSemesters(selectedYearStudy);
@@ -420,119 +418,107 @@ public class GUIPref {
 
 		firstSemester = listSemester.get(0);
 		secondSemester = listSemester.get(1);
-		// buttonCsv
+		
+		// Button for the first semester
 		final Button button1 = new Button(group2, SWT.RADIO);
 		button1.setText(String.valueOf(firstSemester));
-		// buttonTxt
+		// Button for the second semester
 		final Button button2 = new Button(group2, SWT.RADIO);
 		button2.setText(String.valueOf(secondSemester));
 
-		Listener listener1 = new Listener() {
+		Listener listener = new Listener() {
+			@Override
 			public void handleEvent(Event event) {
-				int user_choice;
+				int user_choice = 0;
 
 				if (event.widget == button1) {
-					user_choice = 1;
-					System.out.println(user_choice);
+					user_choice = Integer.valueOf(button1.getText());
+					selectedSemester = user_choice;
 				} else if (event.widget == button2) {
-					user_choice = 2;
-					System.out.println(user_choice);
+					user_choice = Integer.valueOf(button2.getText());
+					selectedSemester = user_choice;
 				}
-
+				selectedSemester = user_choice;
+				System.out.println(selectedSemester);
+				
+				if (compositeCourses != null)
+					compositeCourses.dispose();
+				compositeCourses = createGroupCourses();
+				
 			}
 		};
-		button1.addListener(SWT.Selection, listener1);
-		button2.addListener(SWT.Selection, listener1);
-
+		
+		button1.addListener(SWT.Selection, listener);
+		button2.addListener(SWT.Selection, listener);
+		
 		prefShell.pack();
 		// return group2;
 		return c;
 	}
-
-	private Composite createComposite() {
-		java.util.List<String> yearNames = teach.getYearNames();
-
+	
+	private Composite createGroupCourses() {
 		Composite c = new Composite(prefShell, SWT.CENTER);
-		c.setLayout(new GridLayout(3, true));
-		c.setSize(prefShell.getSize().x, prefShell.getSize().y);
+		GridLayout f = new GridLayout(2, false);
+		c.setLayout(f);
+		
+		Group groupCourses = new Group(c, SWT.CENTER);
+		
+		java.util.List<String> courseNames = teach.getCoursesName(selectedYearStudy, selectedSemester);
+		
+		groupCourses.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
+		groupCourses.setText("Step 3 : Choose the course");
+		groupCourses.setLayout(new GridLayout(1, true));
 
-		Group group1 = new Group(c, SWT.NONE);
-		group1.setSize(c.getSize().x / 3, c.getSize().y / 3);
+		List listCourses = new List(groupCourses, SWT.BORDER | SWT.MULTI | SWT.V_SCROLL);
+		listCourses.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
 
-		group1.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
-		group1.setText("Step 1: Choose the year of study");
-		group1.setLayout(new GridLayout(1, false));
-
-		/**
-		 * Label nameLabel = new Label(group1, SWT.NONE); nameLabel.setText("Choose");
-		 **/
-
-		List listYearStudy = new List(group1, SWT.BORDER | SWT.MULTI | SWT.V_SCROLL);
-		listYearStudy.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
-		/**
-		 * for( int i = 0; i < 10; i++ ) {
-		 * 
-		 * list.add( "Item " + i ); }
-		 **/
-
-		for (String string : yearNames) {
-			listYearStudy.add(string);
+		for (String string : courseNames) {
+			listCourses.add(string);
 		}
+		
+		final Text text = new Text(prefShell, SWT.BORDER);
+		text.setBounds(60, 130, 160, 25);
 
-		listYearStudy.addListener(SWT.Selection, new Listener() {
-
+		listCourses.addSelectionListener(new SelectionListener() {
 			@Override
-			public void handleEvent(Event e) {
-
-				int[] selection = listYearStudy.getSelectionIndices();
-				for (int i = 0; i < selection.length; i++) {
-					selectedYearStudy = listYearStudy.getItem(i);
-
-					// selectedYearStudy = listYearStudy.getItem(i);
-					// System.out.println(listYearStudy.getItem(i));
-					// string += selection[i] + " ";
+			public void widgetSelected(SelectionEvent event) {
+				String s[] = listCourses.getSelection();
+				String outString = s[0];
+				int length = s.length;
+				if (length != 1){
+					MessageBox messageBox = new MessageBox(prefShell, SWT.ICON_WARNING | SWT.OK);
+					messageBox.setMessage(
+							"It's forbidden to make a multiple selection");
+					messageBox.setText("Warning");
+					messageBox.open();
 				}
-				// System.out.println(selectedYearStudy);
-				// System.out.println("Selection={" + string + "}");
+				
+				text.setText("Selected year of study : " + outString);
+				selectedCourse = outString;
+				
+				LOGGER.info("Year of study " + selectedCourse + " well chosen.");
 			}
 
-			// selectedYearStudy = selectedYearStudyListener;
+			public void widgetDefaultSelected(SelectionEvent event) {
+				String s[] = listCourses.getSelection();
+				String outString = s[0];
+				int length = s.length;
+				if (length != 1){
+					MessageBox messageBox = new MessageBox(prefShell, SWT.ICON_WARNING | SWT.OK);
+					messageBox.setMessage(
+							"It's forbidden to make a multiple selection");
+					messageBox.setText("Warning");
+					messageBox.open();
+				}
+				
+				text.setText("Selected year of study : " + outString);
+				selectedCourse = outString;
+			}
 		});
-		// List listSheetName = new List(group1, SWT.BORDER | SWT.MULTI | SWT.V_SCROLL);
-		/**
-		 * // Group group1 = new Group(prefShell, SWT.SHADOW_OUT); Group group2 = new
-		 * Group(c, SWT.SHADOW_OUT); group2.setText("Step 1: Choose:");
-		 * group2.setSize(c.getSize().x / 3, c.getSize().y / 3); group2.setLayout(new
-		 * GridLayout(1, true));
-		 * 
-		 * 
-		 * // buttonCsv final Button button1 = new Button(group2, SWT.RADIO);
-		 * button1.setText("choice 1 "); // buttonTxt final Button button2 = new
-		 * Button(group2, SWT.RADIO); button2.setText("choice 2 ");
-		 * 
-		 * Listener listener1 = new Listener() { public void handleEvent(Event event) {
-		 * int user_choice;
-		 * 
-		 * if (event.widget == button1) { user_choice = 1;
-		 * System.out.println(user_choice); } else if (event.widget == button2) {
-		 * user_choice = 2; System.out.println(user_choice); }
-		 * 
-		 * } }; button1.addListener(SWT.Selection, listener1);
-		 * button2.addListener(SWT.Selection, listener1);
-		 **/
 
-		// createButtons();
-
-		// Group group2 = new Group(prefShell, SWT.SHADOW_OUT);
-		/**
-		 * Group group3 = new Group(c, SWT.SHADOW_OUT); group3.setSize(c.getSize().x /
-		 * 3, c.getSize().y / 3); group3.setText("Step 2: Insert your age ");
-		 * group3.setLayout(new GridLayout(1, true)); Text textRow=new Text(group3,
-		 * SWT.BORDER); textRow.setText(" ");
-		 **/
-
+		prefShell.pack();
 		return c;
-
+		
 	}
 
 	private String openFileExplorer() {
