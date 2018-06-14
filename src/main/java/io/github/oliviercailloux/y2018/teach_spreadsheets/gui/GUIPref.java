@@ -17,6 +17,7 @@ import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
+import org.eclipse.swt.widgets.DirectoryDialog;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Event;
 import org.eclipse.swt.widgets.FileDialog;
@@ -300,9 +301,7 @@ public class GUIPref {
 		// Create a horizontal separator
 		Label lblSeparator = new Label(prefShell, SWT.HORIZONTAL | SWT.SEPARATOR);
 		lblSeparator.setLayoutData(new GridData(GridData.FILL_HORIZONTAL));
-		// lblSeparator.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false));
 
-		// c = createComposite();
 		groupYearsStudy = createGroupYearsOfStudy();
 
 		prefShell.open();
@@ -361,6 +360,14 @@ public class GUIPref {
 					}
 				}
 				compositeButtons = createGroupSemesters();
+				
+				java.util.List<String> listCMCHoices = teach.getPossibleChoice(selectedYearStudy, selectedSemester, selectedCourse);
+				for(String choice : listCMCHoices) {
+					if(choice.equals("CM")) {
+						
+					}
+				}
+				
 				// compositeCourses = createGroupCourses();
 			}
 
@@ -368,14 +375,6 @@ public class GUIPref {
 			public void widgetDefaultSelected(SelectionEvent event) {
 				String s[] = listYearStudy.getSelection();
 				String outString = s[0];
-				int length = s.length;
-				if (length != 1) {
-					MessageBox messageBox = new MessageBox(prefShell, SWT.ICON_WARNING | SWT.OK);
-					messageBox.setMessage("It's forbidden to make a multiple selection");
-					messageBox.setText("Warning");
-					messageBox.open();
-				}
-
 				text.setText("Selected year of study : " + outString);
 				selectedYearStudy = outString;
 			}
@@ -426,7 +425,6 @@ public class GUIPref {
 				if (compositeCourses != null)
 					compositeCourses.dispose();
 				compositeCourses = createGroupCourses();
-
 			}
 		};
 
@@ -450,50 +448,120 @@ public class GUIPref {
 		groupCourses.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
 		groupCourses.setText("Step 3 : Choose the course");
 		groupCourses.setLayout(new GridLayout(1, true));
+		
+		final List listCourses = new List(groupCourses, SWT.BORDER | SWT.SINGLE | SWT.V_SCROLL);
 
-		final List listCourses = new List(groupCourses, SWT.BORDER | SWT.MULTI | SWT.V_SCROLL);
 		listCourses.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
-
+		
+		/**gridDataList.widthHint = 500;
+		gridDataList.heightHint = 140;
+	    listCourses.setLayoutData(gridDataList);**/
+	    
+	    
 		for (String string : courseNames) {
-			listCourses.add(string);
+			listCourses.add(string.replaceAll("\n", ""));
 		}
 
 		final Text text = new Text(c, SWT.BORDER);
 		text.setBounds(60, 130, 160, 25);
+		GridData gridDataList = new GridData(SWT.FILL, SWT.FILL, true, true);
+		gridDataList = new GridData();
+		gridDataList.widthHint = 400;
+		gridDataList.heightHint = 35;
+		text.setLayoutData(gridDataList);
 
 		listCourses.addSelectionListener(new SelectionListener() {
 			@Override
 			public void widgetSelected(SelectionEvent event) {
 				String s[] = listCourses.getSelection();
 				String outString = s[0];
-
-				text.setText("Selected year of study : " + outString);
+				
+				text.setText("Selected course : " + outString);
 				selectedCourse = outString;
+				
+				LOGGER.info("Course " + selectedCourse + " well chosen.");
 
-				LOGGER.info("Year of study " + selectedCourse + " well chosen.");
 			}
 
 			@Override
 			public void widgetDefaultSelected(SelectionEvent event) {
 				String s[] = listCourses.getSelection();
 				String outString = s[0];
-				int length = s.length;
-				if (length != 1) {
-					MessageBox messageBox = new MessageBox(prefShell, SWT.ICON_WARNING | SWT.OK);
-					messageBox.setMessage("It's forbidden to make a multiple selection");
-					messageBox.setText("Warning");
-					messageBox.open();
-				}
 
-				text.setText("Selected year of study : " + outString);
 				selectedCourse = outString;
 			}
 		});
-
+		
 		prefShell.pack();
 		return c;
 
 	}
+	
+	private Composite createGroupButtonsCM() {
+		Composite c = new Composite(prefShell, SWT.CENTER);
+		GridLayout f = new GridLayout(2, false);
+		c.setLayout(f);
+
+		Group group2 = new Group(c, SWT.SHADOW_OUT);
+		group2.setText("Step 4 : Choose your preferences"); 
+		group2.setLayout(new GridLayout(1, true));
+
+		java.util.List<String> listCMCHoices = teach.getPossibleChoice(selectedYearStudy, selectedSemester, selectedCourse);
+		
+		String choiceA = "A";
+		String choiceB = "B";
+		String choiceC = "C";
+		String choiceAbs = "Absent";
+		
+		
+				final Button buttonA = new Button(group2, SWT.RADIO);
+				buttonA.setText(choiceA);
+				final Button buttonB = new Button(group2, SWT.RADIO);
+				buttonB.setText(choiceB);
+				final Button buttonC = new Button(group2, SWT.RADIO);
+				buttonC.setText(choiceC);
+				final Button buttonAbs = new Button(group2, SWT.RADIO);
+				buttonAbs.setText(choiceAbs);
+				
+				Listener listener = new Listener() {
+					@Override
+					public void handleEvent(Event event) {
+						int user_choice = 0;
+
+						if (event.widget == buttonA) {
+							user_choice = Integer.valueOf(buttonA.getText());
+							selectedSemester = user_choice;
+						} else if (event.widget == buttonB) {
+							user_choice = Integer.valueOf(buttonB.getText());
+							selectedSemester = user_choice;
+						}
+						if (event.widget == buttonC) {
+							user_choice = Integer.valueOf(buttonC.getText());
+							selectedSemester = user_choice;
+						} else if (event.widget == buttonAbs) {
+							user_choice = Integer.valueOf(buttonAbs.getText());
+							selectedSemester = user_choice;
+						}
+						
+						selectedSemester = user_choice;
+						System.out.println(selectedSemester);
+						
+						if (compositeCourses != null)
+							compositeCourses.dispose();
+						compositeCourses = createGroupCourses();
+						
+					}
+				};
+				buttonA.addListener(SWT.Selection, listener);
+				buttonB.addListener(SWT.Selection, listener);
+				
+				prefShell.pack();
+				// return group2;
+				return c;
+			}
+
+		
+
 
 	private String openFileExplorer() {
 		Shell shellFE = new Shell(display);
@@ -521,24 +589,35 @@ public class GUIPref {
 
 		FileDialog fd = new FileDialog(shellFE, SWT.OPEN);
 		fd.setText("Open");
-		fd.setFilterPath("C:/");
+		// fd.setFilterPath("C:/");
+		
+		// only file finishing by .ods are allowed
 		String[] filterExt = { "*.ods" };
 		fd.setFilterExtensions(filterExt);
-		String selected = fd.open();
-		if (selected == null) {
+		String selectedFile = fd.open();
+		if (selectedFile == null) {
 			LOGGER.error("None file has been opened !");
 			return null;
 		}
-		LOGGER.info("The file " + selected + " has been opened.");
-		// if a file has been opened then we open the preferences shell
-		// prefShell();
-		// this.fileName = selected;
-
-		// LOGGER.info("Shell for the courses preferences well opened");
+		LOGGER.info("The file " + selectedFile + " has been opened.");
+		
 		shellFE.dispose();
-		return selected;
+		return selectedFile;
 	}
-
+	
+	private String openDirectoryExplorer() {
+		 DirectoryDialog dlg = new DirectoryDialog(prefShell);
+		 dlg.setText("Open");
+		 dlg.setFilterPath("C:/");
+		 String selectedDir = dlg.open();
+		 if (selectedDir == null) {
+				LOGGER.error("None folder has been opened !");
+				return null;
+		}
+		LOGGER.info("The folder " + selectedDir + " has been opened.");
+		 return selectedDir;
+	}
+	
 	@SuppressWarnings("resource")
 	private java.util.List<Course> getCoursesFromFileExplorer() throws Exception {
 		java.util.List<Course> courses = new ArrayList();
