@@ -4,6 +4,11 @@ import java.util.Objects;
 
 import com.google.common.base.Preconditions;
 
+/**
+ * This class represents the metadata in a {@link CourseSheet} (current year,
+ * number of student, ...)
+ *
+ */
 public class CourseSheetMetadata {
 
 	private int yearBegin = 2017;

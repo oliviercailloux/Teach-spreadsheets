@@ -16,9 +16,14 @@ import io.github.oliviercailloux.y2018.teach_spreadsheets.csv.CsvFileReader;
 import io.github.oliviercailloux.y2018.teach_spreadsheets.odf.ReadCourses;
 import io.github.oliviercailloux.y2018.teach_spreadsheets.odf.WriteSpreadSheet;
 
+/**
+ * This class implements all the methods used by {@link GUIPref}. In a MVC
+ * model, this class represents the Controller part.
+ *
+ */
 public class TeachSpreadSheetController {
 
-	private final static String template = "Saisie_voeux_dauphine_Template.ods";
+	// private final static String template = "Saisie_voeux_dauphine_Template.ods";
 
 	private InputStream source;
 
@@ -26,16 +31,18 @@ public class TeachSpreadSheetController {
 
 	private List<CourseSheet> courseSheetList;
 
-	public TeachSpreadSheetController(InputStream source, OutputStream destination, List<CourseSheet> courseSheetList) {
+	public TeachSpreadSheetController(InputStream source, OutputStream destination) {
 		this.source = source;
 		this.destination = destination;
-		this.courseSheetList = courseSheetList;
 	}
 
 	public TeachSpreadSheetController() {
 
 	}
 
+	/**
+	 * This method reads the courses sheets from the source
+	 */
 	private List<CourseSheet> getCourseSheets() throws Exception {
 		List<CourseSheet> courseSheets = new ArrayList<>();
 		try (ReadCourses courseReader = new ReadCourses(this.source)) {
@@ -45,10 +52,16 @@ public class TeachSpreadSheetController {
 		return courseSheets;
 	}
 
+	/**
+	 * This method gets all the semesters of a course sheet
+	 */
 	public List<Integer> getSemesters(String yearName) {
 		return this.getCourseSheetByYear(yearName).getSemesters();
 	}
 
+	/**
+	 * This method gets the list of the study year names
+	 */
 	public List<String> getYearNames() {
 		List<String> yearNames = new ArrayList<>();
 
@@ -67,16 +80,26 @@ public class TeachSpreadSheetController {
 		return null;
 	}
 
+	/**
+	 * This method gets the list of all the courses of a year and a semester
+	 */
 	public List<String> getCoursesName(String yearName, int semester) {
 		CourseSheet courseSheet = getCourseSheetByYear(yearName);
 		return courseSheet.getCoursesName(semester);
 	}
 
+	/**
+	 * This method gets the list of all the choices of a course
+	 */
 	public List<String> getPossibleChoice(String yearName, int semester, String courseName) {
 		CourseSheet courseSheet = getCourseSheetByYear(yearName);
 		return courseSheet.getPossibleChoice(semester, courseName);
 	}
 
+	/**
+	 * This method is used after a submit of a course preference. It updates the
+	 * list of course preferences.
+	 */
 	public void updatePref(CoursePref coursePref, String yearName, int semester, String courseName) {
 		CoursePref updatedCoursePref = this.getCoursePref(yearName, semester, courseName);
 
@@ -123,10 +146,6 @@ public class TeachSpreadSheetController {
 
 	public List<CourseSheet> getCourseSheetList() {
 		return courseSheetList;
-	}
-
-	public void setCourseSheetList(List<CourseSheet> courseSheetList) {
-		this.courseSheetList = courseSheetList;
 	}
 
 	public static void main(String[] args) throws Exception {

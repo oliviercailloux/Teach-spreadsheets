@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
+import io.github.oliviercailloux.y2018.teach_spreadsheets.gui.GUIPref;
+
 /**
  * @author Victor CHEN (Kantoki), Samuel COHEN Contract 2 - Version 2.0.2 Last
  *         Update : 22/03/2018 This class stores a teacher's preferences for a
@@ -40,19 +42,26 @@ public class CoursePref {
 		this.tpChoice = (course.getTP_Hour() == 0 && course.getCMTP_Hour() == 0) ? Choice.NA : Choice.ABSENT;
 	}
 
+	/**
+	 * Used for {@link GUIPref} to list all choices for a course. Get the possible
+	 * choices possible for a course.
+	 */
 	public List<String> getPossibleChoice() {
 		List<String> choices = new ArrayList<>();
 
-		if (cmChoice == Choice.ABSENT) {
+		if (cmChoice != Choice.NA) {
 			choices.add("CM");
-		} else if (tdChoice == Choice.ABSENT) {
+		} else if (tdChoice != Choice.NA) {
 			choices.add("TD");
-		} else if (tpChoice == Choice.ABSENT) {
+		} else if (tpChoice != Choice.NA) {
 			choices.add("TP");
 		}
 		return choices;
 	}
 
+	/**
+	 * Transform a list of Courses to a list of CoursePref initialized by default
+	 */
 	public static List<CoursePref> toCoursePref(List<Course> courses) {
 		List<CoursePref> coursePrefs = new ArrayList<>();
 

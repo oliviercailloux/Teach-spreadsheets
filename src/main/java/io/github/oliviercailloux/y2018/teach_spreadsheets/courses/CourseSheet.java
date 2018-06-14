@@ -5,7 +5,8 @@ import java.util.List;
 import java.util.Objects;
 
 /**
- * This class represents a sheet of courses, with all the metadata
+ * This class represents a sheet of courses, with all the metadata in the sheet
+ * (number of student, current year, ...)
  *
  */
 public class CourseSheet {
@@ -96,24 +97,12 @@ public class CourseSheet {
 		return coursePrefS1;
 	}
 
-	public void setCoursePrefS1(List<CoursePref> courseS1) {
-		this.coursePrefS1 = courseS1;
-	}
-
 	public List<CoursePref> getCoursePrefS2() {
 		return coursePrefS2;
 	}
 
-	public void setCoursePrefS2(List<CoursePref> courseS2) {
-		this.coursePrefS2 = courseS2;
-	}
-
 	public CourseSheetMetadata getSheetMetadata() {
 		return sheetMetadata;
-	}
-
-	public void setSheetMetadata(CourseSheetMetadata sheetMetadata) {
-		this.sheetMetadata = Objects.requireNonNull(sheetMetadata);
 	}
 
 	@Override
