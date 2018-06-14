@@ -1,8 +1,10 @@
 package io.github.oliviercailloux.y2018.teach_spreadsheets.gui;
 
 import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.FileReader;
+import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.util.ArrayList;
@@ -23,7 +25,10 @@ import io.github.oliviercailloux.y2018.teach_spreadsheets.odf.WriteSpreadSheet;
  */
 public class TeachSpreadSheetController {
 
-	// private final static String template = "Saisie_voeux_dauphine_Template.ods";
+	// private final static String template =
+	// "Saisie_voeux_dauphine_Template.ods";
+
+	private Teacher teacher = null;
 
 	private InputStream source;
 
@@ -31,13 +36,29 @@ public class TeachSpreadSheetController {
 
 	private List<CourseSheet> courseSheetList;
 
-	public TeachSpreadSheetController(InputStream source, OutputStream destination) {
+	public TeachSpreadSheetController(InputStream source,
+			OutputStream destination) {
 		this.source = source;
 		this.destination = destination;
 	}
 
-	public TeachSpreadSheetController() {
+	public TeachSpreadSheetController(String teacherPath)
+			throws FileNotFoundException, IOException {
+		// Get teacher
+		try (FileReader fileReader = new FileReader(teacherPath)) {
+			this.teacher = CsvFileReader.readTeacherFromCSVfile(fileReader);
+		}
 
+	}
+
+	// Main functions
+
+	private void writeSpreadsheet() throws Exception {
+		try (InputStream template = TeachSpreadSheetController.class
+				.getResourceAsStream("Template_Saisie_voeux_dauphine.ods")) {
+			WriteSpreadSheet.writeSpreadSheet(template, destination,
+					courseSheetList, this.teacher);
+		}
 	}
 
 	/**
@@ -50,6 +71,10 @@ public class TeachSpreadSheetController {
 		}
 
 		return courseSheets;
+	}
+
+	public String getTeacherName() {
+		return teacher.getName();
 	}
 
 	/**
@@ -91,7 +116,8 @@ public class TeachSpreadSheetController {
 	/**
 	 * This method gets the list of all the choices of a course
 	 */
-	public List<String> getPossibleChoice(String yearName, int semester, String courseName) {
+	public List<String> getPossibleChoice(String yearName, int semester,
+			String courseName) {
 		CourseSheet courseSheet = getCourseSheetByYear(yearName);
 		return courseSheet.getPossibleChoice(semester, courseName);
 	}
@@ -100,15 +126,18 @@ public class TeachSpreadSheetController {
 	 * This method is used after a submit of a course preference. It updates the
 	 * list of course preferences.
 	 */
-	public void updatePref(CoursePref coursePref, String yearName, int semester, String courseName) {
-		CoursePref updatedCoursePref = this.getCoursePref(yearName, semester, courseName);
+	public void updatePref(CoursePref coursePref, String yearName, int semester,
+			String courseName) {
+		CoursePref updatedCoursePref = this.getCoursePref(yearName, semester,
+				courseName);
 
 		updatedCoursePref.setCmChoice(coursePref.getCmChoice());
 		updatedCoursePref.setTdChoice(coursePref.getTdChoice());
 		updatedCoursePref.setTpChoice(coursePref.getTpChoice());
 	}
 
-	private CoursePref getCoursePref(String yearName, int semester, String courseName) {
+	private CoursePref getCoursePref(String yearName, int semester,
+			String courseName) {
 		CourseSheet courseSheet = getCourseSheetByYear(yearName);
 
 		if (semester % 2 == 1) {
@@ -142,6 +171,7 @@ public class TeachSpreadSheetController {
 
 	public void setDestination(OutputStream destination) {
 		this.destination = destination;
+
 	}
 
 	public List<CourseSheet> getCourseSheetList() {
@@ -165,19 +195,25 @@ public class TeachSpreadSheetController {
 		}
 		// Read courses from spreadsheet
 		List<CourseSheet> courseSheets = new ArrayList<>();
-		try (FileInputStream coursesInputStream = new FileInputStream(spreadSheetInitialPath)) {
-			try (ReadCourses courseReader = new ReadCourses(coursesInputStream)) {
+		try (FileInputStream coursesInputStream = new FileInputStream(
+				spreadSheetInitialPath)) {
+			try (ReadCourses courseReader = new ReadCourses(
+					coursesInputStream)) {
 				courseSheets = courseReader.readCourseSheets();
 
 				// Set course preferences
 
-				courseSheets.get(3).getCoursePrefS1().get(0).setCmChoice(Choice.A);
+				courseSheets.get(3).getCoursePrefS1().get(0)
+						.setCmChoice(Choice.A);
 				// Write spreadsheet
 			}
 		}
-		try (FileInputStream templateInputStream = new FileInputStream(spreadSheetInputPath)) {
-			try (FileOutputStream outputStream = new FileOutputStream(spreadSheetOutputPath)) {
-				WriteSpreadSheet.writeSpreadSheet(templateInputStream, outputStream, courseSheets, teacher);
+		try (FileInputStream templateInputStream = new FileInputStream(
+				spreadSheetInputPath)) {
+			try (FileOutputStream outputStream = new FileOutputStream(
+					spreadSheetOutputPath)) {
+				WriteSpreadSheet.writeSpreadSheet(templateInputStream,
+						outputStream, courseSheets, teacher);
 			}
 		}
 	}
