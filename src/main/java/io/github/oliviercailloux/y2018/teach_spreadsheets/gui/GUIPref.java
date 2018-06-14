@@ -1,24 +1,16 @@
 package io.github.oliviercailloux.y2018.teach_spreadsheets.gui;
 
-import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.Reader;
-import java.io.StringReader;
 import java.util.ArrayList;
-import java.util.Arrays;
 
 import org.eclipse.swt.SWT;
-import org.eclipse.swt.events.ControlAdapter;
-import org.eclipse.swt.events.ControlEvent;
-import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.events.SelectionListener;
-import org.eclipse.swt.graphics.Color;
-
 import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.graphics.Rectangle;
 import org.eclipse.swt.layout.GridData;
@@ -29,24 +21,18 @@ import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Event;
 import org.eclipse.swt.widgets.FileDialog;
 import org.eclipse.swt.widgets.Group;
-import org.eclipse.swt.widgets.Item;
 import org.eclipse.swt.widgets.Label;
+import org.eclipse.swt.widgets.List;
 import org.eclipse.swt.widgets.Listener;
 import org.eclipse.swt.widgets.Menu;
 import org.eclipse.swt.widgets.MenuItem;
 import org.eclipse.swt.widgets.MessageBox;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.Text;
-import org.eclipse.swt.widgets.Widget;
-import org.eclipse.swt.widgets.List;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import io.github.oliviercailloux.y2018.teach_spreadsheets.courses.Choice;
 import io.github.oliviercailloux.y2018.teach_spreadsheets.courses.Course;
-import io.github.oliviercailloux.y2018.teach_spreadsheets.courses.CoursePref;
-import io.github.oliviercailloux.y2018.teach_spreadsheets.courses.CourseSheet;
-import io.github.oliviercailloux.y2018.teach_spreadsheets.courses.CourseSheetMetadata;
 import io.github.oliviercailloux.y2018.teach_spreadsheets.courses.Teacher;
 import io.github.oliviercailloux.y2018.teach_spreadsheets.csv.CsvFileReader;
 import io.github.oliviercailloux.y2018.teach_spreadsheets.odf.ReadCourses;
@@ -74,7 +60,7 @@ public class GUIPref {
 		this.teach = teach;
 	}
 
-	private void initializeMainMenu() throws IOException {
+	public void initializeMainMenu() throws IOException {
 
 		String logoFileName = "logoGUI.png";
 
@@ -106,7 +92,7 @@ public class GUIPref {
 
 			// Label with teacher name
 			Label lblCentered = new Label(shell, SWT.NONE);
-			lblCentered.setText("Bienvenue" + getTheTeacher());
+			lblCentered.setText("Bienvenue " + this.teach.getTeacherName());
 			lblCentered.setLayoutData(new GridData(SWT.CENTER, SWT.FILL, false, false));
 
 			// Create a horizontal separator
@@ -340,41 +326,37 @@ public class GUIPref {
 		c.setLayout(new GridLayout(2, false));
 
 		Group groupYearOfStudy = new Group(c, SWT.CENTER);
-		
+
 		java.util.List<String> yearNames = teach.getYearNames();
 
 		groupYearOfStudy.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
 		groupYearOfStudy.setText("Step 1: Choose the year of study");
 		groupYearOfStudy.setLayout(new GridLayout(1, false));
-		
-		
 
 		final List listYearStudy = new List(groupYearOfStudy, SWT.BORDER | SWT.SINGLE | SWT.V_SCROLL);
 		listYearStudy.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
-		
-		
 
 		for (String string : yearNames) {
 			listYearStudy.add(string);
 		}
-		
+
 		final Text text = new Text(c, SWT.BORDER);
-		text.setBounds(60, 130, 160, 25); 
+		text.setBounds(60, 130, 160, 25);
 
 		listYearStudy.addSelectionListener(new SelectionListener() {
 			@Override
 			public void widgetSelected(SelectionEvent event) {
 				String s[] = listYearStudy.getSelection();
 				String outString = s[0];
-				
+
 				text.setText("Selected year of study : " + outString);
 				selectedYearStudy = outString;
-				
+
 				LOGGER.info("Year of study " + selectedYearStudy + " well chosen.");
 
 				if (compositeButtons != null) {
 					compositeButtons.dispose();
-					if ( compositeCourses != null) {
+					if (compositeCourses != null) {
 						compositeCourses.dispose();
 					}
 				}
@@ -382,18 +364,18 @@ public class GUIPref {
 				// compositeCourses = createGroupCourses();
 			}
 
+			@Override
 			public void widgetDefaultSelected(SelectionEvent event) {
 				String s[] = listYearStudy.getSelection();
 				String outString = s[0];
 				int length = s.length;
-				if (length != 1){
+				if (length != 1) {
 					MessageBox messageBox = new MessageBox(prefShell, SWT.ICON_WARNING | SWT.OK);
-					messageBox.setMessage(
-							"It's forbidden to make a multiple selection");
+					messageBox.setMessage("It's forbidden to make a multiple selection");
 					messageBox.setText("Warning");
 					messageBox.open();
 				}
-				
+
 				text.setText("Selected year of study : " + outString);
 				selectedYearStudy = outString;
 			}
@@ -418,7 +400,7 @@ public class GUIPref {
 
 		firstSemester = listSemester.get(0);
 		secondSemester = listSemester.get(1);
-		
+
 		// Button for the first semester
 		final Button button1 = new Button(group2, SWT.RADIO);
 		button1.setText(String.valueOf(firstSemester));
@@ -440,42 +422,42 @@ public class GUIPref {
 				}
 				selectedSemester = user_choice;
 				System.out.println(selectedSemester);
-				
+
 				if (compositeCourses != null)
 					compositeCourses.dispose();
 				compositeCourses = createGroupCourses();
-				
+
 			}
 		};
-		
+
 		button1.addListener(SWT.Selection, listener);
 		button2.addListener(SWT.Selection, listener);
-		
+
 		prefShell.pack();
 		// return group2;
 		return c;
 	}
-	
+
 	private Composite createGroupCourses() {
 		Composite c = new Composite(prefShell, SWT.CENTER);
 		GridLayout f = new GridLayout(2, false);
 		c.setLayout(f);
-		
+
 		Group groupCourses = new Group(c, SWT.CENTER);
-		
+
 		java.util.List<String> courseNames = teach.getCoursesName(selectedYearStudy, selectedSemester);
-		
+
 		groupCourses.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
 		groupCourses.setText("Step 3 : Choose the course");
 		groupCourses.setLayout(new GridLayout(1, true));
- 
+
 		final List listCourses = new List(groupCourses, SWT.BORDER | SWT.MULTI | SWT.V_SCROLL);
 		listCourses.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
 
 		for (String string : courseNames) {
 			listCourses.add(string);
 		}
-		
+
 		final Text text = new Text(c, SWT.BORDER);
 		text.setBounds(60, 130, 160, 25);
 
@@ -484,25 +466,25 @@ public class GUIPref {
 			public void widgetSelected(SelectionEvent event) {
 				String s[] = listCourses.getSelection();
 				String outString = s[0];
-				
+
 				text.setText("Selected year of study : " + outString);
 				selectedCourse = outString;
-				
+
 				LOGGER.info("Year of study " + selectedCourse + " well chosen.");
 			}
 
+			@Override
 			public void widgetDefaultSelected(SelectionEvent event) {
 				String s[] = listCourses.getSelection();
 				String outString = s[0];
 				int length = s.length;
-				if (length != 1){
+				if (length != 1) {
 					MessageBox messageBox = new MessageBox(prefShell, SWT.ICON_WARNING | SWT.OK);
-					messageBox.setMessage(
-							"It's forbidden to make a multiple selection");
+					messageBox.setMessage("It's forbidden to make a multiple selection");
 					messageBox.setText("Warning");
 					messageBox.open();
 				}
-				
+
 				text.setText("Selected year of study : " + outString);
 				selectedCourse = outString;
 			}
@@ -510,7 +492,7 @@ public class GUIPref {
 
 		prefShell.pack();
 		return c;
-		
+
 	}
 
 	private String openFileExplorer() {
@@ -607,60 +589,61 @@ public class GUIPref {
 		}
 	}
 
-	public static void main(String[] args) throws IOException {
-		/** CourseSheetMetadata csm1 = new CourseSheetMetadata();
-		csm1.setYearOfStud("L3 MIAGE");
-		csm1.setFirstSemesterNumber(1);
-
-		CourseSheetMetadata csm2 = new CourseSheetMetadata();
-		csm2.setYearOfStud("L1");
-		csm2.setFirstSemesterNumber(3);
-
-		java.util.List<CourseSheet> courses = new ArrayList();
-
-		Course c1 = new Course("Test", "Test", "L3", "Ok", "Ok", 1);
-		CoursePref cp1 = new CoursePref(c1);
-
-		Course c2 = new Course("Test", "Test", "L3", "Ok", "Ok", 3);
-		CoursePref cp = new CoursePref(c2);
-		java.util.List<CoursePref> coursePrefS1 = new ArrayList();
-		java.util.List<CoursePref> coursePrefS2 = new ArrayList();
-		coursePrefS1.add(cp);
-
-		java.util.List<String> yearStudy = new ArrayList();
-		yearStudy.add(c1.getYearOfStud());
-		yearStudy.add(c2.getYearOfStud());
-
-		CourseSheet cs1 = new CourseSheet(csm1, coursePrefS1, coursePrefS2);
-		CourseSheet cs2 = new CourseSheet(csm2, coursePrefS1, coursePrefS2);
-		courses.add(cs1);
-		courses.add(cs2); **/
-
-		TeachSpreadSheetController teach = new TeachSpreadSheetController();
-		GUIPref gui = new GUIPref(teach);
-		gui.initializeMainMenu();
-		/*
-		 * Display display = new Display(); Shell shell = new Shell(display, SWT.RESIZE
-		 * | SWT.CLOSE | SWT.MIN); shell.open(); shell.setText("File Choice");
-		 * 
-		 * // initialize a grid layout manager GridLayout gridLayout = new GridLayout();
-		 * gridLayout.numColumns = 2; shell.setLayout(gridLayout);
-		 * 
-		 * // create the label and the field text Label labelTitle = new Label(shell,
-		 * SWT.NONE); labelTitle.setText("File to load : "); labelTitle.setSize(100,
-		 * 25); Text textTitle = new Text(shell, SWT.BORDER);
-		 * textTitle.setText("Saisie_Voeux_Dauphine.ods"); Button buttonSubmit = new
-		 * Button(shell, SWT.PUSH); buttonSubmit.setText("Submit");
-		 * buttonSubmit.setSize(100, 25); buttonSubmit.addListener(SWT.Selection, new
-		 * Listener() {
-		 * 
-		 * @Override public void handleEvent(Event e) { switch (e.type) { case
-		 * SWT.Selection: String selection = textTitle.getText(); Shell shell2 = new
-		 * Shell(display, SWT.RESIZE | SWT.CLOSE | SWT.MIN); shell2.open();
-		 * 
-		 * while (!shell2.isDisposed()) { // if (!display.readAndDispatch())
-		 * display.sleep(); } break; default: break; } } });
-		 */
-	}
-
+	// public static void main(String[] args) throws IOException {
+	// /** CourseSheetMetadata csm1 = new CourseSheetMetadata();
+	// csm1.setYearOfStud("L3 MIAGE");
+	// csm1.setFirstSemesterNumber(1);
+	//
+	// CourseSheetMetadata csm2 = new CourseSheetMetadata();
+	// csm2.setYearOfStud("L1");
+	// csm2.setFirstSemesterNumber(3);
+	//
+	// java.util.List<CourseSheet> courses = new ArrayList();
+	//
+	// Course c1 = new Course("Test", "Test", "L3", "Ok", "Ok", 1);
+	// CoursePref cp1 = new CoursePref(c1);
+	//
+	// Course c2 = new Course("Test", "Test", "L3", "Ok", "Ok", 3);
+	// CoursePref cp = new CoursePref(c2);
+	// java.util.List<CoursePref> coursePrefS1 = new ArrayList();
+	// java.util.List<CoursePref> coursePrefS2 = new ArrayList();
+	// coursePrefS1.add(cp);
+	//
+	// java.util.List<String> yearStudy = new ArrayList();
+	// yearStudy.add(c1.getYearOfStud());
+	// yearStudy.add(c2.getYearOfStud());
+	//
+	// CourseSheet cs1 = new CourseSheet(csm1, coursePrefS1, coursePrefS2);
+	// CourseSheet cs2 = new CourseSheet(csm2, coursePrefS1, coursePrefS2);
+	// courses.add(cs1);
+	// courses.add(cs2); **/
+	//
+	// TeachSpreadSheetController teach = new TeachSpreadSheetController();
+	// GUIPref gui = new GUIPref(teach);
+	// gui.initializeMainMenu();
+	// /*
+	// * Display display = new Display(); Shell shell = new Shell(display,
+	// SWT.RESIZE
+	// * | SWT.CLOSE | SWT.MIN); shell.open(); shell.setText("File Choice");
+	// *
+	// * // initialize a grid layout manager GridLayout gridLayout = new
+	// GridLayout();
+	// * gridLayout.numColumns = 2; shell.setLayout(gridLayout);
+	// *
+	// * // create the label and the field text Label labelTitle = new Label(shell,
+	// * SWT.NONE); labelTitle.setText("File to load : "); labelTitle.setSize(100,
+	// * 25); Text textTitle = new Text(shell, SWT.BORDER);
+	// * textTitle.setText("Saisie_Voeux_Dauphine.ods"); Button buttonSubmit = new
+	// * Button(shell, SWT.PUSH); buttonSubmit.setText("Submit");
+	// * buttonSubmit.setSize(100, 25); buttonSubmit.addListener(SWT.Selection, new
+	// * Listener() {
+	// *
+	// * @Override public void handleEvent(Event e) { switch (e.type) { case
+	// * SWT.Selection: String selection = textTitle.getText(); Shell shell2 = new
+	// * Shell(display, SWT.RESIZE | SWT.CLOSE | SWT.MIN); shell2.open();
+	// *
+	// * while (!shell2.isDisposed()) { // if (!display.readAndDispatch())
+	// * display.sleep(); } break; default: break; } } });
+	// */
+	// }
 }
