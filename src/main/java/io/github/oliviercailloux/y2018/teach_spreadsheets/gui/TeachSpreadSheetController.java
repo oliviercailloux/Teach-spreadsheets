@@ -24,8 +24,7 @@ import io.github.oliviercailloux.y2018.teach_spreadsheets.odf.WriteSpreadSheet;
  */
 public class TeachSpreadSheetController {
 
-	// private final static String template =
-	// "Saisie_voeux_dauphine_Template.ods";
+	private final static String TEMPLATE = "Template_Saisie_voeux_dauphine.ods";
 
 	private Teacher teacher = null;
 
@@ -51,8 +50,7 @@ public class TeachSpreadSheetController {
 	// Main functions
 
 	private void writeSpreadsheet() throws Exception {
-		try (InputStream template = TeachSpreadSheetController.class
-				.getResourceAsStream("Template_Saisie_voeux_dauphine.ods")) {
+		try (InputStream template = TeachSpreadSheetController.class.getResourceAsStream(TEMPLATE)) {
 			WriteSpreadSheet.writeSpreadSheet(template, destination, courseSheetList, this.teacher);
 		}
 	}
