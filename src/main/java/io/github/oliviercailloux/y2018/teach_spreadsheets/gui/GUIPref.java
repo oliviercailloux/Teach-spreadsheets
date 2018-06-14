@@ -360,14 +360,15 @@ public class GUIPref {
 					}
 				}
 				compositeButtons = createGroupSemesters();
-				
-				java.util.List<String> listCMCHoices = teach.getPossibleChoice(selectedYearStudy, selectedSemester, selectedCourse);
-				for(String choice : listCMCHoices) {
-					if(choice.equals("CM")) {
-						
+
+				java.util.List<String> listCMCHoices = teach.getPossibleChoice(selectedYearStudy, selectedSemester,
+						selectedCourse);
+				for (String choice : listCMCHoices) {
+					if (choice.equals("CM")) {
+
 					}
 				}
-				
+
 				// compositeCourses = createGroupCourses();
 			}
 
@@ -448,16 +449,16 @@ public class GUIPref {
 		groupCourses.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
 		groupCourses.setText("Step 3 : Choose the course");
 		groupCourses.setLayout(new GridLayout(1, true));
-		
+
 		final List listCourses = new List(groupCourses, SWT.BORDER | SWT.SINGLE | SWT.V_SCROLL);
 
 		listCourses.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
-		
-		/**gridDataList.widthHint = 500;
-		gridDataList.heightHint = 140;
-	    listCourses.setLayoutData(gridDataList);**/
-	    
-	    
+
+		/**
+		 * gridDataList.widthHint = 500; gridDataList.heightHint = 140;
+		 * listCourses.setLayoutData(gridDataList);
+		 **/
+
 		for (String string : courseNames) {
 			listCourses.add(string.replaceAll("\n", ""));
 		}
@@ -475,10 +476,10 @@ public class GUIPref {
 			public void widgetSelected(SelectionEvent event) {
 				String s[] = listCourses.getSelection();
 				String outString = s[0];
-				
+
 				text.setText("Selected course : " + outString);
 				selectedCourse = outString;
-				
+
 				LOGGER.info("Course " + selectedCourse + " well chosen.");
 
 			}
@@ -491,77 +492,74 @@ public class GUIPref {
 				selectedCourse = outString;
 			}
 		});
-		
+
 		prefShell.pack();
 		return c;
 
 	}
-	
+
 	private Composite createGroupButtonsCM() {
 		Composite c = new Composite(prefShell, SWT.CENTER);
 		GridLayout f = new GridLayout(2, false);
 		c.setLayout(f);
 
 		Group group2 = new Group(c, SWT.SHADOW_OUT);
-		group2.setText("Step 4 : Choose your preferences"); 
+		group2.setText("Step 4 : Choose your preferences");
 		group2.setLayout(new GridLayout(1, true));
 
-		java.util.List<String> listCMCHoices = teach.getPossibleChoice(selectedYearStudy, selectedSemester, selectedCourse);
-		
+		java.util.List<String> listCMCHoices = teach.getPossibleChoice(selectedYearStudy, selectedSemester,
+				selectedCourse);
+
 		String choiceA = "A";
 		String choiceB = "B";
 		String choiceC = "C";
 		String choiceAbs = "Absent";
-		
-		
-				final Button buttonA = new Button(group2, SWT.RADIO);
-				buttonA.setText(choiceA);
-				final Button buttonB = new Button(group2, SWT.RADIO);
-				buttonB.setText(choiceB);
-				final Button buttonC = new Button(group2, SWT.RADIO);
-				buttonC.setText(choiceC);
-				final Button buttonAbs = new Button(group2, SWT.RADIO);
-				buttonAbs.setText(choiceAbs);
-				
-				Listener listener = new Listener() {
-					@Override
-					public void handleEvent(Event event) {
-						int user_choice = 0;
 
-						if (event.widget == buttonA) {
-							user_choice = Integer.valueOf(buttonA.getText());
-							selectedSemester = user_choice;
-						} else if (event.widget == buttonB) {
-							user_choice = Integer.valueOf(buttonB.getText());
-							selectedSemester = user_choice;
-						}
-						if (event.widget == buttonC) {
-							user_choice = Integer.valueOf(buttonC.getText());
-							selectedSemester = user_choice;
-						} else if (event.widget == buttonAbs) {
-							user_choice = Integer.valueOf(buttonAbs.getText());
-							selectedSemester = user_choice;
-						}
-						
-						selectedSemester = user_choice;
-						System.out.println(selectedSemester);
-						
-						if (compositeCourses != null)
-							compositeCourses.dispose();
-						compositeCourses = createGroupCourses();
-						
-					}
-				};
-				buttonA.addListener(SWT.Selection, listener);
-				buttonB.addListener(SWT.Selection, listener);
-				
-				prefShell.pack();
-				// return group2;
-				return c;
+		final Button buttonA = new Button(group2, SWT.RADIO);
+		buttonA.setText(choiceA);
+		final Button buttonB = new Button(group2, SWT.RADIO);
+		buttonB.setText(choiceB);
+		final Button buttonC = new Button(group2, SWT.RADIO);
+		buttonC.setText(choiceC);
+		final Button buttonAbs = new Button(group2, SWT.RADIO);
+		buttonAbs.setText(choiceAbs);
+
+		Listener listener = new Listener() {
+			@Override
+			public void handleEvent(Event event) {
+				int user_choice = 0;
+
+				if (event.widget == buttonA) {
+					user_choice = Integer.valueOf(buttonA.getText());
+					selectedSemester = user_choice;
+				} else if (event.widget == buttonB) {
+					user_choice = Integer.valueOf(buttonB.getText());
+					selectedSemester = user_choice;
+				}
+				if (event.widget == buttonC) {
+					user_choice = Integer.valueOf(buttonC.getText());
+					selectedSemester = user_choice;
+				} else if (event.widget == buttonAbs) {
+					user_choice = Integer.valueOf(buttonAbs.getText());
+					selectedSemester = user_choice;
+				}
+
+				selectedSemester = user_choice;
+				System.out.println(selectedSemester);
+
+				if (compositeCourses != null)
+					compositeCourses.dispose();
+				compositeCourses = createGroupCourses();
+
 			}
+		};
+		buttonA.addListener(SWT.Selection, listener);
+		buttonB.addListener(SWT.Selection, listener);
 
-		
-
+		prefShell.pack();
+		// return group2;
+		return c;
+	}
 
 	private String openFileExplorer() {
 		Shell shellFE = new Shell(display);
@@ -590,7 +588,7 @@ public class GUIPref {
 		FileDialog fd = new FileDialog(shellFE, SWT.OPEN);
 		fd.setText("Open");
 		// fd.setFilterPath("C:/");
-		
+
 		// only file finishing by .ods are allowed
 		String[] filterExt = { "*.ods" };
 		fd.setFilterExtensions(filterExt);
@@ -600,24 +598,24 @@ public class GUIPref {
 			return null;
 		}
 		LOGGER.info("The file " + selectedFile + " has been opened.");
-		
+
 		shellFE.dispose();
 		return selectedFile;
 	}
-	
+
 	private String openDirectoryExplorer() {
-		 DirectoryDialog dlg = new DirectoryDialog(prefShell);
-		 dlg.setText("Open");
-		 dlg.setFilterPath("C:/");
-		 String selectedDir = dlg.open();
-		 if (selectedDir == null) {
-				LOGGER.error("None folder has been opened !");
-				return null;
+		DirectoryDialog dlg = new DirectoryDialog(prefShell);
+		dlg.setText("Open");
+		dlg.setFilterPath("C:/");
+		String selectedDir = dlg.open();
+		if (selectedDir == null) {
+			LOGGER.error("None folder has been opened !");
+			return null;
 		}
 		LOGGER.info("The folder " + selectedDir + " has been opened.");
-		 return selectedDir;
+		return selectedDir;
 	}
-	
+
 	@SuppressWarnings("resource")
 	private java.util.List<Course> getCoursesFromFileExplorer() throws Exception {
 		java.util.List<Course> courses = new ArrayList();
