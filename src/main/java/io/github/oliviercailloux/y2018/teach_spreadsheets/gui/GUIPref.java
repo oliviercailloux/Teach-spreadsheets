@@ -345,10 +345,14 @@ public class GUIPref {
 
 		groupYearOfStudy.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
 		groupYearOfStudy.setText("Step 1: Choose the year of study");
-		groupYearOfStudy.setLayout(new GridLayout(1, true));
+		groupYearOfStudy.setLayout(new GridLayout(1, false));
+		
+		
 
-		List listYearStudy = new List(groupYearOfStudy, SWT.BORDER | SWT.MULTI | SWT.V_SCROLL);
+		final List listYearStudy = new List(groupYearOfStudy, SWT.BORDER | SWT.SINGLE | SWT.V_SCROLL);
 		listYearStudy.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
+		
+		
 
 		for (String string : yearNames) {
 			listYearStudy.add(string);
@@ -362,14 +366,6 @@ public class GUIPref {
 			public void widgetSelected(SelectionEvent event) {
 				String s[] = listYearStudy.getSelection();
 				String outString = s[0];
-				int length = s.length;
-				if (length != 1){
-					MessageBox messageBox = new MessageBox(prefShell, SWT.ICON_WARNING | SWT.OK);
-					messageBox.setMessage(
-							"It's forbidden to make a multiple selection");
-					messageBox.setText("Warning");
-					messageBox.open();
-				}
 				
 				text.setText("Selected year of study : " + outString);
 				selectedYearStudy = outString;
@@ -472,8 +468,8 @@ public class GUIPref {
 		groupCourses.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
 		groupCourses.setText("Step 3 : Choose the course");
 		groupCourses.setLayout(new GridLayout(1, true));
-
-		List listCourses = new List(groupCourses, SWT.BORDER | SWT.MULTI | SWT.V_SCROLL);
+ 
+		final List listCourses = new List(groupCourses, SWT.BORDER | SWT.MULTI | SWT.V_SCROLL);
 		listCourses.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
 
 		for (String string : courseNames) {
@@ -488,14 +484,6 @@ public class GUIPref {
 			public void widgetSelected(SelectionEvent event) {
 				String s[] = listCourses.getSelection();
 				String outString = s[0];
-				int length = s.length;
-				if (length != 1){
-					MessageBox messageBox = new MessageBox(prefShell, SWT.ICON_WARNING | SWT.OK);
-					messageBox.setMessage(
-							"It's forbidden to make a multiple selection");
-					messageBox.setText("Warning");
-					messageBox.open();
-				}
 				
 				text.setText("Selected year of study : " + outString);
 				selectedCourse = outString;
