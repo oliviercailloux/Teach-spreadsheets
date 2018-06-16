@@ -82,6 +82,7 @@ public class GUIPref {
 		compositeSemesters.dispose();
 		compositeChoices.dispose();
 		compositeCourses.dispose();
+		prefShell.pack();
 	}
 
 	private void resetSelectedItems() {
@@ -386,22 +387,26 @@ public class GUIPref {
 			public void widgetSelected(SelectionEvent event) {
 				String s[] = listYearStudy.getSelection();
 				String outString = s[0];
-
+				String actualYearOfStudy = selectedYearStudy;
 				text.setText("Selected year of study : " + outString);
 				selectedYearStudy = outString;
-
+				System.out.println(actualYearOfStudy + " " + selectedYearStudy + ": "
+						+ actualYearOfStudy.equals(selectedYearStudy));
 				LOGGER.info("Year of study " + selectedYearStudy + " well chosen.");
 
-				if (compositeSemesters != null) {
-					compositeSemesters.dispose();
-					if (compositeCourses != null) {
-						compositeCourses.dispose();
-						if (compositeChoices != null) {
-							compositeChoices.dispose();
+				if (!actualYearOfStudy.equals(selectedYearStudy)) {
+					if (compositeSemesters != null) {
+						compositeSemesters.dispose();
+						if (compositeCourses != null) {
+							compositeCourses.dispose();
+							if (compositeChoices != null) {
+								compositeChoices.dispose();
+							}
 						}
 					}
+					compositeSemesters = createCompositeSemesters();
 				}
-				compositeSemesters = createCompositeSemesters();
+
 			}
 
 			@Override
@@ -414,6 +419,7 @@ public class GUIPref {
 		});
 
 		prefShell.pack();
+		prefShell.open();
 		return groupYearOfStudy;
 	}
 
@@ -457,7 +463,6 @@ public class GUIPref {
 					selectedSemester = user_choice;
 				}
 				selectedSemester = user_choice;
-				System.out.println(selectedSemester);
 
 				if (compositeCourses != null) {
 					compositeCourses.dispose();
@@ -474,7 +479,7 @@ public class GUIPref {
 		button2.addListener(SWT.Selection, listener);
 
 		prefShell.pack();
-		// return group2;
+		prefShell.open();
 		return c;
 	}
 
@@ -558,7 +563,6 @@ public class GUIPref {
 				selectedCourse = outString;
 			}
 		});
-
 		prefShell.pack();
 		return c;
 
@@ -570,10 +574,8 @@ public class GUIPref {
 	 */
 	private Composite createCompositeForChoices() {
 		compositeChoices = new Composite(prefShell, SWT.CENTER);
-
 		GridLayout f = new GridLayout(3, true);
 		compositeChoices.setLayout(f);
-
 		return compositeChoices;
 	}
 
@@ -699,7 +701,7 @@ public class GUIPref {
 	private Group createGroupButtonsTP() {
 		// Composite c = new Composite(compositeChoices, SWT.SHADOW_OUT);
 		Group group2 = new Group(compositeChoices, SWT.NONE);
-		group2.setText("Step 6 : Choose your preferences for TD");
+		group2.setText("Step 6 : Choose your preferences for TP");
 		group2.setLayout(new GridLayout(1, true));
 
 		Choice choiceA = Choice.A;
@@ -846,6 +848,7 @@ public class GUIPref {
 							selectedCMCHoice, selectedTDCHoice, selectedTPCHoice);
 					teach.updatePref(cp);
 					resetComposite();
+					buttonSubmit.dispose();
 					resetSelectedItems();
 				} else {
 					MessageBox messageBox = new MessageBox(shell, SWT.ICON_ERROR | SWT.OK);
