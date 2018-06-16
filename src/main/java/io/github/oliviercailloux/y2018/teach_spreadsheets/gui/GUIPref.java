@@ -7,7 +7,6 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Date;
 
 import org.eclipse.swt.SWT;
@@ -73,7 +72,7 @@ public class GUIPref {
 	private Choice selectedTDCHoice = Choice.NA;
 	private Choice selectedTPCHoice = Choice.NA;
 
-	private java.util.List<CoursePref> listCoursePref = new ArrayList<>();
+	private Composite compositeSubmit;
 
 	public GUIPref(TeachSpreadSheetController teach) {
 		this.teach = teach;
@@ -248,6 +247,7 @@ public class GUIPref {
 							+ dateFormat.format(date).toString() + ".ods";
 					try {
 						teach.setDestination(new FileOutputStream(destination));
+						prefShell.dispose();
 					} catch (@SuppressWarnings("unused") FileNotFoundException e1) {
 						failed = true;
 					} catch (@SuppressWarnings("unused") Exception e1) {
@@ -459,8 +459,13 @@ public class GUIPref {
 				selectedSemester = user_choice;
 				System.out.println(selectedSemester);
 
-				if (compositeCourses != null)
+				if (compositeCourses != null) {
 					compositeCourses.dispose();
+					if (compositeChoices != null) {
+						compositeChoices.dispose();
+					}
+				}
+
 				compositeCourses = createCompositeCourses();
 			}
 		};
@@ -522,6 +527,9 @@ public class GUIPref {
 
 				if (compositeChoices != null) {
 					compositeChoices.dispose();
+					if (compositeSubmit != null) {
+						compositeSubmit.dispose();
+					}
 				}
 				compositeChoices = createCompositeForChoices();
 				for (String possibleChoice : listPossibleChoice) {
@@ -537,7 +545,7 @@ public class GUIPref {
 						groupTPButtons = createGroupButtonsTP();
 					}
 				}
-				Button buttonSubmit = createButtonSubmitPreference();
+				compositeSubmit = createButtonSubmitPreference();
 				prefShell.pack();
 				prefShell.open();
 			}
@@ -810,14 +818,18 @@ public class GUIPref {
 		}
 	}
 
-	private Button createButtonSubmitPreference() {
+	private Composite createButtonSubmitPreference() {
+		Composite c = new Composite(prefShell, SWT.NONE);
+		GridLayout f = new GridLayout(1, true);
+		c.setLayout(f);
+
 		// Create a horizontal separator
-		Label lblSeparator = new Label(prefShell, SWT.HORIZONTAL | SWT.SEPARATOR);
+		Label lblSeparator = new Label(c, SWT.HORIZONTAL | SWT.SEPARATOR);
 		lblSeparator.setLayoutData(new GridData(GridData.FILL_HORIZONTAL));
 
 		// Button to submit the preferences for a specified course
 		Button buttonSubmit;
-		buttonSubmit = new Button(prefShell, SWT.NONE);
+		buttonSubmit = new Button(c, SWT.NONE);
 		buttonSubmit.setText("Submit your preferences for the course : " + selectedCourse);
 		buttonSubmit.setLayoutData(new GridData(GridData.FILL_HORIZONTAL));
 		buttonSubmit.addSelectionListener(new SelectionListener() {
@@ -849,7 +861,7 @@ public class GUIPref {
 				widgetSelected(e);
 			}
 		});
-		return buttonSubmit;
+		return c;
 	}
 
 	/**
