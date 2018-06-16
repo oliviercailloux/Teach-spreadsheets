@@ -512,7 +512,6 @@ public class GUIPref {
 					}
 					if (possibleChoice.equals("TP")) {
 						groupTPButtons = createGroupButtonsTP();
-
 					}
 				}
 
@@ -540,6 +539,7 @@ public class GUIPref {
 		compositeChoices = new Composite(prefShell, SWT.CENTER);
 		GridLayout f = new GridLayout(3, true);
 		compositeChoices.setLayout(f);
+		compositeChoices.setVisible(true);
 		return compositeChoices;
 	}
 
@@ -596,6 +596,9 @@ public class GUIPref {
 		buttonB.addListener(SWT.Selection, listener);
 		buttonC.addListener(SWT.Selection, listener);
 		buttonAbs.addListener(SWT.Selection, listener);
+
+		compositeChoices.pack();
+		prefShell.pack();
 
 		return group2;
 
@@ -655,6 +658,10 @@ public class GUIPref {
 		buttonC.addListener(SWT.Selection, listener);
 		buttonAbs.addListener(SWT.Selection, listener);
 
+		group2.setVisible(true);
+		compositeChoices.pack();
+		prefShell.pack();
+
 		return group2;
 		// return c;
 	}
@@ -711,6 +718,10 @@ public class GUIPref {
 		buttonB.addListener(SWT.Selection, listener);
 		buttonC.addListener(SWT.Selection, listener);
 		buttonAbs.addListener(SWT.Selection, listener);
+
+		group2.setVisible(true);
+		compositeChoices.pack();
+		prefShell.pack();
 
 		return group2;
 		// return c;
