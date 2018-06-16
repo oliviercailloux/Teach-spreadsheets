@@ -51,9 +51,11 @@ public class CoursePref {
 
 		if (cmChoice != Choice.NA) {
 			choices.add("CM");
-		} else if (tdChoice != Choice.NA) {
+		}
+		if (tdChoice != Choice.NA) {
 			choices.add("TD");
-		} else if (tpChoice != Choice.NA) {
+		}
+		if (tpChoice != Choice.NA) {
 			choices.add("TP");
 		}
 		return choices;

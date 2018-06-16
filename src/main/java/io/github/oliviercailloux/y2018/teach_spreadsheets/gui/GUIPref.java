@@ -511,7 +511,8 @@ public class GUIPref {
 						groupTDButtons = createGroupButtonsTD();
 					}
 					if (possibleChoice.equals("TP")) {
-						groupTPButtons = createGroupButtonsTD();
+						groupTPButtons = createGroupButtonsTP();
+
 					}
 				}
 
@@ -537,7 +538,7 @@ public class GUIPref {
 	 */
 	private Composite createCompositeForChoices() {
 		compositeChoices = new Composite(prefShell, SWT.CENTER);
-		GridLayout f = new GridLayout(3, false);
+		GridLayout f = new GridLayout(3, true);
 		compositeChoices.setLayout(f);
 		return compositeChoices;
 	}
@@ -547,7 +548,7 @@ public class GUIPref {
 	 */
 	private Group createGroupButtonsCM() {
 		// Composite c = new Composite(compositeChoices, SWT.SHADOW_OUT);
-		Group group2 = new Group(compositeChoices, SWT.CENTER);
+		Group group2 = new Group(compositeChoices, SWT.NONE);
 		group2.setText("Step 4 : Choose your preferences for CM");
 		group2.setLayout(new GridLayout(1, true));
 
@@ -589,6 +590,7 @@ public class GUIPref {
 				System.out.println(selectedCMCHoice);
 
 			}
+
 		};
 		buttonA.addListener(SWT.Selection, listener);
 		buttonB.addListener(SWT.Selection, listener);
@@ -605,7 +607,7 @@ public class GUIPref {
 	 */
 	private Group createGroupButtonsTD() {
 		// Composite c = new Composite(compositeChoices, SWT.SHADOW_OUT);
-		Group group2 = new Group(compositeChoices, SWT.SHADOW_OUT);
+		Group group2 = new Group(compositeChoices, SWT.NONE);
 		group2.setText("Step 5 : Choose your preferences for TD");
 		group2.setLayout(new GridLayout(1, true));
 
@@ -662,7 +664,7 @@ public class GUIPref {
 	 */
 	private Group createGroupButtonsTP() {
 		// Composite c = new Composite(compositeChoices, SWT.SHADOW_OUT);
-		Group group2 = new Group(compositeChoices, SWT.SHADOW_OUT);
+		Group group2 = new Group(compositeChoices, SWT.NONE);
 		group2.setText("Step 6 : Choose your preferences for TD");
 		group2.setLayout(new GridLayout(1, true));
 
