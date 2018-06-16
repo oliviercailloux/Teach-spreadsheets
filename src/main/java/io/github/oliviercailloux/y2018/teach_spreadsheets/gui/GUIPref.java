@@ -401,6 +401,9 @@ public class GUIPref {
 							compositeCourses.dispose();
 							if (compositeChoices != null) {
 								compositeChoices.dispose();
+								if (compositeSubmit != null) {
+									compositeSubmit.dispose();
+								}
 							}
 						}
 					}
@@ -468,6 +471,9 @@ public class GUIPref {
 					compositeCourses.dispose();
 					if (compositeChoices != null) {
 						compositeChoices.dispose();
+						if (compositeSubmit != null) {
+							compositeSubmit.dispose();
+						}
 					}
 				}
 
