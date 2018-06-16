@@ -54,7 +54,7 @@ public class GUIPref {
 	private TeachSpreadSheetController teach;
 
 	private Group groupYearsStudy;
-	private Composite compositeButtons;
+	private Composite compositeSemesters;
 	private Composite compositeCourses;
 	private Composite compositeChoices;
 
@@ -73,6 +73,12 @@ public class GUIPref {
 
 	public GUIPref(TeachSpreadSheetController teach) {
 		this.teach = teach;
+	}
+
+	private void resetComposite() {
+		compositeSemesters.dispose();
+		compositeChoices.dispose();
+		compositeCourses.dispose();
 	}
 
 	/**
@@ -300,11 +306,10 @@ public class GUIPref {
 				// the main Display. The child could also access the
 				// display itself by calling Display.getDefault()
 				// =====================================================
-				CoursePref cp = submitPreference(selectedCourse, selectedSemester, selectedCourse, selectedCMCHoice,
-						selectedCMCHoice, selectedCMCHoice);
-				listCoursePref.add(cp);
-				LOGGER.info("Your preferences have been saved");
-
+				CoursePref cp = submitPreference(selectedYearStudy, selectedSemester, selectedCourse, selectedCMCHoice,
+						selectedTDCHoice, selectedTPCHoice);
+				teach.updatePref(cp);
+				resetComposite();
 			}
 
 			@Override
@@ -373,8 +378,8 @@ public class GUIPref {
 
 				LOGGER.info("Year of study " + selectedYearStudy + " well chosen.");
 
-				if (compositeButtons != null) {
-					compositeButtons.dispose();
+				if (compositeSemesters != null) {
+					compositeSemesters.dispose();
 					if (compositeCourses != null) {
 						compositeCourses.dispose();
 						if (compositeChoices != null) {
@@ -382,7 +387,7 @@ public class GUIPref {
 						}
 					}
 				}
-				compositeButtons = createCompositeSemesters();
+				compositeSemesters = createCompositeSemesters();
 			}
 
 			@Override
@@ -509,7 +514,7 @@ public class GUIPref {
 					if (possibleChoice.equals("CM")) {
 						groupCMButtons = createGroupButtonsCM();
 						// compositeCMButtons =
-						// createGroupButtonsCM(compositeButtons);
+						// createGroupButtonsCM(compositeSemesters);
 					}
 					if (possibleChoice.equals("TD")) {
 						groupTDButtons = createGroupButtonsTD();

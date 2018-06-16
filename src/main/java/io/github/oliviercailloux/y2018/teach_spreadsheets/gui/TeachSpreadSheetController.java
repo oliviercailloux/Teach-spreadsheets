@@ -10,6 +10,9 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import io.github.oliviercailloux.y2018.teach_spreadsheets.courses.CoursePref;
 import io.github.oliviercailloux.y2018.teach_spreadsheets.courses.CourseSheet;
 import io.github.oliviercailloux.y2018.teach_spreadsheets.courses.Teacher;
@@ -25,6 +28,8 @@ import io.github.oliviercailloux.y2018.teach_spreadsheets.odf.WriteSpreadSheet;
 public class TeachSpreadSheetController {
 
 	private final static String TEMPLATE = "Template_Saisie_voeux_dauphine.ods";
+
+	private final static Logger LOGGER = LoggerFactory.getLogger(TeachSpreadSheetController.class);
 
 	private Teacher teacher = null;
 
@@ -119,13 +124,16 @@ public class TeachSpreadSheetController {
 	 * This method is used after a submit of a course preference. It updates the
 	 * list of course preferences.
 	 */
-	public void updatePref(CoursePref coursePref, String yearName, int semester, String courseName) {
+	public void updatePref(CoursePref coursePref) {
 
-		CoursePref updatedCoursePref = this.getCoursePref(yearName, semester, courseName);
+		CoursePref updatedCoursePref = this.getCoursePref(coursePref.getCourse().getYearOfStud(),
+				coursePref.getCourse().getSemester(), coursePref.getCourse().getName());
 
 		updatedCoursePref.setCmChoice(coursePref.getCmChoice());
 		updatedCoursePref.setTdChoice(coursePref.getTdChoice());
 		updatedCoursePref.setTpChoice(coursePref.getTpChoice());
+		LOGGER.info("Your preferences have been saved");
+
 	}
 
 	private CoursePref getCoursePref(String yearName, int semester, String courseName) {
