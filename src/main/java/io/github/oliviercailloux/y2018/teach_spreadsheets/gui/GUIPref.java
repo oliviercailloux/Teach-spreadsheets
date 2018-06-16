@@ -355,7 +355,7 @@ public class GUIPref {
 			listYearStudy.add(string);
 		}
 
-		final Text text = new Text(c, SWT.BORDER);
+		final Text text = new Text(c, SWT.BORDER | SWT.H_SCROLL);
 		text.setBounds(60, 130, 160, 25);
 
 		listYearStudy.addSelectionListener(new SelectionListener() {
@@ -379,8 +379,6 @@ public class GUIPref {
 					}
 				}
 				compositeButtons = createCompositeSemesters();
-
-				// compositeCourses = createGroupCourses();
 			}
 
 			@Override
@@ -472,11 +470,6 @@ public class GUIPref {
 
 		listCourses.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
 
-		/**
-		 * gridDataList.widthHint = 500; gridDataList.heightHint = 140;
-		 * listCourses.setLayoutData(gridDataList);
-		 **/
-
 		for (String string : courseNames) {
 			listCourses.add(string);
 		}
@@ -519,6 +512,7 @@ public class GUIPref {
 					}
 					if (possibleChoice.equals("TP")) {
 						groupTPButtons = createGroupButtonsTP();
+
 					}
 				}
 
@@ -546,7 +540,6 @@ public class GUIPref {
 		compositeChoices = new Composite(prefShell, SWT.CENTER);
 		GridLayout f = new GridLayout(3, true);
 		compositeChoices.setLayout(f);
-		compositeChoices.setVisible(true);
 		return compositeChoices;
 	}
 
@@ -604,9 +597,8 @@ public class GUIPref {
 		buttonC.addListener(SWT.Selection, listener);
 		buttonAbs.addListener(SWT.Selection, listener);
 
-		compositeChoices.pack();
-		prefShell.pack();
 		return group2;
+
 		// return c;
 	}
 
@@ -663,9 +655,6 @@ public class GUIPref {
 		buttonC.addListener(SWT.Selection, listener);
 		buttonAbs.addListener(SWT.Selection, listener);
 
-		group2.setVisible(true);
-		compositeChoices.pack();
-		prefShell.pack();
 		return group2;
 		// return c;
 	}
@@ -723,9 +712,6 @@ public class GUIPref {
 		buttonC.addListener(SWT.Selection, listener);
 		buttonAbs.addListener(SWT.Selection, listener);
 
-		group2.setVisible(true);
-		compositeChoices.pack();
-		prefShell.pack();
 		return group2;
 		// return c;
 	}
