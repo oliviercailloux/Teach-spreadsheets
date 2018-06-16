@@ -68,7 +68,7 @@ public class TeachSpreadSheetController {
 	}
 
 	public String getTeacherName() {
-		return teacher.getName();
+		return teacher.getFirstName() + " " + teacher.getName();
 	}
 
 	/**
