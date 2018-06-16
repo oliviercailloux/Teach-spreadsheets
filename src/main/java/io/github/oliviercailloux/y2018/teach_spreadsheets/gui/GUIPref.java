@@ -83,6 +83,7 @@ public class GUIPref {
 		compositeSemesters.dispose();
 		compositeChoices.dispose();
 		compositeCourses.dispose();
+		prefShell.pack();
 	}
 
 	private void resetSelectedItems() {
@@ -95,8 +96,8 @@ public class GUIPref {
 	}
 
 	/**
-	 * This methods is the main interface (display). This is the first shell where
-	 * the user starts
+	 * This methods is the main interface (display). This is the first shell
+	 * where the user starts
 	 */
 	public void initializeMainMenu() throws IOException {
 
@@ -205,8 +206,8 @@ public class GUIPref {
 	}
 
 	/**
-	 * This methods opens a new shell in order to let the user sets his preferences
-	 * for a specified course
+	 * This methods opens a new shell in order to let the user sets his
+	 * preferences for a specified course
 	 */
 	private void prefShell() {
 
@@ -356,8 +357,8 @@ public class GUIPref {
 	}
 
 	/**
-	 * This methods creates a Group in which there is a list of Years of Study from
-	 * the file opened
+	 * This methods creates a Group in which there is a list of Years of Study
+	 * from the file opened
 	 */
 	private Group createGroupYearsOfStudy() {
 		Composite c = new Composite(prefShell, SWT.CENTER);
@@ -550,7 +551,6 @@ public class GUIPref {
 				selectedCourse = outString;
 			}
 		});
-
 		prefShell.pack();
 		return c;
 
@@ -782,7 +782,8 @@ public class GUIPref {
 	}
 
 	/**
-	 * This method closes a Shell if the user confirms it (by pressing YES button)
+	 * This method closes a Shell if the user confirms it (by pressing YES
+	 * button)
 	 */
 	private boolean exitShell() {
 		MessageBox messageBox = new MessageBox(shell, SWT.ICON_QUESTION | SWT.YES | SWT.NO);
@@ -834,6 +835,7 @@ public class GUIPref {
 							selectedCMCHoice, selectedTDCHoice, selectedTPCHoice);
 					teach.updatePref(cp);
 					resetComposite();
+					buttonSubmit.dispose();
 					resetSelectedItems();
 				} else {
 					MessageBox messageBox = new MessageBox(shell, SWT.ICON_ERROR | SWT.OK);
@@ -853,8 +855,8 @@ public class GUIPref {
 	}
 
 	/**
-	 * This methods creates a new Course Preference object using all the selected
-	 * elements from the user
+	 * This methods creates a new Course Preference object using all the
+	 * selected elements from the user
 	 */
 	@SuppressWarnings("hiding")
 	private CoursePref submitPreference(String selectedYearOfStudy, Integer selectedSemester, String selectedCourse,
