@@ -525,6 +525,7 @@ public class GUIPref {
 		listCourses.addSelectionListener(new SelectionListener() {
 			@Override
 			public void widgetSelected(SelectionEvent event) {
+				String actualCourse = selectedCourse;
 				String s[] = listCourses.getSelection();
 				String outString = s[0];
 
@@ -532,31 +533,34 @@ public class GUIPref {
 				selectedCourse = outString;
 
 				LOGGER.info("Course " + selectedCourse + " well chosen.");
+				if (!actualCourse.equals(selectedCourse)) {
 
-				java.util.List<String> listPossibleChoice = teach.getPossibleChoice(selectedYearStudy, selectedSemester,
-						selectedCourse);
+					java.util.List<String> listPossibleChoice = teach.getPossibleChoice(selectedYearStudy,
+							selectedSemester, selectedCourse);
 
-				if (compositeChoices != null) {
-					compositeChoices.dispose();
-					if (compositeSubmit != null) {
-						compositeSubmit.dispose();
+					if (compositeChoices != null) {
+						compositeChoices.dispose();
+						if (compositeSubmit != null) {
+							compositeSubmit.dispose();
+						}
 					}
+					compositeChoices = null;
+					compositeChoices = createCompositeForChoices();
+					for (String possibleChoice : listPossibleChoice) {
+						if (possibleChoice.equals("CM")) {
+							groupCMButtons = createGroupButtonsCM();
+							// compositeCMButtons =
+							// createGroupButtonsCM(compositeSemesters);
+						}
+						if (possibleChoice.equals("TD")) {
+							groupTDButtons = createGroupButtonsTD();
+						}
+						if (possibleChoice.equals("TP")) {
+							groupTPButtons = createGroupButtonsTP();
+						}
+					}
+					compositeSubmit = createButtonSubmitPreference();
 				}
-				compositeChoices = createCompositeForChoices();
-				for (String possibleChoice : listPossibleChoice) {
-					if (possibleChoice.equals("CM")) {
-						groupCMButtons = createGroupButtonsCM();
-						// compositeCMButtons =
-						// createGroupButtonsCM(compositeSemesters);
-					}
-					if (possibleChoice.equals("TD")) {
-						groupTDButtons = createGroupButtonsTD();
-					}
-					if (possibleChoice.equals("TP")) {
-						groupTPButtons = createGroupButtonsTP();
-					}
-				}
-				compositeSubmit = createButtonSubmitPreference();
 				prefShell.pack();
 				prefShell.open();
 			}
