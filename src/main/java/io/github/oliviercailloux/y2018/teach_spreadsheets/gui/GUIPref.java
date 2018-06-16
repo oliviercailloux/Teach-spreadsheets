@@ -545,7 +545,7 @@ public class GUIPref {
 
 		GridLayout f = new GridLayout(3, true);
 		compositeChoices.setLayout(f);
-		compositeChoices.setVisible(true);
+
 		return compositeChoices;
 	}
 
@@ -661,8 +661,6 @@ public class GUIPref {
 		buttonC.addListener(SWT.Selection, listener);
 		buttonAbs.addListener(SWT.Selection, listener);
 
-		group2.setVisible(true);
-
 		return group2;
 		// return c;
 	}
@@ -719,8 +717,6 @@ public class GUIPref {
 		buttonB.addListener(SWT.Selection, listener);
 		buttonC.addListener(SWT.Selection, listener);
 		buttonAbs.addListener(SWT.Selection, listener);
-
-		group2.setVisible(true);
 
 		return group2;
 		// return c;
