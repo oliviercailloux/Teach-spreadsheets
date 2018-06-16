@@ -69,7 +69,7 @@ public class CourseSheet {
 	}
 
 	private CoursePref getCoursePref(int semester, String courseName) {
-		if (semester % 2 == 0) {
+		if (semester % 2 == 1) {
 			for (CoursePref coursePref : coursePrefS1) {
 				if (coursePref.getCourse().getName().equals(courseName)) {
 					return coursePref;
