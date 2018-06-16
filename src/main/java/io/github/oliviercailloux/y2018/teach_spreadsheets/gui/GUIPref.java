@@ -81,6 +81,15 @@ public class GUIPref {
 		compositeCourses.dispose();
 	}
 
+	private void resetSelectedItems() {
+		selectedYearStudy = "";
+		selectedSemester = 0;
+		selectedCourse = "";
+		selectedCMCHoice = Choice.NA;
+		selectedTDCHoice = Choice.NA;
+		selectedTPCHoice = Choice.NA;
+	}
+
 	/**
 	 * This methods is the main interface (display). This is the first shell where
 	 * the user starts
@@ -293,35 +302,6 @@ public class GUIPref {
 		lblSeparator = new Label(prefShell, SWT.HORIZONTAL | SWT.SEPARATOR);
 		lblSeparator.setLayoutData(new GridData(GridData.FILL_HORIZONTAL));
 
-		// Button to submit the preferences for a specified course
-		Button buttonSubmit;
-		buttonSubmit = new Button(prefShell, SWT.NONE);
-		buttonSubmit.setText("Submit your preferences for the course" + selectedCourse);
-		buttonSubmit.setLayoutData(new GridData(GridData.FILL_HORIZONTAL));
-		buttonSubmit.addSelectionListener(new SelectionListener() {
-			@Override
-			public void widgetSelected(SelectionEvent e) {
-				// =====================================================
-				// on button press, create a child Shell object passing
-				// the main Display. The child could also access the
-				// display itself by calling Display.getDefault()
-				// =====================================================
-				CoursePref cp = submitPreference(selectedYearStudy, selectedSemester, selectedCourse, selectedCMCHoice,
-						selectedTDCHoice, selectedTPCHoice);
-				teach.updatePref(cp);
-				resetComposite();
-			}
-
-			@Override
-			public void widgetDefaultSelected(SelectionEvent e) {
-				widgetSelected(e);
-			}
-		});
-
-		// Create a horizontal separator
-		lblSeparator = new Label(prefShell, SWT.HORIZONTAL | SWT.SEPARATOR);
-		lblSeparator.setLayoutData(new GridData(GridData.FILL_HORIZONTAL));
-
 		groupYearsStudy = createGroupYearsOfStudy();
 
 		prefShell.open();
@@ -523,6 +503,7 @@ public class GUIPref {
 						groupTPButtons = createGroupButtonsTP();
 					}
 				}
+				Button buttonSubmit = createButtonSubmitPreference();
 				prefShell.pack();
 				prefShell.open();
 			}
@@ -794,6 +775,48 @@ public class GUIPref {
 			LOGGER.info("The application has been closed.");
 			System.exit(0);
 		}
+	}
+
+	private Button createButtonSubmitPreference() {
+		// Create a horizontal separator
+		Label lblSeparator = new Label(prefShell, SWT.HORIZONTAL | SWT.SEPARATOR);
+		lblSeparator.setLayoutData(new GridData(GridData.FILL_HORIZONTAL));
+
+		// Button to submit the preferences for a specified course
+		Button buttonSubmit;
+		buttonSubmit = new Button(prefShell, SWT.NONE);
+		buttonSubmit.setText("Submit your preferences for the course : " + selectedCourse);
+		buttonSubmit.setLayoutData(new GridData(GridData.FILL_HORIZONTAL));
+		buttonSubmit.addSelectionListener(new SelectionListener() {
+			@Override
+			public void widgetSelected(SelectionEvent e) {
+				// =====================================================
+				// on button press, create a child Shell object passing
+				// the main Display. The child could also access the
+				// display itself by calling Display.getDefault()
+				// =====================================================
+				if (!(selectedCMCHoice == Choice.NA) || !(selectedTDCHoice == Choice.NA)
+						|| !(selectedTPCHoice == Choice.NA)) {
+					CoursePref cp = submitPreference(selectedYearStudy, selectedSemester, selectedCourse,
+							selectedCMCHoice, selectedTDCHoice, selectedTPCHoice);
+					teach.updatePref(cp);
+					resetComposite();
+					resetSelectedItems();
+				} else {
+					MessageBox messageBox = new MessageBox(shell, SWT.ICON_ERROR | SWT.OK);
+					messageBox
+							.setMessage("You must select your preferences choices for the course : " + selectedCourse);
+					messageBox.setText("Error on the submission");
+					messageBox.open();
+				}
+			}
+
+			@Override
+			public void widgetDefaultSelected(SelectionEvent e) {
+				widgetSelected(e);
+			}
+		});
+		return buttonSubmit;
 	}
 
 	/**
