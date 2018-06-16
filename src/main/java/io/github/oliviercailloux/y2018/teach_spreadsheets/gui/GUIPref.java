@@ -538,8 +538,7 @@ public class GUIPref {
 	 */
 	private Composite createCompositeForChoices() {
 		compositeChoices = new Composite(prefShell, SWT.CENTER);
-		GridLayout f = new GridLayout(3, true);
-		compositeChoices.setLayout(f);
+		compositeChoices.setLayout(new RowLayout());
 		return compositeChoices;
 	}
 
