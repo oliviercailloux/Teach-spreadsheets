@@ -431,6 +431,7 @@ public class GUIPref {
 		});
 
 		prefShell.pack();
+		prefShell.open();
 		return groupYearOfStudy;
 	}
 
@@ -711,7 +712,7 @@ public class GUIPref {
 	private Group createGroupButtonsTP() {
 		// Composite c = new Composite(compositeChoices, SWT.SHADOW_OUT);
 		Group group2 = new Group(compositeChoices, SWT.NONE);
-		group2.setText("Step 6 : Choose your preferences for TD");
+		group2.setText("Step 6 : Choose your preferences for TP");
 		group2.setLayout(new GridLayout(1, true));
 
 		Choice choiceA = Choice.A;
