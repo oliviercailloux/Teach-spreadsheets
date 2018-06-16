@@ -184,7 +184,7 @@ public class ReadCourses implements AutoCloseable {
 			if ("".equals(cellText) && j == startCellColumnIndex) {
 				break;
 			}
-			course.setName(cellText);
+			course.setName(cellText.replaceAll("\n", " "));
 
 			j++;
 			actualCell = currentSheet.getCellByPosition(j, i);
