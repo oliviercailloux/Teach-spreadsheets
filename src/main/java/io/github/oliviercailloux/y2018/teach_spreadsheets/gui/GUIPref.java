@@ -2,9 +2,13 @@ package io.github.oliviercailloux.y2018.teach_spreadsheets.gui;
 
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.SelectionEvent;
@@ -219,6 +223,36 @@ public class GUIPref {
 		file.setMenu(fileMenu);
 		final MenuItem exportItem = new MenuItem(fileMenu, SWT.PUSH);
 		exportItem.setText("&Export your prefs");
+		exportItem.addSelectionListener(new SelectionListener() {
+
+			@SuppressWarnings("resource")
+			@Override
+			public void widgetSelected(SelectionEvent e) {
+				boolean failed = true;
+
+				while (failed) {
+					failed = false;
+					String destination = openDirectoryExplorer();
+					DateFormat dateFormat = new SimpleDateFormat("yyyy_MM_dd_HH_mm_ss");
+					Date date = new Date();
+					destination = destination + "\\Saisie_de_Voeux_" + teach.getTeacherName() + "_"
+							+ dateFormat.format(date).toString() + ".ods";
+					try {
+						teach.setDestination(new FileOutputStream(destination));
+					} catch (@SuppressWarnings("unused") FileNotFoundException e1) {
+						failed = true;
+					} catch (@SuppressWarnings("unused") Exception e1) {
+						failed = false;
+					}
+				}
+			}
+
+			@Override
+			public void widgetDefaultSelected(SelectionEvent e) {
+				widgetSelected(e);
+
+			}
+		});
 		// method
 		final MenuItem openNewFileItem = new MenuItem(fileMenu, SWT.PUSH);
 		openNewFileItem.setText("&Open new file courses");
@@ -736,7 +770,6 @@ public class GUIPref {
 		FileDialog fd = new FileDialog(shellFE, SWT.OPEN);
 		fd.setText("Open");
 		// fd.setFilterPath("C:/");
-
 		// only file finishing by .ods are allowed
 		String[] filterExt = { "*.ods" };
 		fd.setFilterExtensions(filterExt);
