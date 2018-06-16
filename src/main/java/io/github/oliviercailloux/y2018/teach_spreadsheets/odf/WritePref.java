@@ -74,6 +74,8 @@ public class WritePref {
 			currentCell = sheet.getCellByPosition(startCellColumnIndex, currentRow);
 			if (coursePref.getCmChoice() == Choice.NA) {
 				currentCell.setBorders(CellBordersType.DIAGONALBLTR, border);
+			} else if (coursePref.getCmChoice() == Choice.ABSENT) {
+				currentCell.setStringValue("");
 			} else {
 				currentCell.setStringValue(coursePref.getCmChoice().toString());
 			}
@@ -82,6 +84,9 @@ public class WritePref {
 			currentCell = sheet.getCellByPosition(startCellColumnIndex + 1, currentRow);
 			if (coursePref.getTdChoice() == Choice.NA) {
 				currentCell.setBorders(CellBordersType.DIAGONALBLTR, border);
+
+			} else if (coursePref.getTdChoice() == Choice.ABSENT) {
+				currentCell.setStringValue("");
 			} else {
 				currentCell.setStringValue(coursePref.getTdChoice().toString());
 			}
@@ -90,6 +95,9 @@ public class WritePref {
 			currentCell = sheet.getCellByPosition(startCellColumnIndex + 2, currentRow);
 			if (coursePref.getTpChoice() == Choice.NA) {
 				currentCell.setBorders(CellBordersType.DIAGONALBLTR, border);
+
+			} else if (coursePref.getTpChoice() == Choice.ABSENT) {
+				currentCell.setStringValue("");
 			} else {
 				currentCell.setStringValue(coursePref.getTpChoice().toString());
 			}
@@ -107,7 +115,9 @@ public class WritePref {
 
 		}
 
-		if (save) {
+		if (save)
+
+		{
 			this.workbook.save(this.destination);
 		}
 		LOGGER.info("File" + destination + "has been correctly saved");
