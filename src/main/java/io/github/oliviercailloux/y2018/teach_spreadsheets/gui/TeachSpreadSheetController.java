@@ -137,7 +137,7 @@ public class TeachSpreadSheetController {
 					return coursePref;
 				}
 			}
-		} else if (semester % 2 == 2) {
+		} else if (semester % 2 == 0) {
 			for (CoursePref coursePref : courseSheet.getCoursePrefS2()) {
 				if (coursePref.getCourse().getName().equals(courseName)) {
 					return coursePref;

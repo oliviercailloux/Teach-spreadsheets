@@ -56,7 +56,7 @@ public class CourseSheet {
 
 	public List<String> getCoursesName(int semester) {
 		List<String> coursesName = new ArrayList<>();
-		if (semester % 2 == 0) {
+		if (semester % 2 == 1) {
 			for (CoursePref coursePref : coursePrefS1) {
 				coursesName.add(coursePref.getCourse().getName());
 			}
@@ -69,7 +69,7 @@ public class CourseSheet {
 	}
 
 	private CoursePref getCoursePref(int semester, String courseName) {
-		if (semester % 2 == 0) {
+		if (semester % 2 == 1) {
 			for (CoursePref coursePref : coursePrefS1) {
 				if (coursePref.getCourse().getName().equals(courseName)) {
 					return coursePref;
@@ -86,7 +86,8 @@ public class CourseSheet {
 	}
 
 	public List<String> getPossibleChoice(int semester, String courseName) {
-		return this.getCoursePref(semester, courseName).getPossibleChoice();
+		CoursePref course = this.getCoursePref(semester, courseName);
+		return course.getPossibleChoice();
 	}
 
 	public int getFirstSemesterNumber() {

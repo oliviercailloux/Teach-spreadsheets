@@ -10,11 +10,11 @@ import io.github.oliviercailloux.y2018.teach_spreadsheets.gui.TeachSpreadSheetCo
 public class App {
 
 	public static void main(String[] args) throws FileNotFoundException, IOException {
-		InputStream teacherFile = App.class.getResourceAsStream("teacher_info.csv");
-		TeachSpreadSheetController controller = new TeachSpreadSheetController(teacherFile);
-		GUIPref gui = new GUIPref(controller);
-		gui.initializeMainMenu();
-
+		try (InputStream teacherFile = App.class.getResourceAsStream("teacher_info.csv")) {
+			TeachSpreadSheetController controller = new TeachSpreadSheetController(teacherFile);
+			GUIPref gui = new GUIPref(controller);
+			gui.initializeMainMenu();
+		}
 	}
 
 }

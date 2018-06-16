@@ -478,7 +478,7 @@ public class GUIPref {
 		 **/
 
 		for (String string : courseNames) {
-			listCourses.add(string.replaceAll("\n", ""));
+			listCourses.add(string);
 		}
 
 		final Text text = new Text(c, SWT.BORDER | SWT.H_SCROLL);
