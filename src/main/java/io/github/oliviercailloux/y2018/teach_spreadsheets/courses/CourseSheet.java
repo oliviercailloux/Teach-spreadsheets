@@ -86,7 +86,8 @@ public class CourseSheet {
 	}
 
 	public List<String> getPossibleChoice(int semester, String courseName) {
-		return this.getCoursePref(semester, courseName).getPossibleChoice();
+		CoursePref course = this.getCoursePref(semester, courseName);
+		return course.getPossibleChoice();
 	}
 
 	public int getFirstSemesterNumber() {
