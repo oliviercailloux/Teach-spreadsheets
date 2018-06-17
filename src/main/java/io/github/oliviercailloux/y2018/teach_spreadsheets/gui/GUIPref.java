@@ -38,6 +38,12 @@ import io.github.oliviercailloux.y2018.teach_spreadsheets.courses.Choice;
 import io.github.oliviercailloux.y2018.teach_spreadsheets.courses.Course;
 import io.github.oliviercailloux.y2018.teach_spreadsheets.courses.CoursePref;
 
+/*
+ * INFO: If layout() is not called and changes are made after the shell is opened, then the children may not be correctly laid out until the shell is somehow resized
+ * When you modify a shell child, you need to use shell.layout(), so the modification can be effective.
+ * 
+ */
+
 /**
  * This class is a Graphic User Interface allowing the user to import a file (in
  * which there are courses) and to set preferences on these courses. He can
@@ -338,7 +344,8 @@ public class GUIPref {
 		lblSeparator.setLayoutData(new GridData(GridData.FILL_HORIZONTAL));
 
 		groupYearsStudy = createGroupYearsOfStudy();
-
+		prefShell.layout();
+		prefShell.pack();
 		prefShell.open();
 		LOGGER.info("Shell for the preferences well opened");
 
@@ -409,7 +416,9 @@ public class GUIPref {
 					}
 					compositeSemesters = createCompositeSemesters();
 				}
-
+				prefShell.layout();
+				prefShell.pack();
+				prefShell.open();
 			}
 
 			@Override
@@ -421,8 +430,6 @@ public class GUIPref {
 			}
 		});
 
-		prefShell.pack();
-		prefShell.open();
 		return groupYearOfStudy;
 	}
 
@@ -478,14 +485,15 @@ public class GUIPref {
 				}
 
 				compositeCourses = createCompositeCourses();
+				prefShell.layout();
+				prefShell.pack();
+				prefShell.open();
 			}
 		};
 
 		button1.addListener(SWT.Selection, listener);
 		button2.addListener(SWT.Selection, listener);
 
-		prefShell.pack();
-		prefShell.open();
 		return c;
 	}
 
@@ -544,7 +552,6 @@ public class GUIPref {
 							compositeSubmit.dispose();
 						}
 					}
-					compositeChoices = null;
 					compositeChoices = createCompositeForChoices();
 					for (String possibleChoice : listPossibleChoice) {
 						if (possibleChoice.equals("CM")) {
@@ -561,6 +568,7 @@ public class GUIPref {
 					}
 					compositeSubmit = createButtonSubmitPreference();
 				}
+				prefShell.layout();
 				prefShell.pack();
 				prefShell.open();
 			}
@@ -573,7 +581,6 @@ public class GUIPref {
 				selectedCourse = outString;
 			}
 		});
-		prefShell.pack();
 		return c;
 
 	}
