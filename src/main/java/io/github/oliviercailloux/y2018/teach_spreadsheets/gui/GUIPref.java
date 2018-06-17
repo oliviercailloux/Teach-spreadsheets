@@ -518,11 +518,16 @@ public class GUIPref {
 
 		final List listCourses = new List(groupCourses, SWT.BORDER | SWT.SINGLE | SWT.V_SCROLL);
 
-		listCourses.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
-
 		for (String string : courseNames) {
 			listCourses.add(string);
 		}
+
+		GridData gridDataList = new GridData(SWT.FILL, SWT.FILL, true, true);
+		gridDataList = new GridData();
+		gridDataList.widthHint = 400;
+		// 10 items displayed then need to scroll
+		gridDataList.heightHint = 180;
+		listCourses.setLayoutData(gridDataList);
 
 		final Text text = new Text(c, SWT.BORDER | SWT.H_SCROLL);
 		text.setBounds(60, 130, 160, 25);
