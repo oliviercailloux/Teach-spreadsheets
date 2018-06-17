@@ -222,15 +222,25 @@ public class GUIPref {
 		// Doesn't allow the user to close the main shell when the preferences
 		// shell is
 		// open
-		prefShell = new Shell(display, SWT.CLOSE | SWT.SYSTEM_MODAL);
+		prefShell = new Shell(display, SWT.SYSTEM_MODAL | SWT.SHELL_TRIM);
 		prefShell.setMinimumSize(200, 200);
 		GridLayout gl = new GridLayout();
 		gl.numColumns = 1;
 		prefShell.setLayout(gl);
-		prefShell.setImage(new Image(display, GUIPref.class.getResourceAsStream("logo-pref.png")));
-		// prefShell.setLayout(new GridLayout(2, false));
-		prefShell.setText("Mes préférences - Teach-spreadsheets");
 
+		InputStream logoStream = GUIPref.class.getResourceAsStream("logo-pref.png");
+		Image logo = new Image(display, logoStream);
+		prefShell.setImage(logo);
+		// prefShell.setLayout(new GridLayout(2, false));
+
+		// HEADER
+		Composite header = new Composite(prefShell, SWT.CENTER);
+		header.setLayout(new GridLayout(2, false));
+		Label labelImg = new Label(header, SWT.LEFT);
+		labelImg.setImage(logo);
+		Label txt = new Label(header, SWT.RIGHT);
+		txt.setText("Mes préférences - Teach-spreadsheets");
+		header.pack();
 		// Create a menu
 		Menu menu = new Menu(prefShell, SWT.BAR);
 		// create a file menu and add an exit item
@@ -336,14 +346,14 @@ public class GUIPref {
 		// ============================
 		// Create a Label in the Shell
 		// ============================
-		Label topLabel = new Label(prefShell, SWT.NONE);
-		topLabel.setText("Insérez vos préférences");
-		topLabel.setLayoutData(new GridData(SWT.CENTER, SWT.FILL, false, false));
-
-		// Create a horizontal separator
-		Label lblSeparator;
-		lblSeparator = new Label(prefShell, SWT.HORIZONTAL | SWT.SEPARATOR);
-		lblSeparator.setLayoutData(new GridData(GridData.FILL_HORIZONTAL));
+		// Label topLabel = new Label(prefShell, SWT.NONE);
+		// topLabel.setText("Insérez vos préférences");
+		// topLabel.setLayoutData(new GridData(SWT.CENTER, SWT.FILL, false, false));
+		//
+		// // Create a horizontal separator
+		// Label lblSeparator;
+		// lblSeparator = new Label(prefShell, SWT.HORIZONTAL | SWT.SEPARATOR);
+		// lblSeparator.setLayoutData(new GridData(GridData.FILL_HORIZONTAL));
 
 		compositeYearsStudy = createGroupYearsOfStudy();
 		prefShell.layout();
@@ -526,7 +536,7 @@ public class GUIPref {
 		gridDataList = new GridData();
 		gridDataList.widthHint = 400;
 		// 10 items displayed then need to scroll
-		gridDataList.heightHint = 180;
+		gridDataList.heightHint = 100;
 		listCourses.setLayoutData(gridDataList);
 
 		final Text text = new Text(c, SWT.BORDER | SWT.H_SCROLL);
