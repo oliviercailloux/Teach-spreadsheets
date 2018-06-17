@@ -342,7 +342,6 @@ public class GUIPref {
 
 		// Create a horizontal separator
 		Label lblSeparator;
-
 		lblSeparator = new Label(prefShell, SWT.HORIZONTAL | SWT.SEPARATOR);
 		lblSeparator.setLayoutData(new GridData(GridData.FILL_HORIZONTAL));
 
@@ -443,8 +442,8 @@ public class GUIPref {
 	 */
 	private Composite createCompositeSemesters() {
 		Composite c = new Composite(prefShell, SWT.CENTER);
-		GridLayout f = new GridLayout(2, false);
-		c.setLayout(f);
+		GridLayout gl = new GridLayout(2, false);
+		c.setLayout(gl);
 
 		Group group2 = new Group(c, SWT.SHADOW_OUT);
 		group2.setText("Step " + currentStep++ + " : Choose the semester");
@@ -506,8 +505,8 @@ public class GUIPref {
 	 */
 	private Composite createCompositeCourses() {
 		Composite c = new Composite(prefShell, SWT.CENTER);
-		GridLayout f = new GridLayout(2, false);
-		c.setLayout(f);
+		GridLayout gl = new GridLayout(2, false);
+		c.setLayout(gl);
 
 		Group groupCourses = new Group(c, SWT.CENTER);
 
@@ -540,7 +539,7 @@ public class GUIPref {
 				String actualCourse = selectedCourse;
 				String s[] = listCourses.getSelection();
 				String outString = s[0];
-
+				String actuelSelectedCourse = selectedCourse;
 				text.setText("Selected course : " + outString);
 				selectedCourse = outString;
 
@@ -557,6 +556,7 @@ public class GUIPref {
 						}
 					}
 					compositeChoices = createCompositeForChoices();
+
 					currentStep = 4;
 					for (String possibleChoice : listPossibleChoice) {
 						if (possibleChoice.equals("CM")) {
@@ -596,8 +596,8 @@ public class GUIPref {
 	 */
 	private Composite createCompositeForChoices() {
 		compositeChoices = new Composite(prefShell, SWT.CENTER);
-		GridLayout f = new GridLayout(3, true);
-		compositeChoices.setLayout(f);
+		GridLayout gl = new GridLayout(3, true);
+		compositeChoices.setLayout(gl);
 		return compositeChoices;
 	}
 
@@ -843,9 +843,9 @@ public class GUIPref {
 	}
 
 	private Composite createButtonSubmitPreference() {
-		Composite c = new Composite(prefShell, SWT.NONE);
-		GridLayout f = new GridLayout(1, true);
-		c.setLayout(f);
+		Composite c = new Composite(prefShell, SWT.CENTER);
+		GridLayout gl = new GridLayout(1, true);
+		c.setLayout(gl);
 
 		// Create a horizontal separator
 		Label lblSeparator = new Label(c, SWT.HORIZONTAL | SWT.SEPARATOR);
