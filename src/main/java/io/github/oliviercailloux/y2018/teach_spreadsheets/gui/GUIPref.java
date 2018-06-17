@@ -124,7 +124,7 @@ public class GUIPref {
 			shell.setText("Menu principal - Teach-spreadsheets");
 			shell.setLayout(new GridLayout(1, false));
 			shell.setSize(500, 700);
-
+			shell.setImage(new Image(display, GUIPref.class.getResourceAsStream("iconGUI.png")));
 			// Display an image
 			Image image = new Image(display, inputStream);
 			Label labelImg = new Label(shell, SWT.CENTER);
@@ -223,11 +223,11 @@ public class GUIPref {
 		// shell is
 		// open
 		prefShell = new Shell(display, SWT.CLOSE | SWT.SYSTEM_MODAL);
-
+		prefShell.setMinimumSize(200, 200);
 		GridLayout gl = new GridLayout();
 		gl.numColumns = 1;
 		prefShell.setLayout(gl);
-
+		prefShell.setImage(new Image(display, GUIPref.class.getResourceAsStream("logo-pref.png")));
 		// prefShell.setLayout(new GridLayout(2, false));
 		prefShell.setText("Mes préférences - Teach-spreadsheets");
 
