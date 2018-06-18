@@ -256,24 +256,7 @@ public class GUIPref {
 			@SuppressWarnings("resource")
 			@Override
 			public void widgetSelected(SelectionEvent e) {
-				boolean failed = true;
-
-				while (failed) {
-					failed = false;
-					String destination = openDirectoryExplorer();
-					DateFormat dateFormat = new SimpleDateFormat("yyyy_MM_dd_HH_mm_ss");
-					Date date = new Date();
-					destination = destination + "\\Saisie_de_Voeux_" + teach.getTeacherName() + "_"
-							+ dateFormat.format(date).toString() + ".ods";
-					try {
-						teach.setDestination(new FileOutputStream(destination));
-						prefShell.dispose();
-					} catch (@SuppressWarnings("unused") FileNotFoundException e1) {
-						failed = true;
-					} catch (@SuppressWarnings("unused") Exception e1) {
-						failed = false;
-					}
-				}
+				exportAllPreferences();
 			}
 
 			@Override
@@ -410,8 +393,6 @@ public class GUIPref {
 				String actualYearOfStudy = selectedYearStudy;
 				text.setText("Selected year of study : " + outString);
 				selectedYearStudy = outString;
-				System.out.println(actualYearOfStudy + " " + selectedYearStudy + ": "
-						+ actualYearOfStudy.equals(selectedYearStudy));
 				LOGGER.info("Year of study " + selectedYearStudy + " well chosen.");
 
 				if (compositeSemesters != null) {
@@ -468,10 +449,10 @@ public class GUIPref {
 
 		// Button for the first semester
 		final Button button1 = new Button(group2, SWT.RADIO);
-		button1.setText(String.valueOf(firstSemester));
+		button1.setText("Semestre " + String.valueOf(firstSemester));
 		// Button for the second semester
 		final Button button2 = new Button(group2, SWT.RADIO);
-		button2.setText(String.valueOf(secondSemester));
+		button2.setText("Semestre " + String.valueOf(secondSemester));
 
 		Listener listener = new Listener() {
 			@Override
@@ -479,11 +460,15 @@ public class GUIPref {
 				int user_choice = 0;
 
 				if (event.widget == button1) {
-					user_choice = Integer.valueOf(button1.getText());
+					String fistSemester = button1.getText().split(" ")[1];
+					user_choice = Integer.valueOf(fistSemester);
 					selectedSemester = user_choice;
+					LOGGER.info(button1.getText() + " well chosen");
 				} else if (event.widget == button2) {
-					user_choice = Integer.valueOf(button2.getText());
+					String secondSemester = button2.getText().split(" ")[1];
+					user_choice = Integer.valueOf(secondSemester);
 					selectedSemester = user_choice;
+					LOGGER.info(button2.getText() + " well chosen");
 				}
 				selectedSemester = user_choice;
 
@@ -535,8 +520,8 @@ public class GUIPref {
 		GridData gridDataList = new GridData(SWT.FILL, SWT.FILL, true, true);
 		gridDataList = new GridData();
 		gridDataList.widthHint = 400;
-		// 10 items displayed then need to scroll
-		gridDataList.heightHint = 100;
+		// 8 items displayed then need to scroll
+		gridDataList.heightHint = 140;
 		listCourses.setLayoutData(gridDataList);
 
 		final Text text = new Text(c, SWT.BORDER | SWT.H_SCROLL);
@@ -660,7 +645,7 @@ public class GUIPref {
 				}
 
 				selectedCMCHoice = CMChoice;
-				System.out.println(selectedCMCHoice);
+				LOGGER.info("You selected the choice " + selectedCMCHoice + " for the CM.");
 
 			}
 
@@ -719,7 +704,7 @@ public class GUIPref {
 				}
 
 				selectedTDCHoice = TDChoice;
-				System.out.println(selectedTDCHoice);
+				LOGGER.info("You selected the choice " + selectedTDCHoice + " for the TD.");
 
 			}
 		};
@@ -776,7 +761,7 @@ public class GUIPref {
 				}
 
 				selectedTPCHoice = TPChoice;
-				System.out.println(selectedTPCHoice);
+				LOGGER.info("You selected the choice " + selectedTPCHoice + " for the TP.");
 
 			}
 		};
@@ -926,5 +911,27 @@ public class GUIPref {
 
 		return cp;
 
+	}
+
+	@SuppressWarnings("resource")
+	private void exportAllPreferences() {
+		boolean failed = true;
+
+		while (failed) {
+			failed = false;
+			String destination = openDirectoryExplorer();
+			DateFormat dateFormat = new SimpleDateFormat("yyyy_MM_dd_HH_mm_ss");
+			Date date = new Date();
+			destination = destination + "\\Saisie_de_Voeux_" + teach.getTeacherName() + "_"
+					+ dateFormat.format(date).toString() + ".ods";
+			try {
+				teach.setDestination(new FileOutputStream(destination));
+				prefShell.dispose();
+			} catch (@SuppressWarnings("unused") FileNotFoundException e1) {
+				failed = true;
+			} catch (@SuppressWarnings("unused") Exception e1) {
+				failed = false;
+			}
+		}
 	}
 }
