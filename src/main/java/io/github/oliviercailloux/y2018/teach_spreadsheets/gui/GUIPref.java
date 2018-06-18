@@ -152,32 +152,22 @@ public class GUIPref {
 			Button buttonFileExplorer = new Button(shell, SWT.NONE);
 			buttonFileExplorer.setText("Ouvrez votre fichier contenant tous les cours");
 			buttonFileExplorer.setLayoutData(new GridData(GridData.FILL_HORIZONTAL));
-			buttonFileExplorer.addSelectionListener(new SelectionListener() {
-				@SuppressWarnings("resource")
-				@Override
-				public void widgetSelected(SelectionEvent e) {
+			buttonFileExplorer.addListener(SWT.Selection, event -> {
+				String fileName = openFileExplorer();
 
-					String fileName = openFileExplorer();
-
-					FileInputStream fis;
-					if (!(fileName == null)) {
-						// we must use a Try/Catch because we can't throw on the
-						// method
-						// widgetSelected(SelectionEvent e)
-						try {
-							fis = new FileInputStream(fileName);
-							teach.setSource(fis);
-							prefShell();
-						} catch (Exception e1) {
-							LOGGER.error("File not opened");
-							throw new IllegalStateException(e1);
-						}
+				FileInputStream fis;
+				if (!(fileName == null)) {
+					// we must use a Try/Catch because we can't throw on the
+					// method
+					// widgetSelected(SelectionEvent e)
+					try {
+						fis = new FileInputStream(fileName);
+						teach.setSource(fis);
+						prefShell();
+					} catch (Exception e1) {
+						LOGGER.error("File not opened");
+						throw new IllegalStateException(e1);
 					}
-				}
-
-				@Override
-				public void widgetDefaultSelected(SelectionEvent e) {
-					widgetSelected(e);
 				}
 			});
 
@@ -187,18 +177,7 @@ public class GUIPref {
 			buttonExit = new Button(shell, SWT.NONE);
 			buttonExit.setText("Quitter l'application");
 			buttonExit.setLayoutData(new GridData(GridData.FILL_HORIZONTAL));
-			buttonExit.addSelectionListener(new SelectionListener() {
-				@Override
-				public void widgetSelected(SelectionEvent e) {
-					exitApplication();
-
-				}
-
-				@Override
-				public void widgetDefaultSelected(SelectionEvent e) {
-					widgetSelected(e);
-				}
-			});
+			buttonExit.addListener(SWT.Selection, event -> exitApplication());
 
 			shell.pack();
 			shell.open();
