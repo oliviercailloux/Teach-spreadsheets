@@ -49,7 +49,7 @@ import io.github.oliviercailloux.y2018.teach_spreadsheets.courses.CoursePref;
  * which there are courses) and to set preferences on these courses. He can
  * choose a specified year of study, then a semester, then a specified course.
  * 
- * @author Victor CHEN (Kantoki)
+ * @author Victor CHEN (Kantoki), Samuel COHEN (samuelcohen75)
  * @version 1.0
  * 
  */
@@ -104,8 +104,8 @@ public class GUIPref {
 	}
 
 	/**
-	 * This methods is the main interface (display). This is the first shell where
-	 * the user starts
+	 * This methods is the main interface (display). This is the first shell
+	 * where the user starts
 	 */
 	public void initializeMainMenu() throws IOException {
 
@@ -193,8 +193,8 @@ public class GUIPref {
 	}
 
 	/**
-	 * This methods opens a new shell in order to let the user sets his preferences
-	 * for a specified course
+	 * This methods opens a new shell in order to let the user sets his
+	 * preferences for a specified course
 	 */
 	private void prefShell() {
 
@@ -258,6 +258,7 @@ public class GUIPref {
 				String pathFile = openFileExplorer();
 				if (pathFile != null) {
 					prefShell.dispose();
+					currentStep = 1;
 				}
 			}
 
@@ -280,6 +281,7 @@ public class GUIPref {
 				boolean closing = exitShell();
 				if (closing) {
 					prefShell.dispose();
+					currentStep = 1;
 				}
 			}
 
@@ -340,8 +342,8 @@ public class GUIPref {
 	}
 
 	/**
-	 * This methods creates a Group in which there is a list of Years of Study from
-	 * the file opened
+	 * This methods creates a Group in which there is a list of Years of Study
+	 * from the file opened
 	 */
 	private Composite createGroupYearsOfStudy() {
 		Composite c = new Composite(prefShell, SWT.CENTER);
@@ -795,7 +797,8 @@ public class GUIPref {
 	}
 
 	/**
-	 * This method closes a Shell if the user confirms it (by pressing YES button)
+	 * This method closes a Shell if the user confirms it (by pressing YES
+	 * button)
 	 */
 	private boolean exitShell() {
 		MessageBox messageBox = new MessageBox(shell, SWT.ICON_QUESTION | SWT.YES | SWT.NO);
@@ -881,8 +884,8 @@ public class GUIPref {
 	}
 
 	/**
-	 * This methods creates a new Course Preference object using all the selected
-	 * elements from the user
+	 * This methods creates a new Course Preference object using all the
+	 * selected elements from the user
 	 */
 	@SuppressWarnings("hiding")
 	private CoursePref submitPreference(String selectedYearOfStudy, Integer selectedSemester, String selectedCourse,
@@ -911,6 +914,7 @@ public class GUIPref {
 			try {
 				teach.setDestination(new FileOutputStream(destination));
 				prefShell.dispose();
+				currentStep = 1;
 			} catch (@SuppressWarnings("unused") FileNotFoundException e1) {
 				failed = true;
 			} catch (@SuppressWarnings("unused") Exception e1) {
