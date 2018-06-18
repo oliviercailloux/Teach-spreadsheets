@@ -806,17 +806,20 @@ public class GUIPref {
 			String destination = openDirectoryExplorer();
 			DateFormat dateFormat = new SimpleDateFormat("yyyy_MM_dd_HH_mm_ss");
 			Date date = new Date();
-			destination = destination + "\\Saisie_de_Voeux_" + teach.getTeacherName() + "_"
-					+ dateFormat.format(date).toString() + ".ods";
-			try {
-				teach.setDestination(new FileOutputStream(destination));
-				prefShell.dispose();
-				currentStep = 1;
-			} catch (@SuppressWarnings("unused") FileNotFoundException e1) {
-				failed = true;
-			} catch (@SuppressWarnings("unused") Exception e1) {
-				failed = false;
+			if (!(destination == null)) {
+				destination = destination + "\\Saisie_de_Voeux_" + teach.getTeacherName() + "_"
+						+ dateFormat.format(date).toString() + ".ods";
+				try {
+					teach.setDestination(new FileOutputStream(destination));
+					prefShell.dispose();
+					currentStep = 1;
+				} catch (@SuppressWarnings("unused") FileNotFoundException e1) {
+					failed = true;
+				} catch (@SuppressWarnings("unused") Exception e1) {
+					failed = false;
+				}
 			}
+
 		}
 	}
 }
