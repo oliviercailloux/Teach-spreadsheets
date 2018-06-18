@@ -49,7 +49,7 @@ import io.github.oliviercailloux.y2018.teach_spreadsheets.courses.CoursePref;
  * which there are courses) and to set preferences on these courses. He can
  * choose a specified year of study, then a semester, then a specified course.
  * 
- * @author Victor CHEN
+ * @author Victor CHEN, Samuel COHEN
  * @version 1.0
  * 
  */
@@ -104,8 +104,8 @@ public class GUIPref {
 	}
 
 	/**
-	 * This methods is the main interface (display). This is the first shell where
-	 * the user starts
+	 * This methods is the main interface (display). This is the first shell
+	 * where the user starts
 	 */
 	public void initializeMainMenu() throws IOException {
 
@@ -214,8 +214,8 @@ public class GUIPref {
 	}
 
 	/**
-	 * This methods opens a new shell in order to let the user sets his preferences
-	 * for a specified course
+	 * This methods opens a new shell in order to let the user sets his
+	 * preferences for a specified course
 	 */
 	private void prefShell() {
 
@@ -331,7 +331,8 @@ public class GUIPref {
 		// ============================
 		// Label topLabel = new Label(prefShell, SWT.NONE);
 		// topLabel.setText("Insérez vos préférences");
-		// topLabel.setLayoutData(new GridData(SWT.CENTER, SWT.FILL, false, false));
+		// topLabel.setLayoutData(new GridData(SWT.CENTER, SWT.FILL, false,
+		// false));
 		//
 		// // Create a horizontal separator
 		// Label lblSeparator;
@@ -359,8 +360,8 @@ public class GUIPref {
 	}
 
 	/**
-	 * This methods creates a Group in which there is a list of Years of Study from
-	 * the file opened
+	 * This methods creates a Group in which there is a list of Years of Study
+	 * from the file opened
 	 */
 	private Composite createGroupYearsOfStudy() {
 		Composite c = new Composite(prefShell, SWT.CENTER);
@@ -814,7 +815,8 @@ public class GUIPref {
 	}
 
 	/**
-	 * This method closes a Shell if the user confirms it (by pressing YES button)
+	 * This method closes a Shell if the user confirms it (by pressing YES
+	 * button)
 	 */
 	private boolean exitShell() {
 		MessageBox messageBox = new MessageBox(shell, SWT.ICON_QUESTION | SWT.YES | SWT.NO);
@@ -864,7 +866,8 @@ public class GUIPref {
 				// the main Display. The child could also access the
 				// display itself by calling Display.getDefault()
 				// =====================================================
-				// if (!(selectedCMCHoice == Choice.NA) || !(selectedTDCHoice == Choice.NA)
+				// if (!(selectedCMCHoice == Choice.NA) || !(selectedTDCHoice ==
+				// Choice.NA)
 				// || !(selectedTPCHoice == Choice.NA)) {
 				CoursePref cp = submitPreference(selectedYearStudy, selectedSemester, selectedCourse, selectedCMCHoice,
 						selectedTDCHoice, selectedTPCHoice);
@@ -879,9 +882,11 @@ public class GUIPref {
 				prefShell.pack();
 				prefShell.open();
 				// } else {
-				// MessageBox messageBox = new MessageBox(shell, SWT.ICON_ERROR | SWT.OK);
+				// MessageBox messageBox = new MessageBox(shell, SWT.ICON_ERROR
+				// | SWT.OK);
 				// messageBox
-				// .setMessage("You must select your preferences choices for the course : " +
+				// .setMessage("You must select your preferences choices for the
+				// course : " +
 				// selectedCourse);
 				// messageBox.setText("Error on the submission");
 				// messageBox.open();
@@ -897,8 +902,8 @@ public class GUIPref {
 	}
 
 	/**
-	 * This methods creates a new Course Preference object using all the selected
-	 * elements from the user
+	 * This methods creates a new Course Preference object using all the
+	 * selected elements from the user
 	 */
 	@SuppressWarnings("hiding")
 	private CoursePref submitPreference(String selectedYearOfStudy, Integer selectedSemester, String selectedCourse,
