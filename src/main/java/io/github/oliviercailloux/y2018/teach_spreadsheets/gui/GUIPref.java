@@ -354,6 +354,7 @@ public class GUIPref {
 			public void handleEvent(Event event) {
 				LOGGER.info("Shell for the courses preferences well closed");
 				prefShell.dispose();
+				currentStep = 1;
 			}
 		});
 
