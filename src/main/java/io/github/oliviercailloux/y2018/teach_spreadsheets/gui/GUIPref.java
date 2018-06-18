@@ -47,7 +47,7 @@ import io.github.oliviercailloux.y2018.teach_spreadsheets.courses.CoursePref;
  * which there are courses) and to set preferences on these courses. He can
  * choose a specified year of study, then a semester, then a specified course.
  * 
- * @author Victor CHEN (Kantoki)
+ * @author Victor CHEN (Kantoki), Samuel COHEN (samuelcohen75)
  * @version 2.0
  * 
  */
@@ -65,10 +65,6 @@ public class GUIPref {
 	private Composite compositeCourses;
 	private Composite compositeChoices;
 	private Composite compositeSubmit;
-
-	private Group groupCMButtons;
-	private Group groupTDButtons;
-	private Group groupTPButtons;
 
 	private String selectedYearStudy = "";
 	private Integer selectedSemester;
@@ -102,8 +98,8 @@ public class GUIPref {
 	}
 
 	/**
-	 * This methods is the main interface (display). This is the first shell where
-	 * the user starts
+	 * This methods is the main interface (display). This is the first shell
+	 * where the user starts
 	 */
 	public void initializeMainMenu() throws IOException {
 
@@ -191,8 +187,8 @@ public class GUIPref {
 	}
 
 	/**
-	 * This methods opens a new shell in order to let the user sets his preferences
-	 * for a specified course
+	 * This methods opens a new shell in order to let the user sets his
+	 * preferences for a specified course
 	 */
 	private void prefShell() {
 
@@ -291,8 +287,8 @@ public class GUIPref {
 	}
 
 	/**
-	 * This methods creates a Group in which there is a list of Years of Study from
-	 * the file opened
+	 * This methods creates a Group in which there is a list of Years of Study
+	 * from the file opened
 	 */
 	private Composite createGroupYearsOfStudy() {
 		Composite c = new Composite(prefShell, SWT.CENTER);
@@ -320,7 +316,6 @@ public class GUIPref {
 		listYearStudy.addListener(SWT.Selection, event -> {
 			String s[] = listYearStudy.getSelection();
 			String outString = s[0];
-			String actualYearOfStudy = selectedYearStudy;
 			text.setText("Selected year of study : " + outString);
 			selectedYearStudy = outString;
 			LOGGER.info("Year of study " + selectedYearStudy + " well chosen.");
@@ -458,7 +453,6 @@ public class GUIPref {
 			String actualCourse = selectedCourse;
 			String s[] = listCourses.getSelection();
 			String outString = s[0];
-			String actuelSelectedCourse = selectedCourse;
 			text.setText("Selected course : " + outString);
 			selectedCourse = outString;
 
@@ -479,15 +473,13 @@ public class GUIPref {
 				currentStep = 4;
 				for (String possibleChoice : listPossibleChoice) {
 					if (possibleChoice.equals("CM")) {
-						groupCMButtons = createGroupButtonsCM();
-						// compositeCMButtons =
-						// createGroupButtonsCM(compositeSemesters);
+						createGroupButtonsCM();
 					}
 					if (possibleChoice.equals("TD")) {
-						groupTDButtons = createGroupButtonsTD();
+						createGroupButtonsTD();
 					}
 					if (possibleChoice.equals("TP")) {
-						groupTPButtons = createGroupButtonsTP();
+						createGroupButtonsTP();
 					}
 				}
 				compositeSubmit = createButtonSubmitPreference();
@@ -724,7 +716,8 @@ public class GUIPref {
 	}
 
 	/**
-	 * This method closes a Shell if the user confirms it (by pressing YES button)
+	 * This method closes a Shell if the user confirms it (by pressing YES
+	 * button)
 	 */
 	private boolean exitShell() {
 		MessageBox messageBox = new MessageBox(shell, SWT.ICON_QUESTION | SWT.YES | SWT.NO);
@@ -785,8 +778,8 @@ public class GUIPref {
 	}
 
 	/**
-	 * This methods creates a new Course Preference object using all the selected
-	 * elements from the user
+	 * This methods creates a new Course Preference object using all the
+	 * selected elements from the user
 	 */
 	@SuppressWarnings("hiding")
 	private CoursePref submitPreference(String selectedYearOfStudy, Integer selectedSemester, String selectedCourse,
