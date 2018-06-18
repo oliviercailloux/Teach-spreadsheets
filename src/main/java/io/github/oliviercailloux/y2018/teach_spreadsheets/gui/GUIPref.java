@@ -10,6 +10,8 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.custom.CTabFolder;
+import org.eclipse.swt.custom.CTabItem;
 import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.graphics.Rectangle;
 import org.eclipse.swt.layout.GridData;
@@ -57,6 +59,9 @@ public class GUIPref {
 	private Display display;
 	private Shell shell;
 	private Shell prefShell;
+
+	private CTabFolder folder;
+	private CTabItem item1;
 
 	private TeachSpreadSheetController teach;
 
@@ -119,6 +124,10 @@ public class GUIPref {
 
 			display = new Display();
 			shell = new Shell(display, SWT.CLOSE);
+
+			folder = new CTabFolder(shell, SWT.BORDER);
+			item1 = new CTabItem(folder, SWT.CLOSE);
+
 			shell.setText("Menu principal - Teach-spreadsheets");
 			shell.setLayout(new GridLayout(1, false));
 			shell.setSize(500, 700);
@@ -155,9 +164,7 @@ public class GUIPref {
 
 				FileInputStream fis;
 				if (!(fileName == null)) {
-					// we must use a Try/Catch because we can't throw on the
-					// method
-					// widgetSelected(SelectionEvent e)
+					// we must use a Try/Catch because we can't throw on the method
 					try {
 						fis = new FileInputStream(fileName);
 						teach.setSource(fis);
@@ -169,8 +176,7 @@ public class GUIPref {
 				}
 			});
 
-			// Button allowing the user to quit the application (it closes the
-			// display)
+			// Button allowing the user to quit the application (it closes the display)
 			Button buttonExit;
 			buttonExit = new Button(shell, SWT.NONE);
 			buttonExit.setText("Quitter l'application");
@@ -480,8 +486,6 @@ public class GUIPref {
 				for (String possibleChoice : listPossibleChoice) {
 					if (possibleChoice.equals("CM")) {
 						groupCMButtons = createGroupButtonsCM();
-						// compositeCMButtons =
-						// createGroupButtonsCM(compositeSemesters);
 					}
 					if (possibleChoice.equals("TD")) {
 						groupTDButtons = createGroupButtonsTD();
@@ -498,7 +502,6 @@ public class GUIPref {
 		});
 
 		return c;
-
 	}
 
 	/**
@@ -516,7 +519,6 @@ public class GUIPref {
 	 * This method creates a group of buttons for the CM choices
 	 */
 	private Group createGroupButtonsCM() {
-		// Composite c = new Composite(compositeChoices, SWT.SHADOW_OUT);
 		Group group2 = new Group(compositeChoices, SWT.NONE);
 		group2.setText("Step " + currentStep++ + " : Choose your preferences for CM");
 		group2.setLayout(new GridLayout(1, true));
@@ -567,15 +569,12 @@ public class GUIPref {
 		buttonAbs.addListener(SWT.Selection, listener);
 
 		return group2;
-
-		// return c;
 	}
 
 	/**
 	 * This method creates a group of buttons for the TD choices
 	 */
 	private Group createGroupButtonsTD() {
-		// Composite c = new Composite(compositeChoices, SWT.SHADOW_OUT);
 		Group group2 = new Group(compositeChoices, SWT.NONE);
 		group2.setText("Step " + currentStep++ + " : Choose your preferences for TD");
 		group2.setLayout(new GridLayout(1, true));
@@ -632,7 +631,6 @@ public class GUIPref {
 	 * This method creates a group of buttons for the TP choices
 	 */
 	private Group createGroupButtonsTP() {
-		// Composite c = new Composite(compositeChoices, SWT.SHADOW_OUT);
 		Group group2 = new Group(compositeChoices, SWT.NONE);
 		group2.setText("Step " + currentStep++ + " : Choose your preferences for TP");
 		group2.setLayout(new GridLayout(1, true));
@@ -682,7 +680,6 @@ public class GUIPref {
 		buttonAbs.addListener(SWT.Selection, listener);
 
 		return group2;
-		// return c;
 	}
 
 	/**
@@ -798,7 +795,6 @@ public class GUIPref {
 		cp.setTpChoice(selectedTPChoice);
 
 		return cp;
-
 	}
 
 	@SuppressWarnings("resource")
