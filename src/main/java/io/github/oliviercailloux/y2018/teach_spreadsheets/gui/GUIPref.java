@@ -10,8 +10,6 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 
 import org.eclipse.swt.SWT;
-import org.eclipse.swt.custom.CTabFolder;
-import org.eclipse.swt.custom.CTabItem;
 import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.graphics.Rectangle;
 import org.eclipse.swt.layout.GridData;
@@ -59,9 +57,6 @@ public class GUIPref {
 	private Display display;
 	private Shell shell;
 	private Shell prefShell;
-
-	private CTabFolder folder;
-	private CTabItem item1;
 
 	private TeachSpreadSheetController teach;
 
@@ -124,10 +119,6 @@ public class GUIPref {
 
 			display = new Display();
 			shell = new Shell(display, SWT.CLOSE);
-
-			folder = new CTabFolder(shell, SWT.BORDER);
-			item1 = new CTabItem(folder, SWT.CLOSE);
-
 			shell.setText("Menu principal - Teach-spreadsheets");
 			shell.setLayout(new GridLayout(1, false));
 			shell.setSize(500, 700);
