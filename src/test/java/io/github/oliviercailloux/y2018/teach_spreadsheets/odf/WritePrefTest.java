@@ -63,7 +63,7 @@ public class WritePrefTest {
 		try (InputStream is = WritePrefTest.class.getResourceAsStream("Saisie_voeux_dauphine_WritePref.ods")) {
 			ByteArrayOutputStream tmpWriter = new ByteArrayOutputStream();
 
-			WritePref writer = new WritePref(SpreadsheetDocument.loadDocument(is), tmpWriter, courseSheet);
+			PreferenceWriter writer = new PreferenceWriter(SpreadsheetDocument.loadDocument(is), tmpWriter, courseSheet);
 
 			writer.writeSheetCoursesPref(true);
 

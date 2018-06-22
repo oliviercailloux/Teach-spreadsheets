@@ -13,26 +13,9 @@ import java.util.Objects;
 public class Teacher {
 
 	private int id;
-	private String name = "", firstName = "", adress = "", postCode = "", city = "", personalPhone = "",
-			mobilePhone = "", personalMail = "", dauphineMail = "", status = "", dauphinePhone = "", desk = "";
-
-	public Teacher(int id, String name, String firstName, String adress, String postCode, String city,
-			String personalPhone, String mobilePhone, String personalMail, String dauphineMail, String status,
-			String dauphinePhone, String desk) {
-		this.id = id;
-		this.name = Objects.requireNonNull(name);
-		this.firstName = Objects.requireNonNull(firstName);
-		this.adress = Objects.requireNonNull(adress);
-		this.postCode = Objects.requireNonNull(postCode);
-		this.city = Objects.requireNonNull(city);
-		this.personalPhone = Objects.requireNonNull(personalPhone);
-		this.mobilePhone = Objects.requireNonNull(mobilePhone);
-		this.personalMail = Objects.requireNonNull(personalMail);
-		this.dauphineMail = Objects.requireNonNull(dauphineMail);
-		this.status = Objects.requireNonNull(status);
-		this.dauphinePhone = Objects.requireNonNull(dauphinePhone);
-		this.desk = Objects.requireNonNull(desk);
-	}
+	private String name = "", firstName = "", adress = "", postCode = "",
+			city = "", personalPhone = "", mobilePhone = "", personalMail = "",
+			dauphineMail = "", status = "", dauphinePhone = "", desk = "";
 
 	public Teacher() {
 
@@ -61,47 +44,47 @@ public class Teacher {
 		assert data != null;
 
 		switch (index) {
-		case 0:
-			setId(Integer.parseInt(data));
-			break;
-		case 1:
-			setName(data);
-			break;
-		case 2:
-			setFirstName(data);
-			break;
-		case 3:
-			setAdress(data);
-			break;
-		case 4:
-			setPostCode(data);
-			break;
-		case 5:
-			setCity(data);
-			break;
-		case 6:
-			setPersonalPhone(data);
-			break;
-		case 7:
-			setMobilePhone(data);
-			break;
-		case 8:
-			setPersonalMail(data);
-			break;
-		case 9:
-			setDauphineMail(data);
-			break;
-		case 10:
-			setStatus(data);
-			break;
-		case 11:
-			setDauphinePhone(data);
-			break;
-		case 12:
-			setDesk(data);
-			break;
-		default:
-			throw new IllegalArgumentException();
+			case 0 :
+				setId(Integer.parseInt(data));
+				break;
+			case 1 :
+				setName(data);
+				break;
+			case 2 :
+				setFirstName(data);
+				break;
+			case 3 :
+				setAdress(data);
+				break;
+			case 4 :
+				setPostCode(data);
+				break;
+			case 5 :
+				setCity(data);
+				break;
+			case 6 :
+				setPersonalPhone(data);
+				break;
+			case 7 :
+				setMobilePhone(data);
+				break;
+			case 8 :
+				setPersonalMail(data);
+				break;
+			case 9 :
+				setDauphineMail(data);
+				break;
+			case 10 :
+				setStatus(data);
+				break;
+			case 11 :
+				setDauphinePhone(data);
+				break;
+			case 12 :
+				setDesk(data);
+				break;
+			default :
+				throw new IllegalArgumentException();
 		}
 	}
 

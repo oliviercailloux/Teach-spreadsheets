@@ -102,6 +102,13 @@ public class CourseSheet {
 		return coursePrefS2;
 	}
 
+	public List<CoursePref> getCoursePref() {
+		List<CoursePref> coursePrefs = new ArrayList<>();
+		coursePrefs.addAll(coursePrefS1);
+		coursePrefs.addAll(coursePrefS2);
+		return coursePrefs;
+	}
+
 	public CourseSheetMetadata getSheetMetadata() {
 		return sheetMetadata;
 	}

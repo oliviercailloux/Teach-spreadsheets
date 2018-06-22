@@ -10,7 +10,7 @@ import org.odftoolkit.simple.table.Table;
 import io.github.oliviercailloux.y2018.teach_spreadsheets.courses.Course;
 
 /**
- * Tests to check that the methods from ReadCourses class work
+ * Tests to check that the methods from CourseReader class work
  * 
  * @author Victor CHEN (Kantoki), Louis FONTAINE (fontlo15)
  * @version Version 2.0 Last Update : 14/05/2018.
@@ -28,7 +28,7 @@ public class ReadCoursesTest {
 				.getResourceAsStream("Saisie_voeux_dauphine.ods")) {
 			String yearOfStudy = "L3_Informatique";
 
-			ReadCourses rd = new ReadCourses(is);
+			CourseReader rd = new CourseReader(is);
 			Table currentTable = rd.getReader().getDocument()
 					.getTableByName(yearOfStudy);
 			List<Course> courses;
@@ -49,7 +49,7 @@ public class ReadCoursesTest {
 				.getResourceAsStream("Saisie_voeux_dauphine.ods")) {
 			String yearOfStudy = "L3_Informatique";
 
-			ReadCourses rd = new ReadCourses(is);
+			CourseReader rd = new CourseReader(is);
 			Table currentTable = rd.getReader().getDocument()
 					.getTableByName(yearOfStudy);
 			List<Course> courses;
@@ -89,7 +89,7 @@ public class ReadCoursesTest {
 
 			String yearOfStudy = "L3_Informatique";
 
-			ReadCourses rd = new ReadCourses(is);
+			CourseReader rd = new CourseReader(is);
 			Table currentTable = rd.getReader().getDocument()
 					.getTableByName(yearOfStudy);
 
@@ -127,7 +127,7 @@ public class ReadCoursesTest {
 		try (InputStream is = ReadCoursesTest.class.getResourceAsStream(
 				"Saisie_voeux_dauphine_TestForReadCourses_TwoSheets.ods")) {
 
-			ReadCourses rd = new ReadCourses(is);
+			CourseReader rd = new CourseReader(is);
 
 			List<Course> courses;
 			courses = rd.readCourses();

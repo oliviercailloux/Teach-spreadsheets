@@ -19,29 +19,29 @@ import io.github.oliviercailloux.y2018.teach_spreadsheets.courses.Choice;
 import io.github.oliviercailloux.y2018.teach_spreadsheets.courses.CoursePref;
 import io.github.oliviercailloux.y2018.teach_spreadsheets.courses.CourseSheet;
 
-public class WritePref {
+public class PreferenceWriter {
 
 	/**
 	 * Assuming that the tables of coursePref starts at cells STARTCELL1 and
 	 * STARTCELL2 for each sheet
 	 */
-	private final static String STARTCELL1 = "J4";
+	private final static String START_CELL_1 = "J4";
 	/**
 	 * Assuming that the tables of coursePref starts at cells STARTCELL1 and
 	 * STARTCELL2 for each sheet
 	 */
-	private final static String STARTCELL2 = "X4";
+	private final static String START_CELL_2 = "X4";
 
 	private OutputStream destination = null;
-	private SpreadsheetDocument workbook = null;
+	private SpreadsheetDocument spreadsheetDocument = null;
 	private CourseSheet courseSheet = null;
 
-	private final static Logger LOGGER = LoggerFactory.getLogger(WriteCourses.class);
+	private final static Logger LOGGER = LoggerFactory.getLogger(CourseWriter.class);
 
-	public WritePref(SpreadsheetDocument spreadsheetDocument, OutputStream destination, CourseSheet courseSheet)
+	public PreferenceWriter(SpreadsheetDocument spreadsheetDocument, OutputStream destination, CourseSheet courseSheet)
 			throws Exception {
 		this.destination = Objects.requireNonNull(destination);
-		this.workbook = spreadsheetDocument;
+		this.spreadsheetDocument = spreadsheetDocument;
 		this.courseSheet = Objects.requireNonNull(courseSheet);
 	}
 
@@ -61,7 +61,7 @@ public class WritePref {
 
 		// Design handling
 		Border border = new Border(Color.BLACK, 1, StyleTypeDefinitions.SupportedLinearMeasure.PT);
-		Table sheet = this.workbook.getSheetByName(courseSheet.getSheetMetadata().getYearOfStud());
+		Table sheet = this.spreadsheetDocument.getSheetByName(courseSheet.getSheetMetadata().getYearOfStud());
 
 		Cell currentCell = sheet.getCellByPosition(startCellPosition);
 
@@ -118,7 +118,7 @@ public class WritePref {
 		if (save)
 
 		{
-			this.workbook.save(this.destination);
+			this.spreadsheetDocument.save(this.destination);
 		}
 		LOGGER.info("File" + destination + "has been correctly saved");
 
@@ -129,13 +129,13 @@ public class WritePref {
 	 */
 	public void writeSheetCoursesPref(boolean save) throws Exception {
 
-		writeSemesterCoursesPref(courseSheet.getCoursePrefS1(), STARTCELL1, save);
-		writeSemesterCoursesPref(courseSheet.getCoursePrefS2(), STARTCELL2, save);
+		writeSemesterCoursesPref(courseSheet.getCoursePrefS1(), START_CELL_1, save);
+		writeSemesterCoursesPref(courseSheet.getCoursePrefS2(), START_CELL_2, save);
 
 	}
 
 	public void close() throws IOException {
-		this.workbook.close();
+		this.spreadsheetDocument.close();
 		this.destination.close();
 	}
 }

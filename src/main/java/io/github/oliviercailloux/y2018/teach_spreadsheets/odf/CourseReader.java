@@ -27,7 +27,7 @@ import io.github.oliviercailloux.y2018.teach_spreadsheets.courses.CourseSheetMet
  * @version Version 1.0 Last Update : 13/05/2018.
  * 
  */
-public class ReadCourses implements AutoCloseable {
+public class CourseReader implements AutoCloseable {
 	private final static String COURSTD = "CMTD";
 	private final static String COURSTP = "CMTP";
 	private final static String TD = "TD";
@@ -53,11 +53,11 @@ public class ReadCourses implements AutoCloseable {
 	private final static String CELLSTUDENTNUMBER = "I1";
 	private final static String CELLYEARBEGIN = "G1";
 
-	private final static Logger LOGGER = LoggerFactory.getLogger(ReadCourses.class);
+	private final static Logger LOGGER = LoggerFactory.getLogger(CourseReader.class);
 
 	private ODSReader reader;
 
-	public ReadCourses(InputStream source) throws Exception {
+	public CourseReader(InputStream source) throws Exception {
 		this.reader = new ODSReader(SpreadsheetDocument.loadDocument(source));
 	}
 
@@ -92,13 +92,22 @@ public class ReadCourses implements AutoCloseable {
 				continue;
 			}
 			CourseSheetMetadata sheetMetadata = this.readMetadataSheet(table);
-			List<CoursePref> coursePrefS1 = CoursePref.toCoursePref(this.readCoursesFromCell(STARTCELLCOURSE1, table));
-			List<CoursePref> coursePrefS2 = CoursePref.toCoursePref(this.readCoursesFromCell(STARTCELLCOURSE2, table));
+			List<CoursePref> coursePrefS1 = CoursePref.toCoursePref(setSemesters(
+					this.readCoursesFromCell(STARTCELLCOURSE1, table), sheetMetadata.getFirstSemesterNumber()));
+			List<CoursePref> coursePrefS2 = CoursePref.toCoursePref(setSemesters(
+					this.readCoursesFromCell(STARTCELLCOURSE2, table), sheetMetadata.getFirstSemesterNumber() + 1));
 
 			CourseSheet courseSheet = new CourseSheet(sheetMetadata, coursePrefS1, coursePrefS2);
 			courseSheets.add(courseSheet);
 		}
 		return courseSheets;
+	}
+
+	private List<Course> setSemesters(List<Course> courses, int semester) {
+		for (Course course : courses) {
+			course.setSemester(semester);
+		}
+		return courses;
 	}
 
 	/**

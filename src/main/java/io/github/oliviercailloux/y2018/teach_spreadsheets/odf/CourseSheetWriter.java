@@ -9,9 +9,9 @@ import org.slf4j.LoggerFactory;
 
 import io.github.oliviercailloux.y2018.teach_spreadsheets.courses.CourseSheet;
 
-public class WriteCourseSheet {
+public class CourseSheetWriter {
 
-	private final static Logger LOGGER = LoggerFactory.getLogger(WriteCourseSheet.class);
+	private final static Logger LOGGER = LoggerFactory.getLogger(CourseSheetWriter.class);
 
 	public static void writeCourseSheets(SpreadsheetDocument spreadsheetDocument, OutputStream destination,
 			List<CourseSheet> courseSheets, boolean save) throws Exception {
@@ -29,10 +29,10 @@ public class WriteCourseSheet {
 
 	private static void writeCourseSheet(SpreadsheetDocument spreadsheetDocument, OutputStream destination,
 			CourseSheet courseSheet, boolean save) throws Exception {
-		WriteCourses writer = new WriteCourses(spreadsheetDocument, destination, courseSheet);
+		CourseWriter writer = new CourseWriter(spreadsheetDocument, destination, courseSheet);
 		writer.writeCoursesOfYear(save);
 
-		WritePref prefWriter = new WritePref(spreadsheetDocument, destination, courseSheet);
+		PreferenceWriter prefWriter = new PreferenceWriter(spreadsheetDocument, destination, courseSheet);
 		prefWriter.writeSheetCoursesPref(save);
 
 		LOGGER.info("Course sheet " + courseSheet.getYearOfStud() + " has been writen");

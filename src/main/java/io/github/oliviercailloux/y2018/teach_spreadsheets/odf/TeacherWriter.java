@@ -18,7 +18,7 @@ import io.github.oliviercailloux.y2018.teach_spreadsheets.courses.Teacher;
  *         </p>
  *         spreadsheet Version : 1.0 Last update : 26/05/2018
  */
-public class WriteTeacher {
+public class TeacherWriter {
 
 	// All informations fields position
 	private final static String NAMEPOSITION = "B2";
@@ -37,9 +37,9 @@ public class WriteTeacher {
 
 	private OutputStream destination = null;
 	private SpreadsheetDocument workbook = null;
-	private final static Logger LOGGER = LoggerFactory.getLogger(WriteCourses.class);
+	private final static Logger LOGGER = LoggerFactory.getLogger(CourseWriter.class);
 
-	public WriteTeacher(SpreadsheetDocument spreadsheetDocument, OutputStream destination) throws Exception {
+	public TeacherWriter(SpreadsheetDocument spreadsheetDocument, OutputStream destination) throws Exception {
 		this.destination = Objects.requireNonNull(destination);
 		this.workbook = spreadsheetDocument;
 		LOGGER.info("File" + spreadsheetDocument + "has been correctly loaded");

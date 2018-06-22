@@ -11,6 +11,7 @@ import java.util.Date;
 
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.graphics.Image;
+import org.eclipse.swt.graphics.Point;
 import org.eclipse.swt.graphics.Rectangle;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
@@ -27,8 +28,11 @@ import org.eclipse.swt.widgets.Listener;
 import org.eclipse.swt.widgets.Menu;
 import org.eclipse.swt.widgets.MenuItem;
 import org.eclipse.swt.widgets.MessageBox;
+import org.eclipse.swt.widgets.Monitor;
 import org.eclipse.swt.widgets.Shell;
-import org.eclipse.swt.widgets.Text;
+import org.eclipse.swt.widgets.Table;
+import org.eclipse.swt.widgets.TableColumn;
+import org.eclipse.swt.widgets.TableItem;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -47,7 +51,7 @@ import io.github.oliviercailloux.y2018.teach_spreadsheets.courses.CoursePref;
  * which there are courses) and to set preferences on these courses. He can
  * choose a specified year of study, then a semester, then a specified course.
  * 
- * @author Victor CHEN (Kantoki)
+ * @author Victor CHEN (Kantoki), Samuel COHEN (samuelcohen75)
  * @version 2.0
  * 
  */
@@ -60,11 +64,18 @@ public class GUIPref {
 
 	private TeachSpreadSheetController teach;
 
+	private Composite preferenceContent = null;
+	private Composite summaryContent = null;
+
+	// Composite in preferenceContent
 	private Composite compositeYearsStudy;
 	private Composite compositeSemesters;
 	private Composite compositeCourses;
 	private Composite compositeChoices;
 	private Composite compositeSubmit;
+
+	// Composite in summaryContent
+	private Composite compositeSummary;
 
 	private Group groupCMButtons;
 	private Group groupTDButtons;
@@ -88,7 +99,8 @@ public class GUIPref {
 		compositeChoices.dispose();
 		compositeCourses.dispose();
 		compositeYearsStudy.dispose();
-		prefShell.pack();
+		compositeSummary.dispose();
+		this.preferenceContent.pack();
 	}
 
 	private void resetSelectedItems() {
@@ -109,82 +121,99 @@ public class GUIPref {
 
 		String logoFileName = "logoGUI.png";
 
+		LOGGER.info("Image-Logo bien récupérée");
+
+		display = new Display();
+		shell = new Shell(display, SWT.CLOSE);
+
+		// folder = new CTabFolder(shell, SWT.BORDER);
+		// item1 = new CTabItem(folder, SWT.CLOSE);
+
+		shell.setText("Teach-spreadsheets");
+		shell.setLayout(new GridLayout(1, false));
+
+		shell.setImage(new Image(display, GUIPref.class.getResourceAsStream("iconGUI.png")));
+
+		// Center the shell
+
+		Monitor primary = display.getPrimaryMonitor();
+		Rectangle bounds = primary.getBounds();
+		Rectangle rect = shell.getBounds();
+
+		int x = bounds.x + (bounds.width - rect.width) / 2;
+		int y = bounds.y + (bounds.height - rect.height) / 2;
+
+		shell.setLocation(x, y);
+		// Display an image
+
+		Label labelImg = new Label(shell, SWT.CENTER);
+		Rectangle clientArea = shell.getClientArea();
+		labelImg.setLocation(clientArea.x, clientArea.y);
+
 		try (InputStream inputStream = GUIPref.class.getResourceAsStream(logoFileName)) {
 			if (inputStream == null) {
 				LOGGER.error("File " + logoFileName + " not found.");
 				throw new FileNotFoundException("File not found");
 			}
-
-			LOGGER.info("Image-Logo bien récupérée");
-
-			display = new Display();
-			shell = new Shell(display, SWT.CLOSE);
-			shell.setText("Menu principal - Teach-spreadsheets");
-			shell.setLayout(new GridLayout(1, false));
-			shell.setSize(500, 700);
-			shell.setImage(new Image(display, GUIPref.class.getResourceAsStream("iconGUI.png")));
-			// Display an image
 			Image image = new Image(display, inputStream);
-			Label labelImg = new Label(shell, SWT.CENTER);
-			Rectangle clientArea = shell.getClientArea();
-			labelImg.setLocation(clientArea.x, clientArea.y);
+
 			labelImg.setImage(image);
 			labelImg.pack();
-
-			// Create a horizontal separator
-			Label lblSeparator = new Label(shell, SWT.HORIZONTAL | SWT.SEPARATOR);
-			lblSeparator.setLayoutData(new GridData(GridData.FILL_HORIZONTAL));
-
-			// Label with teacher name
-			Label lblCentered = new Label(shell, SWT.NONE);
-			lblCentered.setText("Bienvenue " + this.teach.getTeacherName());
-			lblCentered.setLayoutData(new GridData(SWT.CENTER, SWT.FILL, false, false));
-
-			// Create a horizontal separator
-			lblSeparator = new Label(shell, SWT.HORIZONTAL | SWT.SEPARATOR);
-			lblSeparator.setLayoutData(new GridData(GridData.FILL_HORIZONTAL));
-
-			// Button to open the file explorer so that the user chooses the
-			// file in which
-			// there are courses
-			Button buttonFileExplorer = new Button(shell, SWT.NONE);
-			buttonFileExplorer.setText("Ouvrez votre fichier contenant tous les cours");
-			buttonFileExplorer.setLayoutData(new GridData(GridData.FILL_HORIZONTAL));
-			buttonFileExplorer.addListener(SWT.Selection, event -> {
-				String fileName = openFileExplorer();
-
-				FileInputStream fis;
-				if (!(fileName == null)) {
-					// we must use a Try/Catch because we can't throw on the method
-					try {
-						fis = new FileInputStream(fileName);
-						teach.setSource(fis);
-						prefShell();
-					} catch (Exception e1) {
-						LOGGER.error("File not opened");
-						throw new IllegalStateException(e1);
-					}
-				}
-			});
-
-			// Button allowing the user to quit the application (it closes the display)
-			Button buttonExit;
-			buttonExit = new Button(shell, SWT.NONE);
-			buttonExit.setText("Quitter l'application");
-			buttonExit.setLayoutData(new GridData(GridData.FILL_HORIZONTAL));
-			buttonExit.addListener(SWT.Selection, event -> exitApplication());
-
-			shell.pack();
-			shell.open();
-			while (!shell.isDisposed()) {
-				if (!display.readAndDispatch())
-					display.sleep();
-			}
-			image.dispose();
-			display.dispose();
-			LOGGER.info("Display well closed");
-
 		}
+		// Create a horizontal separator
+		Label lblSeparator = new Label(shell, SWT.HORIZONTAL | SWT.SEPARATOR);
+		lblSeparator.setLayoutData(new GridData(GridData.FILL_HORIZONTAL));
+
+		// Label with teacher name
+		Label lblCentered = new Label(shell, SWT.NONE);
+		lblCentered.setText("Welcome " + this.teach.getTeacherName());
+		lblCentered.setLayoutData(new GridData(SWT.CENTER, SWT.FILL, false, false));
+
+		// Create a horizontal separator
+		lblSeparator = new Label(shell, SWT.HORIZONTAL | SWT.SEPARATOR);
+		lblSeparator.setLayoutData(new GridData(GridData.FILL_HORIZONTAL));
+
+		// Button to open the file explorer so that the user chooses the
+		// file in which
+		// there are courses
+		Button buttonFileExplorer = new Button(shell, SWT.NONE);
+		buttonFileExplorer.setText("Open spreadsheet");
+		buttonFileExplorer.setLayoutData(new GridData(GridData.FILL_HORIZONTAL));
+		buttonFileExplorer.addListener(SWT.Selection, event -> {
+			String fileName = openFileExplorer();
+
+			FileInputStream fis;
+			if (!(fileName == null)) {
+				// we must use a Try/Catch because we can't throw on the method
+				try {
+					fis = new FileInputStream(fileName);
+					teach.setSource(fis);
+					prefShell();
+				} catch (Exception e1) {
+					LOGGER.error("File not opened");
+					throw new IllegalStateException(e1);
+				}
+			}
+		});
+
+		// Button allowing the user to quit the application (it closes the
+		// display)
+		Button buttonExit;
+		buttonExit = new Button(shell, SWT.NONE);
+		buttonExit.setText("Exit");
+		buttonExit.setLayoutData(new GridData(GridData.FILL_HORIZONTAL));
+		buttonExit.addListener(SWT.Selection, event -> exitApplication());
+
+		shell.pack();
+		shell.open();
+		while (!shell.isDisposed()) {
+			if (!display.readAndDispatch())
+				display.sleep();
+		}
+
+		display.dispose();
+		LOGGER.info("Display well closed");
+
 	}
 
 	/**
@@ -196,25 +225,52 @@ public class GUIPref {
 		// Doesn't allow the user to close the main shell when the preferences
 		// shell is
 		// open
-		prefShell = new Shell(display, SWT.SYSTEM_MODAL | SWT.SHELL_TRIM);
-		prefShell.setMinimumSize(200, 200);
-		GridLayout gl = new GridLayout();
-		gl.numColumns = 1;
-		prefShell.setLayout(gl);
+		prefShell = new Shell(display, SWT.SYSTEM_MODAL | SWT.CLOSE | SWT.MIN | SWT.TITLE);
+		prefShell.setMaximized(true);
+		prefShell.setText("Preferences");
+		// prefShell.setMinimumSize(200, 200);
+		prefShell.setLayout(new GridLayout(2, false));
 
-		InputStream logoStream = GUIPref.class.getResourceAsStream("logo-pref.png");
-		Image logo = new Image(display, logoStream);
-		prefShell.setImage(logo);
-		// prefShell.setLayout(new GridLayout(2, false));
+		this.preferenceContent = new Composite(prefShell, SWT.BORDER);
+		preferenceContent.setLayout(new GridLayout(1, true));
+		this.summaryContent = new Composite(prefShell, SWT.BORDER);
+		summaryContent.setLayout(new GridLayout(1, true));
 
-		// HEADER
-		Composite header = new Composite(prefShell, SWT.CENTER);
+		// proportion of pref and summary
+
+		GridData preferenceData = new GridData(SWT.FILL, SWT.FILL, true, true);
+		GridData summaryData = new GridData(SWT.FILL, SWT.FILL, true, true);
+		Point size = prefShell.getSize();
+		preferenceData.widthHint = (int) (size.x * 0.55);
+		summaryData.widthHint = size.x - preferenceData.widthHint;
+		this.preferenceContent.setLayoutData(preferenceData);
+		this.summaryContent.setLayoutData(summaryData);
+
+		Image logoPref = new Image(display, GUIPref.class.getResourceAsStream("logo-pref.png"));
+		prefShell.setImage(logoPref);
+
+		// HEADER for preferenceContent
+		Composite header = new Composite(this.preferenceContent, SWT.CENTER);
 		header.setLayout(new GridLayout(2, false));
 		Label labelImg = new Label(header, SWT.LEFT);
-		labelImg.setImage(logo);
+		labelImg.setImage(logoPref);
 		Label txt = new Label(header, SWT.RIGHT);
-		txt.setText("Mes préférences - Teach-spreadsheets");
+
+		txt.setText("My preferences - Teach-spreadsheets");
 		header.pack();
+
+		// HEADER for summaryContent
+		Composite header2 = new Composite(this.summaryContent, SWT.CENTER);
+		header2.setLayout(new GridLayout(2, false));
+
+		Label labelImg2 = new Label(header2, SWT.LEFT);
+		Image logoSummary = new Image(display, GUIPref.class.getResourceAsStream("logo-summary.png"));
+		labelImg2.setImage(logoSummary);
+		Label txt2 = new Label(header2, SWT.RIGHT);
+		txt2.setText("Dashboard");
+
+		header2.pack();
+
 		// Create a menu
 		Menu menu = new Menu(prefShell, SWT.BAR);
 		// create a file menu and add an exit item
@@ -269,7 +325,10 @@ public class GUIPref {
 		// lblSeparator.setLayoutData(new GridData(GridData.FILL_HORIZONTAL));
 
 		compositeYearsStudy = createGroupYearsOfStudy();
-		prefShell.layout();
+		compositeSummary = createCompositeSummary();
+
+		summaryContent.layout();
+		preferenceContent.layout();
 		prefShell.pack();
 		prefShell.open();
 		LOGGER.info("Shell for the preferences well opened");
@@ -292,7 +351,7 @@ public class GUIPref {
 	 * the file opened
 	 */
 	private Composite createGroupYearsOfStudy() {
-		Composite c = new Composite(prefShell, SWT.CENTER);
+		Composite c = new Composite(this.preferenceContent, SWT.CENTER);
 		c.setLayout(new GridLayout(2, false));
 
 		Group groupYearOfStudy = new Group(c, SWT.CENTER);
@@ -305,20 +364,23 @@ public class GUIPref {
 		groupYearOfStudy.setLayout(new GridLayout(1, false));
 
 		final List listYearStudy = new List(groupYearOfStudy, SWT.BORDER | SWT.SINGLE | SWT.V_SCROLL);
-		listYearStudy.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
+
+		// List size
+		GridData gridDataList = new GridData(SWT.FILL, SWT.FILL, true, true);
+		gridDataList = new GridData();
+		gridDataList.widthHint = 400;
+		// 8 items displayed then need to scroll
+		gridDataList.heightHint = 70;
+		listYearStudy.setLayoutData(gridDataList);
 
 		for (String string : yearNames) {
 			listYearStudy.add(string);
 		}
 
-		final Text text = new Text(c, SWT.BORDER | SWT.H_SCROLL);
-		text.setBounds(60, 130, 160, 25);
-
 		listYearStudy.addListener(SWT.Selection, event -> {
 			String s[] = listYearStudy.getSelection();
 			String outString = s[0];
 			String actualYearOfStudy = selectedYearStudy;
-			text.setText("Selected year of study : " + outString);
 			selectedYearStudy = outString;
 			LOGGER.info("Year of study " + selectedYearStudy + " well chosen.");
 
@@ -337,7 +399,7 @@ public class GUIPref {
 			currentStep = 2;
 			compositeSemesters = createCompositeSemesters();
 
-			prefShell.layout();
+			preferenceContent.layout();
 			prefShell.pack();
 			prefShell.open();
 		});
@@ -350,7 +412,7 @@ public class GUIPref {
 	 * semester available
 	 */
 	private Composite createCompositeSemesters() {
-		Composite c = new Composite(prefShell, SWT.CENTER);
+		Composite c = new Composite(preferenceContent, SWT.CENTER);
 		GridLayout gl = new GridLayout(2, false);
 		c.setLayout(gl);
 
@@ -401,7 +463,7 @@ public class GUIPref {
 				}
 				currentStep = 3;
 				compositeCourses = createCompositeCourses();
-				prefShell.layout();
+				preferenceContent.layout();
 				prefShell.pack();
 				prefShell.open();
 			}
@@ -417,7 +479,7 @@ public class GUIPref {
 	 * This methods creates a Composite in which there is a list of Courses
 	 */
 	private Composite createCompositeCourses() {
-		Composite c = new Composite(prefShell, SWT.CENTER);
+		Composite c = new Composite(this.preferenceContent, SWT.CENTER);
 		GridLayout gl = new GridLayout(2, false);
 		c.setLayout(gl);
 
@@ -439,24 +501,14 @@ public class GUIPref {
 		gridDataList = new GridData();
 		gridDataList.widthHint = 400;
 		// 8 items displayed then need to scroll
-		gridDataList.heightHint = 140;
+		gridDataList.heightHint = 70;
 		listCourses.setLayoutData(gridDataList);
-
-		final Text text = new Text(c, SWT.BORDER | SWT.H_SCROLL);
-		text.setBounds(60, 130, 160, 25);
-
-		GridData gridDataText = new GridData(SWT.FILL, SWT.FILL, true, true);
-		gridDataText = new GridData();
-		gridDataText.widthHint = 400;
-		gridDataText.heightHint = 35;
-		text.setLayoutData(gridDataText);
 
 		listCourses.addListener(SWT.Selection, event -> {
 			String actualCourse = selectedCourse;
 			String s[] = listCourses.getSelection();
 			String outString = s[0];
 			String actuelSelectedCourse = selectedCourse;
-			text.setText("Selected course : " + outString);
 			selectedCourse = outString;
 
 			LOGGER.info("Course " + selectedCourse + " well chosen.");
@@ -487,7 +539,7 @@ public class GUIPref {
 				}
 				compositeSubmit = createButtonSubmitPreference();
 			}
-			prefShell.layout();
+			preferenceContent.layout();
 			prefShell.pack();
 			prefShell.open();
 		});
@@ -500,8 +552,8 @@ public class GUIPref {
 	 * Choices (CM, TD, TP)
 	 */
 	private Composite createCompositeForChoices() {
-		compositeChoices = new Composite(prefShell, SWT.CENTER);
-		GridLayout gl = new GridLayout(3, true);
+		compositeChoices = new Composite(this.preferenceContent, SWT.CENTER);
+		GridLayout gl = new GridLayout(2, true);
 		compositeChoices.setLayout(gl);
 		return compositeChoices;
 	}
@@ -741,7 +793,7 @@ public class GUIPref {
 	}
 
 	private Composite createButtonSubmitPreference() {
-		Composite c = new Composite(prefShell, SWT.CENTER);
+		Composite c = new Composite(this.preferenceContent, SWT.CENTER);
 		GridLayout gl = new GridLayout(1, true);
 		c.setLayout(gl);
 
@@ -752,7 +804,7 @@ public class GUIPref {
 		// Button to submit the preferences for a specified course
 		Button buttonSubmit;
 		buttonSubmit = new Button(c, SWT.NONE);
-		buttonSubmit.setText("Submit your preferences for the course : " + selectedCourse);
+		buttonSubmit.setText("Submit");
 		buttonSubmit.setLayoutData(new GridData(GridData.FILL_HORIZONTAL));
 		buttonSubmit.addListener(SWT.Selection, event -> {
 			CoursePref cp = submitPreference(selectedYearStudy, selectedSemester, selectedCourse, selectedCMCHoice,
@@ -764,11 +816,57 @@ public class GUIPref {
 			resetSelectedItems();
 
 			compositeYearsStudy = createGroupYearsOfStudy();
-			prefShell.layout();
+			compositeSummary = createCompositeSummary();
+
+			preferenceContent.layout();
+			summaryContent.layout();
 			prefShell.pack();
 			prefShell.open();
 		});
 
+		return c;
+	}
+
+	/**
+	 * This methods creates a Composite in which there is a list of Courses
+	 */
+	private Composite createCompositeSummary() {
+		Composite c = new Composite(this.summaryContent, SWT.CENTER);
+		c.setLayout(new GridLayout(1, false));
+
+		Table t = new Table(c, SWT.BORDER);
+
+		TableColumn tYear = new TableColumn(t, SWT.CENTER);
+		TableColumn tSemester = new TableColumn(t, SWT.CENTER);
+		TableColumn tCourse = new TableColumn(t, SWT.CENTER);
+		TableColumn tCM = new TableColumn(t, SWT.CENTER);
+		TableColumn tTD = new TableColumn(t, SWT.CENTER);
+		TableColumn tTP = new TableColumn(t, SWT.CENTER);
+		tYear.setText("Year");
+		tSemester.setText("Semester");
+		tCourse.setText("Course");
+		tCM.setText("CM");
+		tTD.setText("TD");
+		tTP.setText("TP");
+
+		tYear.setWidth(70);
+		tSemester.setWidth(70);
+		tCourse.setWidth(70);
+		tCM.setWidth(70);
+		tTD.setWidth(70);
+		tTP.setWidth(70);
+
+		t.setHeaderVisible(true);
+
+		java.util.List<CoursePref> prefSummary = teach.getPrefSummary();
+
+		for (CoursePref coursePref : prefSummary) {
+			TableItem item = new TableItem(t, SWT.NONE);
+			item.setText(new String[] { coursePref.getCourse().getYearOfStud(),
+					String.valueOf(coursePref.getCourse().getSemester()), coursePref.getCourse().getName(),
+					coursePref.getCmChoice().toString(), coursePref.getTdChoice().toString(),
+					coursePref.getTpChoice().toString() });
+		}
 		return c;
 	}
 

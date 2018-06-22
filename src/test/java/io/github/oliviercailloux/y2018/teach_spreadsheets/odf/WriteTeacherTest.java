@@ -42,9 +42,9 @@ public class WriteTeacherTest {
 
 			ByteArrayOutputStream tmpWriter = new ByteArrayOutputStream();
 
-			WriteTeacher writeTeacher = new WriteTeacher(SpreadsheetDocument.loadDocument(is), tmpWriter);
+			TeacherWriter teacherWriter = new TeacherWriter(SpreadsheetDocument.loadDocument(is), tmpWriter);
 
-			writeTeacher.write(teacher, true);
+			teacherWriter.write(teacher, true);
 
 			Assert.assertTrue(true);
 
