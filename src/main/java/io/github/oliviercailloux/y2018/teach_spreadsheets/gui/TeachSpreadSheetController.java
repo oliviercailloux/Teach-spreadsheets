@@ -6,6 +6,7 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.io.Reader;
+import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -49,7 +50,7 @@ public class TeachSpreadSheetController {
 	public TeachSpreadSheetController(InputStream teacherPath)
 			throws FileNotFoundException, IOException {
 		// Get teacher
-		try (Reader fileReader = new InputStreamReader(teacherPath)) {
+		try (Reader fileReader = new InputStreamReader(teacherPath, StandardCharsets.UTF_8)) {
 			this.teacher = CsvFileReader.readTeacherFromCSVfile(fileReader);
 		}
 
