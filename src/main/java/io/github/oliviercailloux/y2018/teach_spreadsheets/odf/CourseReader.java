@@ -92,13 +92,22 @@ public class CourseReader implements AutoCloseable {
 				continue;
 			}
 			CourseSheetMetadata sheetMetadata = this.readMetadataSheet(table);
-			List<CoursePref> coursePrefS1 = CoursePref.toCoursePref(this.readCoursesFromCell(STARTCELLCOURSE1, table));
-			List<CoursePref> coursePrefS2 = CoursePref.toCoursePref(this.readCoursesFromCell(STARTCELLCOURSE2, table));
+			List<CoursePref> coursePrefS1 = CoursePref.toCoursePref(setSemesters(
+					this.readCoursesFromCell(STARTCELLCOURSE1, table), sheetMetadata.getFirstSemesterNumber()));
+			List<CoursePref> coursePrefS2 = CoursePref.toCoursePref(setSemesters(
+					this.readCoursesFromCell(STARTCELLCOURSE2, table), sheetMetadata.getFirstSemesterNumber() + 1));
 
 			CourseSheet courseSheet = new CourseSheet(sheetMetadata, coursePrefS1, coursePrefS2);
 			courseSheets.add(courseSheet);
 		}
 		return courseSheets;
+	}
+
+	private List<Course> setSemesters(List<Course> courses, int semester) {
+		for (Course course : courses) {
+			course.setSemester(semester);
+		}
+		return courses;
 	}
 
 	/**
