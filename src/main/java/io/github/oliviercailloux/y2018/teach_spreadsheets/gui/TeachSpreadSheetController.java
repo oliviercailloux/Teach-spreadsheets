@@ -14,6 +14,7 @@ import java.util.Objects;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import io.github.oliviercailloux.y2018.teach_spreadsheets.courses.Choice;
 import io.github.oliviercailloux.y2018.teach_spreadsheets.courses.CoursePref;
 import io.github.oliviercailloux.y2018.teach_spreadsheets.courses.CourseSheet;
 import io.github.oliviercailloux.y2018.teach_spreadsheets.courses.Teacher;
@@ -30,8 +31,7 @@ public class TeachSpreadSheetController {
 
 	private final static String TEMPLATE = "Template_Saisie_voeux_dauphine.ods";
 
-	private final static Logger LOGGER = LoggerFactory
-			.getLogger(TeachSpreadSheetController.class);
+	private final static Logger LOGGER = LoggerFactory.getLogger(TeachSpreadSheetController.class);
 
 	private Teacher teacher = null;
 
@@ -41,14 +41,12 @@ public class TeachSpreadSheetController {
 
 	private List<CourseSheet> courseSheetList;
 
-	public TeachSpreadSheetController(InputStream source,
-			OutputStream destination) {
+	public TeachSpreadSheetController(InputStream source, OutputStream destination) {
 		this.source = source;
 		this.destination = destination;
 	}
 
-	public TeachSpreadSheetController(InputStream teacherPath)
-			throws FileNotFoundException, IOException {
+	public TeachSpreadSheetController(InputStream teacherPath) throws FileNotFoundException, IOException {
 		// Get teacher
 		try (Reader fileReader = new InputStreamReader(teacherPath, StandardCharsets.UTF_8)) {
 			this.teacher = CsvFileReader.readTeacherFromCSVfile(fileReader);
@@ -59,11 +57,28 @@ public class TeachSpreadSheetController {
 	// Main functions
 
 	private void writeSpreadsheet() throws Exception {
-		try (InputStream template = TeachSpreadSheetController.class
-				.getResourceAsStream(TEMPLATE)) {
-			SpreadSheetWriter.writeSpreadSheet(template, destination,
-					courseSheetList, this.teacher);
+		try (InputStream template = TeachSpreadSheetController.class.getResourceAsStream(TEMPLATE)) {
+			SpreadSheetWriter.writeSpreadSheet(template, destination, courseSheetList, this.teacher);
 		}
+	}
+
+	public List<CoursePref> getPrefSummary() {
+		List<CoursePref> coursePrefs = new ArrayList<>();
+
+		for (CourseSheet courseSheet : courseSheetList) {
+			List<CoursePref> currentCoursePrefs = courseSheet.getCoursePref();
+
+			for (CoursePref coursePref : currentCoursePrefs) {
+				if (!(coursePref.getCmChoice().equals(Choice.ABSENT) || coursePref.getCmChoice().equals(Choice.NA))
+						|| !(coursePref.getTdChoice().equals(Choice.ABSENT)
+								|| coursePref.getTdChoice().equals(Choice.NA))
+						|| !(coursePref.getTpChoice().equals(Choice.ABSENT)
+								|| coursePref.getTpChoice().equals(Choice.NA))) {
+					coursePrefs.add(coursePref);
+				}
+			}
+		}
+		return coursePrefs;
 	}
 
 	/**
@@ -121,8 +136,7 @@ public class TeachSpreadSheetController {
 	/**
 	 * This method gets the list of all the choices of a course
 	 */
-	public List<String> getPossibleChoice(String yearName, int semester,
-			String courseName) {
+	public List<String> getPossibleChoice(String yearName, int semester, String courseName) {
 		CourseSheet courseSheet = getCourseSheetByYear(yearName);
 		return courseSheet.getPossibleChoice(semester, courseName);
 	}
@@ -133,10 +147,8 @@ public class TeachSpreadSheetController {
 	 */
 	public void updatePref(CoursePref coursePref) {
 
-		CoursePref updatedCoursePref = this.getCoursePref(
-				coursePref.getCourse().getYearOfStud(),
-				coursePref.getCourse().getSemester(),
-				coursePref.getCourse().getName());
+		CoursePref updatedCoursePref = this.getCoursePref(coursePref.getCourse().getYearOfStud(),
+				coursePref.getCourse().getSemester(), coursePref.getCourse().getName());
 
 		updatedCoursePref.setCmChoice(coursePref.getCmChoice());
 		updatedCoursePref.setTdChoice(coursePref.getTdChoice());
@@ -145,8 +157,7 @@ public class TeachSpreadSheetController {
 
 	}
 
-	private CoursePref getCoursePref(String yearName, int semester,
-			String courseName) {
+	private CoursePref getCoursePref(String yearName, int semester, String courseName) {
 		CourseSheet courseSheet = getCourseSheetByYear(yearName);
 
 		if (semester % 2 == 1) {

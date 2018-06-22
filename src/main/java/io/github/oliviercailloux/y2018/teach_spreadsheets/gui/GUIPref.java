@@ -30,6 +30,9 @@ import org.eclipse.swt.widgets.MenuItem;
 import org.eclipse.swt.widgets.MessageBox;
 import org.eclipse.swt.widgets.Monitor;
 import org.eclipse.swt.widgets.Shell;
+import org.eclipse.swt.widgets.Table;
+import org.eclipse.swt.widgets.TableColumn;
+import org.eclipse.swt.widgets.TableItem;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -64,11 +67,15 @@ public class GUIPref {
 	private Composite preferenceContent = null;
 	private Composite summaryContent = null;
 
+	// Composite in preferenceContent
 	private Composite compositeYearsStudy;
 	private Composite compositeSemesters;
 	private Composite compositeCourses;
 	private Composite compositeChoices;
 	private Composite compositeSubmit;
+
+	// Composite in summaryContent
+	private Composite compositeSummary;
 
 	private Group groupCMButtons;
 	private Group groupTDButtons;
@@ -92,6 +99,7 @@ public class GUIPref {
 		compositeChoices.dispose();
 		compositeCourses.dispose();
 		compositeYearsStudy.dispose();
+		compositeSummary.dispose();
 		this.preferenceContent.pack();
 	}
 
@@ -123,7 +131,7 @@ public class GUIPref {
 
 		shell.setText("Teach-spreadsheets");
 		shell.setLayout(new GridLayout(1, false));
-		shell.setSize(500, 700);
+
 		shell.setImage(new Image(display, GUIPref.class.getResourceAsStream("iconGUI.png")));
 
 		// Center the shell
@@ -219,29 +227,34 @@ public class GUIPref {
 		// shell is
 		// open
 		prefShell = new Shell(display, SWT.SYSTEM_MODAL | SWT.CLOSE | SWT.MIN | SWT.TITLE);
+		prefShell.setMaximized(true);
 		prefShell.setText("Preferences");
-		prefShell.setMinimumSize(200, 200);
+		// prefShell.setMinimumSize(200, 200);
 		prefShell.setLayout(new GridLayout(2, false));
+
 		this.preferenceContent = new Composite(prefShell, SWT.BORDER);
 		preferenceContent.setLayout(new GridLayout(1, true));
 		this.summaryContent = new Composite(prefShell, SWT.BORDER);
+		summaryContent.setLayout(new GridLayout(1, true));
+
+		// proportion of pref and summary
+
 		GridData preferenceData = new GridData(SWT.FILL, SWT.FILL, true, true);
 		GridData summaryData = new GridData(SWT.FILL, SWT.FILL, true, true);
 		Point size = prefShell.getSize();
-		preferenceData.widthHint = (int) (size.x * 0.60);
+		preferenceData.widthHint = (int) (size.x * 0.55);
 		summaryData.widthHint = size.x - preferenceData.widthHint;
 		this.preferenceContent.setLayoutData(preferenceData);
 		this.summaryContent.setLayoutData(summaryData);
 
-		InputStream logoStream = GUIPref.class.getResourceAsStream("logo-pref.png");
-		Image logo = new Image(display, logoStream);
-		prefShell.setImage(logo);
+		Image logoPref = new Image(display, GUIPref.class.getResourceAsStream("logo-pref.png"));
+		prefShell.setImage(logoPref);
 
 		// HEADER for preferenceContent
 		Composite header = new Composite(this.preferenceContent, SWT.CENTER);
 		header.setLayout(new GridLayout(2, false));
 		Label labelImg = new Label(header, SWT.LEFT);
-		labelImg.setImage(logo);
+		labelImg.setImage(logoPref);
 		Label txt = new Label(header, SWT.RIGHT);
 
 		txt.setText("My preferences - Teach-spreadsheets");
@@ -250,10 +263,13 @@ public class GUIPref {
 		// HEADER for summaryContent
 		Composite header2 = new Composite(this.summaryContent, SWT.CENTER);
 		header2.setLayout(new GridLayout(2, false));
+
 		Label labelImg2 = new Label(header2, SWT.LEFT);
-		labelImg2.setImage(logo);
+		Image logoSummary = new Image(display, GUIPref.class.getResourceAsStream("logo-summary.png"));
+		labelImg2.setImage(logoSummary);
 		Label txt2 = new Label(header2, SWT.RIGHT);
 		txt2.setText("Dashboard");
+
 		header2.pack();
 
 		// Create a menu
@@ -310,6 +326,9 @@ public class GUIPref {
 		// lblSeparator.setLayoutData(new GridData(GridData.FILL_HORIZONTAL));
 
 		compositeYearsStudy = createGroupYearsOfStudy();
+		compositeSummary = createCompositeSummary();
+
+		summaryContent.layout();
 		preferenceContent.layout();
 		prefShell.pack();
 		prefShell.open();
@@ -346,7 +365,14 @@ public class GUIPref {
 		groupYearOfStudy.setLayout(new GridLayout(1, false));
 
 		final List listYearStudy = new List(groupYearOfStudy, SWT.BORDER | SWT.SINGLE | SWT.V_SCROLL);
-		listYearStudy.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
+
+		// List size
+		GridData gridDataList = new GridData(SWT.FILL, SWT.FILL, true, true);
+		gridDataList = new GridData();
+		gridDataList.widthHint = 400;
+		// 8 items displayed then need to scroll
+		gridDataList.heightHint = 70;
+		listYearStudy.setLayoutData(gridDataList);
 
 		for (String string : yearNames) {
 			listYearStudy.add(string);
@@ -476,7 +502,7 @@ public class GUIPref {
 		gridDataList = new GridData();
 		gridDataList.widthHint = 400;
 		// 8 items displayed then need to scroll
-		gridDataList.heightHint = 140;
+		gridDataList.heightHint = 70;
 		listCourses.setLayoutData(gridDataList);
 
 		listCourses.addListener(SWT.Selection, event -> {
@@ -528,7 +554,7 @@ public class GUIPref {
 	 */
 	private Composite createCompositeForChoices() {
 		compositeChoices = new Composite(this.preferenceContent, SWT.CENTER);
-		GridLayout gl = new GridLayout(3, true);
+		GridLayout gl = new GridLayout(2, true);
 		compositeChoices.setLayout(gl);
 		return compositeChoices;
 	}
@@ -791,11 +817,57 @@ public class GUIPref {
 			resetSelectedItems();
 
 			compositeYearsStudy = createGroupYearsOfStudy();
+			compositeSummary = createCompositeSummary();
+
 			preferenceContent.layout();
+			summaryContent.layout();
 			prefShell.pack();
 			prefShell.open();
 		});
 
+		return c;
+	}
+
+	/**
+	 * This methods creates a Composite in which there is a list of Courses
+	 */
+	private Composite createCompositeSummary() {
+		Composite c = new Composite(this.summaryContent, SWT.CENTER);
+		c.setLayout(new GridLayout(1, false));
+
+		Table t = new Table(c, SWT.BORDER);
+
+		TableColumn tYear = new TableColumn(t, SWT.CENTER);
+		TableColumn tSemester = new TableColumn(t, SWT.CENTER);
+		TableColumn tCourse = new TableColumn(t, SWT.CENTER);
+		TableColumn tCM = new TableColumn(t, SWT.CENTER);
+		TableColumn tTD = new TableColumn(t, SWT.CENTER);
+		TableColumn tTP = new TableColumn(t, SWT.CENTER);
+		tYear.setText("Year");
+		tSemester.setText("Semester");
+		tCourse.setText("Course");
+		tCM.setText("CM");
+		tTD.setText("TD");
+		tTP.setText("TP");
+
+		tYear.setWidth(70);
+		tSemester.setWidth(70);
+		tCourse.setWidth(70);
+		tCM.setWidth(70);
+		tTD.setWidth(70);
+		tTP.setWidth(70);
+
+		t.setHeaderVisible(true);
+
+		java.util.List<CoursePref> prefSummary = teach.getPrefSummary();
+
+		for (CoursePref coursePref : prefSummary) {
+			TableItem item = new TableItem(t, SWT.NONE);
+			item.setText(new String[] { coursePref.getCourse().getYearOfStud(),
+					String.valueOf(coursePref.getCourse().getSemester()), coursePref.getCourse().getName(),
+					coursePref.getCmChoice().toString(), coursePref.getTdChoice().toString(),
+					coursePref.getTpChoice().toString() });
+		}
 		return c;
 	}
 
