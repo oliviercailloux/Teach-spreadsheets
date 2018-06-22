@@ -28,6 +28,7 @@ import org.eclipse.swt.widgets.Listener;
 import org.eclipse.swt.widgets.Menu;
 import org.eclipse.swt.widgets.MenuItem;
 import org.eclipse.swt.widgets.MessageBox;
+import org.eclipse.swt.widgets.Monitor;
 import org.eclipse.swt.widgets.Shell;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -112,83 +113,100 @@ public class GUIPref {
 
 		String logoFileName = "logoGUI.png";
 
+		LOGGER.info("Image-Logo bien récupérée");
+
+		display = new Display();
+		shell = new Shell(display, SWT.CLOSE);
+
+		// folder = new CTabFolder(shell, SWT.BORDER);
+		// item1 = new CTabItem(folder, SWT.CLOSE);
+
+		shell.setText("Teach-spreadsheets");
+		shell.setLayout(new GridLayout(1, false));
+		shell.setSize(500, 700);
+		shell.setImage(new Image(display, GUIPref.class.getResourceAsStream("iconGUI.png")));
+
+		// Center the shell
+
+		Monitor primary = display.getPrimaryMonitor();
+		Rectangle bounds = primary.getBounds();
+		Rectangle rect = shell.getBounds();
+
+		int x = bounds.x + (bounds.width - rect.width) / 2;
+		int y = bounds.y + (bounds.height - rect.height) / 2;
+
+		shell.setLocation(x, y);
+		// Display an image
+
+		Label labelImg = new Label(shell, SWT.CENTER);
+		Rectangle clientArea = shell.getClientArea();
+		labelImg.setLocation(clientArea.x, clientArea.y);
+
 		try (InputStream inputStream = GUIPref.class.getResourceAsStream(logoFileName)) {
 			if (inputStream == null) {
 				LOGGER.error("File " + logoFileName + " not found.");
 				throw new FileNotFoundException("File not found");
 			}
 
-			LOGGER.info("Image-Logo bien récupérée");
-
-			display = new Display();
-			shell = new Shell(display, SWT.CLOSE);
-
-			shell.setText("Menu principal - Teach-spreadsheets");
-			shell.setLayout(new GridLayout(1, false));
-			shell.setSize(500, 700);
-			shell.setImage(new Image(display, GUIPref.class.getResourceAsStream("iconGUI.png")));
-			// Display an image
 			Image image = new Image(display, inputStream);
-			Label labelImg = new Label(shell, SWT.CENTER);
-			Rectangle clientArea = shell.getClientArea();
-			labelImg.setLocation(clientArea.x, clientArea.y);
+
 			labelImg.setImage(image);
 			labelImg.pack();
-
-			// Create a horizontal separator
-			Label lblSeparator = new Label(shell, SWT.HORIZONTAL | SWT.SEPARATOR);
-			lblSeparator.setLayoutData(new GridData(GridData.FILL_HORIZONTAL));
-
-			// Label with teacher name
-			Label lblCentered = new Label(shell, SWT.NONE);
-			lblCentered.setText("Bienvenue " + this.teach.getTeacherName());
-			lblCentered.setLayoutData(new GridData(SWT.CENTER, SWT.FILL, false, false));
-
-			// Create a horizontal separator
-			lblSeparator = new Label(shell, SWT.HORIZONTAL | SWT.SEPARATOR);
-			lblSeparator.setLayoutData(new GridData(GridData.FILL_HORIZONTAL));
-
-			// Button to open the file explorer so that the user chooses the
-			// file in which
-			// there are courses
-			Button buttonFileExplorer = new Button(shell, SWT.NONE);
-			buttonFileExplorer.setText("Ouvrez votre fichier contenant tous les cours");
-			buttonFileExplorer.setLayoutData(new GridData(GridData.FILL_HORIZONTAL));
-			buttonFileExplorer.addListener(SWT.Selection, event -> {
-				String fileName = openFileExplorer();
-
-				FileInputStream fis;
-				if (!(fileName == null)) {
-					// we must use a Try/Catch because we can't throw on the method
-					try {
-						fis = new FileInputStream(fileName);
-						teach.setSource(fis);
-						prefShell();
-					} catch (Exception e1) {
-						LOGGER.error("File not opened");
-						throw new IllegalStateException(e1);
-					}
-				}
-			});
-
-			// Button allowing the user to quit the application (it closes the display)
-			Button buttonExit;
-			buttonExit = new Button(shell, SWT.NONE);
-			buttonExit.setText("Quitter l'application");
-			buttonExit.setLayoutData(new GridData(GridData.FILL_HORIZONTAL));
-			buttonExit.addListener(SWT.Selection, event -> exitApplication());
-
-			shell.pack();
-			shell.open();
-			while (!shell.isDisposed()) {
-				if (!display.readAndDispatch())
-					display.sleep();
-			}
-			image.dispose();
-			display.dispose();
-			LOGGER.info("Display well closed");
-
 		}
+		// Create a horizontal separator
+		Label lblSeparator = new Label(shell, SWT.HORIZONTAL | SWT.SEPARATOR);
+		lblSeparator.setLayoutData(new GridData(GridData.FILL_HORIZONTAL));
+
+		// Label with teacher name
+		Label lblCentered = new Label(shell, SWT.NONE);
+		lblCentered.setText("Welcome " + this.teach.getTeacherName());
+		lblCentered.setLayoutData(new GridData(SWT.CENTER, SWT.FILL, false, false));
+
+		// Create a horizontal separator
+		lblSeparator = new Label(shell, SWT.HORIZONTAL | SWT.SEPARATOR);
+		lblSeparator.setLayoutData(new GridData(GridData.FILL_HORIZONTAL));
+
+		// Button to open the file explorer so that the user chooses the
+		// file in which
+		// there are courses
+		Button buttonFileExplorer = new Button(shell, SWT.NONE);
+		buttonFileExplorer.setText("Open spreadsheet");
+		buttonFileExplorer.setLayoutData(new GridData(GridData.FILL_HORIZONTAL));
+		buttonFileExplorer.addListener(SWT.Selection, event -> {
+			String fileName = openFileExplorer();
+
+			FileInputStream fis;
+			if (!(fileName == null)) {
+				// we must use a Try/Catch because we can't throw on the method
+				try {
+					fis = new FileInputStream(fileName);
+					teach.setSource(fis);
+					prefShell();
+				} catch (Exception e1) {
+					LOGGER.error("File not opened");
+					throw new IllegalStateException(e1);
+				}
+			}
+		});
+
+		// Button allowing the user to quit the application (it closes the
+		// display)
+		Button buttonExit;
+		buttonExit = new Button(shell, SWT.NONE);
+		buttonExit.setText("Exit");
+		buttonExit.setLayoutData(new GridData(GridData.FILL_HORIZONTAL));
+		buttonExit.addListener(SWT.Selection, event -> exitApplication());
+
+		shell.pack();
+		shell.open();
+		while (!shell.isDisposed()) {
+			if (!display.readAndDispatch())
+				display.sleep();
+		}
+
+		display.dispose();
+		LOGGER.info("Display well closed");
+
 	}
 
 	/**
@@ -200,7 +218,8 @@ public class GUIPref {
 		// Doesn't allow the user to close the main shell when the preferences
 		// shell is
 		// open
-		prefShell = new Shell(display, SWT.SYSTEM_MODAL | SWT.SHELL_TRIM);
+		prefShell = new Shell(display, SWT.SYSTEM_MODAL | SWT.CLOSE | SWT.MIN | SWT.TITLE);
+		prefShell.setText("Preferences");
 		prefShell.setMinimumSize(200, 200);
 		prefShell.setLayout(new GridLayout(2, false));
 		this.preferenceContent = new Composite(prefShell, SWT.BORDER);
@@ -224,7 +243,8 @@ public class GUIPref {
 		Label labelImg = new Label(header, SWT.LEFT);
 		labelImg.setImage(logo);
 		Label txt = new Label(header, SWT.RIGHT);
-		txt.setText("Mes préférences");
+
+		txt.setText("My preferences - Teach-spreadsheets");
 		header.pack();
 
 		// HEADER for summaryContent
@@ -233,7 +253,7 @@ public class GUIPref {
 		Label labelImg2 = new Label(header2, SWT.LEFT);
 		labelImg2.setImage(logo);
 		Label txt2 = new Label(header2, SWT.RIGHT);
-		txt2.setText("Tableau de bord");
+		txt2.setText("Dashboard");
 		header2.pack();
 
 		// Create a menu
@@ -759,7 +779,7 @@ public class GUIPref {
 		// Button to submit the preferences for a specified course
 		Button buttonSubmit;
 		buttonSubmit = new Button(c, SWT.NONE);
-		buttonSubmit.setText("Submit your preferences for the course : " + selectedCourse);
+		buttonSubmit.setText("Submit");
 		buttonSubmit.setLayoutData(new GridData(GridData.FILL_HORIZONTAL));
 		buttonSubmit.addListener(SWT.Selection, event -> {
 			CoursePref cp = submitPreference(selectedYearStudy, selectedSemester, selectedCourse, selectedCMCHoice,
