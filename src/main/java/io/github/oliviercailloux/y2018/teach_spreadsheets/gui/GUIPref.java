@@ -10,9 +10,8 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 
 import org.eclipse.swt.SWT;
-import org.eclipse.swt.custom.CTabFolder;
-import org.eclipse.swt.custom.CTabItem;
 import org.eclipse.swt.graphics.Image;
+import org.eclipse.swt.graphics.Point;
 import org.eclipse.swt.graphics.Rectangle;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
@@ -30,7 +29,6 @@ import org.eclipse.swt.widgets.Menu;
 import org.eclipse.swt.widgets.MenuItem;
 import org.eclipse.swt.widgets.MessageBox;
 import org.eclipse.swt.widgets.Shell;
-import org.eclipse.swt.widgets.Text;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -60,10 +58,10 @@ public class GUIPref {
 	private Shell shell;
 	private Shell prefShell;
 
-	private CTabFolder folder;
-	private CTabItem item1;
-
 	private TeachSpreadSheetController teach;
+
+	private Composite preferenceContent = null;
+	private Composite summaryContent = null;
 
 	private Composite compositeYearsStudy;
 	private Composite compositeSemesters;
@@ -93,7 +91,7 @@ public class GUIPref {
 		compositeChoices.dispose();
 		compositeCourses.dispose();
 		compositeYearsStudy.dispose();
-		prefShell.pack();
+		this.preferenceContent.pack();
 	}
 
 	private void resetSelectedItems() {
@@ -124,9 +122,6 @@ public class GUIPref {
 
 			display = new Display();
 			shell = new Shell(display, SWT.CLOSE);
-
-			folder = new CTabFolder(shell, SWT.BORDER);
-			item1 = new CTabItem(folder, SWT.CLOSE);
 
 			shell.setText("Menu principal - Teach-spreadsheets");
 			shell.setLayout(new GridLayout(1, false));
@@ -207,23 +202,40 @@ public class GUIPref {
 		// open
 		prefShell = new Shell(display, SWT.SYSTEM_MODAL | SWT.SHELL_TRIM);
 		prefShell.setMinimumSize(200, 200);
-		GridLayout gl = new GridLayout();
-		gl.numColumns = 1;
-		prefShell.setLayout(gl);
+		prefShell.setLayout(new GridLayout(2, false));
+		this.preferenceContent = new Composite(prefShell, SWT.BORDER);
+		preferenceContent.setLayout(new GridLayout(1, true));
+		this.summaryContent = new Composite(prefShell, SWT.BORDER);
+		GridData preferenceData = new GridData(SWT.FILL, SWT.FILL, true, true);
+		GridData summaryData = new GridData(SWT.FILL, SWT.FILL, true, true);
+		Point size = prefShell.getSize();
+		preferenceData.widthHint = (int) (size.x * 0.60);
+		summaryData.widthHint = size.x - preferenceData.widthHint;
+		this.preferenceContent.setLayoutData(preferenceData);
+		this.summaryContent.setLayoutData(summaryData);
 
 		InputStream logoStream = GUIPref.class.getResourceAsStream("logo-pref.png");
 		Image logo = new Image(display, logoStream);
 		prefShell.setImage(logo);
-		// prefShell.setLayout(new GridLayout(2, false));
 
-		// HEADER
-		Composite header = new Composite(prefShell, SWT.CENTER);
+		// HEADER for preferenceContent
+		Composite header = new Composite(this.preferenceContent, SWT.CENTER);
 		header.setLayout(new GridLayout(2, false));
 		Label labelImg = new Label(header, SWT.LEFT);
 		labelImg.setImage(logo);
 		Label txt = new Label(header, SWT.RIGHT);
-		txt.setText("Mes préférences - Teach-spreadsheets");
+		txt.setText("Mes préférences");
 		header.pack();
+
+		// HEADER for summaryContent
+		Composite header2 = new Composite(this.summaryContent, SWT.CENTER);
+		header2.setLayout(new GridLayout(2, false));
+		Label labelImg2 = new Label(header2, SWT.LEFT);
+		labelImg2.setImage(logo);
+		Label txt2 = new Label(header2, SWT.RIGHT);
+		txt2.setText("Tableau de bord");
+		header2.pack();
+
 		// Create a menu
 		Menu menu = new Menu(prefShell, SWT.BAR);
 		// create a file menu and add an exit item
@@ -278,7 +290,7 @@ public class GUIPref {
 		// lblSeparator.setLayoutData(new GridData(GridData.FILL_HORIZONTAL));
 
 		compositeYearsStudy = createGroupYearsOfStudy();
-		prefShell.layout();
+		preferenceContent.layout();
 		prefShell.pack();
 		prefShell.open();
 		LOGGER.info("Shell for the preferences well opened");
@@ -301,7 +313,7 @@ public class GUIPref {
 	 * the file opened
 	 */
 	private Composite createGroupYearsOfStudy() {
-		Composite c = new Composite(prefShell, SWT.CENTER);
+		Composite c = new Composite(this.preferenceContent, SWT.CENTER);
 		c.setLayout(new GridLayout(2, false));
 
 		Group groupYearOfStudy = new Group(c, SWT.CENTER);
@@ -320,14 +332,10 @@ public class GUIPref {
 			listYearStudy.add(string);
 		}
 
-		final Text text = new Text(c, SWT.BORDER | SWT.H_SCROLL);
-		text.setBounds(60, 130, 160, 25);
-
 		listYearStudy.addListener(SWT.Selection, event -> {
 			String s[] = listYearStudy.getSelection();
 			String outString = s[0];
 			String actualYearOfStudy = selectedYearStudy;
-			text.setText("Selected year of study : " + outString);
 			selectedYearStudy = outString;
 			LOGGER.info("Year of study " + selectedYearStudy + " well chosen.");
 
@@ -346,7 +354,7 @@ public class GUIPref {
 			currentStep = 2;
 			compositeSemesters = createCompositeSemesters();
 
-			prefShell.layout();
+			preferenceContent.layout();
 			prefShell.pack();
 			prefShell.open();
 		});
@@ -359,7 +367,7 @@ public class GUIPref {
 	 * semester available
 	 */
 	private Composite createCompositeSemesters() {
-		Composite c = new Composite(prefShell, SWT.CENTER);
+		Composite c = new Composite(preferenceContent, SWT.CENTER);
 		GridLayout gl = new GridLayout(2, false);
 		c.setLayout(gl);
 
@@ -410,7 +418,7 @@ public class GUIPref {
 				}
 				currentStep = 3;
 				compositeCourses = createCompositeCourses();
-				prefShell.layout();
+				preferenceContent.layout();
 				prefShell.pack();
 				prefShell.open();
 			}
@@ -426,7 +434,7 @@ public class GUIPref {
 	 * This methods creates a Composite in which there is a list of Courses
 	 */
 	private Composite createCompositeCourses() {
-		Composite c = new Composite(prefShell, SWT.CENTER);
+		Composite c = new Composite(this.preferenceContent, SWT.CENTER);
 		GridLayout gl = new GridLayout(2, false);
 		c.setLayout(gl);
 
@@ -451,21 +459,11 @@ public class GUIPref {
 		gridDataList.heightHint = 140;
 		listCourses.setLayoutData(gridDataList);
 
-		final Text text = new Text(c, SWT.BORDER | SWT.H_SCROLL);
-		text.setBounds(60, 130, 160, 25);
-
-		GridData gridDataText = new GridData(SWT.FILL, SWT.FILL, true, true);
-		gridDataText = new GridData();
-		gridDataText.widthHint = 400;
-		gridDataText.heightHint = 35;
-		text.setLayoutData(gridDataText);
-
 		listCourses.addListener(SWT.Selection, event -> {
 			String actualCourse = selectedCourse;
 			String s[] = listCourses.getSelection();
 			String outString = s[0];
 			String actuelSelectedCourse = selectedCourse;
-			text.setText("Selected course : " + outString);
 			selectedCourse = outString;
 
 			LOGGER.info("Course " + selectedCourse + " well chosen.");
@@ -496,7 +494,7 @@ public class GUIPref {
 				}
 				compositeSubmit = createButtonSubmitPreference();
 			}
-			prefShell.layout();
+			preferenceContent.layout();
 			prefShell.pack();
 			prefShell.open();
 		});
@@ -509,7 +507,7 @@ public class GUIPref {
 	 * Choices (CM, TD, TP)
 	 */
 	private Composite createCompositeForChoices() {
-		compositeChoices = new Composite(prefShell, SWT.CENTER);
+		compositeChoices = new Composite(this.preferenceContent, SWT.CENTER);
 		GridLayout gl = new GridLayout(3, true);
 		compositeChoices.setLayout(gl);
 		return compositeChoices;
@@ -750,7 +748,7 @@ public class GUIPref {
 	}
 
 	private Composite createButtonSubmitPreference() {
-		Composite c = new Composite(prefShell, SWT.CENTER);
+		Composite c = new Composite(this.preferenceContent, SWT.CENTER);
 		GridLayout gl = new GridLayout(1, true);
 		c.setLayout(gl);
 
@@ -773,7 +771,7 @@ public class GUIPref {
 			resetSelectedItems();
 
 			compositeYearsStudy = createGroupYearsOfStudy();
-			prefShell.layout();
+			preferenceContent.layout();
 			prefShell.pack();
 			prefShell.open();
 		});
