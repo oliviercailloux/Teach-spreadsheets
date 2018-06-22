@@ -12,8 +12,6 @@ import org.odftoolkit.simple.style.StyleTypeDefinitions;
 import org.odftoolkit.simple.style.StyleTypeDefinitions.CellBordersType;
 import org.odftoolkit.simple.table.Cell;
 import org.odftoolkit.simple.table.Table;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import io.github.oliviercailloux.y2018.teach_spreadsheets.courses.Choice;
 import io.github.oliviercailloux.y2018.teach_spreadsheets.courses.CoursePref;
@@ -35,8 +33,6 @@ public class PreferenceWriter {
 	private OutputStream destination = null;
 	private SpreadsheetDocument spreadsheetDocument = null;
 	private CourseSheet courseSheet = null;
-
-	private final static Logger LOGGER = LoggerFactory.getLogger(CourseWriter.class);
 
 	public PreferenceWriter(SpreadsheetDocument spreadsheetDocument, OutputStream destination, CourseSheet courseSheet)
 			throws Exception {
@@ -120,7 +116,6 @@ public class PreferenceWriter {
 		{
 			this.spreadsheetDocument.save(this.destination);
 		}
-		LOGGER.info("File" + destination + "has been correctly saved");
 
 	}
 
