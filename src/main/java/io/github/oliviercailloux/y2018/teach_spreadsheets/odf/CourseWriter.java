@@ -26,7 +26,7 @@ import io.github.oliviercailloux.y2018.teach_spreadsheets.courses.CourseSheet;
  *         class allows to write a year of study as a new odf sheet in an odf
  *         spreadsheet Version : 2.1 Last update : 13/05/2018
  */
-public class CourseWriter {
+public class CourseWriter implements AutoCloseable {
 	/**
 	 * Assuming that the tables of courses starts at cells STARTCELL1 and
 	 * STARTCELL2 for each sheet
@@ -343,6 +343,7 @@ public class CourseWriter {
 		}
 	}
 
+	@Override
 	public void close() throws IOException {
 		this.spreadsheetDocument.close();
 		this.destination.close();
