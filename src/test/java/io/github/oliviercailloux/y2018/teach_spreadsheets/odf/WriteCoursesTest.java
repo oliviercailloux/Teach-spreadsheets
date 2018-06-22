@@ -174,7 +174,7 @@ public class WriteCoursesTest {
 		courseSheetMetadata.setYearOfStud(sheetName);
 		CourseSheet courseSheet = new CourseSheet(courseSheetMetadata, semestre1, semestre2);
 		try (OutputStream tmpWriter = new ByteArrayOutputStream()) {
-			WriteCourses yearOfStudyWriter = new WriteCourses(
+			CourseWriter yearOfStudyWriter = new CourseWriter(
 					SpreadsheetDocument.loadDocument(
 							WriteCoursesTest.class.getResourceAsStream("Saisie_voeux_dauphine_WriteCourses.ods")),
 					tmpWriter, courseSheet);

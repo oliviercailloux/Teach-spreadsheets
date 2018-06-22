@@ -447,18 +447,17 @@ public class GUIPref {
 		Group group2 = new Group(c, SWT.SHADOW_OUT);
 		group2.setText("Step 2: Choose the semester");
 		group2.setLayout(new GridLayout(1, true));
-
 		java.util.List<Integer> listSemester = teach
 				.getSemesters(selectedYearStudy);
 		int firstSemester = 0;
 		int secondSemester = 0;
-
 		firstSemester = listSemester.get(0);
 		secondSemester = listSemester.get(1);
 
 		// Button for the first semester
 		final Button button1 = new Button(group2, SWT.RADIO);
 		button1.setText(String.valueOf(firstSemester));
+
 		// Button for the second semester
 		final Button button2 = new Button(group2, SWT.RADIO);
 		button2.setText(String.valueOf(secondSemester));
@@ -480,9 +479,9 @@ public class GUIPref {
 				if (compositeCourses != null)
 					compositeCourses.dispose();
 				compositeCourses = createCompositeCourses();
+
 			}
 		};
-
 		button1.addListener(SWT.Selection, listener);
 		button2.addListener(SWT.Selection, listener);
 
@@ -532,6 +531,7 @@ public class GUIPref {
 			public void widgetSelected(SelectionEvent event) {
 				String s[] = listCourses.getSelection();
 				String outString = s[0];
+				String actualCourse = selectedCourse;
 
 				text.setText("Selected course : " + outString);
 				selectedCourse = outString;
@@ -541,25 +541,27 @@ public class GUIPref {
 				java.util.List<String> listPossibleChoice = teach
 						.getPossibleChoice(selectedYearStudy, selectedSemester,
 								selectedCourse);
+				if (!actualCourse.equals(selectedCourse)) {
 
-				if (compositeChoices != null) {
-					compositeChoices.dispose();
+					if (compositeChoices != null) {
+						compositeChoices.dispose();
+					}
+					compositeChoices = createCompositeForChoices();
+					for (String possibleChoice : listPossibleChoice) {
+						if (possibleChoice.equals("CM")) {
+							groupCMButtons = createGroupButtonsCM();
+							// compositeCMButtons =
+							// createGroupButtonsCM(compositeSemesters);
+						}
+						if (possibleChoice.equals("TD")) {
+							groupTDButtons = createGroupButtonsTD();
+						}
+						if (possibleChoice.equals("TP")) {
+							groupTPButtons = createGroupButtonsTP();
+						}
+					}
+					Button buttonSubmit = createButtonSubmitPreference();
 				}
-				compositeChoices = createCompositeForChoices();
-				for (String possibleChoice : listPossibleChoice) {
-					if (possibleChoice.equals("CM")) {
-						groupCMButtons = createGroupButtonsCM();
-						// compositeCMButtons =
-						// createGroupButtonsCM(compositeSemesters);
-					}
-					if (possibleChoice.equals("TD")) {
-						groupTDButtons = createGroupButtonsTD();
-					}
-					if (possibleChoice.equals("TP")) {
-						groupTPButtons = createGroupButtonsTP();
-					}
-				}
-				Button buttonSubmit = createButtonSubmitPreference();
 				prefShell.pack();
 				prefShell.open();
 			}
@@ -584,7 +586,8 @@ public class GUIPref {
 	private Composite createCompositeForChoices() {
 		compositeChoices = new Composite(prefShell, SWT.CENTER);
 
-		GridLayout f = new GridLayout(3, true);
+		GridLayout f = new GridLayout(2, false);
+		f.horizontalSpacing = 0;
 		compositeChoices.setLayout(f);
 
 		return compositeChoices;
@@ -836,16 +839,11 @@ public class GUIPref {
 	}
 
 	private Button createButtonSubmitPreference() {
-		// Create a horizontal separator
-		Label lblSeparator = new Label(prefShell,
-				SWT.HORIZONTAL | SWT.SEPARATOR);
-		lblSeparator.setLayoutData(new GridData(GridData.FILL_HORIZONTAL));
 
 		// Button to submit the preferences for a specified course
 		Button buttonSubmit;
-		buttonSubmit = new Button(prefShell, SWT.NONE);
-		buttonSubmit.setText(
-				"Submit your preferences for the course : " + selectedCourse);
+		buttonSubmit = new Button(compositeChoices, SWT.NONE);
+		buttonSubmit.setText("Submit");
 		buttonSubmit.setLayoutData(new GridData(GridData.FILL_HORIZONTAL));
 		buttonSubmit.addSelectionListener(new SelectionListener() {
 			@Override

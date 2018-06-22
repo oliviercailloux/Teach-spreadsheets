@@ -34,7 +34,8 @@ public class CsvFileReaderTest {
 		expected.add(course);
 
 		String filename = "oneCourseTest.csv";
-		String inputStream = IOUtils.toString(CsvFileReaderTest.class.getResourceAsStream(filename),
+		String inputStream = IOUtils.toString(
+				CsvFileReaderTest.class.getResourceAsStream(filename),
 				StandardCharsets.UTF_8);
 
 		Reader stringReader = new StringReader(inputStream);
@@ -48,15 +49,27 @@ public class CsvFileReaderTest {
 	@Test
 	public void testReadTeachersFromCSVfile() throws Exception {
 
-		Teacher expected = new Teacher(1, "dupont", "toto", "52 rue des laurents", "75016", "Paris", "0154669563",
-				"0645895632", "toto.dupont@gmail.com", "toto.dupont@dauphine.eu", "maitre de conférence", "0145895522",
-				"B14");
+		Teacher expected = new Teacher();
+		expected.setId(1);
+		expected.setAdress("52 rue des laurents");
+		expected.setCity("Paris");
+		expected.setDauphineMail("toto.dupont@dauphine.eu");
+		expected.setDauphinePhone("0154669563");
+		expected.setDesk("B14");
+		expected.setFirstName("toto");
+		expected.setMobilePhone("0645895632");
+		expected.setName("dupont");
+		expected.setPersonalMail("toto.dupont@gmail.com");
+		expected.setPersonalPhone("0145895522");
+		expected.setPostCode("75016");
+		expected.setStatus("maitre de conférence");
 
 		String filename = "oneTeacherTest.csv";
 
 		Teacher actual = null;
 
-		String inputStream = IOUtils.toString(CsvFileReaderTest.class.getResourceAsStream(filename),
+		String inputStream = IOUtils.toString(
+				CsvFileReaderTest.class.getResourceAsStream(filename),
 				StandardCharsets.UTF_8);
 
 		Reader stringReader = new StringReader(inputStream);

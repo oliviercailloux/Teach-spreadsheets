@@ -20,24 +20,29 @@ import io.github.oliviercailloux.y2018.teach_spreadsheets.courses.Course;
  */
 public class CsvFileWriter {
 
-	private final static Logger LOGGER = LoggerFactory.getLogger(CsvFileWriter.class);
+	private final static Logger LOGGER = LoggerFactory
+			.getLogger(CsvFileWriter.class);
 
 	// Delimiter used in CSV file
 	private static final String NEW_LINE_SEPARATOR = "\n";
 
 	// CSV file header
-	private static final Object[] FILE_HEADER = { "Name", "Apogee Code", "Year of Study", "CM hours", "TD hours",
-			"CMTD hours", "TP hours", "Groups number" };
+	private static final Object[] FILE_HEADER = {"Name", "Apogee Code",
+			"Year of Study", "CM hours", "TD hours", "CMTD hours", "TP hours",
+			"Groups number"};
 
-	public static void writeInCSV(List<Course> courses, Writer writer) throws IOException {
+	public static void writeInCSV(List<Course> courses, Writer writer)
+			throws IOException {
 
 		// Create the CSVFormat object with "\n" as a record delimiter
-		CSVFormat csvFileFormat = CSVFormat.EXCEL.withRecordSeparator(NEW_LINE_SEPARATOR);
+		CSVFormat csvFileFormat = CSVFormat.EXCEL
+				.withRecordSeparator(NEW_LINE_SEPARATOR);
 		// initialize FileWriter object
 
 		LOGGER.info("File is ready to be writen");
 		// initialize CSVPrinter object
-		try (CSVPrinter csvFilePrinter = new CSVPrinter(writer, csvFileFormat)) {
+		try (CSVPrinter csvFilePrinter = new CSVPrinter(writer,
+				csvFileFormat)) {
 			LOGGER.info("File is ready to be writen with CSVPrinter");
 			// Create CSV file header
 			csvFilePrinter.printRecord(FILE_HEADER);
@@ -56,7 +61,8 @@ public class CsvFileWriter {
 
 				csvFilePrinter.printRecord(coursesRecord);
 			}
-			LOGGER.info("\nYour courses have been successfully exported into a CSV File");
+			LOGGER.info(
+					"Your courses have been successfully exported into a CSV File");
 
 		}
 	}

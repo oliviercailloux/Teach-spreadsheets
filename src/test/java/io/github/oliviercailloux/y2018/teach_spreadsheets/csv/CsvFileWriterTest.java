@@ -41,7 +41,7 @@ public class CsvFileWriterTest {
 
 		CsvFileReader.readCourseCSVfile(stringReader, actual);
 
-		Assert.assertTrue(actual.get(0).equals((expected.get(0))));
+		Assert.assertTrue(actual.equals(expected));
 	}
 
 }
