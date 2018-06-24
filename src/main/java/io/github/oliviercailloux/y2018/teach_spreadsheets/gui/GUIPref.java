@@ -152,7 +152,7 @@ public class GUIPref {
 		shell.setLocation(x, y);
 
 		// Display an image
-		Label labelImg = new Label(shell, SWT.CENTER);
+		Label labelImg = new Label(shell, SWT.NONE);
 		Rectangle clientArea = shell.getClientArea();
 		labelImg.setLocation(clientArea.x, clientArea.y);
 
@@ -173,7 +173,7 @@ public class GUIPref {
 		// Label with teacher name
 		Label lblCentered = new Label(shell, SWT.NONE);
 		lblCentered.setText("Welcome " + this.teach.getTeacherName());
-		lblCentered.setLayoutData(new GridData(SWT.CENTER, SWT.FILL, false, false));
+		lblCentered.setLayoutData(new GridData(SWT.NONE, SWT.FILL, false, false));
 
 		// Create a horizontal separator
 		lblSeparator = new Label(shell, SWT.HORIZONTAL | SWT.SEPARATOR);
@@ -238,7 +238,7 @@ public class GUIPref {
 
 		// Doesn't allow the user to close the main shell when the preferences shell is
 		// open (SYSTEM_MODAL)
-		prefShell = new Shell(display, SWT.SYSTEM_MODAL | SWT.CLOSE | SWT.MIN | SWT.TITLE);
+		prefShell = new Shell(display, SWT.SYSTEM_MODAL | SWT.SHELL_TRIM);
 		prefShell.setMaximized(true);
 		prefShell.setText("Preferences");
 		prefShell.setLayout(new GridLayout(2, false));
@@ -262,7 +262,7 @@ public class GUIPref {
 		prefShell.setImage(logoPref);
 
 		// HEADER for preferenceContent
-		Composite header = new Composite(this.preferenceContent, SWT.CENTER);
+		Composite header = new Composite(this.preferenceContent, SWT.NONE);
 		header.setLayout(new GridLayout(2, false));
 		Label labelImg = new Label(header, SWT.LEFT);
 		labelImg.setImage(logoPref);
@@ -272,7 +272,7 @@ public class GUIPref {
 		header.pack();
 
 		// HEADER for summaryContent
-		Composite header2 = new Composite(this.summaryContent, SWT.CENTER);
+		Composite header2 = new Composite(this.summaryContent, SWT.NONE);
 		header2.setLayout(new GridLayout(2, false));
 
 		Label labelImg2 = new Label(header2, SWT.LEFT);
@@ -344,10 +344,10 @@ public class GUIPref {
 	 * the file opened
 	 */
 	private Composite createGroupYearsOfStudy() {
-		Composite c = new Composite(this.preferenceContent, SWT.CENTER);
+		Composite c = new Composite(this.preferenceContent, SWT.NONE);
 		c.setLayout(new GridLayout(2, false));
 
-		Group groupYearOfStudy = new Group(c, SWT.CENTER);
+		Group groupYearOfStudy = new Group(c, SWT.NONE);
 
 		java.util.List<String> yearNames = teach.getYearNames();
 
@@ -404,7 +404,7 @@ public class GUIPref {
 	 * semester available
 	 */
 	private Composite createCompositeSemesters() {
-		Composite c = new Composite(preferenceContent, SWT.CENTER);
+		Composite c = new Composite(preferenceContent, SWT.NONE);
 		GridLayout gl = new GridLayout(2, false);
 		c.setLayout(gl);
 
@@ -474,11 +474,11 @@ public class GUIPref {
 	 * This methods creates a Composite in which there is a list of Courses
 	 */
 	private Composite createCompositeCourses() {
-		Composite c = new Composite(this.preferenceContent, SWT.CENTER);
+		Composite c = new Composite(this.preferenceContent, SWT.NONE);
 		GridLayout gl = new GridLayout(2, false);
 		c.setLayout(gl);
 
-		Group groupCourses = new Group(c, SWT.CENTER);
+		Group groupCourses = new Group(c, SWT.NONE);
 
 		// retrieve every courses from the selected year of study and a given semester
 		// (selected semester)
@@ -547,7 +547,7 @@ public class GUIPref {
 	 * Choices (CM, TD, TP)
 	 */
 	private Composite createCompositeForChoices() {
-		compositeChoices = new Composite(this.preferenceContent, SWT.CENTER);
+		compositeChoices = new Composite(this.preferenceContent, SWT.NONE);
 		GridLayout gl = new GridLayout(2, true);
 		compositeChoices.setLayout(gl);
 		return compositeChoices;
@@ -789,7 +789,7 @@ public class GUIPref {
 	 * Create a button that allows the user to submit his preferences for a Course
 	 */
 	private Composite createButtonSubmitPreference() {
-		Composite c = new Composite(this.preferenceContent, SWT.CENTER);
+		Composite c = new Composite(this.preferenceContent, SWT.NONE);
 		GridLayout gl = new GridLayout(1, true);
 		c.setLayout(gl);
 
@@ -828,17 +828,17 @@ public class GUIPref {
 	 * This methods creates a Composite in which there is a list of Courses
 	 */
 	private Composite createCompositeSummary() {
-		Composite c = new Composite(this.summaryContent, SWT.CENTER);
+		Composite c = new Composite(this.summaryContent, SWT.NONE);
 		c.setLayout(new GridLayout(1, false));
 
 		Table t = new Table(c, SWT.BORDER);
 
-		TableColumn tYear = new TableColumn(t, SWT.CENTER);
-		TableColumn tSemester = new TableColumn(t, SWT.CENTER);
-		TableColumn tCourse = new TableColumn(t, SWT.CENTER);
-		TableColumn tCM = new TableColumn(t, SWT.CENTER);
-		TableColumn tTD = new TableColumn(t, SWT.CENTER);
-		TableColumn tTP = new TableColumn(t, SWT.CENTER);
+		TableColumn tYear = new TableColumn(t, SWT.NONE);
+		TableColumn tSemester = new TableColumn(t, SWT.NONE);
+		TableColumn tCourse = new TableColumn(t, SWT.NONE);
+		TableColumn tCM = new TableColumn(t, SWT.NONE);
+		TableColumn tTD = new TableColumn(t, SWT.NONE);
+		TableColumn tTP = new TableColumn(t, SWT.NONE);
 		tYear.setText("Year");
 		tSemester.setText("Semester");
 		tCourse.setText("Course");
