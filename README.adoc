@@ -12,5 +12,5 @@ The code is hereby published under the MIT License, with the permission of the c
 
 The project documentation is link:Doc/README.adoc[here].
 
-== Logos' Credits
+== Credits
 The Icons used in the gui are made by link:https://www.flaticon.com/authors/freepik[Freepik], link:https://www.flaticon.com/authors/xnimrodx[nimrodx] and link:https://www.flaticon.com/authors/prosymbols[Prosymbols] from link:https://www.flaticon.com/[www.flaticon.com].
