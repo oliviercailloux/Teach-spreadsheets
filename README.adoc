@@ -1,16 +1,41 @@
-= Teach spreadsheets
-:gitHubUserName: oliviercailloux
-:groupId: io.github.{gitHubUserName}
-:artifactId: teach_spreadsheets
-:repository: Teach-spreadsheets
+= Teach spreadsheets : Itération 2 UML 
+:hide-uri-scheme:
 
-image:https://github.com/{gitHubUserName}/{repository}/workflows/Maven%20CI/badge.svg["Build Status", link="https://github.com/{gitHubUserName}/{repository}/actions"]
+Project members : Mohamed I, Mohamed A, Mehdi, Ryan, Nael, Samba, Elena
 
-A Java project developed by students during the https://github.com/oliviercailloux/java-course[Java course] taught at Université Paris-Dauphine (in https://dauphine.psl.eu/formations/licences/informatique-des-organisations/l3-methodes-informatiques-appliquees-pour-la-gestion-des-entreprises[L3 MIAGE Alternance]).
+'''
 
-The code is hereby published under the MIT License, with the permission of the contributors.
+*SMPO : Nael*
 
-The project documentation is link:Doc/README.adoc[here].
+'''
 
-== Credits
-The Icons used in the gui are made by link:https://www.flaticon.com/authors/freepik[Freepik], link:https://www.flaticon.com/authors/xnimrodx[nimrodx] and link:https://www.flaticon.com/authors/prosymbols[Prosymbols] from link:https://www.flaticon.com/[www.flaticon.com].
+*Team 1 : Samba & Mehdi*
+
+TO DO :
+
+* Implementation of the proposed changes and improvements of the class diagrams: "Class_Ods_Write_Office365_Upload" and "Class_Ods_Write_Office365_Cloud" started on the branch “dev_Ryan_ElMahdi” So the new branch will be created from this branch https://github.com/oliviercailloux-org/dep-git-Teach_spreadsheets/tree/dev_Ryan_ElMahdi and have to be named : Creation_spreadsheet_online-it2
+
+* Update of README : Presentation , content  and  recover the existing readme that has been overwritten at iteration number one
+
+* Continue research and testing in order to find a solution allowing the connection to Microsoft 365 and the creation of an Excel file and writing in this same file ( the file Doc/Doc_Excel_Api.adoc on the branch https://github.com/oliviercailloux-org/dep-git-Teach_spreadsheets/tree/dev_samba_nael can possibly be reused) 
+
+'''
+*Team 2 : Mohammed A & Elena*
+
+TO DO :
+
+* Implementation of the proposed changes and improvement of the class diagrams started on the branch dev_Mohamed_x2 for the task : "the application displays the difference between the total of hours desired and the total of hours assigned. The total of hours assigned are gathered for every teacher for every cell where he appears” . So the new branch will be created from this branch https://github.com/oliviercailloux-org/dep-git-Teach_spreadsheets/tree/dev_Mohamed_x2 and have to be named : Difference_hoursDesired_hoursAssigned-it2
+
+* Sequence diagram  as proposed by Mr Cailloux.
+
+* Update of README : Presentation , content  and  recover the existing readme that has been overwritten at iteration number one
+
+'''
+*Team 3 : Ryan & Mohammed I*
+
+TO DO :
+
+* Sequence diagram and class diagram for the task : “If a 365 sheet already exists, the application overwrites the information in the displayed cells; and indicates a new tab the changes made”. The branch will be created from the branch master and named Sheet_already_exists-it2
+
+
+
