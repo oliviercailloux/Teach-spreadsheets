@@ -1,4 +1,19 @@
-= Teach spreadsheets : Itération 2 UML 
+= Teach spreadsheets
+:gitHubUserName: oliviercailloux
+:groupId: io.github.{gitHubUserName}
+:artifactId: teach_spreadsheets
+:repository: Teach-spreadsheets
+
+image:https://github.com/{gitHubUserName}/{repository}/workflows/Maven%20CI/badge.svg["Build Status", link="https://github.com/{gitHubUserName}/{repository}/actions"]
+
+A Java project developed by students during the https://github.com/oliviercailloux/java-course[Java course] taught at Université Paris-Dauphine (in https://dauphine.psl.eu/formations/licences/informatique-des-organisations/l3-methodes-informatiques-appliquees-pour-la-gestion-des-entreprises[L3 MIAGE Alternance]).
+
+The code is hereby published under the MIT License, with the permission of the contributors.
+
+The project documentation is link:Doc/README.adoc[here].
+
+
+== Plan Itération 2 UML 
 :hide-uri-scheme:
 
 Project members : Mohamed I, Mohamed A, Mehdi, Ryan, Nael, Samba, Elena
@@ -37,5 +52,7 @@ TO DO :
 
 * Sequence diagram and class diagram for the task : “If a 365 sheet already exists, the application overwrites the information in the displayed cells; and indicates a new tab the changes made”. The branch will be created from the branch master and named Sheet_already_exists-it2
 
-
+'''
+== Credits
+The Icons used in the gui are made by link:https://www.flaticon.com/authors/freepik[Freepik], link:https://www.flaticon.com/authors/xnimrodx[nimrodx] and link:https://www.flaticon.com/authors/prosymbols[Prosymbols] from link:https://www.flaticon.com/[www.flaticon.com].
 
