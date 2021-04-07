@@ -24,6 +24,7 @@ Project members : Mohamed I, Mohamed A, Mehdi, Ryan, Nael, Samba, Elena
 
 '''
 
+
 *Team 1 : Samba & Mehdi*
 
 TO DO :
@@ -52,7 +53,45 @@ TO DO :
 
 * Sequence diagram and class diagram for the task : “If a 365 sheet already exists, the application overwrites the information in the displayed cells; and indicates a new tab the changes made”. The branch will be created from the branch master and named Sheet_already_exists-it2
 
+
+== Plan Itération 3 UML 
+:hide-uri-scheme:
+
+
 '''
+
+*SMPO : Ryan Hamiche*
+
+'''
+
+*Team 1 : Mehdi & Mohamed A*
+
+TO DO :
+
+* Bien se renseigner sur le package write, à propos de la création et la manière dont on écrit dans la feuille de calcul (existant)
+
+* S’en inspirer pour créer un diagramme de classe concernant l’écriture de feuilles de calcul en ligne en prenant bien compte des commentaires de la PR#7. Il contiendra deux classes au moins (ou plus), une sur la modification de feuilles en ligne (générale et utilisable dans n’importe quel projet), et une autre classe qui utilise la première et fasse le lien à nos besoins. Créer une documentation sur comment cela va impacter le projet et comment on pourra adapter aisément l’ancien projet au notre. 
+
+
+'''
+*Team 2 : Samba & Nael*
+
+TO DO :
+
+* Améliorer le tutoriel sur les modifications de feuille de calcul Office365. Implémentation de classes et méthodes pour modifier cellule (précisée en entrée) et mise en page de cette cellule dans un package dédié. Faire des tests pour vérifier si cela convient à nos besoins (surtout sur la modification de feuille de calcul)
+
+* Création application officielle Azure Directory pour le projet avec compte Outlook dédié pour que tout le monde puisse y accéder.
+
+
+'''
+*Team 3 : Elena & Mohamed I*
+
+TO DO :
+
+* Faire une documentation sur le programme existant, feuilles en entrée, feuilles en sortie, analyser ce que fait le programme ; une documentation qui pourra être utile et compréhensible par un utilisateur. 
+
+* Préparer un plan pour la présentation finale. 
+
+
 == Credits
 The Icons used in the gui are made by link:https://www.flaticon.com/authors/freepik[Freepik], link:https://www.flaticon.com/authors/xnimrodx[nimrodx] and link:https://www.flaticon.com/authors/prosymbols[Prosymbols] from link:https://www.flaticon.com/[www.flaticon.com].
-
