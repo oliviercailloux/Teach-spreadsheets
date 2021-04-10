@@ -73,10 +73,11 @@ Project members : Mohamed I, Mohamed A, Mehdi, Ryan, Nael, Samba, Elena
 '''
 *Team 3 : Elena & Mohamed I*
 
-* Faire une documentation sur le programme existant, feuilles en entrée, feuilles en sortie, analyser ce que fait le programme ; une documentation qui pourra être utile et compréhensible par un utilisateur. 
+* Peaufiner et finaliser la tâche : L’application affiche la différence entre le nombre d’heures total désiré et le total affecté, pour chaque enseignant, dans chaque cellule où il apparait, par exemple : "[− 30h]" . En prenant en compte les commentaires et indications de la PR#8
+
+* Proposer une documentation pour la tâche :  Si une feuille 365 existe déjà, l’application écrase les informations dans les cellules correspondantes ; et indique dans un nouvel onglet les modifications apportées. Cette documentation décrira la lecture, les vérifications de modifications (à la main) de la feuille de calcul et le renseignement de modifications apportées dans un nouvel onglet. Elle pourra ensuite mener à une réalisation des diagrammes concernant cette tâche.
 
 * Préparer un plan pour la présentation finale. 
-
 
 == Credits
 The Icons used in the gui are made by link:https://www.flaticon.com/authors/freepik[Freepik], link:https://www.flaticon.com/authors/xnimrodx[nimrodx] and link:https://www.flaticon.com/authors/prosymbols[Prosymbols] from link:https://www.flaticon.com/[www.flaticon.com].
