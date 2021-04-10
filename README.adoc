@@ -75,7 +75,7 @@ Project members : Mohamed I, Mohamed A, Mehdi, Ryan, Nael, Samba, Elena
 
 * Peaufiner et finaliser la tâche : L’application affiche la différence entre le nombre d’heures total désiré et le total affecté, pour chaque enseignant, dans chaque cellule où il apparait, par exemple : "[− 30h]" . En prenant en compte les commentaires et indications de la PR#8
 
-* Proposer une documentation pour la tâche :  Si une feuille 365 existe déjà, l’application écrase les informations dans les cellules correspondantes ; et indique dans un nouvel onglet les modifications apportées. Cette documentation décrira la lecture, les vérifications de modifications (à la main) de la feuille de calcul et le renseignement de modifications apportées dans un nouvel onglet. Elle pourra ensuite mener à une réalisation des diagrammes concernant cette tâche.
+* Proposer une documentation pour la tâche :  Si une feuille 365 existe déjà, l’application écrase les informations dans les cellules correspondantes ; et indique dans un nouvel onglet les modifications apportées. Cette documentation décrira la lecture, les calculs/vérifications de modifications (à la main) de la feuille de calcul et le renseignement de modifications apportées dans un nouvel onglet. Elle pourra ensuite mener à une réalisation des diagrammes concernant cette tâche.
 
 * Préparer un plan pour la présentation finale. 
 
