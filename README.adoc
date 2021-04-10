@@ -14,7 +14,6 @@ The project documentation is link:Doc/README.adoc[here].
 
 
 == Plan Itération 2 UML 
-:hide-uri-scheme:
 
 Project members : Mohamed I, Mohamed A, Mehdi, Ryan, Nael, Samba, Elena
 
@@ -27,8 +26,6 @@ Project members : Mohamed I, Mohamed A, Mehdi, Ryan, Nael, Samba, Elena
 
 *Team 1 : Samba & Mehdi*
 
-TO DO :
-
 * Implementation of the proposed changes and improvements of the class diagrams: https://github.com/oliviercailloux-org/dep-git-Teach_spreadsheets/blob/f1f999ee8368e8950394f53e16ba524e8219d248/Doc/Images/Class_Ods_Write_Office365_Upload.png["Class_Ods_Write_Office365_Upload"] and https://github.com/oliviercailloux-org/dep-git-Teach_spreadsheets/blob/f1f999ee8368e8950394f53e16ba524e8219d248/Doc/Images/Class_Ods_Write_Office365_Cloud.png["Class_Ods_Write_Office365_Cloud"] started on the branch https://github.com/oliviercailloux-org/dep-git-Teach_spreadsheets/tree/dev_Ryan_ElMahdi[dev_Ryan_ElMahdi] (Voir PR #3) So the new branch will be created from this branch https://github.com/oliviercailloux-org/dep-git-Teach_spreadsheets/tree/dev_Ryan_ElMahdi[dev_Ryan_ElMahdi] and have to be named : Creation_spreadsheet_online-it2
 
 * Update of README : Presentation , content  and  recover the existing readme that has been overwritten at iteration number one
@@ -38,8 +35,6 @@ TO DO :
 '''
 *Team 2 : Mohammed A & Elena*
 
-TO DO :
-
 * Implementation of the proposed changes and improvement of the class diagrams started on the branch dev_Mohamed_x2 (https://github.com/oliviercailloux-org/dep-git-Teach_spreadsheets/blob/32141a63acb93246a15d8be48ce75bcdd8314ab7/Doc/Images/Base%20classes%20modified.png[Modification of class diagrams "Base classes"]) for the task : "the application displays the difference between the total of hours desired and the total of hours assigned. The total of hours assigned are gathered for every teacher for every cell where he appears” (Voir PR #2). So the new branch will be created from this branch https://github.com/oliviercailloux-org/dep-git-Teach_spreadsheets/tree/dev_Mohamed_x2 and have to be named : Difference_hoursDesired_hoursAssigned-it2
 
 * Sequence diagram  as proposed by Mr Cailloux (At PR #2 's review)
@@ -48,8 +43,6 @@ TO DO :
 
 '''
 *Team 3 : Ryan & Mohammed I*
-
-TO DO :
 
 * Sequence diagram and class diagram for the task : “If a 365 sheet already exists, the application overwrites the information in the displayed cells; and indicates a new tab the changes made”. The branch will be created from the branch master and named Sheet_already_exists-it2
 
