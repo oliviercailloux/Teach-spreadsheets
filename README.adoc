@@ -14,7 +14,6 @@ The project documentation is link:Doc/README.adoc[here].
 
 
 == Plan Itération 2 UML 
-:hide-uri-scheme:
 
 Project members : Mohamed I, Mohamed A, Mehdi, Ryan, Nael, Samba, Elena
 
@@ -24,9 +23,8 @@ Project members : Mohamed I, Mohamed A, Mehdi, Ryan, Nael, Samba, Elena
 
 '''
 
-*Team 1 : Samba & Mehdi*
 
-TO DO :
+*Team 1 : Samba & Mehdi*
 
 * Implementation of the proposed changes and improvements of the class diagrams: https://github.com/oliviercailloux-org/dep-git-Teach_spreadsheets/blob/f1f999ee8368e8950394f53e16ba524e8219d248/Doc/Images/Class_Ods_Write_Office365_Upload.png["Class_Ods_Write_Office365_Upload"] and https://github.com/oliviercailloux-org/dep-git-Teach_spreadsheets/blob/f1f999ee8368e8950394f53e16ba524e8219d248/Doc/Images/Class_Ods_Write_Office365_Cloud.png["Class_Ods_Write_Office365_Cloud"] started on the branch https://github.com/oliviercailloux-org/dep-git-Teach_spreadsheets/tree/dev_Ryan_ElMahdi[dev_Ryan_ElMahdi] (Voir PR #3) So the new branch will be created from this branch https://github.com/oliviercailloux-org/dep-git-Teach_spreadsheets/tree/dev_Ryan_ElMahdi[dev_Ryan_ElMahdi] and have to be named : Creation_spreadsheet_online-it2
 
@@ -37,8 +35,6 @@ TO DO :
 '''
 *Team 2 : Mohammed A & Elena*
 
-TO DO :
-
 * Implementation of the proposed changes and improvement of the class diagrams started on the branch dev_Mohamed_x2 (https://github.com/oliviercailloux-org/dep-git-Teach_spreadsheets/blob/32141a63acb93246a15d8be48ce75bcdd8314ab7/Doc/Images/Base%20classes%20modified.png[Modification of class diagrams "Base classes"]) for the task : "the application displays the difference between the total of hours desired and the total of hours assigned. The total of hours assigned are gathered for every teacher for every cell where he appears” (Voir PR #2). So the new branch will be created from this branch https://github.com/oliviercailloux-org/dep-git-Teach_spreadsheets/tree/dev_Mohamed_x2 and have to be named : Difference_hoursDesired_hoursAssigned-it2
 
 * Sequence diagram  as proposed by Mr Cailloux (At PR #2 's review)
@@ -48,11 +44,40 @@ TO DO :
 '''
 *Team 3 : Ryan & Mohammed I*
 
-TO DO :
-
 * Sequence diagram and class diagram for the task : “If a 365 sheet already exists, the application overwrites the information in the displayed cells; and indicates a new tab the changes made”. The branch will be created from the branch master and named Sheet_already_exists-it2
 
+
+== Plan Itération 3 UML 
+
 '''
+
+*SMPO : Ryan Hamiche*
+
+'''
+
+*Team 1 : Mehdi & Mohamed A*
+
+* Bien se renseigner sur le package write, à propos de la création et la manière dont on écrit dans la feuille de calcul (existant)
+
+* S’en inspirer pour créer un diagramme de classe concernant l’écriture de feuilles de calcul en ligne en prenant bien compte des commentaires de la PR#7. Il contiendra deux classes au moins (ou plus), une sur la modification de feuilles en ligne (générale et utilisable dans n’importe quel projet), et une autre classe qui utilise la première et fasse le lien à nos besoins. Créer une documentation sur comment cela va impacter le projet et comment on pourra adapter aisément l’ancien projet au notre. 
+
+
+'''
+*Team 2 : Samba & Nael*
+
+* Améliorer le tutoriel sur les modifications de feuille de calcul Office365. Implémentation de classes et méthodes pour modifier cellule (précisée en entrée) et mise en page de cette cellule dans un package dédié. Faire des tests pour vérifier si cela convient à nos besoins (surtout sur la modification de feuille de calcul)
+
+* Création application officielle Azure Directory pour le projet avec compte Outlook dédié pour que tout le monde puisse y accéder.
+
+
+'''
+*Team 3 : Elena & Mohamed I*
+
+* Peaufiner et finaliser la tâche : L’application affiche la différence entre le nombre d’heures total désiré et le total affecté, pour chaque enseignant, dans chaque cellule où il apparait, par exemple : "[− 30h]" . En prenant en compte les commentaires et indications de la PR#8
+
+* Proposer une documentation pour la tâche :  Si une feuille 365 existe déjà, l’application écrase les informations dans les cellules correspondantes ; et indique dans un nouvel onglet les modifications apportées. Cette documentation décrira la lecture, les calculs/vérifications de modifications (à la main) de la feuille de calcul et le renseignement de modifications apportées dans un nouvel onglet.
+
+* Préparer un plan pour la présentation finale. 
+
 == Credits
 The Icons used in the gui are made by link:https://www.flaticon.com/authors/freepik[Freepik], link:https://www.flaticon.com/authors/xnimrodx[nimrodx] and link:https://www.flaticon.com/authors/prosymbols[Prosymbols] from link:https://www.flaticon.com/[www.flaticon.com].
-
