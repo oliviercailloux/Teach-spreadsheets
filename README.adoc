@@ -79,5 +79,31 @@ Project members : Mohamed I, Mohamed A, Mehdi, Ryan, Nael, Samba, Elena
 
 * Préparer un plan pour la présentation finale. 
 
+== Plan Itération 3 UML 
+
+'''
+
+*SMPO : Mohamed Irazzi*
+
+'''
+
+*Team 1 : Mehdi & Mohamed A*
+
+*Implémenter le package d’authentification et la classe WriterLib (se trouvant dans le package Write se trouvant lui même dans le package Online).
+
+*S’informer sur Jarris et essayer de l’implémenter.
+
+
+'''
+*Team 2 : Samba & Nael*
+
+*Faire le Caneva du fichier qui va être en sortie en ligne -> affectation service 20/21 (Faire la structure du tableau avec les intitulés des colonnes).
+
+
+'''
+*Team 3 : Elena & Ryan*
+
+*Commencer à implémenter la classe XlsSummarizer (se trouvant dans le package Write se trouvant lui même dans le package Online).
+
 == Credits
 The Icons used in the gui are made by link:https://www.flaticon.com/authors/freepik[Freepik], link:https://www.flaticon.com/authors/xnimrodx[nimrodx] and link:https://www.flaticon.com/authors/prosymbols[Prosymbols] from link:https://www.flaticon.com/[www.flaticon.com].
