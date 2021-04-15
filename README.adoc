@@ -87,7 +87,7 @@ Project members : Mohamed I, Mohamed A, Mehdi, Ryan, Nael, Samba, Elena
 
 '''
 
-* Team 1 : Mehdi & Mohamed A*
+*Team 1 : Mehdi & Mohamed A*
 
 * Implémenter le package d’authentification et la classe WriterLib (se trouvant dans le package Write se trouvant lui même dans le package Online).
 
