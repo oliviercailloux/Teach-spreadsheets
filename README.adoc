@@ -79,7 +79,7 @@ Project members : Mohamed I, Mohamed A, Mehdi, Ryan, Nael, Samba, Elena
 
 * Préparer un plan pour la présentation finale. 
 
-== Plan Itération 3 UML 
+== Plan Itération 1 JAVA
 
 '''
 
