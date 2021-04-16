@@ -97,13 +97,13 @@ Project members : Mohamed I, Mohamed A, Mehdi, Ryan, Nael, Samba, Elena
 '''
 *Team 2 : Samba & Nael*
 
-* Faire le Caneva du fichier qui va être en sortie en ligne -> affectation service 20/21 (Faire la structure du tableau avec les intitulés des colonnes).
+* Faire le Caneva du fichier qui va être en sortie en ligne -> affectation service 20/21 (Alimenter la colonne "type de cours").
 
 
 '''
 *Team 3 : Elena & Ryan*
 
-* Commencer à implémenter la classe XlsSummarizer (se trouvant dans le package Write se trouvant lui même dans le package Online).
+* Commencer à implémenter la classe AssignmentPerTeacher (se trouvant dans le package Write se trouvant lui même dans le package Online).
 
 == Credits
 The Icons used in the gui are made by link:https://www.flaticon.com/authors/freepik[Freepik], link:https://www.flaticon.com/authors/xnimrodx[nimrodx] and link:https://www.flaticon.com/authors/prosymbols[Prosymbols] from link:https://www.flaticon.com/[www.flaticon.com].
