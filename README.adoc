@@ -87,7 +87,7 @@ Project members : Mohamed I, Mohamed A, Mehdi, Ryan, Nael, Samba, Elena
 
 '''
 
-*Team 1 : Mehdi & Mohamed A*
+*Team 1 : Mehdi & Nael*
 
 * Implémenter le package d’authentification et la classe WriterLib (se trouvant dans le package Write se trouvant lui même dans le package Online).
 
@@ -95,7 +95,7 @@ Project members : Mohamed I, Mohamed A, Mehdi, Ryan, Nael, Samba, Elena
 
 
 '''
-*Team 2 : Samba & Nael*
+*Team 2 : Samba & Mohamed A*
 
 * Faire le Caneva du fichier qui va être en sortie en ligne -> affectation service 20/21 (Alimenter la colonne "type de cours").
 
