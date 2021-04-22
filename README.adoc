@@ -79,5 +79,31 @@ Project members : Mohamed I, Mohamed A, Mehdi, Ryan, Nael, Samba, Elena
 
 * Préparer un plan pour la présentation finale. 
 
+== Plan Itération 1 JAVA
+
+'''
+
+*SMPO : Mohamed Irazzi*
+
+'''
+
+*Team 1 : Mehdi & Nael*
+
+* Implémenter le package d’authentification et la classe WriterLib (se trouvant dans le package Write se trouvant lui même dans le package Online).
+
+* S’informer sur Jarris et essayer de l’implémenter.
+
+
+'''
+*Team 2 : Samba & Mohamed A*
+
+* Faire le Caneva du fichier qui va être en sortie en ligne -> affectation service 20/21 (Alimenter la colonne "type de cours").
+
+
+'''
+*Team 3 : Elena & Ryan*
+
+* Commencer à implémenter la classe AssignmentPerTeacher (se trouvant dans le package Write se trouvant lui même dans le package Online).
+
 == Credits
 The Icons used in the gui are made by link:https://www.flaticon.com/authors/freepik[Freepik], link:https://www.flaticon.com/authors/xnimrodx[nimrodx] and link:https://www.flaticon.com/authors/prosymbols[Prosymbols] from link:https://www.flaticon.com/[www.flaticon.com].
