@@ -105,6 +105,30 @@ Project members : Mohamed I, Mohamed A, Mehdi, Ryan, Nael, Samba, Elena
 
 * Commencer à implémenter la classe AssignmentPerTeacher (se trouvant dans le package Write se trouvant lui même dans le package Online).
 
+== Plan Itération 4 UML
+
+'''
+
+*SMPO : Elena*
+
+'''
+
+*Team 1 : Mohamed I et Ryan*
+
+* Pour la tâche "Si une feuille 365 existe déjà, l’application écrase les informations dans les cellules correspondantes ; et indique dans un nouvel onglet les modifications apportées", faire une documentation détaillé dessus (quelle type d'erreur vont être repérées et corrigées et comment). Nous n'allons pas écraser la feuille déjà existante, mais en créer une nouvelle avec les modifications et signaler les erreurs détectées. Suite à cela, nous allons faire un diagramme de séquence pour illuster.
+
+
+
+'''
+*Team 2 : Mohamed A & Samba*
+
+* Travailler sur la nouvelle version de l'authentification (https://docs.microsoft.com/en-us/graph/tutorials/java?tutorial-step=1) et faire un exemple de code permettant de s'authentifier avec cette nouvelle version. Mettre à jour si possible (et/ou nécessaire) le tutoriel.
+
+
+'''
+*Team 3 : Mehdi & Nael*
+
+* Travailler sur la documentation UML de l'écriture en ligne ; focus sur le XlsSummarizer (programmer à l'itération 1 de java sur la PR#16 https://github.com/oliviercailloux-org/dep-git-Teach_spreadsheets/pull/16 )  + prise en considération remarque PR #13 tout en conservant pour le moment l'authentification actuelle (qui sera actualisée par la suite, comme discuté en réunion avec M. Cailloux)
+
 == Credits
 The Icons used in the gui are made by link:https://www.flaticon.com/authors/freepik[Freepik], link:https://www.flaticon.com/authors/xnimrodx[nimrodx] and link:https://www.flaticon.com/authors/prosymbols[Prosymbols] from link:https://www.flaticon.com/[www.flaticon.com].
-Elena
