@@ -107,3 +107,4 @@ Project members : Mohamed I, Mohamed A, Mehdi, Ryan, Nael, Samba, Elena
 
 == Credits
 The Icons used in the gui are made by link:https://www.flaticon.com/authors/freepik[Freepik], link:https://www.flaticon.com/authors/xnimrodx[nimrodx] and link:https://www.flaticon.com/authors/prosymbols[Prosymbols] from link:https://www.flaticon.com/[www.flaticon.com].
+Elena
