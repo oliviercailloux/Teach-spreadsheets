@@ -128,7 +128,7 @@ Project members : Mohamed I, Mohamed A, Mehdi, Ryan, Nael, Samba, Elena
 '''
 *Team 3 : Mehdi & Nael*
 
-* Travailler sur la documentation UML de l'écriture en ligne ; focus sur le XlsSummarizer (programmer à l'itération 1 de java sur la PR#16 https://github.com/oliviercailloux-org/dep-git-Teach_spreadsheets/pull/16 )  + prise en considération remarque PR #13 tout en conservant pour le moment l'authentification actuelle (qui sera actualisée par la suite, comme discuté en réunion avec M. Cailloux)
+* Travailler sur la documentation UML de l'écriture en ligne ; focus sur le XlsSummarizer (programmer à l'itération 1 de java sur la PR#16 https://github.com/oliviercailloux-org/dep-git-Teach_spreadsheets/pull/16 )  + prise en considération remarque PR #13 https://github.com/oliviercailloux-org/dep-git-Teach_spreadsheets/pull/13 tout en conservant pour le moment l'authentification actuelle (qui sera actualisée par la suite, comme discuté en réunion avec M. Cailloux)
 
 == Credits
 The Icons used in the gui are made by link:https://www.flaticon.com/authors/freepik[Freepik], link:https://www.flaticon.com/authors/xnimrodx[nimrodx] and link:https://www.flaticon.com/authors/prosymbols[Prosymbols] from link:https://www.flaticon.com/[www.flaticon.com].
