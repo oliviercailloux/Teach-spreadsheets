@@ -115,7 +115,7 @@ Project members : Mohamed I, Mohamed A, Mehdi, Ryan, Nael, Samba, Elena
 
 *Team 1 : Mohamed I et Ryan*
 
-* Pour la tâche "Si une feuille 365 existe déjà, l’application écrase les informations dans les cellules correspondantes ; et indique dans un nouvel onglet les modifications apportées", faire une documentation détaillé dessus (quelle type d'erreur vont être repérées et corrigées et comment). Nous n'allons pas écraser la feuille déjà existante, mais en créer une nouvelle avec les modifications et signaler les erreurs détectées. Suite à cela, nous allons faire un diagramme de séquence pour illuster.
+* Pour la tâche "Si une feuille 365 existe déjà, l’application écrase les informations dans les cellules correspondantes ; et indique dans un nouvel onglet les modifications apportées", faire une documentation détaillée dessus (quel types d'erreurs vont être repérées et corrigées et comment). Nous n'allons pas écraser la feuille déjà existante, mais allons en créer une nouvelle avec les modifications et signaler les erreurs détectées. Suite à cela, nous allons faire un diagramme de séquence pour illuster.
 
 
 
