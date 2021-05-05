@@ -141,23 +141,24 @@ Project members : Mohamed I, Mohamed A, Mehdi, Ryan, Nael, Samba, Elena
 
 *Team 1 : Mohammed I & Ryan*
 
-* Implémenter le package d’authentification et la classe WriterLib (se trouvant dans le package Write se trouvant lui même dans le package Online).
+* Continuer de travailler sur la PR #17, nous allons implémenter les tests unitaires pour l'écriture en ligne relatifs à la classe AssignmentPerTeacher.
 
-* S’informer sur Jarris et essayer de l’implémenter.
+* Nous allons prendre en considération les remarques faîtes afin d'améliorer le code existant (implémentation du logger).
 
 
 '''
 *Team 2 : Samba & Nael*
 
-* Faire le Caneva du fichier qui va être en sortie en ligne -> affectation service 20/21 (Alimenter la colonne "type de cours").
+* Implémenter la nouvelle méthode d'authentification et la nouvelle manière d'écrire en ligne (càd mettre à jour la classe WorkSheetWriter)
 
 
 '''
 *Team 3 : Moha A & Elena*
 
-* Commencer à implémenter la classe AssignmentPerTeacher (se trouvant dans le package Write se trouvant lui même dans le package Online).
+* Comme expliqué à la PR #16, la modification du style ou de la police d'une cellule ne fonctionne pas, en effet lorsque l'on souhaite modifier le style d'une cellule, ce sont toutes les cellules qui sont modifiées. Nous allons donc retravailler sur ça en partant de la nouvelle version de Microsoft 365 qui va être implémentée.
 
 * Si l'utilisation de la nouvelle version de Microsoft 365 ne résout pas le problème, nous allons donc partir sur l'implémentation des classes du package Read.
+
 
 == Credits
 The Icons used in the gui are made by link:https://www.flaticon.com/authors/freepik[Freepik], link:https://www.flaticon.com/authors/xnimrodx[nimrodx] and link:https://www.flaticon.com/authors/prosymbols[Prosymbols] from link:https://www.flaticon.com/[www.flaticon.com].
