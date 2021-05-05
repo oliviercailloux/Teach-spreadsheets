@@ -130,5 +130,34 @@ Project members : Mohamed I, Mohamed A, Mehdi, Ryan, Nael, Samba, Elena
 
 * Travailler sur la documentation UML de l'écriture en ligne ; focus sur le XlsSummarizer (programmer à l'itération 1 de java sur la PR#16 https://github.com/oliviercailloux-org/dep-git-Teach_spreadsheets/pull/16 )  + prise en considération remarque PR #13 https://github.com/oliviercailloux-org/dep-git-Teach_spreadsheets/pull/13 tout en conservant pour le moment l'authentification actuelle (qui sera actualisée par la suite, comme discuté en réunion avec M. Cailloux)
 
+
+== Plan Itération 2 JAVA
+
+'''
+
+*SMPO : Ibouda El Mahdi*
+
+'''
+
+*Team 1 : Mohammed I & Ryan*
+
+* Implémenter le package d’authentification et la classe WriterLib (se trouvant dans le package Write se trouvant lui même dans le package Online).
+
+* S’informer sur Jarris et essayer de l’implémenter.
+
+
+'''
+*Team 2 : Samba & Nael*
+
+* Faire le Caneva du fichier qui va être en sortie en ligne -> affectation service 20/21 (Alimenter la colonne "type de cours").
+
+
+'''
+*Team 3 : Moha A & Elena*
+
+* Commencer à implémenter la classe AssignmentPerTeacher (se trouvant dans le package Write se trouvant lui même dans le package Online).
+
+* Si l'utilisation de la nouvelle version de Microsoft 365 ne résout pas le problème, nous allons donc partir sur l'implémentation des classes du package Read.
+
 == Credits
 The Icons used in the gui are made by link:https://www.flaticon.com/authors/freepik[Freepik], link:https://www.flaticon.com/authors/xnimrodx[nimrodx] and link:https://www.flaticon.com/authors/prosymbols[Prosymbols] from link:https://www.flaticon.com/[www.flaticon.com].
