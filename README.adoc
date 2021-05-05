@@ -150,7 +150,7 @@ Project members : Mohamed I, Mohamed A, Mehdi, Ryan, Nael, Samba, Elena
 '''
 *Team 2 : Samba & Nael*
 
-* Implémenter la nouvelle méthode d'authentification et la nouvelle manière d'écrire en ligne (càd mettre à jour la classe WorkSheetWriter)
+* Implémenter la nouvelle méthode d'authentification et la nouvelle manière d'écrire en ligne (càd mettre à jour la classe WorkSheetWriter).
 
 
 '''
