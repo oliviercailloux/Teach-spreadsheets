@@ -140,9 +140,9 @@ Project members : Mohamed I, Mohamed A, Mehdi, Ryan, Nael, Samba, Elena
 
 '''
 
-*Team 1 : Mohammed I & Ryan*
+*Team 1 : Moha I & Ryan*
 
-* Continuer de travailler sur la PR #17, nous allons implémenter les tests unitaires pour l'écriture en ligne relatifs à la classe AssignmentPerTeacher.
+* Continuer de travailler sur la link:https://github.com/oliviercailloux-org/dep-git-Teach_spreadsheets/pull/17[PR #17], nous allons implémenter les tests unitaires pour l'écriture en ligne relatifs à la classe AssignmentPerTeacher.
 
 * Nous allons prendre en considération les remarques faîtes afin d'améliorer le code existant (implémentation du logger).
 
@@ -156,7 +156,7 @@ Project members : Mohamed I, Mohamed A, Mehdi, Ryan, Nael, Samba, Elena
 '''
 *Team 3 : Moha A & Elena*
 
-* Comme expliqué à la PR #16, la modification du style ou de la police d'une cellule ne fonctionne pas, en effet lorsque l'on souhaite modifier le style d'une cellule, ce sont toutes les cellules qui sont modifiées. Nous allons donc retravailler sur ça en partant de la nouvelle version de Microsoft 365 qui va être implémentée.
+* Comme expliqué à la link:https://github.com/oliviercailloux-org/dep-git-Teach_spreadsheets/pull/16[PR #16], la modification du style ou de la police d'une cellule ne fonctionne pas, en effet lorsque l'on souhaite modifier le style d'une cellule, ce sont toutes les cellules qui sont modifiées. Nous allons donc retravailler sur ça en partant de la nouvelle version de Microsoft 365 qui va être implémentée.
 
 * Si l'utilisation de la nouvelle version de Microsoft 365 ne résout pas le problème, nous allons donc partir sur l'implémentation des classes du package Read.
 
