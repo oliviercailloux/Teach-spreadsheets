@@ -131,6 +131,7 @@ Project members : Mohamed I, Mohamed A, Mehdi, Ryan, Nael, Samba, Elena
 * Travailler sur la documentation UML de l'écriture en ligne ; focus sur le XlsSummarizer (programmer à l'itération 1 de java sur la PR#16 https://github.com/oliviercailloux-org/dep-git-Teach_spreadsheets/pull/16 )  + prise en considération remarque PR #13 https://github.com/oliviercailloux-org/dep-git-Teach_spreadsheets/pull/13 tout en conservant pour le moment l'authentification actuelle (qui sera actualisée par la suite, comme discuté en réunion avec M. Cailloux)
 
 
+
 == Plan Itération 2 JAVA
 
 '''
