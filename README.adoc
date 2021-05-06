@@ -142,7 +142,7 @@ Project members : Mohamed I, Mohamed A, Mehdi, Ryan, Nael, Samba, Elena
 
 *Team 1 : Moha I & Ryan*
 
-* Trouver une solution qui permettrait au programme de se connecter directement à Internet et de s'authentifier automatiquement, ce qui permettra également d'automatiser les tests.
+* Chercher et implémenter une solution qui permettrait au programme de se connecter directement à Internet et de s'authentifier automatiquement, ce qui permettra également d'automatiser les tests.
 
 
 '''
