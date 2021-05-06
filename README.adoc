@@ -142,9 +142,7 @@ Project members : Mohamed I, Mohamed A, Mehdi, Ryan, Nael, Samba, Elena
 
 *Team 1 : Moha I & Ryan*
 
-* Continuer de travailler sur la link:https://github.com/oliviercailloux-org/dep-git-Teach_spreadsheets/pull/17[PR #17], nous allons implémenter les tests unitaires pour l'écriture en ligne relatifs à la classe AssignmentPerTeacher.
-
-* Nous allons prendre en considération les remarques faîtes afin d'améliorer le code existant (implémentation du logger).
+* Trouver une solution qui permettrait au programme de se connecter directement à Internet et de s'authentifier automatiquement, ce qui permettra également d'automatiser les tests.
 
 
 '''
