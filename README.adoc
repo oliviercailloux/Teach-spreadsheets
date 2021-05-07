@@ -144,6 +144,8 @@ Project members : Mohamed I, Mohamed A, Mehdi, Ryan, Nael, Samba, Elena
 
 * Chercher et implémenter une solution qui permettrait au programme de se connecter directement à Internet et de s'authentifier automatiquement, ce qui permettra également d'automatiser les tests.
 
+* Création d'une interface générale et deux implémentations, dont une locale.
+
 
 '''
 *Team 2 : Samba & Nael*
