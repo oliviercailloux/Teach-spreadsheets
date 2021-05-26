@@ -161,5 +161,32 @@ Project members : Mohamed I, Mohamed A, Mehdi, Ryan, Nael, Samba, Elena
 * Si l'utilisation de la nouvelle version de Microsoft 365 ne résout pas le problème, nous allons donc partir sur l'implémentation des classes du package Read.
 
 
+== Plan Itération UML itération 5
+
+'''
+
+*SMPO : ALASSAF Mohamed*
+
+'''
+
+*Team 1 : Nael TALBI & Mohamed IRAZZI*
+
+* Faire le diagramme de classe du package "bimodal" qui contient une interface avec une méthode d'écriture. Celle-ci doit permettre à la fois (selon les paramètres -> URL) d'écrire en ligne ou en local
+
+
+
+'''
+*Team 2 : Samba DIOUF & El Mahdi IBOUDA*
+
+* Suite de la PR (https://github.com/MohamedALASSAF/Teach-spreadsheets-authentification/pull/1), retravailler la documentation sur la nouvelle facon de s'authentifier en prenant en compte les remarques du professeur en l'ajoutant au tutoriel général (https://github.com/oliviercailloux-org/dep-git-Teach_spreadsheets/blob/Creation_spreadsheet_online-it3/Doc/Excel_Online_Api_Tutorial.adoc)
+
+
+'''
+*Team 3 : Ryan HAMICHE & Elena SOCOLOVA *
+
+*  Suite aux remarques et à la suggestion faitent à la PR #29, faire une documentation/tutoriel avec potentiellement un diagramme de séquence pour la lecture d'une feuille excel en ligne en téléchargeant en local la feuille Excel en ligne, et utilisant l’approche existante de l’année passée pour lire la feuille.
+
+
+
 == Credits
 The Icons used in the gui are made by link:https://www.flaticon.com/authors/freepik[Freepik], link:https://www.flaticon.com/authors/xnimrodx[nimrodx] and link:https://www.flaticon.com/authors/prosymbols[Prosymbols] from link:https://www.flaticon.com/[www.flaticon.com].
