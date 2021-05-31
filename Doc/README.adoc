@@ -135,8 +135,11 @@ image::Images\Class_Interface_WorksheetWriter.png[{fullWidth}]
 
 We have an Interface who implements two classes.
 
-In this interface, we have multtiple fonctions that allow to write in a sheet. "setValueAt" allows to write in the cells, and the two other functions are there for the design of the sheet (for the color and the type of writing).
+In this interface, we have multiple functions that allow to write in a sheet. "setValueAt" allows to write in a cell, and the two other functions are for formatting the sheet (color, font, size ...).
 
-Then, we have the first class "LocalWorksheetWriter", it can use an existing sheet or create a new one, and it writes directly on the table.
+The two  classes work as follows : it can use an existing sheet or create a new one, then stored it  and finnaly allows to write directly on it.
 
-The second class allow the same thing but there we write on an online sheet. That's why it uses the GrapheServiceClient.
+The first class "LocalWorksheetWriter", stores the sheet in an object "table" .
+
+The second class "OnlineWorksheetWriter" stores the sheet in an object "WorkbookWorksheetRequestBuilder" which is used to build the requests allowing to interact with the sheet. That's why it uses also the GrapheServiceClient which allows communication with the microsoft graph API. 
+
