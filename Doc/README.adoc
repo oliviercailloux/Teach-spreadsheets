@@ -104,6 +104,20 @@ The main goal of *JsonDeserializer* is to read courses information, presented in
 
 *InputVowsFile* deals with the files link:https://github.com/oliviercailloux/projets/raw/master/Voeux/AA%20-%20Saisie%20des%20voeux%202016-2017.xls[“AA-Saisie voeux 2016-2017.xls”]. The method *createPersonalizedFiles* creates personalized calc files, by completing the sheet "Emploi du temps", and puts them in a specified directory. This class was not implemented because we renounced working on RefRof to get the teachers' information.
 
+== WorksheetWriter classes
+
+image::Images\Class_Interface_WorksheetWriter.png[{fullWidth}]
+
+We have an interface who implements two classes.
+
+In this interface, we have multiple functions that allow to write in a sheet. "setValueAt" allows to write in a cell, and the two other functions are for formatting the sheet (color, font, size ...).
+
+The two  classes work as follows : it can use an existing sheet or create a new one, then stored it and finnaly allows to write directly on it.
+
+The first class "LocalWorksheetWriter", stores the sheet in an object "table" .
+
+The second class "OnlineWorksheetWriter" stores the sheet in an object "WorkbookWorksheetRequestBuilder" which is used to build the requests allowing to interact with the sheet. That's why it uses also the GrapheServiceClient which allows communication with the microsoft graph API and for example to get the "WorkbookWorksheetRequestBuilder" corresponding to the desired sheet 
+
 [[GuiDescription]]
 = Gui description
 
