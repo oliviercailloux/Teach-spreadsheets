@@ -133,11 +133,11 @@ Here you will find our new diagram.
 
 image::Images\Class_Interface_WorksheetWriter.png[{fullWidth}]
 
-We have an Interface who implements two classes.
+We have an interface who implements two classes.
 
 In this interface, we have multiple functions that allow to write in a sheet. "setValueAt" allows to write in a cell, and the two other functions are for formatting the sheet (color, font, size ...).
 
-The two  classes work as follows : it can use an existing sheet or create a new one, then stored it  and finnaly allows to write directly on it.
+The two  classes work as follows : it can use an existing sheet or create a new one, then stored it and finnaly allows to write directly on it.
 
 The first class "LocalWorksheetWriter", stores the sheet in an object "table" .
 
