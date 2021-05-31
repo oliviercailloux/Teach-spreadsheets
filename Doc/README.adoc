@@ -126,7 +126,7 @@ image::Images\Class_Interface_WorksheetWriter.png[{fullWidth}]
 
 We have an Interface who implements two classes.
 
-In this interface, we have multtiple fonctions that allow to write in a sheet. "setValueAt" allows to write in the cells, and the two other functions are there for the design of the sheet (for the color and the type of writing.
+In this interface, we have multtiple fonctions that allow to write in a sheet. "setValueAt" allows to write in the cells, and the two other functions are there for the design of the sheet (for the color and the type of writing).
 
 Then, we have the first class "LocalWorksheetWriter", it can use an existing sheet or create a new one, and it writes directly on the table.
 
