@@ -141,5 +141,5 @@ The two  classes work as follows : it can use an existing sheet or create a new 
 
 The first class "LocalWorksheetWriter", stores the sheet in an object "table" .
 
-The second class "OnlineWorksheetWriter" stores the sheet in an object "WorkbookWorksheetRequestBuilder" which is used to build the requests allowing to interact with the sheet. That's why it uses also the GrapheServiceClient which allows communication with the microsoft graph API. 
+The second class "OnlineWorksheetWriter" stores the sheet in an object "WorkbookWorksheetRequestBuilder" which is used to build the requests allowing to interact with the sheet. That's why it uses also the GrapheServiceClient which allows communication with the microsoft graph API and for example to get the "WorkbookWorksheetRequestBuilder" corresponding to the desired sheet 
 
