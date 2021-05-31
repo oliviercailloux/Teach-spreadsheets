@@ -115,6 +115,15 @@ When the user runs this program, he will be met with this interface with all the
 are considered as selected preferences and represents the preferences that the user accepts. After all the wanted preferences are selected, the user can click on the submit button to generate the
 assignment files.
 
+= Online Spreadsheet
+Here you will find our new diagrams.
+
+[[ClassDiag]]
+== Class diagrams doc
+=== Class_Interface_WorksheetWriter 
+
+image::Images\Class_Interface_WorksheetWriter.png[{fullWidth}]
+
 Some notes:
 
 * The table on the right shows all the courses.The user can check it to know the maximum number of each group in each course.
