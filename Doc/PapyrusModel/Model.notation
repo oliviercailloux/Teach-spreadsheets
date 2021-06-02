@@ -3864,14 +3864,35 @@
       </children>
       <children xmi:type="notation:BasicCompartment" xmi:id="_OpuLuMIbEeuQ-pgVA3P42w" type="Interface_OperationCompartment">
         <children xmi:type="notation:Shape" xmi:id="_Jdz78MIlEeuQ-pgVA3P42w" type="Operation_InterfaceOperationLabel">
+          <styles xmi:type="notation:StringListValueStyle" xmi:id="_a2dxcMP0EeurYOWfqkVSHQ" name="maskLabel">
+            <stringListValue>parametersName</stringListValue>
+            <stringListValue>visibility</stringListValue>
+            <stringListValue>name</stringListValue>
+            <stringListValue>parametersType</stringListValue>
+            <stringListValue>returnType</stringListValue>
+          </styles>
           <element xmi:type="uml:Operation" href="Model.uml#_JdZsQMIlEeuQ-pgVA3P42w"/>
           <layoutConstraint xmi:type="notation:Location" xmi:id="_Jdz78cIlEeuQ-pgVA3P42w"/>
         </children>
         <children xmi:type="notation:Shape" xmi:id="_2Agj0MImEeuQ-pgVA3P42w" type="Operation_InterfaceOperationLabel">
+          <styles xmi:type="notation:StringListValueStyle" xmi:id="_cBgBMMP0EeurYOWfqkVSHQ" name="maskLabel">
+            <stringListValue>parametersName</stringListValue>
+            <stringListValue>visibility</stringListValue>
+            <stringListValue>name</stringListValue>
+            <stringListValue>parametersType</stringListValue>
+            <stringListValue>returnType</stringListValue>
+          </styles>
           <element xmi:type="uml:Operation" href="Model.uml#_2AYoAMImEeuQ-pgVA3P42w"/>
           <layoutConstraint xmi:type="notation:Location" xmi:id="_2Agj0cImEeuQ-pgVA3P42w"/>
         </children>
         <children xmi:type="notation:Shape" xmi:id="_NA4IIMInEeuQ-pgVA3P42w" type="Operation_InterfaceOperationLabel">
+          <styles xmi:type="notation:StringListValueStyle" xmi:id="_eLSYMMP0EeurYOWfqkVSHQ" name="maskLabel">
+            <stringListValue>parametersName</stringListValue>
+            <stringListValue>visibility</stringListValue>
+            <stringListValue>name</stringListValue>
+            <stringListValue>parametersType</stringListValue>
+            <stringListValue>returnType</stringListValue>
+          </styles>
           <element xmi:type="uml:Operation" href="Model.uml#_NAnCYMInEeuQ-pgVA3P42w"/>
           <layoutConstraint xmi:type="notation:Location" xmi:id="_NA4IIcInEeuQ-pgVA3P42w"/>
         </children>
