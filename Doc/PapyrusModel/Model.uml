@@ -816,23 +816,19 @@ there are other private methods which format the ods : putBorders(), formatheade
         <packagedElement xmi:type="uml:Class" xmi:id="_PrOsAMIbEeuQ-pgVA3P42w" name="LocalWorksheetWriter">
           <ownedAttribute xmi:type="uml:Property" xmi:id="_HzjDcMIuEeuQ-pgVA3P42w" name="worksheet" visibility="private" type="_CvFKMIcgEeqUqZA2AF_9Pw"/>
           <interfaceRealization xmi:type="uml:InterfaceRealization" xmi:id="_-YGw0MI6EeuQ-pgVA3P42w" client="_PrOsAMIbEeuQ-pgVA3P42w" supplier="_Opp6QMIbEeuQ-pgVA3P42w" contract="_Opp6QMIbEeuQ-pgVA3P42w"/>
-          <ownedOperation xmi:type="uml:Operation" xmi:id="_sl5fAMIwEeuQ-pgVA3P42w" name="loadExistingSheet" isStatic="true">
+          <ownedOperation xmi:type="uml:Operation" xmi:id="_sl5fAMIwEeuQ-pgVA3P42w" name="loadExistingSheet" visibility="package" isStatic="true">
             <ownedParameter xmi:type="uml:Parameter" xmi:id="_JtSr8MIxEeuQ-pgVA3P42w" name="worksheetWriter" type="_SFLj8MIxEeuQ-pgVA3P42w" direction="return"/>
-            <ownedParameter xmi:type="uml:Parameter" xmi:id="_HK_44MIyEeuQ-pgVA3P42w" name="urlWorkbook">
-              <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#String"/>
-            </ownedParameter>
+            <ownedParameter xmi:type="uml:Parameter" xmi:id="_HK_44MIyEeuQ-pgVA3P42w" name="urlWorkbook" type="_QtxbAIcSEeqUqZA2AF_9Pw"/>
             <ownedParameter xmi:type="uml:Parameter" xmi:id="_UKfOIMIyEeuQ-pgVA3P42w" name="worksheetName">
               <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#String"/>
             </ownedParameter>
           </ownedOperation>
           <ownedOperation xmi:type="uml:Operation" xmi:id="_q4yLAMIyEeuQ-pgVA3P42w" name="loadNewSheet" isStatic="true">
-            <ownedParameter xmi:type="uml:Parameter" xmi:id="_03czkMIyEeuQ-pgVA3P42w" name="urlWorkbook">
-              <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#String"/>
-            </ownedParameter>
+            <ownedParameter xmi:type="uml:Parameter" xmi:id="_03czkMIyEeuQ-pgVA3P42w" name="urlWorkbook" type="_QtxbAIcSEeqUqZA2AF_9Pw"/>
             <ownedParameter xmi:type="uml:Parameter" xmi:id="_4G2u0MIyEeuQ-pgVA3P42w" name="worksheetName">
               <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#String"/>
             </ownedParameter>
-            <ownedParameter xmi:type="uml:Parameter" xmi:id="_9YXEsMIyEeuQ-pgVA3P42w" name="worksheetWriter" type="_SFLj8MIxEeuQ-pgVA3P42w"/>
+            <ownedParameter xmi:type="uml:Parameter" xmi:id="_9YXEsMIyEeuQ-pgVA3P42w" name="worksheetWriter" type="_SFLj8MIxEeuQ-pgVA3P42w" direction="return"/>
           </ownedOperation>
         </packagedElement>
         <packagedElement xmi:type="uml:Usage" xmi:id="_zYXs0MI6EeuQ-pgVA3P42w" client="_KXgIkMIbEeuQ-pgVA3P42w" supplier="_YYcYIMI5EeuQ-pgVA3P42w"/>

@@ -3740,10 +3740,30 @@
           </children>
           <children xmi:type="notation:BasicCompartment" xmi:id="_PrRIR8IbEeuQ-pgVA3P42w" type="Class_OperationCompartment">
             <children xmi:type="notation:Shape" xmi:id="_smEeIMIwEeuQ-pgVA3P42w" type="Operation_ClassOperationLabel">
+              <eAnnotations xmi:type="ecore:EAnnotation" xmi:id="_lfZh0MOuEeurYOWfqkVSHQ" source="QualifiedName">
+                <details xmi:type="ecore:EStringToStringMapEntry" xmi:id="_lfaI4MOuEeurYOWfqkVSHQ" key="QualifiedNameDepth" value="5"/>
+              </eAnnotations>
+              <eAnnotations xmi:type="ecore:EAnnotation" xmi:id="_oWzz0MOuEeurYOWfqkVSHQ" source="ShadowFigure">
+                <details xmi:type="ecore:EStringToStringMapEntry" xmi:id="_oW0a4MOuEeurYOWfqkVSHQ" key="ShadowFigure_Value" value="true"/>
+              </eAnnotations>
+              <styles xmi:type="notation:StringListValueStyle" xmi:id="_pGuN0MOuEeurYOWfqkVSHQ" name="maskLabel">
+                <stringListValue>parametersName</stringListValue>
+                <stringListValue>visibility</stringListValue>
+                <stringListValue>name</stringListValue>
+                <stringListValue>parametersType</stringListValue>
+                <stringListValue>returnType</stringListValue>
+              </styles>
               <element xmi:type="uml:Operation" href="Model.uml#_sl5fAMIwEeuQ-pgVA3P42w"/>
               <layoutConstraint xmi:type="notation:Location" xmi:id="_smEeIcIwEeuQ-pgVA3P42w"/>
             </children>
             <children xmi:type="notation:Shape" xmi:id="_q478AMIyEeuQ-pgVA3P42w" type="Operation_ClassOperationLabel">
+              <styles xmi:type="notation:StringListValueStyle" xmi:id="_x8xBcMOuEeurYOWfqkVSHQ" name="maskLabel">
+                <stringListValue>parametersName</stringListValue>
+                <stringListValue>visibility</stringListValue>
+                <stringListValue>name</stringListValue>
+                <stringListValue>parametersType</stringListValue>
+                <stringListValue>returnType</stringListValue>
+              </styles>
               <element xmi:type="uml:Operation" href="Model.uml#_q4yLAMIyEeuQ-pgVA3P42w"/>
               <layoutConstraint xmi:type="notation:Location" xmi:id="_q478AcIyEeuQ-pgVA3P42w"/>
             </children>
@@ -3778,10 +3798,24 @@
           </children>
           <children xmi:type="notation:BasicCompartment" xmi:id="_KXzDgMIbEeuQ-pgVA3P42w" type="Class_OperationCompartment">
             <children xmi:type="notation:Shape" xmi:id="_qr0lsMI1EeuQ-pgVA3P42w" type="Operation_ClassOperationLabel">
+              <styles xmi:type="notation:StringListValueStyle" xmi:id="__9fKMMOuEeurYOWfqkVSHQ" name="maskLabel">
+                <stringListValue>parametersName</stringListValue>
+                <stringListValue>visibility</stringListValue>
+                <stringListValue>name</stringListValue>
+                <stringListValue>parametersType</stringListValue>
+                <stringListValue>returnType</stringListValue>
+              </styles>
               <element xmi:type="uml:Operation" href="Model.uml#_oIbb4MI1EeuQ-pgVA3P42w"/>
               <layoutConstraint xmi:type="notation:Location" xmi:id="_qr0lscI1EeuQ-pgVA3P42w"/>
             </children>
             <children xmi:type="notation:Shape" xmi:id="_Zi2AoMI3EeuQ-pgVA3P42w" type="Operation_ClassOperationLabel">
+              <styles xmi:type="notation:StringListValueStyle" xmi:id="_B9c20MOvEeurYOWfqkVSHQ" name="maskLabel">
+                <stringListValue>parametersName</stringListValue>
+                <stringListValue>visibility</stringListValue>
+                <stringListValue>name</stringListValue>
+                <stringListValue>parametersType</stringListValue>
+                <stringListValue>returnType</stringListValue>
+              </styles>
               <element xmi:type="uml:Operation" href="Model.uml#_-UTywMI2EeuQ-pgVA3P42w"/>
               <layoutConstraint xmi:type="notation:Location" xmi:id="_Zi2AocI3EeuQ-pgVA3P42w"/>
             </children>
