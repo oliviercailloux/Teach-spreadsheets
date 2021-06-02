@@ -186,6 +186,32 @@ Project members : Mohamed I, Mohamed A, Mehdi, Ryan, Nael, Samba, Elena
 
 *  Suite aux remarques et à la suggestion faitent à la PR #29, faire une documentation/tutoriel avec potentiellement un diagramme de séquence pour la lecture d'une feuille excel en ligne en téléchargeant en local la feuille Excel en ligne, et utilisant l’approche existante de l’année passée pour lire la feuille.
 
+== Plan Itération 3 JAVA
+
+'''
+
+*SMPO : Irazzi Mohamed*
+
+'''
+
+*Team 1 : Nael et Mehdi *
+
+* Suite à la PR (https://github.com/oliviercailloux-org/dep-git-Teach_spreadsheets/pull/33), faire l'implémentation de l'interface WorksheetWriter composé des deux classes : OnlineWorksheetWriter et LocalWorksheetWriter.
+
+
+'''
+*Team 2 : Samba & Mohamed Alassaf*
+
+* Implémenter la nouvelle méthode d'authentification et la nouvelle manière d'écrire en ligne (càd mettre à jour la classe WorkSheetWriter).
+
+
+'''
+*Team 3 : Ryan A & Elena*
+
+* 
+
+* Si l'utilisation de la nouvelle version de Microsoft 365 ne résout pas le problème, nous allons donc partir sur l'implémentation des classes du package Read.
+
 
 
 == Credits
