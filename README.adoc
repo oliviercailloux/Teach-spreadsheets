@@ -194,23 +194,23 @@ Project members : Mohamed I, Mohamed A, Mehdi, Ryan, Nael, Samba, Elena
 
 '''
 
-*Team 1 : Nael et Mehdi *
+*Team 1 : Nael et Mehdi*
 
-* Suite à la link:https://github.com/oliviercailloux-org/dep-git-Teach_spreadsheets/pull/33[PR 33], faire l'implémentation de l'interface WorksheetWriter composé des deux classes : OnlineWorksheetWriter et LocalWorksheetWriter.
+* Suite à la link:https://github.com/oliviercailloux-org/dep-git-Teach_spreadsheets/pull/33[PR #33], faire l'implémentation de l'interface WorksheetWriter composé des deux classes : OnlineWorksheetWriter et LocalWorksheetWriter.
 
 
 '''
 *Team 2 : Samba & Mohamed Alassaf*
 
-* Implémenter la nouvelle méthode d'authentification et la nouvelle manière d'écrire en ligne (càd mettre à jour la classe WorkSheetWriter).
+* Continuer la tâche faîtes lors de la link:https://github.com/oliviercailloux-org/dep-git-Teach_spreadsheets/pull/16[PR #16] , implémenter les fonctions permettant de remplir les colonnes restantes.
 
 
 '''
-*Team 3 : Ryan A & Elena*
+*Team 3 : Ryan & Elena*
 
-* 
+* Suite à la link:https://github.com/oliviercailloux-org/dep-git-Teach_spreadsheets/pull/34[PR #34] , implémenter les fonctions permettant la conversion de fichier XLSX en ODS (suivre les instructions de link:https://github.com/oliviercailloux-org/dep-git-Teach_spreadsheets/pull/34#pullrequestreview-674211184[l'éval] en utilisant Stack Overflow.
 
-* Si l'utilisation de la nouvelle version de Microsoft 365 ne résout pas le problème, nous allons donc partir sur l'implémentation des classes du package Read.
+* En cas d'échec de la tâche ci-dessus, finaliser la classe AssignmentPerTeacher, en ajoutant la mise en page aux fonctions et les tests unitaires.
 
 
 
