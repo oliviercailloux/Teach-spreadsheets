@@ -208,7 +208,7 @@ Project members : Mohamed I, Mohamed A, Mehdi, Ryan, Nael, Samba, Elena
 '''
 *Team 3 : Ryan & Elena*
 
-* Suite à la link:https://github.com/oliviercailloux-org/dep-git-Teach_spreadsheets/pull/34[PR #34] , implémenter les fonctions permettant la conversion de fichier XLSX en ODS (suivre les instructions de link:https://github.com/oliviercailloux-org/dep-git-Teach_spreadsheets/pull/34#pullrequestreview-674211184[l'éval] en utilisant Stack Overflow.
+* Suite à la link:https://github.com/oliviercailloux-org/dep-git-Teach_spreadsheets/pull/34[PR #34] , implémenter les fonctions permettant la conversion de fichier XLSX en ODS (suivre les instructions de link:https://github.com/oliviercailloux-org/dep-git-Teach_spreadsheets/pull/34#pullrequestreview-674211184[l'éval]).
 
 * En cas d'échec de la tâche ci-dessus, finaliser la classe AssignmentPerTeacher, en ajoutant la mise en page aux fonctions et les tests unitaires.
 
