@@ -202,7 +202,7 @@ Project members : Mohamed I, Mohamed A, Mehdi, Ryan, Nael, Samba, Elena
 '''
 *Team 2 : Samba & Mohamed Alassaf*
 
-* Continuer la tâche faîtes lors de la link:https://github.com/oliviercailloux-org/dep-git-Teach_spreadsheets/pull/16[PR #16] , dans la classe XlsSummarizer implémenter les fonctions permettant de remplir les colonnes restantes.
+* Continuer la tâche faîtes lors de la link:https://github.com/oliviercailloux-org/dep-git-Teach_spreadsheets/pull/16[PR #16] , dans la classe XlsSummarizer implémenter les fonctions permettant de remplir les colonnes avec les informations correspondantes.
 
 
 '''
