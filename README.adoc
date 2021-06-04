@@ -196,7 +196,7 @@ Project members : Mohamed I, Mohamed A, Mehdi, Ryan, Nael, Samba, Elena
 
 *Team 1 : Nael et Mehdi*
 
-* Suite à la link:https://github.com/oliviercailloux-org/dep-git-Teach_spreadsheets/pull/33[PR #33], faire l'implémentation de l'interface WorksheetWriter composé des deux classes : OnlineWorksheetWriter et LocalWorksheetWriter.
+* Suite à la link:https://github.com/oliviercailloux-org/dep-git-Teach_spreadsheets/pull/33[PR #33], faire l'implémentation de l'interface WorksheetWriter composé des deux classes : OnlineWorksheetWriter (qui retournera un fichier XLSX (en fonction des résulats de la tâche de la team 3)) et LocalWorksheetWriter (qui retournera un fichier de type ODS). L'implémentation de ces deux classes seront scindées en deux PR distinctes.
 
 
 '''
