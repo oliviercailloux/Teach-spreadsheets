@@ -200,7 +200,7 @@ Project members : Mohamed I, Mohamed A, Mehdi, Ryan, Nael, Samba, Elena
 
 * La première consiste à implémenter la classe OnlineWorksheetWriter et créer sa PR.
 
-* la deuxième tâche elle consistera donc à implémenter la classe LocalWorksheetWriter et créer sa PR.
+* La deuxième tâche elle consistera donc à implémenter la classe LocalWorksheetWriter et créer sa PR.
 
 
 '''
