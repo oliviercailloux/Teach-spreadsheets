@@ -186,6 +186,36 @@ Project members : Mohamed I, Mohamed A, Mehdi, Ryan, Nael, Samba, Elena
 
 *  Suite aux remarques et à la suggestion faitent à la PR #29, faire une documentation/tutoriel avec potentiellement un diagramme de séquence pour la lecture d'une feuille excel en ligne en téléchargeant en local la feuille Excel en ligne, et utilisant l’approche existante de l’année passée pour lire la feuille.
 
+== Plan Itération 3 JAVA
+
+'''
+
+*SMPO : Irazzi Mohamed*
+
+'''
+
+*Team 1 : Nael et Mehdi*
+
+* Suite à la link:https://github.com/oliviercailloux-org/dep-git-Teach_spreadsheets/pull/33[PR #33], faire l'implémentation de l'interface WorksheetWriter composé des deux classes : OnlineWorksheetWriter (qui retournera un fichier XLSX (en fonction des résulats de la tâche de la team 3)) et LocalWorksheetWriter (qui retournera un fichier de type ODS). Cette équipe va donc avoir deux tâches.
+
+* La première consiste à implémenter la classe OnlineWorksheetWriter et créer sa PR.
+
+* La deuxième tâche elle consistera donc à implémenter la classe LocalWorksheetWriter et créer sa PR.
+
+
+'''
+*Team 2 : Samba & Mohamed Alassaf*
+
+* Continuer la tâche faîtes lors de la link:https://github.com/oliviercailloux-org/dep-git-Teach_spreadsheets/pull/16[PR #16] , dans la classe XlsSummarizer implémenter les fonctions permettant de remplir les colonnes avec les informations correspondantes.
+
+
+'''
+*Team 3 : Ryan & Elena*
+
+* Suite à la link:https://github.com/oliviercailloux-org/dep-git-Teach_spreadsheets/pull/34[PR #34] , implémenter les fonctions permettant la conversion de fichier XLSX en ODS (suivre les instructions de link:https://github.com/oliviercailloux-org/dep-git-Teach_spreadsheets/pull/34#pullrequestreview-674211184[l'éval]).
+
+* En cas d'échec de la tâche ci-dessus, finaliser la classe AssignmentPerTeacher, en ajoutant la mise en page aux fonctions et les tests unitaires.
+
 
 
 == Credits
