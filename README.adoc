@@ -216,7 +216,29 @@ Project members : Mohamed I, Mohamed A, Mehdi, Ryan, Nael, Samba, Elena
 
 * En cas d'échec de la tâche ci-dessus, finaliser la classe AssignmentPerTeacher, en ajoutant la mise en page aux fonctions et les tests unitaires.
 
+== Plan Itération 6 UML
 
+'''
+
+*SMPO : Elena Socolova*
+
+'''
+
+*Team 1 : Samba et Ryan*
+
+* Mettre à jour le tutoriel sur le répertoire distant et adapter le code à une utilisation simple (le séparer du projet)
+
+
+'''
+*Team 2 : Nael & Mehdi*
+
+* Refaire le diagramme de classe interface et classes implémenté PR #33
+
+
+'''
+*Team 3 : Mohamed Irazzi & Mohamed Alassaf*
+
+* Préparer la présentation du 30 juin et trouver de nouvelles tâches pour l'équipe qui va nous succéder
 
 == Credits
 The Icons used in the gui are made by link:https://www.flaticon.com/authors/freepik[Freepik], link:https://www.flaticon.com/authors/xnimrodx[nimrodx] and link:https://www.flaticon.com/authors/prosymbols[Prosymbols] from link:https://www.flaticon.com/[www.flaticon.com].
