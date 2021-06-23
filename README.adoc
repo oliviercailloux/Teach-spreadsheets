@@ -240,7 +240,7 @@ Le but de cette itération est surtout de consolider ce qu'on avait fait durant 
 '''
 *Team 3 : Mehdi & Mohamed Irazzi*
 
-* Faire les changements pour pouvoir merge la classe XlsSumarizzer
+* Faire les changements pour pouvoir merge la classe XlsSummarizer
 
 == Credits
 The Icons used in the gui are made by link:https://www.flaticon.com/authors/freepik[Freepik], link:https://www.flaticon.com/authors/xnimrodx[nimrodx] and link:https://www.flaticon.com/authors/prosymbols[Prosymbols] from link:https://www.flaticon.com/[www.flaticon.com].
