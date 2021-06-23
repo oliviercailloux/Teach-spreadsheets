@@ -216,7 +216,31 @@ Project members : Mohamed I, Mohamed A, Mehdi, Ryan, Nael, Samba, Elena
 
 * En cas d'échec de la tâche ci-dessus, finaliser la classe AssignmentPerTeacher, en ajoutant la mise en page aux fonctions et les tests unitaires.
 
+== Plan Itération 4 JAVA
 
+'''
+
+*SMPO : Elena SOCOLOVA*
+
+Le but de cette itération est surtout de consolider ce qu'on avait fait durant tout ce projet et ne pas rajouter de nouvelles fonctionnalités 
+
+'''
+
+*Team 1 : Nael et Samba*
+
+* Faire les changements pour pouvoir merge la classe WorksheetWriter
+
+
+'''
+*Team 2 : Ryan & Mohamed Alassaf*
+
+* Faire les changements pour pouvoir merge la classe AssignementPerTeacher
+
+
+'''
+*Team 3 : Mehdi & Mohamed Irazzi*
+
+* Faire les changements pour pouvoir merge la classe XlsSummarizer
 
 == Credits
 The Icons used in the gui are made by link:https://www.flaticon.com/authors/freepik[Freepik], link:https://www.flaticon.com/authors/xnimrodx[nimrodx] and link:https://www.flaticon.com/authors/prosymbols[Prosymbols] from link:https://www.flaticon.com/[www.flaticon.com].
