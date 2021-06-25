@@ -228,7 +228,9 @@ Le but de cette itération est surtout de consolider ce qu'on avait fait durant 
 
 *Team 1 : Nael et Samba*
 
-* Faire les changements pour pouvoir merge la classe WorksheetWriter
+* Créer une exeception WriteException lancer par les Classes OnlineWorksheetWriter OsdWorksheetWriter -> 1 tâche
+* Faire les changements pour pouvoir merge la classe WorksheetWriter et les classes qui l'implémentent (OnlineWorksheetWriter et OdsWorksheetWriter) -> 2 tâches
+* Faire les changements pour pouvoir merge la classe Authenticator
 
 
 '''
