@@ -123,7 +123,6 @@ public class OnlineWorksheetWriter implements WorksheetWriter {
 	@Override
 	public void setValueAt(int row, int column, String content) throws WriteException {
 		checkArgument(row >= 0, column >= 0);
-		checkNotNull(sheetRequestBuilder);
 
 		String url = sheetRequestBuilder.buildRequest().getRequestUrl().toString();
 
