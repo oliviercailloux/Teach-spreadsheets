@@ -4,7 +4,7 @@ public interface WorksheetWriter {
 
 	/**
 	 * This method allow to write in a worksheet using the row and the column of the
-	 * cell (example : A1 => (row=0,clomn=0)
+	 * cell (example : A1 => (row=0,column=0)
 	 * 
 	 * @param row     - the row of the cell which we want to read : the range of the
 	 *                value of row and column are >= 0
@@ -29,9 +29,6 @@ public interface WorksheetWriter {
 	 * @param color  - color of the cell of the form #RRGGBB (e.g. 'FFA500') or as a
 	 *               named HTML color (e.g. 'orange')
 	 * 
-	 * @see <a
-	 *      href="https://github.com/microsoftgraph/msgraph-sdk-java/issues/744 ">
-	 *      The issue that helped us to implement this function online </a>
 	 */
 	public void setBackgroundColor(int row, int column, String color) throws WriteException;
 
@@ -50,10 +47,6 @@ public interface WorksheetWriter {
 	 * @param bold
 	 * @param size   - size of the cell
 	 * @param name   - police name
-	 * 
-	 * @see <a href=
-	 *      "https://docs.microsoft.com/fr-fr/graph/api/resources/rangefont?view=graph-rest-1.0">
-	 *      The Microsoft doc that helped to implement this function online </a>
 	 * 
 	 */
 	public void setFont(int row, int column, Boolean bold, String color, Double size, String name)
@@ -75,9 +68,6 @@ public interface WorksheetWriter {
 	 * @param alignmentHorizontal -text horizontal aligmnent
 	 * @param alignmentVertical   - text vertical aligmnent
 	 * 
-	 * @see <a href=
-	 *      "https://docs.microsoft.com/fr-fr/graph/api/resources/rangeformat?view=graph-rest-1.0">
-	 *      The Microsoft doc that helped to implement this function online </a>
 	 *
 	 * 
 	 */

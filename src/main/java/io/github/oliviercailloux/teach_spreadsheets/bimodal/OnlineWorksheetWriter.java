@@ -114,7 +114,7 @@ public class OnlineWorksheetWriter implements WorksheetWriter {
 				}
 			}
 		} catch (ClientException e) {
-			throw new WriteException(e.getMessage());
+			throw new WriteException("An oline write failure occurred", e);
 		}
 
 		return sheetExist;
@@ -135,11 +135,16 @@ public class OnlineWorksheetWriter implements WorksheetWriter {
 		try {
 			request.patch(wR);
 		} catch (ClientException e) {
-			throw new WriteException(e.getMessage());
+			throw new WriteException("An oline write failure occurred", e);
 		}
 
 	}
 
+	/**
+	 * @see <a
+	 *      href="https://github.com/microsoftgraph/msgraph-sdk-java/issues/744 ">
+	 *      The issue that helped us to implement this function online </a>
+	 */
 	@Override
 	public void setBackgroundColor(int row, int column, String color) throws WriteException {
 		checkArgument(row >= 0, column >= 0);
@@ -161,11 +166,16 @@ public class OnlineWorksheetWriter implements WorksheetWriter {
 		try {
 			request.patch(workbookRangeFill);
 		} catch (ClientException e) {
-			throw new WriteException(e.getMessage());
+			throw new WriteException("An oline write failure occurred", e);
 		}
 
 	}
 
+	/**
+	 * @see <a href=
+	 *      "https://docs.microsoft.com/fr-fr/graph/api/resources/rangeformat?view=graph-rest-1.0">
+	 *      The Microsoft doc that helped to implement this function online </a>
+	 */
 	@Override
 	public void setFont(int row, int column, Boolean bold, String color, Double size, String name)
 			throws WriteException {
@@ -187,7 +197,7 @@ public class OnlineWorksheetWriter implements WorksheetWriter {
 		try {
 			request.patch(workbookRangeFont);
 		} catch (ClientException e) {
-			throw new WriteException(e.getMessage());
+			throw new WriteException("An oline write failure occurred", e);
 		}
 
 	}
@@ -212,7 +222,7 @@ public class OnlineWorksheetWriter implements WorksheetWriter {
 		try {
 			request.patch(workbookRangeFormat);
 		} catch (ClientException e) {
-			throw new WriteException(e.getMessage());
+			throw new WriteException("An oline write failure occurred", e);
 		}
 
 	}
@@ -238,7 +248,7 @@ public class OnlineWorksheetWriter implements WorksheetWriter {
 		try {
 			request.post(wr);
 		} catch (ClientException e) {
-			throw new WriteException(e.getMessage());
+			throw new WriteException("An oline write failure occurred", e);
 		}
 
 	}
