@@ -15,7 +15,7 @@ import com.microsoft.graph.models.WorkbookWorksheetCellParameterSet;
 import com.microsoft.graph.requests.DriveSearchCollectionPage;
 import com.microsoft.graph.requests.GraphServiceClient;
 
-import io.github.oliviercailloux.teach_spreadsheets.bimodal.WriteException;
+import io.github.oliviercailloux.teach_spreadsheets.bimodal.ReadException;
 
 public class WorksheetReader {
 
@@ -25,9 +25,9 @@ public class WorksheetReader {
 	 * @param fileName
 	 * @param graphClient
 	 * @return FileId
-	 * @throws WriteException
+	 * @throws ReadException
 	 */
-	public static String getFileId(String fileName, GraphServiceClient graphClient) throws WriteException {
+	public static String getFileId(String fileName, GraphServiceClient graphClient) throws ReadException {
 		checkNotNull(fileName);
 		checkNotNull(graphClient);
 		String fileId = "";
@@ -41,7 +41,7 @@ public class WorksheetReader {
 			checkState(content.size() == 1, "size of page contents is not equal to 1");
 			fileId = content.get(0).getAsJsonObject().get("id").getAsString();
 		} catch (ClientException e) {
-			throw new WriteException(e.getMessage());
+			throw new ReadException(e.getMessage());
 		}
 
 		return fileId;
@@ -61,10 +61,10 @@ public class WorksheetReader {
 	 *                      is translated by its alphabetical rank starting with 0
 	 *                      (ex : A -> 0, B->1 ... ZA-> 26)
 	 * @return - the value of the cell
-	 * @throws WriteException
+	 * @throws ReadException
 	 */
 	public static String getCellValue(String fileId, String worksheetName, GraphServiceClient graphClient, int row,
-			int column) throws WriteException {
+			int column) throws ReadException {
 		checkArgument(row >= 0, column >= 0);
 		checkNotNull(fileId);
 		checkNotNull(worksheetName);
@@ -77,7 +77,7 @@ public class WorksheetReader {
 					.buildRequest().get().values;
 			cellValue = contentCell.getAsString();
 		} catch (ClientException e) {
-			throw new WriteException(e.getMessage());
+			throw new ReadException(e.getMessage());
 		}
 
 		return cellValue;
