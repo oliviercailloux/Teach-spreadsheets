@@ -238,7 +238,7 @@ Project members : Mohamed I, Mohamed A, Mehdi, Ryan, Nael, Samba, Elena
 '''
 *Team 3 : Mohamed Irazzi & Mohamed Alassaf*
 
-* Préparer la présentation du 30 juin et trouver de nouvelles tâches pour l'équipe qui va nous succéder
+* Continuer la link:https://github.com/oliviercailloux-org/dep-git-Teach_spreadsheets/pull/28[PR #28] et fournir une documentation afin de permettre l'automatisation des tests pour le groupe de l'année prochaine. 
 
 == Credits
 The Icons used in the gui are made by link:https://www.flaticon.com/authors/freepik[Freepik], link:https://www.flaticon.com/authors/xnimrodx[nimrodx] and link:https://www.flaticon.com/authors/prosymbols[Prosymbols] from link:https://www.flaticon.com/[www.flaticon.com].
