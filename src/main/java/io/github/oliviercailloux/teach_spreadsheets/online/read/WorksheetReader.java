@@ -37,8 +37,8 @@ public class WorksheetReader {
 			JsonArray content = (JsonArray) (itemJsonObect.get("pageContents"));
 			checkState(content.size() == 1, "size of page contents is not equal to 1");
 			fileId = content.get(0).getAsJsonObject().get("id").getAsString();
-		} catch (Exception e) {
-			throw new ClientException(e.getMessage(), e);
+		 } catch (ClientException e) {
+			throw new WriteException(e.getMessage());
 		}
 
 		return fileId;
@@ -72,8 +72,8 @@ public class WorksheetReader {
 					.cell(WorkbookWorksheetCellParameterSet.newBuilder().withRow(row).withColumn(column).build())
 					.buildRequest().get().values;
 			cellValue = contentCell.getAsString();
-		} catch (Exception e) {
-			throw new ClientException(e.getMessage(), e);
+		} catch (ClientException e) {
+			throw new WriteException(e.getMessage());
 		}
 
 		return cellValue;
