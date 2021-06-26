@@ -15,6 +15,8 @@ import com.microsoft.graph.models.WorkbookWorksheetCellParameterSet;
 import com.microsoft.graph.requests.DriveSearchCollectionPage;
 import com.microsoft.graph.requests.GraphServiceClient;
 
+import io.github.oliviercailloux.teach_spreadsheets.bimodal.WriteException;
+
 public class WorksheetReader {
 
 	/**
@@ -23,8 +25,9 @@ public class WorksheetReader {
 	 * @param fileName
 	 * @param graphClient
 	 * @return FileId
+	 * @throws WriteException
 	 */
-	public static String getFileId(String fileName, GraphServiceClient graphClient) {
+	public static String getFileId(String fileName, GraphServiceClient graphClient) throws WriteException {
 		checkNotNull(fileName);
 		checkNotNull(graphClient);
 		String fileId = "";
@@ -37,7 +40,7 @@ public class WorksheetReader {
 			JsonArray content = (JsonArray) (itemJsonObect.get("pageContents"));
 			checkState(content.size() == 1, "size of page contents is not equal to 1");
 			fileId = content.get(0).getAsJsonObject().get("id").getAsString();
-		 } catch (ClientException e) {
+		} catch (ClientException e) {
 			throw new WriteException(e.getMessage());
 		}
 
@@ -58,9 +61,10 @@ public class WorksheetReader {
 	 *                      is translated by its alphabetical rank starting with 0
 	 *                      (ex : A -> 0, B->1 ... ZA-> 26)
 	 * @return - the value of the cell
+	 * @throws WriteException
 	 */
 	public static String getCellValue(String fileId, String worksheetName, GraphServiceClient graphClient, int row,
-			int column) {
+			int column) throws WriteException {
 		checkArgument(row >= 0, column >= 0);
 		checkNotNull(fileId);
 		checkNotNull(worksheetName);
