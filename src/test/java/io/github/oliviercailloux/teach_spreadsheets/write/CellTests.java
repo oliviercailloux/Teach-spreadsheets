@@ -14,7 +14,6 @@ public class CellTests {
 		assertEquals(cell1.getColumn(),702);
 		assertEquals(cell1.getRow(),110);
 		assertEquals(cell2.getCell(),"AB102");
-		assertThrows(IllegalArgumentException.class, () -> new Cell("AD:/12"));
+		assertThrows(IllegalArgumentException.class, () -> new Cell("AD:12"));
 	}
-
 }

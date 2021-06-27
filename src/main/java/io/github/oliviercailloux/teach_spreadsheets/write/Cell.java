@@ -95,8 +95,4 @@ public class Cell {
 			return false;
 		return true;
 	}
-
-
-
-
 }
