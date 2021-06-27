@@ -20,6 +20,7 @@ import io.github.oliviercailloux.teach_spreadsheets.base.CoursePref;
 import io.github.oliviercailloux.teach_spreadsheets.base.SubCourseKind;
 import io.github.oliviercailloux.teach_spreadsheets.bimodal.OnlineWorksheetWriter;
 import io.github.oliviercailloux.teach_spreadsheets.bimodal.WorksheetWriter;
+import io.github.oliviercailloux.teach_spreadsheets.bimodal.WriteException;
 import okhttp3.Request;
 
 public class XlsSummarizer {
@@ -110,13 +111,16 @@ public class XlsSummarizer {
 	 * 
 	 */
 	public static void setSummarizerSheetHeader() {
-		wWriter.setValueAt(1, COURSE_TYPE_POSITION, "Type de cours");
-		wWriter.setValueAt(1, NUMBER_HOURS_POSITION, "Nbre hetd");
-		wWriter.setValueAt(1, TEAM, "Equipe 2010-2021");
-		wWriter.setValueAt(1, CANDIDATES__POSITION, "Candidat");
-		wWriter.setValueAt(1, ASSIGNMENT_POSITION, "AFFECTATION");
-		wWriter.setValueAt(1, COMMENTS_POSITION, "Commentaire");
-
+		try {
+			wWriter.setValueAt(1, COURSE_TYPE_POSITION, "Type de cours");
+			wWriter.setValueAt(1, NUMBER_HOURS_POSITION, "Nbre hetd");
+			wWriter.setValueAt(1, TEAM, "Equipe 2010-2021");
+			wWriter.setValueAt(1, CANDIDATES__POSITION, "Candidat");
+			wWriter.setValueAt(1, ASSIGNMENT_POSITION, "AFFECTATION");
+			wWriter.setValueAt(1, COMMENTS_POSITION, "Commentaire");
+		} catch (WriteException e) {
+			throw new IllegalStateException(e);
+		}
 		formatHeaders();
 	}
 
@@ -126,10 +130,13 @@ public class XlsSummarizer {
 				ASSIGNMENT_POSITION, COMMENTS_POSITION, TEAM,3);
 
 		for (int position : headersPositions) {
-			wWriter.setBackgroundColor(1, position, "#98d454");
-			wWriter.setFont(1, position, true, "Black", 12.0, "Arial");
-			wWriter.setFormat(1, position, 100.0, "center",null);
-
+			try {
+				wWriter.setBackgroundColor(1, position, "#98d454");
+				wWriter.setFont(1, position, true, "Black", 12.0, "Arial");
+				wWriter.setFormat(1, position, 100.0, "center",null);
+			} catch (WriteException e) {
+				throw new IllegalStateException(e);
+			}
 		}
 
 	}
