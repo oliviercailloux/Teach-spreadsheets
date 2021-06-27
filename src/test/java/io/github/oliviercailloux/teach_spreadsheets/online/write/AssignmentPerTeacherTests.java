@@ -5,6 +5,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.net.URL;
 
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.odftoolkit.simple.SpreadsheetDocument;
 import org.odftoolkit.simple.table.Table;
@@ -26,7 +27,11 @@ import io.github.oliviercailloux.teach_spreadsheets.base.Course;
 import io.github.oliviercailloux.teach_spreadsheets.base.Teacher;
 
 public class AssignmentPerTeacherTests {
-
+	
+	/*
+	 * You must launch this test manually.
+	 */
+	@Disabled("Until getting a solution for token access with browser authentification")
 	@Test
 	void testCreateAssignmentPerTeacher() throws Exception {
 		String teacherFirstName = "TestFN";
