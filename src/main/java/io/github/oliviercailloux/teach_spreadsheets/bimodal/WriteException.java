@@ -8,7 +8,7 @@ public class WriteException extends Exception {
 	 *
 	 * @param message the detail message.
 	 */
-	public WriteException(String message) {
-		super(message);
+	public WriteException(String message, Throwable cause) {
+		super(message, cause);
 	}
 }
