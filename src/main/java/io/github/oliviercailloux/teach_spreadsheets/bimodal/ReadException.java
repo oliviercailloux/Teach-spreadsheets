@@ -4,7 +4,7 @@ public class ReadException extends Exception {
 	private static final long serialVersionUID = 6254301468790470484L;
 
 	/**
-	 * Constructs a {@code WriteException} with the specified detail message.
+	 * Constructs a {@code ReadException} with the specified detail message.
 	 *
 	 * @param message the detail message.
 	 */
