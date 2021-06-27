@@ -108,35 +108,30 @@ public class XlsSummarizer {
 
 	/**
 	 * This method adds the headers to the sheet.
+	 * @throws WriteException 
 	 * 
 	 */
-	public static void setSummarizerSheetHeader() {
-		try {
-			wWriter.setValueAt(1, COURSE_TYPE_POSITION, "Type de cours");
-			wWriter.setValueAt(1, NUMBER_HOURS_POSITION, "Nbre hetd");
-			wWriter.setValueAt(1, TEAM, "Equipe 2010-2021");
-			wWriter.setValueAt(1, CANDIDATES__POSITION, "Candidat");
-			wWriter.setValueAt(1, ASSIGNMENT_POSITION, "AFFECTATION");
-			wWriter.setValueAt(1, COMMENTS_POSITION, "Commentaire");
-		} catch (WriteException e) {
-			throw new IllegalStateException(e);
-		}
+	public static void setSummarizerSheetHeader() throws WriteException {
+		wWriter.setValueAt(1, COURSE_TYPE_POSITION, "Type de cours");
+		wWriter.setValueAt(1, NUMBER_HOURS_POSITION, "Nbre hetd");
+		wWriter.setValueAt(1, TEAM, "Equipe 2010-2021");
+		wWriter.setValueAt(1, CANDIDATES__POSITION, "Candidat");
+		wWriter.setValueAt(1, ASSIGNMENT_POSITION, "AFFECTATION");
+		wWriter.setValueAt(1, COMMENTS_POSITION, "Commentaire");
+
 		formatHeaders();
 	}
 
-	private static void formatHeaders() {
+	private static void formatHeaders() throws WriteException {
 		
 		Set<Integer> headersPositions = Set.of(COURSE_TYPE_POSITION, NUMBER_HOURS_POSITION, CANDIDATES__POSITION,
 				ASSIGNMENT_POSITION, COMMENTS_POSITION, TEAM,3);
 
 		for (int position : headersPositions) {
-			try {
-				wWriter.setBackgroundColor(1, position, "#98d454");
-				wWriter.setFont(1, position, true, "Black", 12.0, "Arial");
-				wWriter.setFormat(1, position, 100.0, "center",null);
-			} catch (WriteException e) {
-				throw new IllegalStateException(e);
-			}
+			wWriter.setBackgroundColor(1, position, "#98d454");
+			wWriter.setFont(1, position, true, "Black", 12.0, "Arial");
+			wWriter.setFormat(1, position, 100.0, "center",null);
+
 		}
 
 	}
@@ -145,9 +140,10 @@ public class XlsSummarizer {
 	 * This method creates a summarized Xls in your online repository. For each
 	 * course, it writes all the teachers who want to teach the course, their
 	 * preferences and, possibly, their assignments.
+	 * @throws WriteException 
 	 * 
 	 */
-	public void createSummary(String fileId, String worksheetName, GraphServiceClient<Request> graphClient) {
+	public void createSummary(String fileId, String worksheetName, GraphServiceClient<Request> graphClient) throws WriteException {
 		wWriter = OnlineWorksheetWriter.loadExistingSheet(fileId, worksheetName, graphClient);
 
 		setSummarizerSheetHeader();
@@ -227,7 +223,7 @@ public class XlsSummarizer {
 	
 
 	private void setSummarizedFileForGroup(Course course, SubCourseKind group, Set<CoursePref> prefsForGroup,
-			Set<TeacherAssignment> teachersAssigned, int compteur) {
+			Set<TeacherAssignment> teachersAssigned, int compteur) throws WriteException {
 		checkNotNull(course, "The course should not be null.");
 		checkNotNull(group, "The group should not be null.");
 		checkNotNull(prefsForGroup, "The set of preferences for the group should not be null.");

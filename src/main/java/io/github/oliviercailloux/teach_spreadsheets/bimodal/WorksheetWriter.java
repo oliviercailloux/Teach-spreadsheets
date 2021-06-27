@@ -49,7 +49,7 @@ public interface WorksheetWriter {
 	 * @param name   - police name
 	 * 
 	 */
-	public void setFont(int row, int column, boolean bold, String color, double size, String name)
+	public void setFont(int row, int column, Boolean bold, String color, Double size, String name)
 			throws WriteException;
 
 	/**
