@@ -51,6 +51,22 @@ public interface WorksheetWriter {
 	 */
 	public void setFont(int row, int column, boolean bold, String color, double size, String name)
 			throws WriteException;
+	
+	/**
+	 * This method allow to change the borders of a cell using the row and the column
+	 * of the cell (example : a1 =>(row=0,column=0))
+	 * 
+	 * @param row    - the row of the cell which we want to read - the range of the
+	 *               value of row and column are >= 0
+	 * @param column - the column of the cell which we want to read - In excel the
+	 *               column's name are letter, here the letter is is translated by
+	 *               its alphabetical rank starting with 0 (ex : A -> 0, B->1 ...
+	 *               ZA-> 26)
+	 * @param color  - color of the borders of the cell
+	 * @param sideIndex  - sideIndex of the borders of the cell (EdgeTop , EdgeBottom , EdgeLeft , EdgeRight)
+	 * @param weight  - weight of the borders of the cell
+	 */
+	void setBorder(int row, int column, String color, String sideIndex, String weight);
 
 	/**
 	 * This method allow to change the format of a cell using the row and the column

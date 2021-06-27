@@ -14,6 +14,7 @@ import com.google.gson.JsonPrimitive;
 import com.microsoft.graph.core.ClientException;
 import com.microsoft.graph.http.CustomRequest;
 import com.microsoft.graph.models.WorkbookRange;
+import com.microsoft.graph.models.WorkbookRangeBorder;
 import com.microsoft.graph.models.WorkbookRangeFill;
 import com.microsoft.graph.models.WorkbookRangeFont;
 import com.microsoft.graph.models.WorkbookRangeFormat;
@@ -207,6 +208,38 @@ public class OnlineWorksheetWriter implements WorksheetWriter {
 			throw new WriteException("An online write failure occurred", e);
 		}
 
+	}
+	
+	/**
+	 * @see <a href=
+	 *      "https://docs.microsoft.com/fr-fr/graph/api/rangeborder-update?view=graph-rest-1.0&tabs=java">
+	 *      The Microsoft doc that helped to implement this function online </a>
+	 */
+	@Override
+	public void setBorder(int row, int column, String color, String sideIndex, String weight) {
+		checkArgument(row >= 0, column >= 0);
+		WorkbookRangeBorder workbookRangeBorder = new WorkbookRangeBorder();
+		workbookRangeBorder.color = color;
+		workbookRangeBorder.style = "Continuous";
+		workbookRangeBorder.weight = weight;
+		String url = sheetRequestBuilder.range(WorkbookWorksheetRangeParameterSet.newBuilder().withAddress("").build())
+				.format().borders(sideIndex).buildRequest().getRequestUrl().toString();
+		if (!url.contains("microsoft.graph.range")) {
+			throw new IllegalStateException("Error with MS Graph Url");
+		}
+		String urlRequest = url.replace("microsoft.graph.range",
+				"microsoft.graph.cell(row=" + row + ",column=" + column + ")");
+
+		CustomRequest<WorkbookRangeBorder> request = new CustomRequest<>(urlRequest, sheetRequestBuilder.getClient(),
+				null, WorkbookRangeBorder.class);
+		request.patch(workbookRangeBorder);
+	}
+	
+	public void setAllBordersBlack(int row, int column) {
+		setBorder(row,column,"Black","EdgeBottom","Thin");
+		setBorder(row,column,"Black","EdgeRight","Thin");
+		setBorder(row,column,"Black","EdgeTop","Thin");
+		setBorder(row,column,"Black","EdgeLeft","Thin");
 	}
 
 	@Override
