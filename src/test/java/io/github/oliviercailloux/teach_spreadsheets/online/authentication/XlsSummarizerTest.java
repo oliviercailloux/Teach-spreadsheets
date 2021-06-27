@@ -18,6 +18,7 @@ import java.nio.file.Path;
 import java.util.LinkedHashSet;
 import java.util.Set;
 import okhttp3.Request;
+import org.junit.jupiter.api.Test;
 import org.odftoolkit.simple.SpreadsheetDocument;
 
 public class XlsSummarizerTest {
@@ -27,7 +28,8 @@ public class XlsSummarizerTest {
 	static private Path odsPrefSummaryDocumentPath = outputFolderPath.resolve(Path.of("odsPrefSummary.ods"));
 	static private Path coursesJsonPath = outputFolderPath.resolve("courses.json");
 	
-	public static void main(String[] args) throws IOException, Exception {
+	@Test
+	void test() throws IOException, Exception {
 
 		
 		/**
