@@ -41,7 +41,7 @@ public class WorksheetReader {
 			checkState(content.size() == 1, "size of page contents is not equal to 1");
 			fileId = content.get(0).getAsJsonObject().get("id").getAsString();
 		} catch (ClientException e) {
-			throw new ReadException(e.getMessage());
+			throw new ReadException("An online read failure occurred",e);
 		}
 
 		return fileId;
@@ -77,7 +77,7 @@ public class WorksheetReader {
 					.buildRequest().get().values;
 			cellValue = contentCell.getAsString();
 		} catch (ClientException e) {
-			throw new ReadException(e.getMessage());
+			throw new ReadException("An online read failure occurred",e);
 		}
 
 		return cellValue;
