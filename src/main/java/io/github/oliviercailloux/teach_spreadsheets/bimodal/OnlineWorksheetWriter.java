@@ -63,7 +63,6 @@ public class OnlineWorksheetWriter implements WorksheetWriter {
 		}
 
 		return new OnlineWorksheetWriter(graphClient.me().drive().items(fileId).workbook().worksheets(workSheetName));
-		
 	}
 
 	/**
