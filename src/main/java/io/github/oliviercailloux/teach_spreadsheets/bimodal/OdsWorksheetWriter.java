@@ -4,7 +4,6 @@ import static com.google.common.base.Preconditions.checkArgument;
 import static com.google.common.base.Preconditions.checkNotNull;
 
 import java.io.File;
-import java.io.IOException;
 
 import org.odftoolkit.simple.Document;
 import org.odftoolkit.simple.SpreadsheetDocument;
@@ -26,13 +25,13 @@ public class OdsWorksheetWriter implements WorksheetWriter {
 	}
 
 	/**
-	 * This method load an existing worksheet in the workbook identified by his url.
-	 * The worksheet is store in the variable worksheet.
+	 * This method load an existing worksheet in the workbook identified by his
+	 * file. The worksheet is store in the variable worksheet.
 	 * 
-	 * @param urlWorkbook   - The fileId identifies the workbook where we want to
+	 * @param workbookGiven - The file identifies the workbook where we want to
 	 *                      create the worksheet
 	 * @param worksheetName - The name of the worksheet we want to create
-	 * @throws IOException if the Ods file could not be saved
+	 * @throws ReadException if the Ods file could not be saved
 	 */
 	public static OdsWorksheetWriter loadExistingSheet(File workbookGiven, String worksheetName) throws ReadException {
 
@@ -42,13 +41,13 @@ public class OdsWorksheetWriter implements WorksheetWriter {
 		SpreadsheetDocument workbook;
 		try {
 			workbook = SpreadsheetDocument.loadDocument(workbookGiven);
-			workbook.close();
 
 		} catch (Exception e) {
 			throw new ReadException("A local read failure occurred", e);
 		}
 
 		Table worksheet = workbook.getTableByName(worksheetName);
+		workbook.close();
 
 		if (worksheet == null) {
 			throw new IllegalStateException("failure to retrieve the worksheet");
@@ -61,7 +60,7 @@ public class OdsWorksheetWriter implements WorksheetWriter {
 	 * This method creates an empty Worksheet in the workbook identified by his url
 	 * and load it. The worksheet is stored in the variable worksheet
 	 * 
-	 * @param urlWorkbook   - The fileId identifies the workbook where we want to
+	 * @param workbookGiven - The file identifies the workbook where we want to
 	 *                      create the worksheet
 	 * @param worksheetName - The name of the worksheet we want to create
 	 * @throws ReadException if the Ods file could not be reached
@@ -111,7 +110,7 @@ public class OdsWorksheetWriter implements WorksheetWriter {
 	}
 
 	@Override
-	public void setBackgroundColor(int row, int column, String color) {
+	public void setBackgroundColor(int row, int column, String color) throws WriteException {
 		throw new UnsupportedOperationException();
 	}
 
