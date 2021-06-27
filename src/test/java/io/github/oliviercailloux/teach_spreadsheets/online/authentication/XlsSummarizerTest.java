@@ -18,9 +18,11 @@ import java.nio.file.Path;
 import java.util.LinkedHashSet;
 import java.util.Set;
 import okhttp3.Request;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.odftoolkit.simple.SpreadsheetDocument;
 
+@Disabled
 public class XlsSummarizerTest {
 
 	static private Path outputFolderPath = Path.of("output");
