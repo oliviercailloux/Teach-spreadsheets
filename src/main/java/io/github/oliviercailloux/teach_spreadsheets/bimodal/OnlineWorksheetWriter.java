@@ -55,7 +55,12 @@ public class OnlineWorksheetWriter implements WorksheetWriter {
 			throw new IllegalStateException("This worksheet doesn't exist ");
 		}
 
-		graphClient.me().drive().items(fileId).workbook().worksheets(workSheetName).buildRequest().get();
+		try {
+			graphClient.me().drive().items(fileId).workbook().worksheets(workSheetName).buildRequest().get();
+		} catch (ClientException e) {
+			throw new WriteException("Loading of online worksheet failed", e);
+		}
+
 		return new OnlineWorksheetWriter(graphClient.me().drive().items(fileId).workbook().worksheets(workSheetName));
 	}
 
@@ -82,11 +87,12 @@ public class OnlineWorksheetWriter implements WorksheetWriter {
 			throw new IllegalStateException("A Worksheet with this name already exist ");
 		}
 
-		WorkbookWorksheet wB = graphClient.me().drive().items(fileId).workbook().worksheets()
-				.add(WorkbookWorksheetAddParameterSet.newBuilder().withName(workSheetName).build()).buildRequest()
-				.post();
-		if (wB == null) {
-			throw new IllegalStateException("Creation of new worksheet failed");
+		try {
+			graphClient.me().drive().items(fileId).workbook().worksheets()
+					.add(WorkbookWorksheetAddParameterSet.newBuilder().withName(workSheetName).build()).buildRequest()
+					.post();
+		} catch (Exception e) {
+			throw new WriteException("Creation of new online worksheet failed", e);
 		}
 
 		LOGGER.info("Worsheet created succesfully");
@@ -114,7 +120,7 @@ public class OnlineWorksheetWriter implements WorksheetWriter {
 				}
 			}
 		} catch (ClientException e) {
-			throw new WriteException("An oline write failure occurred", e);
+			throw new WriteException("An online write failure occurred", e);
 		}
 
 		return sheetExist;
@@ -135,7 +141,7 @@ public class OnlineWorksheetWriter implements WorksheetWriter {
 		try {
 			request.patch(wR);
 		} catch (ClientException e) {
-			throw new WriteException("An oline write failure occurred", e);
+			throw new WriteException("An online write failure occurred", e);
 		}
 
 	}
@@ -166,7 +172,7 @@ public class OnlineWorksheetWriter implements WorksheetWriter {
 		try {
 			request.patch(workbookRangeFill);
 		} catch (ClientException e) {
-			throw new WriteException("An oline write failure occurred", e);
+			throw new WriteException("An online write failure occurred", e);
 		}
 
 	}
@@ -177,7 +183,7 @@ public class OnlineWorksheetWriter implements WorksheetWriter {
 	 *      The Microsoft doc that helped to implement this function online </a>
 	 */
 	@Override
-	public void setFont(int row, int column, Boolean bold, String color, Double size, String name)
+	public void setFont(int row, int column, boolean bold, String color, double size, String name)
 			throws WriteException {
 		checkArgument(row >= 0, column >= 0);
 		WorkbookRangeFont workbookRangeFont = new WorkbookRangeFont();
@@ -197,7 +203,7 @@ public class OnlineWorksheetWriter implements WorksheetWriter {
 		try {
 			request.patch(workbookRangeFont);
 		} catch (ClientException e) {
-			throw new WriteException("An oline write failure occurred", e);
+			throw new WriteException("An online write failure occurred", e);
 		}
 
 	}
@@ -222,7 +228,7 @@ public class OnlineWorksheetWriter implements WorksheetWriter {
 		try {
 			request.patch(workbookRangeFormat);
 		} catch (ClientException e) {
-			throw new WriteException("An oline write failure occurred", e);
+			throw new WriteException("An online write failure occurred", e);
 		}
 
 	}
@@ -248,7 +254,7 @@ public class OnlineWorksheetWriter implements WorksheetWriter {
 		try {
 			request.post(wr);
 		} catch (ClientException e) {
-			throw new WriteException("An oline write failure occurred", e);
+			throw new WriteException("An online write failure occurred", e);
 		}
 
 	}
