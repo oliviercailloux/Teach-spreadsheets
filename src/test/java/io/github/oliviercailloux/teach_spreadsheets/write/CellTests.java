@@ -10,10 +10,10 @@ public class CellTests {
 	@Test
 	void testCell() throws Exception {
 		Cell cell1 = new Cell("AAA111");
-		Cell cell2 = new Cell(101,27);
-		assertEquals(cell1.getColumn(),702);
-		assertEquals(cell1.getRow(),110);
-		assertEquals(cell2.getCell(),"AB102");
+		Cell cell2 = new Cell(101, 27);
+		assertEquals(cell1.getColumn(), 702);
+		assertEquals(cell1.getRow(), 110);
+		assertEquals(cell2.getCell(), "AB102");
 		assertThrows(IllegalArgumentException.class, () -> new Cell("AD:12"));
 	}
 }

@@ -208,14 +208,14 @@ public class OnlineWorksheetWriter implements WorksheetWriter {
 		}
 
 	}
-	
+
 	/**
 	 * @see <a href=
 	 *      "https://docs.microsoft.com/fr-fr/graph/api/rangeborder-update?view=graph-rest-1.0&tabs=java">
 	 *      The Microsoft doc that helped to implement this function online </a>
 	 */
 	@Override
-	public void setBorder(int row, int column, String color, String sideIndex, String weight) {
+	public void setBorder(int row, int column, String color, String sideIndex, String weight) throws WriteException {
 		checkArgument(row >= 0, column >= 0);
 		WorkbookRangeBorder workbookRangeBorder = new WorkbookRangeBorder();
 		workbookRangeBorder.color = color;
@@ -231,14 +231,19 @@ public class OnlineWorksheetWriter implements WorksheetWriter {
 
 		CustomRequest<WorkbookRangeBorder> request = new CustomRequest<>(urlRequest, sheetRequestBuilder.getClient(),
 				null, WorkbookRangeBorder.class);
-		request.patch(workbookRangeBorder);
+		try {
+			request.patch(workbookRangeBorder);
+		} catch (ClientException e) {
+			throw new WriteException("An online write failure occurred", e);
+		}
+
 	}
-	
-	public void setAllBordersBlack(int row, int column) {
-		setBorder(row,column,"Black","EdgeBottom","Thin");
-		setBorder(row,column,"Black","EdgeRight","Thin");
-		setBorder(row,column,"Black","EdgeTop","Thin");
-		setBorder(row,column,"Black","EdgeLeft","Thin");
+
+	public void setAllBordersBlack(int row, int column) throws WriteException {
+		setBorder(row, column, "Black", "EdgeBottom", "Thin");
+		setBorder(row, column, "Black", "EdgeRight", "Thin");
+		setBorder(row, column, "Black", "EdgeTop", "Thin");
+		setBorder(row, column, "Black", "EdgeLeft", "Thin");
 	}
 
 	@Override

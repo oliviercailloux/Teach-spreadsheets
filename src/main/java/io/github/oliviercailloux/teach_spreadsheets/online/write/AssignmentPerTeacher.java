@@ -84,12 +84,13 @@ public class AssignmentPerTeacher {
 
 	/**
 	 * This method formats the headers of the table in the sheet.
+	 * 
 	 * @throws WriteException
 	 */
 	private static void formatHeaders() throws WriteException {
 		Set<Cell> personalInfoPositions = Set.of(TEACHER_FIRST_NAME_POSITION, TEACHER_LAST_NAME_POSITION,
 				STATUS_POSITION, OFFICE_POSITION, PERSONAL_EMAIL_POSITION, DAUPHINE_EMAIL_POSITION,
-				PERSONAL_PHONE_POSITION, MOBILE_PHONE_POSITION, DAUPHINE_PHONE_NUMBER_POSITION);		
+				PERSONAL_PHONE_POSITION, MOBILE_PHONE_POSITION, DAUPHINE_PHONE_NUMBER_POSITION);
 
 		Set<Cell> valuesPositions = Set.of(TEACHER_FIRST_NAME_POSITION_VALUE, TEACHER_LAST_NAME_POSITION_VALUE,
 				STATUS_POSITION_VALUE, OFFICE_POSITION_VALUE, PERSONAL_EMAIL_POSITION_VALUE,
@@ -110,7 +111,7 @@ public class AssignmentPerTeacher {
 		for (Cell cell : headersPositions) {
 			wWriter.setFont(cell.getRow(), cell.getColumn(), true, "#2A6099", 12d, "Arial");
 			if (!cell.equals(TITLE_POSITION)) {
-				wWriter.setFormat(cell.getRow(), cell.getColumn(),100.0,"center","center");
+				wWriter.setFormat(cell.getRow(), cell.getColumn(), 100.0, "center", "center");
 				wWriter.setAllBordersBlack(cell.getRow(), cell.getColumn());
 			}
 		}
@@ -119,59 +120,69 @@ public class AssignmentPerTeacher {
 
 	/**
 	 * This method writes the headers in the online document.
-	 * @param teacher       - the teacher for who we want to do the summarized Fiche de
-	 *                			service
+	 * 
+	 * @param teacher - the teacher for who we want to do the summarized Fiche de
+	 *                service
 	 * @throws WriteException
 	 */
 	private static void headersToXlsx(Teacher teacher) throws WriteException {
 		checkNotNull(teacher, "The teacher should not be null.");
 
-		wWriter.setValueAt(TITLE_POSITION.getRow(),TITLE_POSITION.getColumn(),"Assignment per Teacher");
+		wWriter.setValueAt(TITLE_POSITION.getRow(), TITLE_POSITION.getColumn(), "Assignment per Teacher");
 
-		wWriter.setValueAt(TEACHER_FIRST_NAME_POSITION.getRow(),TEACHER_FIRST_NAME_POSITION.getColumn(),"FIRST NAME");
-		wWriter.setValueAt(TEACHER_FIRST_NAME_POSITION_VALUE.getRow(),TEACHER_FIRST_NAME_POSITION_VALUE.getColumn(),teacher.getFirstName());
+		wWriter.setValueAt(TEACHER_FIRST_NAME_POSITION.getRow(), TEACHER_FIRST_NAME_POSITION.getColumn(), "FIRST NAME");
+		wWriter.setValueAt(TEACHER_FIRST_NAME_POSITION_VALUE.getRow(), TEACHER_FIRST_NAME_POSITION_VALUE.getColumn(),
+				teacher.getFirstName());
 
-		wWriter.setValueAt(TEACHER_LAST_NAME_POSITION.getRow(),TEACHER_LAST_NAME_POSITION.getColumn(),"LAST NAME");
-		wWriter.setValueAt(TEACHER_LAST_NAME_POSITION_VALUE.getRow(),TEACHER_LAST_NAME_POSITION_VALUE.getColumn(),teacher.getLastName());
+		wWriter.setValueAt(TEACHER_LAST_NAME_POSITION.getRow(), TEACHER_LAST_NAME_POSITION.getColumn(), "LAST NAME");
+		wWriter.setValueAt(TEACHER_LAST_NAME_POSITION_VALUE.getRow(), TEACHER_LAST_NAME_POSITION_VALUE.getColumn(),
+				teacher.getLastName());
 
-		wWriter.setValueAt(STATUS_POSITION.getRow(),STATUS_POSITION.getColumn(),"STATUS");
-		wWriter.setValueAt(STATUS_POSITION_VALUE.getRow(),STATUS_POSITION_VALUE.getColumn(),teacher.getStatus());
+		wWriter.setValueAt(STATUS_POSITION.getRow(), STATUS_POSITION.getColumn(), "STATUS");
+		wWriter.setValueAt(STATUS_POSITION_VALUE.getRow(), STATUS_POSITION_VALUE.getColumn(), teacher.getStatus());
 
-		wWriter.setValueAt(OFFICE_POSITION.getRow(),OFFICE_POSITION.getColumn(),"OFFICE");
-		wWriter.setValueAt(OFFICE_POSITION_VALUE.getRow(),OFFICE_POSITION_VALUE.getColumn(),teacher.getOffice());
+		wWriter.setValueAt(OFFICE_POSITION.getRow(), OFFICE_POSITION.getColumn(), "OFFICE");
+		wWriter.setValueAt(OFFICE_POSITION_VALUE.getRow(), OFFICE_POSITION_VALUE.getColumn(), teacher.getOffice());
 
-		wWriter.setValueAt(PERSONAL_EMAIL_POSITION.getRow(),PERSONAL_EMAIL_POSITION.getColumn(),"PERSONAL E-MAIL");
-		wWriter.setValueAt(PERSONAL_EMAIL_POSITION_VALUE.getRow(),PERSONAL_EMAIL_POSITION_VALUE.getColumn(),teacher.getPersonalEmail());
+		wWriter.setValueAt(PERSONAL_EMAIL_POSITION.getRow(), PERSONAL_EMAIL_POSITION.getColumn(), "PERSONAL E-MAIL");
+		wWriter.setValueAt(PERSONAL_EMAIL_POSITION_VALUE.getRow(), PERSONAL_EMAIL_POSITION_VALUE.getColumn(),
+				teacher.getPersonalEmail());
 
-		wWriter.setValueAt(DAUPHINE_EMAIL_POSITION.getRow(),DAUPHINE_EMAIL_POSITION.getColumn(),"DAUPHINE E-MAIL");
-		wWriter.setValueAt(DAUPHINE_EMAIL_POSITION_VALUE.getRow(),DAUPHINE_EMAIL_POSITION_VALUE.getColumn(),teacher.getDauphineEmail());
+		wWriter.setValueAt(DAUPHINE_EMAIL_POSITION.getRow(), DAUPHINE_EMAIL_POSITION.getColumn(), "DAUPHINE E-MAIL");
+		wWriter.setValueAt(DAUPHINE_EMAIL_POSITION_VALUE.getRow(), DAUPHINE_EMAIL_POSITION_VALUE.getColumn(),
+				teacher.getDauphineEmail());
 
-		wWriter.setValueAt(PERSONAL_PHONE_POSITION.getRow(),PERSONAL_PHONE_POSITION.getColumn(),"PERSONAL PHONE");
-		wWriter.setValueAt(PERSONAL_PHONE_POSITION_VALUE.getRow(),PERSONAL_PHONE_POSITION_VALUE.getColumn(),teacher.getPersonalPhone());
+		wWriter.setValueAt(PERSONAL_PHONE_POSITION.getRow(), PERSONAL_PHONE_POSITION.getColumn(), "PERSONAL PHONE");
+		wWriter.setValueAt(PERSONAL_PHONE_POSITION_VALUE.getRow(), PERSONAL_PHONE_POSITION_VALUE.getColumn(),
+				teacher.getPersonalPhone());
 
-		wWriter.setValueAt(MOBILE_PHONE_POSITION.getRow(),MOBILE_PHONE_POSITION.getColumn(),"MOBILE PHONE");
-		wWriter.setValueAt(MOBILE_PHONE_POSITION_VALUE.getRow(),MOBILE_PHONE_POSITION_VALUE.getColumn(),teacher.getMobilePhone());
+		wWriter.setValueAt(MOBILE_PHONE_POSITION.getRow(), MOBILE_PHONE_POSITION.getColumn(), "MOBILE PHONE");
+		wWriter.setValueAt(MOBILE_PHONE_POSITION_VALUE.getRow(), MOBILE_PHONE_POSITION_VALUE.getColumn(),
+				teacher.getMobilePhone());
 
-		wWriter.setValueAt(DAUPHINE_PHONE_NUMBER_POSITION.getRow(),DAUPHINE_PHONE_NUMBER_POSITION.getColumn(),"DAUPHINE PHONE NUMBER");
-		wWriter.setValueAt(DAUPHINE_PHONE_NUMBER_POSITION_VALUE.getRow(),DAUPHINE_PHONE_NUMBER_POSITION_VALUE.getColumn(),teacher.getDauphinePhoneNumber());
+		wWriter.setValueAt(DAUPHINE_PHONE_NUMBER_POSITION.getRow(), DAUPHINE_PHONE_NUMBER_POSITION.getColumn(),
+				"DAUPHINE PHONE NUMBER");
+		wWriter.setValueAt(DAUPHINE_PHONE_NUMBER_POSITION_VALUE.getRow(),
+				DAUPHINE_PHONE_NUMBER_POSITION_VALUE.getColumn(), teacher.getDauphinePhoneNumber());
 
-		wWriter.setValueAt(STUDY_LEVEL_POSITION.getRow(),STUDY_LEVEL_POSITION.getColumn(),"STUDY LEVEL");
+		wWriter.setValueAt(STUDY_LEVEL_POSITION.getRow(), STUDY_LEVEL_POSITION.getColumn(), "STUDY LEVEL");
 
-		wWriter.setValueAt(SEMESTER_POSITION.getRow(),SEMESTER_POSITION.getColumn(),"SEMESTER");
+		wWriter.setValueAt(SEMESTER_POSITION.getRow(), SEMESTER_POSITION.getColumn(), "SEMESTER");
 
-		wWriter.setValueAt(COURSE_POSITION.getRow(),COURSE_POSITION.getColumn(),"COURSE");
+		wWriter.setValueAt(COURSE_POSITION.getRow(), COURSE_POSITION.getColumn(), "COURSE");
 
-		wWriter.setValueAt(TYPE_POSITION.getRow(),TYPE_POSITION.getColumn(),"TYPE");
+		wWriter.setValueAt(TYPE_POSITION.getRow(), TYPE_POSITION.getColumn(), "TYPE");
 
-		wWriter.setValueAt(NUMBER_HOURS_POSITION.getRow(),NUMBER_HOURS_POSITION.getColumn(),"Nbr H");
+		wWriter.setValueAt(NUMBER_HOURS_POSITION.getRow(), NUMBER_HOURS_POSITION.getColumn(), "Nbr H");
 
 		formatHeaders();
 	}
 
 	/**
 	 * This method writes the courses of the teacher in the online document.
-	 * @param line          - the line where we start to write
-	 * @param assignments   - the assignments that we will write in the sheet
+	 * 
+	 * @param line        - the line where we start to write
+	 * @param assignments - the assignments that we will write in the sheet
 	 * @throws WriteException
 	 */
 	private static void completeCourses(int line, ImmutableSet<TeacherAssignment> assignments) throws WriteException {
@@ -184,45 +195,47 @@ public class AssignmentPerTeacher {
 		totalNumberMinutes = 0;
 		for (TeacherAssignment ta : assignments) {
 
-			wWriter.setValueAt(line_tmp, 0,String.valueOf(ta.getCourse().getStudyLevel()));
-			wWriter.setBorder(line_tmp, 0, "Black", "EdgeRight","Thin");
-			wWriter.setValueAt(line_tmp, 1,String.valueOf(ta.getCourse().getSemester()));
-			wWriter.setBorder(line_tmp, 1, "Black", "EdgeRight","Thin");
-			wWriter.setValueAt(line_tmp, 2,ta.getCourse().getName());
-			wWriter.setBorder(line_tmp, 2, "Black", "EdgeRight","Thin");
+			wWriter.setValueAt(line_tmp, 0, String.valueOf(ta.getCourse().getStudyLevel()));
+			wWriter.setBorder(line_tmp, 0, "Black", "EdgeRight", "Thin");
+			wWriter.setValueAt(line_tmp, 1, String.valueOf(ta.getCourse().getSemester()));
+			wWriter.setBorder(line_tmp, 1, "Black", "EdgeRight", "Thin");
+			wWriter.setValueAt(line_tmp, 2, ta.getCourse().getName());
+			wWriter.setBorder(line_tmp, 2, "Black", "EdgeRight", "Thin");
 
 			for (SubCourseKind group : SubCourseKind.values()) {
 				if (ta.getCountGroups(group) != 0) {
 					wWriter.setValueAt(line_tmp, 3, group.toString());
-					wWriter.setBorder(line_tmp, 3, "Black", "EdgeRight","Thin");
-					wWriter.setValueAt(line_tmp, 4,String.valueOf(ta.getCourse().getNbMinutes(group) / 60.0));
-					wWriter.setBorder(line_tmp, 4, "Black", "EdgeRight","Thin");
+					wWriter.setBorder(line_tmp, 3, "Black", "EdgeRight", "Thin");
+					wWriter.setValueAt(line_tmp, 4, String.valueOf(ta.getCourse().getNbMinutes(group) / 60.0));
+					wWriter.setBorder(line_tmp, 4, "Black", "EdgeRight", "Thin");
 					totalNumberMinutes += ta.getCourse().getNbMinutes(group);
 					line_tmp++;
 				}
 			}
 		}
-		wWriter.setBorder(line_tmp, 0, "Black", "EdgeTop","Thin");
-		wWriter.setBorder(line_tmp, 1, "Black", "EdgeTop","Thin");
-		wWriter.setBorder(line_tmp, 2, "Black", "EdgeTop","Thin");
-		wWriter.setBorder(line_tmp, 3, "Black", "EdgeTop","Thin");
-		wWriter.setBorder(line_tmp, 4, "Black", "EdgeTop","Thin");
+		wWriter.setBorder(line_tmp, 0, "Black", "EdgeTop", "Thin");
+		wWriter.setBorder(line_tmp, 1, "Black", "EdgeTop", "Thin");
+		wWriter.setBorder(line_tmp, 2, "Black", "EdgeTop", "Thin");
+		wWriter.setBorder(line_tmp, 3, "Black", "EdgeTop", "Thin");
+		wWriter.setBorder(line_tmp, 4, "Black", "EdgeTop", "Thin");
 
 		line_tmp += 3;
 
-		wWriter.setValueAt(line_tmp, 3,"TOTAL");
+		wWriter.setValueAt(line_tmp, 3, "TOTAL");
 
-		wWriter.setValueAt(line_tmp, 4,String.valueOf(totalNumberMinutes / 60d));
+		wWriter.setValueAt(line_tmp, 4, String.valueOf(totalNumberMinutes / 60d));
 		wWriter.setAllBordersBlack(line_tmp, 4);
 
 		totalNumberMinutes = 0;
 	}
+
 	/**
-	 * This method creates new od and writes in an Excel Document already created online. For a given
-	 * teacher, it writes all the informations about this teacher and the courses he/she will teach.
+	 * This method creates new od and writes in an Excel Document already created
+	 * online. For a given teacher, it writes all the informations about this
+	 * teacher and the courses he/she will teach.
 	 * 
-	 * @param fileId        - the fileId needed to find the online sheet
-	 * @param graphClient   - the graphClient needed to find the online sheet
+	 * @param fileId             - the fileId needed to find the online sheet
+	 * @param graphClient        - the graphClient needed to find the online sheet
 	 * @param teacher            - the teacher for who we want to do the summarized
 	 *                           Fiche de service
 	 * @param allCoursesAssigned - a complete set of CourseAssignment (it represents
@@ -234,15 +247,17 @@ public class AssignmentPerTeacher {
 		checkNotNull(teacher, "The teacher should not be null.");
 		checkNotNull(allCoursesAssigned, "The set of courses assigned should not be null.");
 
-		String workSheetName = teacher.getFirstName()+"_"+teacher.getLastName();
+		String workSheetName = teacher.getFirstName() + "_" + teacher.getLastName();
 
-		if(OnlineWorksheetWriter.checkExistingSheet(fileId, workSheetName, graphClient)) wWriter = OnlineWorksheetWriter.loadExistingSheet(fileId, workSheetName, graphClient);
-		else wWriter = OnlineWorksheetWriter.loadNewSheet(fileId, workSheetName, graphClient);
+		if (OnlineWorksheetWriter.checkExistingSheet(fileId, workSheetName, graphClient))
+			wWriter = OnlineWorksheetWriter.loadExistingSheet(fileId, workSheetName, graphClient);
+		else
+			wWriter = OnlineWorksheetWriter.loadNewSheet(fileId, workSheetName, graphClient);
 
 		headersToXlsx(teacher);
 		ImmutableSet<TeacherAssignment> assignments = CourseAssignment.getTeacherAssignments(teacher,
 				allCoursesAssigned);
 		int line = 16;
-		completeCourses(line,assignments);
+		completeCourses(line, assignments);
 	}
 }

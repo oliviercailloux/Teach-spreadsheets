@@ -27,7 +27,7 @@ import io.github.oliviercailloux.teach_spreadsheets.base.Course;
 import io.github.oliviercailloux.teach_spreadsheets.base.Teacher;
 
 public class AssignmentPerTeacherTests {
-	
+
 	/*
 	 * You must launch this test manually.
 	 */
@@ -38,9 +38,10 @@ public class AssignmentPerTeacherTests {
 		String teacherLastName = "TestLN";
 
 		Teacher teacher1 = Teacher.Builder.newInstance().setFirstName(teacherFirstName).setLastName(teacherLastName)
-				.setAddress("Place de Maréchal de Lattre de Tassigny, 75016 PARIS").setDauphineEmail("teacher1@dauphine.fr")
-				.setPersonalEmail("teacher1@gmail.com").setOffice("B512").setPersonalPhone("07 06 05 04 03")
-				.setMobilePhone("06 12 34 56 78").setDauphinePhoneNumber("06 07 08 09 10").setStatus("MCF").build();
+				.setAddress("Place de Maréchal de Lattre de Tassigny, 75016 PARIS")
+				.setDauphineEmail("teacher1@dauphine.fr").setPersonalEmail("teacher1@gmail.com").setOffice("B512")
+				.setPersonalPhone("07 06 05 04 03").setMobilePhone("06 12 34 56 78")
+				.setDauphinePhoneNumber("06 07 08 09 10").setStatus("MCF").build();
 
 		Course course1 = Course.Builder.newInstance().setName("testcourse1").setStudyYear(2016).setStudyLevel("DE1")
 				.setSemester(1).setCountGroupsCM(3).setCountGroupsTD(4).setNbMinutesCM(60).setNbMinutesTD(60).build();
@@ -60,7 +61,7 @@ public class AssignmentPerTeacherTests {
 		CourseAssignment courseAssignment = courseAssignmentBuilder.build();
 		CourseAssignment courseAssignment2 = courseAssignmentBuilder2.build();
 
-		ImmutableSet<CourseAssignment> allCoursesAssigned = ImmutableSet.of(courseAssignment,courseAssignment2);
+		ImmutableSet<CourseAssignment> allCoursesAssigned = ImmutableSet.of(courseAssignment, courseAssignment2);
 
 		IAuthenticationProvider token = Authenticator.getAuthenticationProvider();
 
@@ -70,6 +71,7 @@ public class AssignmentPerTeacherTests {
 		String fileId = WorksheetReader.getFileId("AssignmentPerTeacher.xlsx", graphClient);
 
 		AssignmentPerTeacher.assignmentPerTeacher(fileId, graphClient, teacher1, allCoursesAssigned);
-		assertTrue(OnlineWorksheetWriter.checkExistingSheet(fileId, teacher1.getFirstName()+"_"+teacher1.getLastName(), graphClient));
+		assertTrue(OnlineWorksheetWriter.checkExistingSheet(fileId,
+				teacher1.getFirstName() + "_" + teacher1.getLastName(), graphClient));
 	}
 }
