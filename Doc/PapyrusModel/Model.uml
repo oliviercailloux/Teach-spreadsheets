@@ -771,7 +771,7 @@ there are other private methods which format the ods : putBorders(), formatheade
         </packagedElement>
         <packagedElement xmi:type="uml:Interface" xmi:id="_Opp6QMIbEeuQ-pgVA3P42w" name="WorksheetWriter">
           <ownedOperation xmi:type="uml:Operation" xmi:id="_JdZsQMIlEeuQ-pgVA3P42w" name="setValueAt">
-            <ownedParameter xmi:type="uml:Parameter" xmi:id="_jsJboMImEeuQ-pgVA3P42w" name="line">
+            <ownedParameter xmi:type="uml:Parameter" xmi:id="_jsJboMImEeuQ-pgVA3P42w" name="row">
               <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/JavaPrimitiveTypes.library.uml#int"/>
             </ownedParameter>
             <ownedParameter xmi:type="uml:Parameter" xmi:id="_tMyrcMImEeuQ-pgVA3P42w" name="column">
@@ -780,9 +780,10 @@ there are other private methods which format the ods : putBorders(), formatheade
             <ownedParameter xmi:type="uml:Parameter" xmi:id="_xIMKAMImEeuQ-pgVA3P42w" name="content">
               <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#String"/>
             </ownedParameter>
+            <ownedParameter xmi:type="uml:Parameter" xmi:id="_G79DMNgeEeuAweResmjsng" direction="return"/>
           </ownedOperation>
           <ownedOperation xmi:type="uml:Operation" xmi:id="_2AYoAMImEeuQ-pgVA3P42w" name="setBackgroundColor">
-            <ownedParameter xmi:type="uml:Parameter" xmi:id="_8ymisMImEeuQ-pgVA3P42w" name="line">
+            <ownedParameter xmi:type="uml:Parameter" xmi:id="_8ymisMImEeuQ-pgVA3P42w" name="row">
               <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/JavaPrimitiveTypes.library.uml#int"/>
             </ownedParameter>
             <ownedParameter xmi:type="uml:Parameter" xmi:id="_-z9WcMImEeuQ-pgVA3P42w" name="column">
@@ -793,22 +794,53 @@ there are other private methods which format the ods : putBorders(), formatheade
             </ownedParameter>
           </ownedOperation>
           <ownedOperation xmi:type="uml:Operation" xmi:id="_NAnCYMInEeuQ-pgVA3P42w" name="setFont">
-            <ownedParameter xmi:type="uml:Parameter" xmi:id="_NAnCYcInEeuQ-pgVA3P42w" name="line">
+            <ownedParameter xmi:type="uml:Parameter" xmi:id="_NAnCYcInEeuQ-pgVA3P42w" name="row">
               <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/JavaPrimitiveTypes.library.uml#int"/>
             </ownedParameter>
             <ownedParameter xmi:type="uml:Parameter" xmi:id="_NAnCYsInEeuQ-pgVA3P42w" name="column">
               <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/JavaPrimitiveTypes.library.uml#int"/>
             </ownedParameter>
-            <ownedParameter xmi:type="uml:Parameter" xmi:id="_NAnCY8InEeuQ-pgVA3P42w" name="fontFamilyName">
-              <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#String"/>
+            <ownedParameter xmi:type="uml:Parameter" xmi:id="_NAnCY8InEeuQ-pgVA3P42w" name="bold">
+              <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/JavaPrimitiveTypes.library.uml#boolean"/>
             </ownedParameter>
             <ownedParameter xmi:type="uml:Parameter" xmi:id="_ZlgGUMInEeuQ-pgVA3P42w" name="color">
               <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#String"/>
             </ownedParameter>
-            <ownedParameter xmi:type="uml:Parameter" xmi:id="_k9XWcMInEeuQ-pgVA3P42w" name="bold">
-              <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/JavaPrimitiveTypes.library.uml#boolean"/>
+            <ownedParameter xmi:type="uml:Parameter" xmi:id="_k9XWcMInEeuQ-pgVA3P42w" name="size">
+              <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/JavaPrimitiveTypes.library.uml#double"/>
             </ownedParameter>
-            <ownedParameter xmi:type="uml:Parameter" xmi:id="_vQX3UMInEeuQ-pgVA3P42w" name="size">
+            <ownedParameter xmi:type="uml:Parameter" xmi:id="_vQX3UMInEeuQ-pgVA3P42w" name="name">
+              <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#String"/>
+            </ownedParameter>
+          </ownedOperation>
+          <ownedOperation xmi:type="uml:Operation" xmi:id="_QMPYQNgdEeuAweResmjsng" name="setFormat">
+            <ownedParameter xmi:type="uml:Parameter" xmi:id="_eERfENgdEeuAweResmjsng" name="row">
+              <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/JavaPrimitiveTypes.library.uml#int"/>
+            </ownedParameter>
+            <ownedParameter xmi:type="uml:Parameter" xmi:id="_frbDENgdEeuAweResmjsng" name="column">
+              <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/JavaPrimitiveTypes.library.uml#int"/>
+            </ownedParameter>
+            <ownedParameter xmi:type="uml:Parameter" xmi:id="_jSFnwNgdEeuAweResmjsng" name="columnWidth">
+              <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/JavaPrimitiveTypes.library.uml#double"/>
+            </ownedParameter>
+            <ownedParameter xmi:type="uml:Parameter" xmi:id="_lxBvYNgdEeuAweResmjsng" name="alignmentHorizontal">
+              <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#String"/>
+            </ownedParameter>
+            <ownedParameter xmi:type="uml:Parameter" xmi:id="_nsU-cNgdEeuAweResmjsng" name="alignmentVertical">
+              <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#String"/>
+            </ownedParameter>
+          </ownedOperation>
+          <ownedOperation xmi:type="uml:Operation" xmi:id="_uoh7kNgdEeuAweResmjsng" name="cellFusion" visibility="public">
+            <ownedParameter xmi:type="uml:Parameter" xmi:id="_2aNIINgdEeuAweResmjsng" name="firstRow">
+              <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/JavaPrimitiveTypes.library.uml#int"/>
+            </ownedParameter>
+            <ownedParameter xmi:type="uml:Parameter" xmi:id="_4EaAINgdEeuAweResmjsng" name="firstColumn">
+              <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/JavaPrimitiveTypes.library.uml#int"/>
+            </ownedParameter>
+            <ownedParameter xmi:type="uml:Parameter" xmi:id="_5dc2sNgdEeuAweResmjsng" name="secondRow">
+              <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/JavaPrimitiveTypes.library.uml#int"/>
+            </ownedParameter>
+            <ownedParameter xmi:type="uml:Parameter" xmi:id="_63yGsNgdEeuAweResmjsng" name="secondColumn">
               <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/JavaPrimitiveTypes.library.uml#int"/>
             </ownedParameter>
           </ownedOperation>
