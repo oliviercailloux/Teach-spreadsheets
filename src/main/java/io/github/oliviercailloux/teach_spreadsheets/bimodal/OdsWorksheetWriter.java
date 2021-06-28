@@ -138,4 +138,10 @@ public class OdsWorksheetWriter implements WorksheetWriter {
 		return worksheet;
 	}
 
+	@Override
+	public void setBorder(int row, int column, String color, String sideIndex, String weight) throws WriteException {
+		throw new UnsupportedOperationException();
+
+	}
+
 }
