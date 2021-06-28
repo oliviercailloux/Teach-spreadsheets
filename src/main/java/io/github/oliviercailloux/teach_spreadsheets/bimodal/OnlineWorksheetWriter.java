@@ -183,7 +183,7 @@ public class OnlineWorksheetWriter implements WorksheetWriter {
 	 *      The Microsoft doc that helped to implement this function online </a>
 	 */
 	@Override
-	public void setFont(int row, int column, Boolean bold, String color, Double size, String name)
+	public void setFont(int row, int column, boolean bold, String color, double size, String name)
 			throws WriteException {
 		checkArgument(row >= 0, column >= 0);
 		WorkbookRangeFont workbookRangeFont = new WorkbookRangeFont();

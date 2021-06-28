@@ -36,6 +36,7 @@ public class XlsSummarizer {
 	private final static int ASSIGNMENT_POSITION = 7;
 	private final static int COMMENTS_POSITION = 8;
 	private static WorksheetWriter wWriter;
+	private final static int DEFAULT_SIZE = 11;
 
 	private int line;
 
@@ -108,7 +109,8 @@ public class XlsSummarizer {
 
 	/**
 	 * This method adds the headers to the sheet.
-	 * @throws WriteException 
+	 * 
+	 * @throws WriteException
 	 * 
 	 */
 	public static void setSummarizerSheetHeader() throws WriteException {
@@ -123,14 +125,14 @@ public class XlsSummarizer {
 	}
 
 	private static void formatHeaders() throws WriteException {
-		
+
 		Set<Integer> headersPositions = Set.of(COURSE_TYPE_POSITION, NUMBER_HOURS_POSITION, CANDIDATES__POSITION,
-				ASSIGNMENT_POSITION, COMMENTS_POSITION, TEAM,3);
+				ASSIGNMENT_POSITION, COMMENTS_POSITION, TEAM, 3);
 
 		for (int position : headersPositions) {
 			wWriter.setBackgroundColor(1, position, "#98d454");
 			wWriter.setFont(1, position, true, "Black", 12.0, "Arial");
-			wWriter.setFormat(1, position, 100.0, "center",null);
+			wWriter.setFormat(1, position, 100.0, "center", null);
 
 		}
 
@@ -140,17 +142,19 @@ public class XlsSummarizer {
 	 * This method creates a summarized Xls in your online repository. For each
 	 * course, it writes all the teachers who want to teach the course, their
 	 * preferences and, possibly, their assignments.
-	 * @throws WriteException 
+	 * 
+	 * @throws WriteException
 	 * 
 	 */
-	public void createSummary(String fileId, String worksheetName, GraphServiceClient<Request> graphClient) throws WriteException {
+	public void createSummary(String fileId, String worksheetName, GraphServiceClient<Request> graphClient)
+			throws WriteException {
 		wWriter = OnlineWorksheetWriter.loadExistingSheet(fileId, worksheetName, graphClient);
 
 		setSummarizerSheetHeader();
 
 		line = 1;
 		int compteur;
-		
+
 		LinkedList<Course> allcourse = new LinkedList<>(allCourses);
 		Collections.sort(allcourse, new Comparator<Course>() {
 			@Override
@@ -158,32 +162,32 @@ public class XlsSummarizer {
 				return Integer.valueOf(c1.getSemester()).compareTo(c2.getSemester());
 			}
 		});
-		 
+
 		int semester = allcourse.getFirst().getSemester();
 		Course lastCourse = allcourse.getLast();
-		int semesterRow = 1 ;
-		
+		int semesterRow = 1;
+
 		for (Course course : allcourse) {
 			compteur = 0;
 			line++;
-			if(course.getSemester() > semester) {
-				wWriter.setValueAt(semesterRow, 1, "S " + semester );
-				wWriter.cellFusion(semesterRow, 1,line-1 ,1 );
-				wWriter.setFont(semesterRow, 1, true, null, null, null);
-				wWriter.setFormat(semesterRow, 1, 50.0, "center","center");
-				semester =  course.getSemester()  ;
-				semesterRow = line ;
+			if (course.getSemester() > semester) {
+				wWriter.setValueAt(semesterRow, 1, "S " + semester);
+				wWriter.cellFusion(semesterRow, 1, line - 1, 1);
+				wWriter.setFont(semesterRow, 1, true, null, DEFAULT_SIZE, null);
+				wWriter.setFormat(semesterRow, 1, 50.0, "center", "center");
+				semester = course.getSemester();
+				semesterRow = line;
 			}
-			if(lastCourse.equals(course)) {
-				wWriter.setValueAt(semesterRow, 1, "S " + semester );
-				wWriter.setFormat(semesterRow, 1, 50.0, "center","center");
-				wWriter.setFont(semesterRow, 1, true, null, null, null);
-				wWriter.cellFusion(semesterRow, 1,line ,1 );
+			if (lastCourse.equals(course)) {
+				wWriter.setValueAt(semesterRow, 1, "S " + semester);
+				wWriter.setFormat(semesterRow, 1, 50.0, "center", "center");
+				wWriter.setFont(semesterRow, 1, true, null, DEFAULT_SIZE, null);
+				wWriter.cellFusion(semesterRow, 1, line, 1);
 			}
-			
+
 			wWriter.setValueAt(line, 2, course.getName());
 			wWriter.setBackgroundColor(line, 2, "#e0dcdc");
-			wWriter.cellFusion(line, COURSE_TYPE_POSITION,line ,COMMENTS_POSITION );
+			wWriter.cellFusion(line, COURSE_TYPE_POSITION, line, COMMENTS_POSITION);
 
 			// formatCourseHeader();
 
@@ -214,13 +218,10 @@ public class XlsSummarizer {
 				}
 
 			}
-			
+
 		}
-		
 
 	}
-
-	
 
 	private void setSummarizedFileForGroup(Course course, SubCourseKind group, Set<CoursePref> prefsForGroup,
 			Set<TeacherAssignment> teachersAssigned, int compteur) throws WriteException {
@@ -234,7 +235,7 @@ public class XlsSummarizer {
 		wWriter.setValueAt(line, 2, group.toString());
 		wWriter.setValueAt(line, 4, String.valueOf(course.getNbMinutes(group) / 60.0));
 
-		if (group.toString() != "CM") {
+		if (!group.toString().equals("CM")) {
 			wWriter.setValueAt(line, 3, compteur + "");
 
 		}

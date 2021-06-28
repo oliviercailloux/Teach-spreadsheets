@@ -6,12 +6,12 @@ import io.github.oliviercailloux.teach_spreadsheets.base.AggregatedPrefs;
 import io.github.oliviercailloux.teach_spreadsheets.base.Course;
 import io.github.oliviercailloux.teach_spreadsheets.base.CoursePref;
 import io.github.oliviercailloux.teach_spreadsheets.base.TeacherPrefs;
+import io.github.oliviercailloux.teach_spreadsheets.gui.Controller;
 import io.github.oliviercailloux.teach_spreadsheets.json.JsonSerializer;
 import io.github.oliviercailloux.teach_spreadsheets.online.read.WorksheetReader;
 import io.github.oliviercailloux.teach_spreadsheets.online.write.XlsSummarizer;
 import io.github.oliviercailloux.teach_spreadsheets.read.MultipleOdsPrefReader;
 import io.github.oliviercailloux.teach_spreadsheets.write.OdsSummarizer;
-import io.github.oliviercailloux.teach_spreadsheets.gui.Controller;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -29,11 +29,10 @@ public class XlsSummarizerTest {
 	static private Path inputFolderPath = Path.of("input");
 	static private Path odsPrefSummaryDocumentPath = outputFolderPath.resolve(Path.of("odsPrefSummary.ods"));
 	static private Path coursesJsonPath = outputFolderPath.resolve("courses.json");
-	
+
 	@Test
 	void test() throws IOException, Exception {
 
-		
 		/**
 		 * Reading part.
 		 */
@@ -43,15 +42,13 @@ public class XlsSummarizerTest {
 		 */
 		Set<Course> courses = aggregatedPrefs.getCourses();
 		Set<CoursePref> CoursePrefs = new LinkedHashSet<>();
-		
+
 		for (Course course : courses) {
 			CoursePrefs.addAll(aggregatedPrefs.getCoursePrefs(course));
 		}
 
 		OdsSummarizer odsPrefSummary = OdsSummarizer.newInstance(courses);
 		odsPrefSummary.addPrefs(CoursePrefs);
-
-		
 
 		try (SpreadsheetDocument odsPrefSummaryDocument = odsPrefSummary.createSummary()) {
 			if (!Files.exists(outputFolderPath)) {
@@ -65,7 +62,7 @@ public class XlsSummarizerTest {
 
 		Set<TeacherPrefs> teacherPrefs = aggregatedPrefs.getTeacherPrefsSet();
 		Controller.initializeAndLaunchGui(teacherPrefs, courses, CoursePrefs, outputFolderPath);
-		
+
 		IAuthenticationProvider token = Authenticator.getAuthenticationProvider();
 
 		GraphServiceClient<Request> graphClient = GraphServiceClient.builder().authenticationProvider(token)
@@ -73,7 +70,7 @@ public class XlsSummarizerTest {
 
 		// Get the file Id of Book1.xlsx
 		String fileId = WorksheetReader.getFileId("Book1.xlsx", graphClient);
-		
+
 		XlsSummarizer xlsSum = XlsSummarizer.newInstance(courses, CoursePrefs);
 
 		xlsSum.createSummary(fileId, "Sheet3", graphClient);
