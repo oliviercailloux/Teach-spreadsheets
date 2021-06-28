@@ -216,6 +216,7 @@ Project members : Mohamed I, Mohamed A, Mehdi, Ryan, Nael, Samba, Elena
 
 * En cas d'échec de la tâche ci-dessus, finaliser la classe AssignmentPerTeacher, en ajoutant la mise en page aux fonctions et les tests unitaires.
 
+
 == Plan Itération 4 JAVA
 
 '''
@@ -244,6 +245,32 @@ Le but de cette itération est surtout de consolider ce qu'on avait fait durant 
 *Team 3 : Mehdi & Mohamed Irazzi*
 
 * Faire les changements pour pouvoir merge la classe XlsSummarizer
+
+== Plan Itération 6 UML
+
+'''
+
+*SMPO : Elena Socolova*
+
+'''
+
+*Team 1 : Samba et Ryan*
+
+* Mettre à jour le tutoriel sur le répertoire distant et adapter le code à une utilisation simple (le séparer du projet)
+
+
+'''
+*Team 2 : Nael & Mehdi*
+
+* Refaire le diagramme de classe interface et classes implémenté PR #33
+
+
+'''
+*Team 3 : Mohamed Irazzi & Mohamed Alassaf*
+
+* Faire un diagramme de séquence avec une documentation si nécessaire du processus d’exécution de la sixième fonctionnalité à envisager c'est à dire "l’application génère un résumé de toutes les affectations, par cours, pour diffusion aux enseignants".
+
+
 
 == Credits
 The Icons used in the gui are made by link:https://www.flaticon.com/authors/freepik[Freepik], link:https://www.flaticon.com/authors/xnimrodx[nimrodx] and link:https://www.flaticon.com/authors/prosymbols[Prosymbols] from link:https://www.flaticon.com/[www.flaticon.com].
