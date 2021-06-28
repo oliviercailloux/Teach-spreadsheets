@@ -268,7 +268,7 @@ Le but de cette itération est surtout de consolider ce qu'on avait fait durant 
 '''
 *Team 3 : Mohamed Irazzi & Mohamed Alassaf*
 
-* Faire un document en proposant des tâches a envisager pour le groupe qui va nous succéder.
+* Faire un diagramme de séquence avec une documentation si nécessaire du processus d’exécution de la sixième fonctionnalité à envisager c'est à dire "l’application génère un résumé de toutes les affectations, par cours, pour diffusion aux enseignants".
 
 
 
