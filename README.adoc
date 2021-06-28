@@ -216,6 +216,36 @@ Project members : Mohamed I, Mohamed A, Mehdi, Ryan, Nael, Samba, Elena
 
 * En cas d'échec de la tâche ci-dessus, finaliser la classe AssignmentPerTeacher, en ajoutant la mise en page aux fonctions et les tests unitaires.
 
+
+== Plan Itération 4 JAVA
+
+'''
+
+*SMPO : Elena SOCOLOVA*
+
+Le but de cette itération est surtout de consolider ce qu'on avait fait durant tout ce projet et ne pas rajouter de nouvelles fonctionnalités 
+
+'''
+
+*Team 1 : Nael et Samba*
+
+* Créer une exeception WriteException lancer par les Classes OnlineWorksheetWriter OsdWorksheetWriter -> 1 tâche
+* Faire les changements pour pouvoir merge la classe WorksheetWriter et les classes qui l'implémentent (OnlineWorksheetWriter et OdsWorksheetWriter) -> 2 tâches
+* Faire les changements pour pouvoir merge la classe Authenticator
+* Faire les changements pour pouvoir merge la classe WorksheetReader
+
+
+'''
+*Team 2 : Ryan & Mohamed Alassaf*
+
+* Faire les changements pour pouvoir merge la classe AssignementPerTeacher
+
+
+'''
+*Team 3 : Mehdi & Mohamed Irazzi*
+
+* Faire les changements pour pouvoir merge la classe XlsSummarizer
+
 == Plan Itération 6 UML
 
 '''
@@ -239,6 +269,8 @@ Project members : Mohamed I, Mohamed A, Mehdi, Ryan, Nael, Samba, Elena
 *Team 3 : Mohamed Irazzi & Mohamed Alassaf*
 
 * Continuer la link:https://github.com/oliviercailloux-org/dep-git-Teach_spreadsheets/pull/28[PR #28] et fournir une documentation afin de permettre l'automatisation des tests pour le groupe de l'année prochaine. 
+
+
 
 == Credits
 The Icons used in the gui are made by link:https://www.flaticon.com/authors/freepik[Freepik], link:https://www.flaticon.com/authors/xnimrodx[nimrodx] and link:https://www.flaticon.com/authors/prosymbols[Prosymbols] from link:https://www.flaticon.com/[www.flaticon.com].
