@@ -37,7 +37,11 @@ public class XlsSummarizer {
 	private final static int COMMENTS_POSITION = 8;
 	private static WorksheetWriter wWriter;
 	private final static int DEFAULT_SIZE = 11;
-
+	private final static String DEFAULT_COLOR = "Black";
+	private final static String DEFAULT_NAME = "arial";
+	private final static String DEFAULT_ALIGMENT_H = "center";
+	private final static String DEFAULT_ALIGMENT_V = "center";
+	
 	private int line;
 
 	private ImmutableSet<Course> allCourses;
@@ -131,8 +135,8 @@ public class XlsSummarizer {
 
 		for (int position : headersPositions) {
 			wWriter.setBackgroundColor(1, position, "#98d454");
-			wWriter.setFont(1, position, true, "Black", 12.0, "Arial");
-			wWriter.setFormat(1, position, 100.0, "center", null);
+			wWriter.setFont(1, position, true, DEFAULT_COLOR, 12.0, "Arial");
+			wWriter.setFormat(1, position, 100.0, DEFAULT_ALIGMENT_H, DEFAULT_ALIGMENT_V);
 
 		}
 
@@ -173,15 +177,15 @@ public class XlsSummarizer {
 			if (course.getSemester() > semester) {
 				wWriter.setValueAt(semesterRow, 1, "S " + semester);
 				wWriter.cellFusion(semesterRow, 1, line - 1, 1);
-				wWriter.setFont(semesterRow, 1, true, null, DEFAULT_SIZE, null);
-				wWriter.setFormat(semesterRow, 1, 50.0, "center", "center");
+				wWriter.setFont(semesterRow, 1, true, DEFAULT_COLOR, DEFAULT_SIZE, DEFAULT_NAME);
+				wWriter.setFormat(semesterRow, 1, 50.0, DEFAULT_ALIGMENT_H, DEFAULT_ALIGMENT_V);
 				semester = course.getSemester();
 				semesterRow = line;
 			}
 			if (lastCourse.equals(course)) {
 				wWriter.setValueAt(semesterRow, 1, "S " + semester);
-				wWriter.setFormat(semesterRow, 1, 50.0, "center", "center");
-				wWriter.setFont(semesterRow, 1, true, null, DEFAULT_SIZE, null);
+				wWriter.setFormat(semesterRow, 1, 50.0, DEFAULT_ALIGMENT_H, DEFAULT_ALIGMENT_V);
+				wWriter.setFont(semesterRow, 1, true, DEFAULT_COLOR, DEFAULT_SIZE, DEFAULT_NAME);
 				wWriter.cellFusion(semesterRow, 1, line, 1);
 			}
 
