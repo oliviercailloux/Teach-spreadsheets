@@ -268,7 +268,7 @@ Le but de cette itération est surtout de consolider ce qu'on avait fait durant 
 '''
 *Team 3 : Mohamed Irazzi & Mohamed Alassaf*
 
-* Continuer la link:https://github.com/oliviercailloux-org/dep-git-Teach_spreadsheets/pull/28[PR #28] et fournir une documentation afin de permettre l'automatisation des tests pour le groupe de l'année prochaine. 
+* Faire un document en proposant des tâches a envisager pour le groupe qui va nous succéder.
 
 
 
