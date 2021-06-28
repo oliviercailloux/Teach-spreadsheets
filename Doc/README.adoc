@@ -114,9 +114,15 @@ In this interface, we have multiple functions that allow to write in a sheet. "s
 
 The two  classes work as follows : it can use an existing sheet or create a new one, then stored it and finnaly allows to write directly on it.
 
-The first class "LocalWorksheetWriter", stores the sheet in an object "table" .
+The first class "OdsWorksheetWriter", stores the sheet in an object "table".
 
 The second class "OnlineWorksheetWriter" stores the sheet in an object "WorkbookWorksheetRequestBuilder" which is used to build the requests allowing to interact with the sheet. That's why it uses also the GrapheServiceClient : it allows communication with the microsoft graph API. To create it we first need to get the accces token provided by our application on Azure AD.  Then the graph service client will allow for example to get the "WorkbookWorksheetRequestBuilder" corresponding to the desired sheet , write in this sheet , etc. 
+
+Finnaly we have created to types of Exception : WriteException & ReadException. These exceptions are thrown by this two classes in case of network error.
+
+We have created a tutorial that shows you how to authenticate to Office 365 and how to interact with an online Excel workbook. It is available in the following git directory : https://github.com/MohamedALASSAF/Teach-spreadsheets-authentification. 
+
+
 
 [[GuiDescription]]
 = Gui description
