@@ -108,7 +108,7 @@ The main goal of *JsonDeserializer* is to read courses information, presented in
 
 image::Images\Class_Interface_WorksheetWriter.png[{fullWidth}]
 
-We have an interface who implements two classes.
+We have two classes who implements an interface.
 
 In this interface, we have multiple functions that allow to write in a sheet. "setValueAt" allows to write in a cell, and the two other functions are for formatting the sheet (color, font, size ...).
 
