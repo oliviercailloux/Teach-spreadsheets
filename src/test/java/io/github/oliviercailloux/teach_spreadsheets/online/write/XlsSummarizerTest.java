@@ -1,4 +1,4 @@
-package io.github.oliviercailloux.teach_spreadsheets.online.authentication;
+package io.github.oliviercailloux.teach_spreadsheets.online.write;
 
 import com.microsoft.graph.authentication.IAuthenticationProvider;
 import com.microsoft.graph.requests.GraphServiceClient;
