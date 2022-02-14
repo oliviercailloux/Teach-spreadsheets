@@ -1,6 +1,9 @@
-= Initial project
+= Documentation
 
-You can find here the initial project : link:https://github.com/oliviercailloux/projets/blob/master/%C3%89nonc%C3%A9s/Teach%20spreadsheets.adoc[“Teach spreadsheets”]
+See: link:TODO.adoc[TODO’s].
+
+== Original description (to be translated)
+L’administration de MIDO, un département de Dauphine, utilise actuellement des feuilles de calcul pour affecter les enseignants aux cours à enseigner lors d’une année académique donnée. En vue d’une transition vers des outils plus simples d’emploi, ce projet vise à interagir automatiquement avec les feuilles de calcul intégrant les informations fournies par le département.
 
 [[UseCaseDiag]]
 = Use Case doc
