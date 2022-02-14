@@ -1,0 +1,28 @@
+= TODO
+
+One of the parts we want to build on is the ability of the current application to write worksheet files online and locally. We want to extract this useful functionality into a separate, reusable library, consolidate it and extend it to reading functionality. We then want to extract data from ROF (a Dauphine Database). We then will be able to merge both aspects.
+
+* Clone this project into a new repository. Name the project “J-Worksheets”.
+* Remove from that repository everything that is not useful for the worksheet related functions.
+* Design a WorksheetReader as documented.
+* Implement the OdsWorksheetReader as documented.
+* Implement the OnlineWorksheetReader as documented.
+* Use these implementations and interfaces in the Teach Spreadsheets project.
+* Integrate (in the POM dependencies) a suitable library (ask me for the reference) for accessing ROF (Référentiel des Offres de Formation), Dauphine (you should first obtain access from DSI, Direction des Systèmes d’Information)
+* Design and implement a summary of given assignments, using this https://github.com/oliviercailloux/projets/raw/master/Teach%20spreadsheets/Affectations.ods[exemple].
+* Populate the preference classes with the result of reading online worksheets (using the new interfaces).
+
+== Older requirements (to be updated and translated)
+* L’application lit les données de préférences à partir d’une feuille de calcul présente dans le répertoire courant, crée une feuille Microsoft Excel 365 et y entre les données de préférences lues (s’inspirer de https://universitedauphine-my.sharepoint.com/:x:/g/personal/olivier_cailloux_lamsade_dauphine_fr/EcEa_5tUG2xLothTCUF40l0BPFXAosNZGTKI-01aPPCREg?e=dN9CnT[cet exemple] utilisé pour cette année)
+* L’application lit plusieurs feuilles en entrée, et compile les données de préférences dans la feuille 365
+* Si une feuille 365 existe déjà, l’application écrase les informations dans les cellules correspondantes ; et indique dans un nouvel onglet les modifications apportées
+* L’application lit les affectations actuelles dans la feuille 365 et compile, dans un onglet particulier, les affectations pour chacun, en indiquant le total d’heures affectées et désirées pour chacun.
+* L’application affiche la différence entre le nombre d’heures total désiré et le total affecté, pour chaque enseignant, dans chaque cellule où il apparait, par exemple : "[− 30h]".
+* L’application génère un résumé de toutes les affectations, par cours (cf. https://github.com/oliviercailloux/projets/raw/master/Teach%20spreadsheets/Affectations.ods[exemple]), pour diffusion aux enseignants
+* Accéder aux données des cours de l’année passée pour indiquer les responsables précédents dans 365 (ou modifier si déjà indiqués)
+* (Avec la Direction des Systèmes d’Information de Dauphine) Accéder aux cours prestés l’année passée : nombre d’heures, nombre de groupes, etc. Générer une feuille 365 ressemblant aux feuilles de collecte des préférences à l’aide de ces données.
+
+== Références
+* Tutoriel https://docs.microsoft.com/graph/tutorials/java[Office 365 en Java]
+* https://docs.microsoft.com/graph/use-the-api[Use the Microsoft Graph API]
+* https://github.com/oliviercailloux/MSGRAPH_Tutoriel[MSGraph tutorial] (created by previous years students)
